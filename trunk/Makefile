@@ -65,7 +65,6 @@ clean:
 # ==============================================
 tclean:
 	rm -f `find . | grep \~ `
-	rm -f `find . | grep \tmp `
 # ==============================================
 install:
 	cp toka /usr/bin

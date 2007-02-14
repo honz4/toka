@@ -1,0 +1,5 @@
+#! /bin/sh
+make docs clean
+svn add *
+svn commit
+
