@@ -1,0 +1,41 @@
+.IX Title "TOKA 1"
+.TH TOKA 1 "2006-12-30" "toka" "Toka Language"
+.SH "NAME"
+toka \- a small programming language
+.SH "SYNOPSIS"
+.IX Header "SYNOPSIS"
+\&\fBtoka\fR \fI[script\-file] [...optional arguments...]\fR
+.SH "DESCRIPTION"
+.IX Header "DESCRIPTION"
+Toka is a small language with many similarities to Forth. It
+was designed to be be easily learned, extended, and used. In
+addition, it acts a research project, and thus has an evolving
+set of features. 
+.PP
+It has a minimal form of garbage collection, decompiler, makes
+use of threaded code, and provides a small number of carefully
+selected primitives. In addition, it also features a standard
+bootstrap module (loaded on startup), which greatly expands the
+core primitives into a useful language.
+.SH "OPTIONS"
+.IX Header "OPTIONS"
+.IP "\fI[script\-file]\fR" 4
+.IX Item "[script-file]"
+An optional script to run on startup. This will be run 
+after the standard bootstrap is processed.
+.IP "\fI[...optional arguments...]\fR" 4
+.IX Item "[...optional arguments...]"
+These are passed to the script.
+.SH "FILES"
+.IX Header "FILES"
+\&\fI/usr/bin/toka\fR
+The toka binary.
+.PP
+\&\fI/usr/share/toka/bootstrap.toka\fR
+The standard bootstrap module
+.SH "BUGS"
+.IX Header "BUGS"
+None reported
+.SH "AUTHOR"
+.IX Header "AUTHOR"
+Charles R. Childers <crc at retroforth dot org>

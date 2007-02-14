@@ -1,0 +1,12 @@
+i: Dictionary
+t:   is-macro
+   [ 1 ] is-macro [1]
+   [ [1] [1] ] 1 try 1 try invoke
+t:   is
+   1 2 [ 3 ] is foo
+   foo 3 try 2 try 1 try
+t:   is-data
+   100 malloc dup is-data foo
+   foo try
+t:   \
+   [ ] dup is foo \ foo try

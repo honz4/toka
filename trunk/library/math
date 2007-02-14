@@ -1,0 +1,6 @@
+from libc.so.6
+1 import labs as abs
+0 import random
+1 import srandom
+
+[ over swap 1 - [ over * ] iterate nip ] is ^

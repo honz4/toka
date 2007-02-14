@@ -1,0 +1,151 @@
+[ 10 parse drop ] is #!
+
+#! ---------------------------------------
+#! Potentially Architecture Dependent 
+#! Settings
+#!
+#! These seem to be ok for all systems I
+#! have tested on. (x86, x86-64, MIPS)
+#! ---------------------------------------
+[ 1 ] is char-size
+[ 8 ] is cell-size
+
+
+#! ---------------------------------------
+#! Constants for various ASCII values
+#! ---------------------------------------
+[ 32 ] is SPACE
+[ 10 ] is CR
+[ 13 ] is LF
+[ 27 ] is ESC
+[  9 ] is TAB
+
+
+#! ---------------------------------------
+#! Parsing extensions
+#! ---------------------------------------
+[ SPACE parse ] is wsparse
+[ CR parse ] is lnparse
+
+
+#! ---------------------------------------
+#! Constants for file operations
+#! ---------------------------------------
+[ 1 ] is "R"
+[ 2 ] is "R+"
+[ 3 ] is "W"
+[ 4 ] is "W+"
+[ 5 ] is "A"
+[ 6 ] is "A+"
+[ 1 ] is START
+[ 2 ] is CURRENT
+[ 3 ] is END
+
+
+#! ---------------------------------------
+#! Obtaining Character
+#! ---------------------------------------
+[ 255 and ] is >char
+[ SPACE parse @ >char ] is char
+[ char # ] is-macro char:
+
+
+#! ---------------------------------------
+#! Strings
+#! ---------------------------------------
+[ char: " parse ] is "
+[ " count dup malloc dup # swap copy ] is-macro s"
+
+
+#! ---------------------------------------
+#! Output
+#! ---------------------------------------
+[ CR LF emit emit ] is cr
+[ SPACE emit ] is space
+[   TAB emit ] is tab
+[ lnparse type cr ] is t:
+
+[ ESC emit type ] is ^esc
+[ s" [2J" ^esc s" [1;1H" ^esc ] is clear
+
+
+#! ---------------------------------------
+#! Stack manipulation
+#! ---------------------------------------
+[ swap drop ] is nip
+[ >r swap r> swap ] is rot
+[ swap >r swap r> ] is -rot
+[ >r dup r> swap ] is over
+[ dup -rot ] is tuck
+[ over over ] is 2dup
+[ drop drop ] is 2drop
+[ depth [ drop ] iterate ] is reset
+
+
+#! ---------------------------------------
+#! Math
+#! ---------------------------------------
+[ 1 + ] is 1+
+[ 1 - ] is 1-
+[ -1 * ] is negate
+[ /mod nip ] is /
+[ /mod drop ] is mod
+[ -1 xor ] is not
+
+
+#! ---------------------------------------
+#! Memory and Variables
+#! ---------------------------------------
+[ char-size * ] is chars
+[ char-size + ] is char+
+[ char-size - ] is char-
+[ cell-size * ] is cells
+[ cell-size + ] is cell+
+[ cell-size - ] is cell-
+[ dup @ rot + swap ! ] is +!
+[ dup @ rot - swap ! ] is -!
+[ -1 swap ! ] is on
+[  0 swap ! ] is off
+[ dup @ not swap ! ] is toggle
+[ cell-size malloc is-data ] is variable
+
+
+#! ---------------------------------------
+#! Numeric bases
+#! ---------------------------------------
+[ 16 base ! ] is hex
+[ 10 base ! ] is decimal
+[  2 base ! ] is binary
+[  8 base ! ] is octal
+
+
+#! ---------------------------------------
+#! Conditionals
+#! ---------------------------------------
+[  0 ] is FALSE
+[ -1 ] is TRUE
+[ [ ] t/f ] is true?
+[ [ ] swap t/f ] is false?
+
+
+#! ---------------------------------------
+#! Flow Control
+#! ---------------------------------------
+[ r> dup >r ] is r@
+[ r> r> swap >r >r ] is later
+
+
+#! ---------------------------------------
+#! Help
+#! ---------------------------------------
+[ 
+  cr
+  s" :help        Display this text" type cr
+  s" :words       Display a list of words" type cr
+  s" :stack       Display the current data stack contents" type cr
+  s" :gc          Display information about the current memory usage" type cr
+  s" :see         Decompile a quote (passed on the stack)" type cr
+  s" \ <word>     Return a quote. If the requested word is a primitive" type cr
+  s"              or data structure, return the name in a new quote." type cr
+  cr
+] is :help

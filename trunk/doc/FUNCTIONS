@@ -1,0 +1,510 @@
+
+FILE: bits.c
+
+lshift()
+Shift TOS left by NOS bits
+
+rshift()
+Shift TOS right by NOS bits
+
+and()
+Perform a bitwise AND
+
+or()
+Perform a bitwise OR
+
+xor()
+Perform a bitwise XOR
+
+
+FILE: class.c
+
+forth_class()
+If compiling, compile the xt into the current
+quote. If interpreting, call the word.
+
+self_class()
+Always call the word
+
+data_class()
+If compiling, compile a call to lit() and then
+inline TOS into the following location. Otherwise
+leave TOS alone.
+
+quote_class()
+Handler for quotes; this takes two cells, one
+which is a call to this function, the other is
+the pointer to the quote to invoke.
+
+quote_macro_class()
+If compiling, invoke the quote. If interpreting,
+silently ignore it.
+
+quote_forth_class()
+Perform data_class() semantics, then, if 
+compiling, compile a call to invoke(). Otherwise,
+invoke() is called with the xt on TOS.
+
+
+FILE: cmdline.c
+
+Variables:
+  long arg_count
+  Holds the number of command line arguments
+
+  char *arg_list[12]
+  Holds the list of command line arguments. 
+
+get_arg()
+Return a pointer to a requested argument. This is
+zero based.
+
+num_args()
+Return the number of arguments, not including the
+file names used to launch this program.
+
+build_arg_list(char *args[], long count)
+Copy pointers to the command line arguments to
+arg_list[]. Also sets arg_count.
+
+
+FILE: conditionals.c
+
+less_than()
+Compare TOS and NOS, return a flag.
+
+greater_than()
+Compare TOS and NOS, return a flag.
+
+equals()
+Compare TOS and NOS, return a flag.
+
+not_equals()
+Compare TOS and NOS, return a flag.
+
+
+FILE: console.c
+
+dot()
+Display the number on TOS using the current base
+if possible.
+
+emit()
+Display the character TOS corresponds to. Consumes
+TOS.
+
+type()
+Display the string TOS points to. Consumes TOS.
+
+bye()
+Quit Toka
+
+
+FILE: data.c
+
+make_literal()
+Compile a call to lit() and then place TOS into
+the next memory location.
+
+fetch()
+Fetch the value in the memory location pointed to
+by TOS.
+
+store()
+Store NOS into the memory location specified by
+TOS.
+
+fetch_char()
+Fetch the value in the memory location pointed to
+by TOS. This version reads a single byte.
+
+store_char()
+Store NOS into the memory location specified by
+TOS. This version stores a single byte.
+
+copy()
+Copies 'count' bytes from 'source' to 'dest'. The
+stack form for this is:
+  source dest count
+The memory locations can overlap.
+
+
+FILE: debug.c
+
+words()
+Display a list of all named words
+
+display_stack()
+Display all items on the stack.
+
+gc_info()
+Display information about Toka's memory use
+
+
+FILE: decompile.c
+
+long resolve_name(Inst xt)
+Search for a name in the dictionary that corresponds
+to 'xt'. Display it if found, and return a flag.
+
+decompile()
+Decompile a quote and its children and display the
+result on the screen.
+
+see()
+Decompile the quote on the stack.
+
+
+FILE: dictionary.c
+
+Variables:
+  ENTRY dictionary[4096];
+  Holds the dictionary entries, up to 4096
+
+  long last
+  A pointer to the most recent dictionary entry
+
+add_entry(char *name, Inst xt, Inst class)
+Add an entry to the dictionary.
+
+name_attach(void *class)
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of the specified class.
+
+name_quote()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_forth_class().
+
+name_quote_macro()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_macro_class().
+
+name_data()
+Attach a name (from the input stream) to the data
+at the specified address. Semantics are the same
+as the data_class().
+
+find_word()
+Search for a word (name taken from the string
+passed on TOS) in the dictionary. Returns the
+xt, class, and a flag of -1 if found. If not
+found, returns only a flag of 0.
+
+return_quote()
+Find a name (from the input stream) and return a
+quote that corresponds to the word.
+
+
+FILE: ffi.c
+
+Variables:
+  void *library
+  Pointer to the most recently opened library
+
+ffi_invoke()
+Call a foreign function. This translates between
+Toka and CDECL calling conventions.
+
+ffi_from()
+Select a library to load from.
+
+ffi_import()
+Import and name an external function. This wraps
+the imported function in a quote.
+
+ffi_rename()
+Rename the most recently defined word in the dictionary
+
+
+FILE: files.c
+
+file_open()
+Open a file using the specified mode. Modes are
+a direct map to the fopen() modes: "r", "r+", "w",
+"w+", "a", and "a+". Numeric values for these are
+1 - 6, in that order.
+
+file_close()
+This is just a simple wrapper over fclose().
+
+file_read()
+This is just a simple wrapper over fread().
+
+file_read()
+This is just a simple wrapper over fwrite().
+
+file_size()
+This is just a simple wrapper over fstat() which
+returns the size of the file.
+
+file_seek()
+This is just a simple wrapper over fseek().
+
+file_pos()
+This is just a simple wrapper over ftell().
+
+
+FILE: gc.c
+
+Variables:
+  GCITEM gc_list[128]
+  Holds the list of items marked as garbage
+
+  long gc_depth
+  A pointer to the top of the garbage collection
+  list
+
+  GCITEM gc_trash[128]
+  Holds the short list of items marked as garbage
+
+  long gc_tdepth
+  A pointer to the top of the short garbage
+  collection list
+
+  long gc_used
+  Contains the total size of all currently used
+  memory, including permanent quotes.
+
+  long gc_objects
+  Contains the total number of objects that are
+  currently existing, including permanent ones.
+
+gc_alloc(long items, long size, long type)
+Allocate the requested memory and add it to the
+garbage collection list.
+If type is set to 0, add to the normal garbage
+collection list. If set to 1, add to the short
+list of known garbage items which can be safely
+freed at the next gc().
+If the allocation fails, gc() is called, and the
+allocation is retried. If it still fails, an
+error is reported and Toka is terminated.
+
+gc_keep()
+Remove the specified address (and any childern it
+has registered) from the garbage collection list.
+If the TOS is not an allocated address, this will
+silently ignore it.
+
+gc()
+Free the oldest allocations on the garbage list.
+Will free up to 64 trash entries and 32 normal
+entries per call.
+
+toka_malloc()
+Allocate TOS bytes of memory. Returns a pointer to
+the allocated memory.
+
+
+FILE: initial.c
+
+build_dictionary()
+Attach names and classes to the various initial
+words in the Toka language.
+
+
+FILE: interpret.c
+
+Variables:
+  long compiler
+  When set to 0, interpret; when set to -1, 
+  compile. This is checked by the various word
+  classes defined in class.c
+
+  char *scratch
+  Temporary holding area used by the parser and
+  other routines.
+
+  char *tib
+  Pointer to the text input buffer.
+
+count()
+Perform strlen() on the string passed on TOS. This
+returns the string and the count on the stack.
+
+notfound()
+Display an error message if a word was not found
+or able to be converted to a number. It takes a
+string from the stack.
+
+interpret()
+Accept and process input.
+
+
+FILE: math.c
+
+add()
+Add TOS to NOS
+
+subtract()
+Subtract TOS from NOS
+
+multiply()
+Multiply TOS by NOS
+
+divmod()
+Divide and return the result, including remainder
+
+
+FILE: parser.c
+
+Variables:
+  FILE *input[]
+  Current file stream to parse from. Setup as
+  an array of 8 inputs.
+
+  long isp
+  Pointer to the most recent input source in the array
+
+  long base
+  Holds the current numeric base
+
+to_number()
+Attempt to convert a string (on TOS) to a number.
+This accepts a format of:
+  [-]number
+If successful, it leaves the number and a flag of
+-1 on the stack. Otherwise, it leaves the original
+string, and a flag of 0.
+
+parse()
+Parse the input buffer until the character passed
+on TOS is found, or until the end of the line is
+encountered. Return a pointer to the resulting
+string on the stack.
+
+get_token(char *s, long delim)
+Return a string (in "s") up to the specified 
+delimiter or the end of the line. This also puts
+the resulting string on the stack.
+
+include_file(char *s)
+Attempt to open a file ("s") and add it to the
+top of the input stack.
+
+include()
+Parse for a file name, attempt to open it, and
+add it to the input stream if successful.
+
+needs()
+Parse for a file name, attempt to open it from
+the library, and add it to the input stream if 
+successful.
+
+
+FILE: quotes.c
+
+Variables:
+  QUOTE quotes[8]
+  Holds details about the compiler state, heap,
+  etc for quotes during compilation.
+
+  long qdepth
+  Tracks how deeply the quotes are nested
+
+  long quote_counter
+  Tracks the current loop index
+
+  Inst top
+  Holds a pointer to the root quote
+
+begin_quote()
+Create a new quote. This allocates space for it,
+and sets the compiler flag. A pointer to the
+quote's start is pushed to the stack.
+
+end_quote()
+Terminate the previously opened quote and perform
+data_class() semantics.
+
+invoke()
+Call a quote (passed on TOS)
+
+iterate()
+Repeat execution of a quote (passed on TOS), NOS
+number of times.
+
+truefalse()
+Takes three items (true-xt, false-xt, and a flag)
+from the stack. Stack should be passed in as:
+  flag true false 
+It will execute true if the flag is true, false
+otherwise.
+
+recurse()
+Compiles a call to the top-level quote. As a
+trivial example:
+  [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] true? ] is fib
+
+qlit()
+Push the value in the following memory location
+to the stack. This is used instead of lit() so
+that the decompiler (and eventually debugger) can
+reliably identify nested quotes as opposed to 
+regular literals.
+
+quote_index()
+Return the current loop index (counter)
+
+
+FILE: stack.c
+
+stack_dup()
+Duplicate the TOS
+
+stack_drop()
+Drop the TOS
+
+stack_swap()
+Exchange TOS and NOS
+
+stack_to_r()
+Push TOS to return stack, DROP TOS
+
+stack_from_r()
+Pop TORS to the data stack
+stack_depth()
+Return the number of items on the stack
+
+
+FILE: toka.c
+
+main()
+The main entry point into Toka. Sets up the
+dictionary and calls interpret().
+
+
+FILE: vm.c
+
+Variables:
+  Inst *heap
+  Pointer into the current heap
+
+  Inst *ip
+  The instruction pointer
+
+  long stack[100], rstack[100]
+  The data and return stacks
+
+  long sp, rsp
+  The stack pointers
+
+vm_run(Inst)
+Run through a list of instructions
+Side effects:
+  modifes *ip
+
+vm_stack_check()
+Check for over/underflow and reset if detected
+If the return stack over/underflows, exit Toka
+
+push(long a)
+Push a number to the stack.
+
+lit()
+Push the value in the following memory location
+to the stack
+

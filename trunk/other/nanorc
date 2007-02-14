@@ -1,0 +1,19 @@
+##############################################################################
+#
+# Syntax highlighting for Toka files
+#  
+# Author:  Charles R. Childers, crc(at)retroforth.org
+# License: Public Domain
+#
+# Version: 2006-11-16
+#
+##############################################################################
+
+syntax "toka" "\.toka$"
+color brightblue "\#\!.*"
+color brightyellow  "[0-9]"
+color cyan          start=" is "        end="$"
+color cyan          start=" is-data "   end="$"
+color cyan          start=" is-macro "  end="$"
+color brightred     "\[|\]"
+color green         "^ *invoke |^ *iterate |^ *recurse "

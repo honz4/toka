@@ -1,0 +1,6 @@
+#! /usr/bin/toka
+[ get-arg type cr ] is show-arg
+[ dup . char: = emit space ] is #=
+#args [ i #= show-arg ] iterate
+bye
+

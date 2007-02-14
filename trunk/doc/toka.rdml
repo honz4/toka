@@ -1,0 +1,316 @@
+\author Charles R. Childers
+\title Toka Overview
+\copyright Public Domain
+\format-html rdml.css
+
+\t Introduction
+
+\p Toka is a small language with many similarities to Forth. It
+   was designed to be be easily learned, extended, and used. In
+   addition, it acts a research project, and thus has an evolving
+   set of features. 
+
+\p It has a minimal form of garbage collection, decompiler, makes
+   use of threaded code, and provides a small number of carefully
+   selected primitives. In addition, it also features a standard
+   bootstrap module (loaded on startup), which greatly expands the
+   core primitives into a useful language.
+
+\t Building
+
+\p At a command line, run one of the following:
+
+\pre
+\n  make linux
+\n  make bsd
+\n  make windows
+\-pre
+
+\p If you want a binary with debugging information, try
+   this command line instead:
+
+\pre  
+\n  make CFLAGS=-g
+\-pre
+
+\t Installation
+
+\p You should now install Toka. This typically needs to be done as 
+   the root user.
+
+\pre
+\n  make install
+\-pre
+
+\pre
+\n *************************************************
+\n * If you are the only user on your machine, you *
+\n * can set permissions to allow you to update a  *
+\n * Toka installation without being root. Try:    *
+\n *                                               *
+\n *   chown -R username /usr/bin/toka             *
+\n *   chown -R username /usr/share/toka           *
+\n *************************************************
+\-pre
+
+\t Running Toka
+
+\p You should now be able to load and run Toka. Load as follows:
+
+\pre
+\n  toka
+\-pre
+
+\t Language Basics
+\p The Toka language draws from Forth, so if you are already familiar
+   with concatenative, stack based languages, learning it should not
+   prove difficult. If you come from a C background, it will be a bit
+   different.
+
+\t The Stack
+
+\p Toka is based on a dual stack virtual machine. The primary (data) 
+   stack is used to pass parameters. The alternate (return) stack 
+   contains addresses used during call/return operations and can 
+   temporarily hold values during execution of code.
+
+\pre
+\n *************************************************
+\n * The alternate stack MUST be kept balanced. If *
+\n * you push values to it, you must remove them   *
+\n * before execution of the code finishes or Toka *
+\n * may crash.                                    *
+\n *************************************************
+\-pre
+
+\t Quotes
+
+\p The basic building block in the Toka language is called a quote. 
+   These are small blocks of compiled code. Quotes can be created at 
+   any time and nested up to 8 levels deep.
+
+\p When first created a quote is anonymous; however a name can be 
+   associated with it after it has been created.
+
+\p To create quotes enclose the code in a [ ] pair. After 
+   closing the quote with ], a reference to the quote is left
+   on the stack. An example follows.
+
+\pre
+\n  [ 0 100 [ dup . 1 + ] iterate drop ]
+\-pre
+
+\pre
+\n *************************************************
+\n * Quotes can be up to 64 elements in length;    *
+\n * this is a best case scenario as numbers,      *
+\n * nested quotes, and references to named quotes *
+\n * each take two elements which reduces this to  *
+\n * 32 elements in most cases.                    *
+\n *************************************************
+\-pre
+
+\p Names can be given to quotes via "is" and "is-macro". 
+  Most named quotes will be created via "is". The 
+  "is-macro" form only allows the quotes to be run 
+  during compilation of new quotes. 
+
+\p Consider the earlier example:
+
+\pre
+\n  [ 0 100 [ dup . 1 + ] iterate drop ] is count-to-100
+\-pre
+
+\p This adds a name ("count-to-100") refering to this
+   quote to the dictionary. This is called a "word". Now
+   take a look at is-macro: 
+
+\pre
+\n  [ 34 parse type ] is-macro ."
+\n  [ ." inside a def" 1 2 + . ." still inside" ] is foo
+\n  foo
+\-pre
+
+
+\t Data
+
+\p In addition to quotes, you will generally need to allocate
+   space for variables, buffers, etc. Toka allows for this
+   via "malloc". An example:
+
+\pre
+\n  1024 1024 * malloc
+\-pre
+
+\p This returns a pointer to a 1MiB memory region. The memory
+   will be 0'd out. All memory allocations (this includes the
+   memory for each created quote, temporary data structures
+   used by Toka, and all memory you allocate) are managed by
+   a garbage collector. 
+
+\p If you want to keep a memory region around, there are
+   two ways to do so:
+
+\pre
+\n * keep
+\n * is  is-macro  is-data
+\-pre
+
+\p If you do not name the allocated memory (or quote) and
+   do not invoke "keep" on the pointer, the garbage collector
+   will eventually deallocate the memory. You can force an
+   earlier collection by invoking "gc", or view information
+   about the current memory useage by invoking ".gc"
+
+\t Garbage Collection
+
+\p Toka makes use of a garbage collector for dynamic
+   memory allocations. This allows fairly liberal use
+   of dynamically allocated memory without worry of
+   memory leaks.
+
+\p The model is pretty simple. To allocate memory,
+   gc_alloc() is called. This is passed the number
+   of elements, the size of an element, and a hint
+   regarding whether this is known to be temporary
+   or may be permanent.
+
+\p The garbage collector maintains two lists of
+   allocations. When either of these is filled, the
+   gc() routine is called to clean them up. Any item
+   that was flagged as temporary using gc_alloc() is
+   freed by gc(). It also frees up to 32 allocations
+   from the primary list each time it is called. To
+   help prevent temporary items from being corrupted 
+   by future allocations, only 64 temporary allocations
+   will be freed per call of gc().
+
+\p Another routine, gc_keep() skims down through the
+   list of allocations (most recent to oldest) to
+   find a specific pointer. When found, that (and any
+   allocation that follows, are removed from the list
+   making them permanent allocations. (This assumes
+   that subsequent allocations are referenced by the
+   one you desire to keep. In a normal Toka build
+   this is safe.)
+
+\p Information regarding the current status of the
+   garbage collection subsystem can be obtained via
+   gc_info().
+
+\t The Foreign Function Interface
+
+\p Toka has an optional set of words to map in and allow
+   use of external library functions. This is called the
+   Foreign Function Interface, or FFI.
+
+\p If you built the FFI support into Toka, you will have
+   two new words. The first, "from", is used to select a 
+   library to import functions from.
+
+\pre
+\n  from libc.so
+\n  from libgtk-2.0-x11.so
+\-pre
+  
+\p After setting the active library you can "import"
+   functions from it:
+    
+\pre
+\n  from libc.so
+\n  1 import puts
+\-pre
+      
+\p The "import" word takes the number of arguments
+   and the name of the function to import. When you
+   are ready to use the imported function, just invoke
+   its name:
+
+\pre       
+\n  from libc.so
+\n  1 import puts
+\n  " hello, world!" puts
+\-pre
+              
+\p Imported functions will leave their return value
+   on the stack.
+
+\p In addition to these words, the decompiler has also
+   been extended to recognize FFI functions, displaying
+   a form like:
+
+\pre
+\n  [ address #args <ffi> ]
+\-pre
+
+\t The examples
+\p Toka comes with numerous examples, showing use of the
+   basic language as well as the included library.
+
+\pre
+\n Basic Examples
+\n - hello.toka
+\n   A simple "Hello, World!" script
+\n - show-args.toka
+\n   Echos all arguments passed to it.
+\n - tests.toka
+\n   Perform a set of basic tests on the Toka installation.
+\n   These cover much of the core Toka functionality.
+\n
+\n Basic Shell Tools
+\n - rm.toka
+\n   Remove a file
+\n - cat.toka
+\n   Display a text file
+\n - timedate.toka
+\n   Display the current time and date
+\n   Uses the "time" library.
+\n
+\n Networking
+\n - echo-server.toka
+\n   A simple echo server. This uses recursion and needs to
+\n   be run under socket(1). Recommended command line is:
+\n     socket -slfp ./echo-server.toka 9998
+\n   Then you can:
+\n     telnet 0.0.0.0 9998
+\n   And test it. Get socket(1) from:
+\n     http://www.jnickelsen.de/socket/
+\n
+\n Benchmarking
+\n - timed-fib.toka
+\n   Uses the "time" library to track the approximate
+\n   time required to calculate "35 fib"
+\n - fib.toka
+\n   Calculate "35 fib". The time can be tracked with the
+\n   standard "time" utility on Linux and BSD systems.
+\-pre
+
+\t Libraries
+\p As the Toka language is pretty minimal, a library of additional
+   code has begun to be written. These can be loaded by doing:
+
+\pre
+\n needs libraryname
+\-pre
+
+\p In a normal installation, these will be kept in /usr/share/toka/library
+
+\pre
+\n - console
+\n   Expands on the minimal console interface in Toka.
+\n   This allows for colors (foreground/background),
+\n   positioning of the cursor, and printf.
+\n - ctype
+\n   Functions from ctype.h
+\n - debug
+\n   Expands on the debugging words in Toka.
+\n - math
+\n   Additional math related functionality, including
+\n   some functionality from math.h
+\n - strings
+\n   Additional string processing functionality.
+\n - time
+\n   Basic time functions, useful for basic benchmarking
+\-pre
+
+\end

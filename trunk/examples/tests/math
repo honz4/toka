@@ -1,0 +1,9 @@
+i: Basic Math (no output if successful)
+t:   Addition
+   1 2 + 3 try
+t:   Subtraction
+   2 1 - 1 try
+t:   Division / Modulus
+   10 3 /mod 3 try 1 try
+t:   Multiplication
+   4 4 * 16 try

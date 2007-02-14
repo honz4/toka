@@ -1,0 +1,8 @@
+#! /usr/bin/toka
+
+from libc.so.6
+1 import remove
+
+[ s" rm.toka filename [...]" type cr ] is usage
+[ #args 0 > [ TRUE ] [ FALSE ] t/f ] is check
+[ check [ #args [ i get-arg remove drop ] iterate ] [ usage ] t/f bye ] invoke

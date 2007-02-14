@@ -1,0 +1,4 @@
+#! /bin/sh
+make docs clean
+darcs record --look-for-adds
+
