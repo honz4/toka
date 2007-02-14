@@ -1,0 +1,39 @@
+#summary List of currently supported hardware and software systems
+
+= Introduction =
+
+Toka was intended to be easily portable across a wide variety of systems. This page lists each system tested thus far, and provides additional notes concerning limitations for specific ports at the end.
+
+= Processor =
+
+== x86 ==
+
+ * Linux
+ * NetBSD
+ * FreeBSD
+ * OpenBSD
+ * DragonFly BSD
+ * Windows XP, Vista 
+
+== amd64 ==
+
+ * Linux
+
+== MIPS ==
+
+ * NetBSD
+
+
+= Limitations =
+
+== Windows ==
+
+Toka can be built and used under Windows via Cygwin (see http://cygwin.com). It has not been tested on Windows 95, 98, Me, 2000, or NT. The library functionality does not work in most cases, since Windows lacks a standard libc. This may be addressed in a future release of Toka. 
+
+== BSD ==
+
+The library does not work in many cases as imports are done from libc.so.6. This will be addressed in a future release of Toka. (As a temporary solution, try creating a symlink in /lib to the real libc.so or change each of the library files).
+
+== NetBSD/MIPS ==
+
+Due to lack of real hardware, Toka was tested under GXemul (see http://gavare.se/gxemul/). All functionality works as expected.
