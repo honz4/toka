@@ -1,0 +1,39 @@
+#! /usr/bin/toka
+needs time
+needs scope
+
+{
+  time_t start
+  time_t end
+  variable overhead
+
+  [ start time drop
+    invoke
+    end time drop
+    end @ start @ - . s" seconds elapsed" type cr
+  ]
+} is :time
+
+t: Stage 1: Empty Quotes
+t: ----------------------------------
+t: Invoking
+[ ] :time
+t: 100,000,000 iterations
+[ 100000000 [ ] iterate ] :time
+cr
+t: Stage 2: "1 dup swap drop drop"
+t: ----------------------------------
+t: Invoking
+[ 1 dup swap drop drop ] :time
+t: 100,000,000 iterations
+[ 100000000 [ 1 dup swap drop drop ] iterate ] :time
+cr
+t: Stage 3: foo @ foo !
+t: ----------------------------------
+variable foo
+t: Invoking
+[ foo @ foo ! ] :time
+t: 100,000,000 iterations
+[ 100000000 [ foo @ foo ! ] iterate ] :time
+cr
+bye

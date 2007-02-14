@@ -1,0 +1,15 @@
+i: Quotes
+t:   Creation
+   [ 1 2 + ] is 3.
+   [ 4 5 + ] is 9.
+t:   Invoking
+   9. 9 try
+   3. 3 try
+t:   Iteration
+   [ 1 5 [ dup 1 + ] iterate drop ] is count
+   count
+   5 try  4 try  3 try  2 try  1 try
+t:   Recursion
+   [ dup 0 <> [ dup 1 - recurse ] [ drop ] t/f ] is count2
+   5 count2
+   1 try  2 try  3 try  4 try  5 try

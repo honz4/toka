@@ -1,0 +1,6 @@
+#! /usr/bin/toka
+needs files
+
+[ s" ./cat.toka filename [...]" type cr ] is usage
+[ #args 0 > [ TRUE ] [ FALSE ] t/f ] is check
+[ check [ #args [ i get-arg file.slurp type cr ] iterate ] [ usage ] t/f bye ] invoke

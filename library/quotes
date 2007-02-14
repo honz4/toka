@@ -1,0 +1,5 @@
+[ >r depth >r invoke depth r> - 1 +
+  [ r> r> dup >r swap >r invoke ] iterate 
+] is apply
+
+[ depth 1 = [ 0 ] true? ] is fix?

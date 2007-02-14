@@ -1,0 +1,13 @@
+i: Stack
+t:   dup
+   1 dup 1 try 1 try
+t:   drop
+   1 2 drop 1 try
+t:   swap
+   1 2 swap 1 try 2 try
+t:   >r
+   1 2 3 >r 2 try 1 try
+t:   r>
+   1 2 r> 3 try 2 try 1 try
+t:   depth
+   1 2 3 depth 3 try 3 try 2 try 1 try

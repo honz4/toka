@@ -1,0 +1,14 @@
+i: Data
+t:   base
+   base drop
+t:   @
+   10 base @ try
+t:   !
+   16 16 base ! base @ try
+   a base !
+t:   compiler
+   [ -1 compiler ! ] is }
+   [  0 compiler ! ] is-macro {
+   [ 1 { 2 } ] 2 try invoke 1 try
+t:   heap
+   [ 0 { 0 heap @ ! invoke 0 try

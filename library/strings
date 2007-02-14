@@ -1,0 +1,11 @@
+from libc.so.6
+2 import strcpy
+3 import strncpy
+2 import strcat
+4 import strncat
+2 import strcmp
+3 import strncmp
+2 import strchr
+2 import strrchr
+2 import strstr
+1 import strlen

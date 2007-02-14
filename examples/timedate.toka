@@ -1,0 +1,6 @@
+#! /usr/bin/toka
+needs time
+time_t today
+today time drop
+today ctime type
+bye

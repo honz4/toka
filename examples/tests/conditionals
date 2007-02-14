@@ -1,0 +1,19 @@
+i: Conditionals
+t:   =
+   1 2 =  0 try
+   1 1 = -1 try
+t:   <>
+   1 2 <> -1 try
+   1 1 <>  0 try
+t:   <
+   1 2 < -1 try
+   1 1 <  0 try
+   1 0 <  0 try
+t:   <
+   1 2 >  0 try
+   1 1 >  0 try
+   1 0 > -1 try
+t:   t/f
+   [ = [ 1 ] [ 0 ] t/f ] is =?
+   1 1 =? 1 try
+   1 0 =? 0 try

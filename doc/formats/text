@@ -1,0 +1,30 @@
+( Retro Documentation Markup Language )
+( ----------------------------------- )
+( This is specifically intended to be a simple markup language that )
+( can be used for a variety of types of documents. It is our ultimate )
+( goal to be able to dump the output into text, manpage, and html )
+( formats. )
+
+
+0 last @
+( Metadata )
+: \author lnparse 2drop ;
+: \title lnparse 2drop ;
+: \copyright lnparse 2drop ;
+: \comment lnparse 2drop ;
+: \format-html lnparse 2drop ;
+: \t cr cr lnparse type ;
+: \p cr ;
+: \end  bye ;
+: \b wsparse type space ;
+: \i wsparse type space ;
+: \n lnparse type cr ;
+: \br cr ;
+: \pre cr 48 for '- emit next cr ;
+: \-pre 48 for '- emit next cr cr ;
+: \link wsparse wsparse type space '[ emit type '] emit space ;
+: \image space '[ emit wsparse type '] emit space ;
+
+here is word? ] type space true ;
+here is >number ] false ;
+!

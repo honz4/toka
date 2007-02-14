@@ -1,0 +1,32 @@
+p
+{
+  font-family: arial, sans-serif;
+  color: #663300;
+}
+
+h1
+{
+  text-transform: uppercase;
+  font-size: 20pt;
+  color: #663300;
+}
+
+body
+{
+  background-color: #FDFDE0;
+  width: 70%;
+}
+
+pre
+{
+  background-color: #99CC99;
+  white-space: pre;
+  width: 55%;
+  font-size: small;
+}
+
+i
+{
+  display: inline;
+  background-color: #99CC99;
+}

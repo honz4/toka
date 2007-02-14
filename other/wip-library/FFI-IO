@@ -1,0 +1,4 @@
+2 import printf as printf.2
+[ s" %li " swap printf.2 drop ] is .
+[ s" %s" swap printf.2 drop ] is type
+[ s" %c" swap printf.2 drop ] is emit

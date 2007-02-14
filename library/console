@@ -1,0 +1,31 @@
+#! Enhancements to the console interface
+#! -------------------------------------
+from libc.so.6
+1 import printf
+2 import printf as printf.1
+3 import printf as printf.2
+4 import printf as printf.3
+
+#! -------------------------------------
+[ s" [0m" ^esc ] is normal
+[ s" [1m" ^esc ] is bold
+[ s" [30m" ^esc ] is black
+[ s" [31m" ^esc ] is red
+[ s" [32m" ^esc ] is green
+[ s" [33m" ^esc ] is yellow
+[ s" [34m" ^esc ] is blue
+[ s" [35m" ^esc ] is magenta
+[ s" [36m" ^esc ] is cyan
+[ s" [37m" ^esc ] is white
+[ s" [40m" ^esc ] is onBlack
+[ s" [41m" ^esc ] is onRed
+[ s" [42m" ^esc ] is onGreen
+[ s" [43m" ^esc ] is onYellow
+[ s" [44m" ^esc ] is onBlue
+[ s" [45m" ^esc ] is onMagenta
+[ s" [46m" ^esc ] is onCyan
+[ s" [47m" ^esc ] is onWhite
+
+#! -------------------------------------
+[ s" [%li;%liH" -rot 27 emit printf.2 ] is xy
+[ 1 1 xy ] is home
