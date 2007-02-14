@@ -1,0 +1,36 @@
+#summary How to compile and install Toka
+#labels Phase-Deploy
+
+= Prerequisites =
+
+You will need the following things to build Toka:
+ * C compiler (tested against GCC 2.95, 3.x, and 4.x)
+ * Standard C Library ("libc")
+ * Library providing dlopen() and dlsym() (BSD: libc, Linux, BeOS: libdl)
+ * Make (either BSD or GNU)
+
+= Compiling =
+
+{{{
+  make linux
+}}}
+
+Or:
+
+{{{
+  make bsd
+}}}
+
+= Installation =
+
+{{{
+  make install
+}}}
+
+= Testing =
+
+Toka has a small test suite included. To check your build against it, run:
+
+{{{
+  make tests
+}}}
