@@ -12,16 +12,18 @@ You will need the following things to build Toka:
 = Compiling =
 
 {{{
-  make linux
+  make clean linux
 }}}
 
 Or:
 
 {{{
-  make bsd
+  make clean bsd
 }}}
 
 = Installation =
+
+In a default configuration, Toka will need to be installed if you want it to automatically load the _bootstrap.toka_ extensions. A default install puts _toka_ in _/usr/bin_ and the bootstrap + library modules in _/usr/share/toka_.
 
 {{{
   make install
