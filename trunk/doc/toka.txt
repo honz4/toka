@@ -23,7 +23,7 @@ If you want a binary with debugging information, try this command line instead:
 Installation
 You should now install Toka. This typically needs to be done as the root user. 
 ------------------------------------------------
- make install
+ make install PORTNAME
 ------------------------------------------------
 
 
