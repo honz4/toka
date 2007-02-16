@@ -39,7 +39,7 @@
    the root user.
 
 \pre
-\n  make install
+\n  make install PORTNAME
 \-pre
 
 \pre
