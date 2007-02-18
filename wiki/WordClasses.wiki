@@ -1,0 +1,13 @@
+#summary An overview of word classes
+
+= Introduction =
+
+Internally Toka is built using a concept known as word classes. This idea was originally developed by Helmar Wodtke, and has been picked up by HelFORTH, RetroForth, Reva, and 4p. Unlike these other systems, Toka does not allow for custom classes at this time.
+
+= Details =
+
+Word classes are a way to group related words, based on their compilation and execution behaviors. A special word, called a class handler, is defined to handle an execution token passed to it on the stack. In Toka these handlers are not directly visible; the handler is attached to a quote when it is given a name. 
+
+|| is || Create a word using the primary class. During compilation a call to the quote is laid down. During interpretation the quote is invoked. || *primitive* ||
+|| is-macro || Create a word that is used as a compiler macro. During compilation the quote is invoked. During interpretation it is ignored silently. || *primitive* ||
+|| is-data || Create a word as a data structure. During compilation the value is compiled into the quote. During interpretation the value is left on the stack. || *primitive* ||
