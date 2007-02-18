@@ -11,6 +11,17 @@
  *
  ******************************************************/
 
+/******************************************************
+ * For rebuild:
+ *
+ * USES bits class cmdline conditionals console
+ * USES data debug decompile dictionary ffi files
+ * USES gc initial interpret math parser quotes
+ * USES stack vm
+ *
+ * LIBS dl
+ ******************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

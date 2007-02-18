@@ -58,10 +58,12 @@ docs:
 # ==============================================
 clean:
 	rm -f `find . | grep \~ `
+	rm -f source/*.o
 	rm -f toka test.log
 # ==============================================
 tclean:
 	rm -f `find . | grep \~ `
+	rm -f source/*.o
 # ==============================================
 install:
 	cp toka /usr/bin
