@@ -1,0 +1,64 @@
+#summary An overview of quotes
+
+= Introduction =
+
+The basic building block in the Toka language is called a quote. These are small blocks of compiled code. Quotes can be created at any time and can be nested up to 8 levels deep.
+
+When first created a quote is anonymous; however a name and action can be associated with it after it has been created. 
+
+= Creating Quotes =
+To create quotes enclose the code in a *[* *]* pair. After closing the quote with *]*, a reference to the quote is left on the stack or compiled into the parent quote. An example follows. 
+
+{{{
+  [ 0 100 [ dup . 1 + ] iterate drop ]
+}}}
+
+Names can be given to quotes via *is* and *is-macro*. Most named quotes will be created via *is*. The *is-macro* form creates quotes that act as compiler macros. See WordClasses for further details.
+
+Consider the earlier example: 
+
+{{{
+  [ 0 100 [ dup . 1 + ] iterate drop ] is count-to-100
+}}}
+
+This adds a name (*count-to-100*) refering to this quote to the dictionary. This is called a _word_. Now take a look at *is-macro*: 
+
+{{{
+ [ char: " parse type ] is-macro ."
+ [ ." inside a def" 1 2 + . ." still inside" ] is foo
+ foo
+}}}
+
+As can be seen, the macro is executed during compilation, but is not part of the resulting word. Macros can lay down code however.
+
+= Working With Quotes =
+
+Quotes are also used for loops and conditional execution. Examples of each of these follow.
+
+== Loops ==
+
+{{{
+  #! Loop 10 times, displaying the loop index (returned by i) each time.
+  10 [ i . ] iterate cr
+
+  #! A word that will drop all values on the stack, emptying it.
+  [ depth [ drop ] iterate ] is reset
+}}}
+
+== Conditionals ==
+
+{{{
+  #! Only execute the quote if TOS is equal to 100
+  #! There are other ways to handle conditional execution as well, including false? and t/f
+  [ 100 = [ s" Yes!" type cr ] true? ]
+}}}
+
+== Decompiling ==
+{{{
+  #! The decompiler is called :see
+  [ 1 2 + . ] :see
+
+  #! \ returns a quote that can be viewed with :see
+  [ 1 2 + . ] is 3.
+  \ 3. :see
+}}}
