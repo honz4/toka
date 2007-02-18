@@ -1,5 +1,4 @@
 #! /usr/bin/toka
-needs files
 
 [ s" ./cat.toka filename [...]" type cr ] is usage
 [ #args 0 > [ TRUE ] [ FALSE ] t/f ] is check
