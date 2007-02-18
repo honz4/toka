@@ -55,8 +55,6 @@ tests:
 docs:
 	cd source && ../scripts/tokadoc
 	cd source && mv FUNCTIONS GLOSSARY ../doc
-	cd doc && ./generate html toka.rdml toka.html
-	cd doc && ./generate text toka.rdml toka.txt
 # ==============================================
 clean:
 	rm -f `find . | grep \~ `
