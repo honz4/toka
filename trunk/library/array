@@ -1,0 +1,6 @@
+[ malloc is-data ] is array
+[ swap cell-size * + @ ] is get-element
+[ swap cell-size * + ! ] is put-element
+[ swap char-size * + @ ] is get-char-element
+[ swap char-size * + ! ] is put-char-element
+
