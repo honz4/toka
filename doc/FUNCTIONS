@@ -55,10 +55,6 @@ Variables:
   char *arg_list[12]
   Holds the list of command line arguments. 
 
-get_arg()
-Return a pointer to a requested argument. This is
-zero based.
-
 num_args()
 Return the number of arguments, not including the
 file names used to launch this program.
