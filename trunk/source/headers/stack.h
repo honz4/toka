@@ -1,10 +1,3 @@
-/******************************************************
- * Toka                                       Prototype
- *
- * THIS IS NOT PRODUCTION QUALITY AND WILL LIKELY
- * CONTAIN NUMEROUS BUGS. USE AT YOUR OWN RISK.
- ******************************************************/
-
 #define TOS stack[sp]
 #define NOS stack[sp-1]
 #define TORS rstack[rsp]

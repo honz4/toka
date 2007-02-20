@@ -63,6 +63,10 @@ num_args()
 Return the number of arguments, not including the
 file names used to launch this program.
 
+get_arg_list()
+Return the number of arguments, not including the
+file names used to launch this program.
+
 build_arg_list(char *args[], long count)
 Copy pointers to the command line arguments to
 arg_list[]. Also sets arg_count.
@@ -127,6 +131,12 @@ Copies 'count' bytes from 'source' to 'dest'. The
 stack form for this is:
   source dest count
 The memory locations can overlap.
+
+cell_size()
+Push the size of a cell to the stack.
+
+char_size()
+Push the size of a char to the stack
 
 
 FILE: debug.c

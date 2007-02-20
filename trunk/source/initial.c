@@ -34,7 +34,7 @@ void build_dictionary()
 
   /* cmdline.c */
   add_entry("#args",     &num_args,      &forth_class);
-  add_entry("get-arg",   &get_arg,       &forth_class);
+  add_entry("arglist",   &get_arg_list,  &forth_class);
 
   /* conditionals.c */
   add_entry("<",         &less_than,     &forth_class);
@@ -55,6 +55,8 @@ void build_dictionary()
   add_entry("c!",        &store_char,    &forth_class);
   add_entry("#",         &make_literal,  &forth_class);
   add_entry("copy",      &copy,          &forth_class);
+  add_entry("cell-size", &cell_size,     &forth_class);
+  add_entry("char-size", &char_size,     &forth_class);
 
   /* debug.c */
   add_entry(":words",    &words,         &forth_class);

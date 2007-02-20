@@ -1,17 +1,6 @@
 [ 10 parse drop ] is #!
 
 #! ---------------------------------------
-#! Potentially Architecture Dependent 
-#! Settings
-#!
-#! These seem to be ok for all systems I
-#! have tested on. (x86, x86-64, MIPS)
-#! ---------------------------------------
-[ 1 ] is char-size
-[ 8 ] is cell-size
-
-
-#! ---------------------------------------
 #! Constants for various ASCII values
 #! ---------------------------------------
 [ 32 ] is SPACE
@@ -26,20 +15,6 @@
 #! ---------------------------------------
 [ SPACE parse ] is wsparse
 [ CR parse ] is lnparse
-
-
-#! ---------------------------------------
-#! Constants for file operations
-#! ---------------------------------------
-[ 1 ] is "R"
-[ 2 ] is "R+"
-[ 3 ] is "W"
-[ 4 ] is "W+"
-[ 5 ] is "A"
-[ 6 ] is "A+"
-[ 1 ] is START
-[ 2 ] is CURRENT
-[ 3 ] is END
 
 
 #! ---------------------------------------
@@ -138,11 +113,31 @@
 #! ---------------------------------------
 #! File I/O
 #! ---------------------------------------
+[ 1 ] is "R"
+[ 2 ] is "R+"
+[ 3 ] is "W"
+[ 4 ] is "W+"
+[ 5 ] is "A"
+[ 6 ] is "A+"
+[ 1 ] is START
+[ 2 ] is CURRENT
+[ 3 ] is END
+
 [ "R" file.open dup dup
   file.size 1 + dup malloc dup >r swap
   file.read drop 
   file.close r>
 ] is file.slurp
+
+
+#! ---------------------------------------
+#! Arrays
+#! ---------------------------------------
+[ malloc is ] is is-array
+[ swap cell-size * + @ ] is get-element
+[ swap cell-size * + ! ] is put-element
+[ swap char-size * + @ ] is get-char-element
+[ swap char-size * + ! ] is put-char-element
 
 
 #! ---------------------------------------
@@ -159,3 +154,4 @@
   s"              or data structure, return the name in a new quote." type cr
   cr
 ] is :help
+

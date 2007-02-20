@@ -116,3 +116,29 @@ void copy()
   source = (long *)TOS; DROP;
   memmove(dest, source, count);
 }
+
+
+/******************************************************
+ *|G| cell-size ( -n )     Return the size of a cell
+ *
+ *|F| cell_size()
+ *|F| Push the size of a cell to the stack.
+ *|F|
+ ******************************************************/
+void cell_size()
+{
+  push((long)sizeof(long));
+}
+
+
+/******************************************************
+ *|G| char-size ( -n )     Return the size of a char
+ *
+ *|F| char_size()
+ *|F| Push the size of a char to the stack
+ *|F|
+ ******************************************************/
+void char_size()
+{
+  push((long)sizeof(char));
+}

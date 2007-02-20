@@ -33,23 +33,6 @@ char *arg_list[12];
 
 
 /******************************************************
- *|G| get-arg  ( n-a )     Return a pointer to the 
- *|G|                      requested argument.
- *
- *|F| get_arg()
- *|F| Return a pointer to a requested argument. This is
- *|F| zero based.
- *|F|
- ******************************************************/
-void get_arg()
-{
-  long arg = TOS; DROP;
-  arg--;
-  push((long)arg_list[arg]);
-}
-
-
-/******************************************************
  *|G| #args    (  -n )     Return the number of arguments
  *
  *|F| num_args()
@@ -60,6 +43,21 @@ void get_arg()
 void num_args()
 {
   push(arg_count);
+}
+
+
+/******************************************************
+ *|G| arglist  (  -a )     Return a pointer to the 
+ *|G|                      argument list.
+ *
+ *|F| get_arg_list()
+ *|F| Return the number of arguments, not including the
+ *|F| file names used to launch this program.
+ *|F|
+ ******************************************************/
+void get_arg_list()
+{
+  push((long)&arg_list);
 }
 
 
@@ -75,7 +73,7 @@ void build_arg_list(char *args[], long count)
   if(count >= 2)
   {
     for(a = 0; a < count; a++)
-       arg_list[a] = args[a+2];
+       arg_list[a] = args[a+1];
     arg_count = count - 2;
   }
   else
