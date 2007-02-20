@@ -3,8 +3,6 @@
 and      ( ab-c )    Perform a bitwise AND
 or       ( ab-c )    Perform a bitwise OR
 xor      ( ab-c )    Perform a bitwise XOR
-get-arg  ( n-a )     Return a pointer to the 
-                     requested argument.
 #args    (  -n )     Return the number of arguments
 arglist  (  -a )     Return a pointer to the 
                      argument list.
