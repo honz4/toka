@@ -5,4 +5,4 @@ from libc.so.6
 
 [ s" rm.toka filename [...]" type cr ] is usage
 [ #args 0 > [ TRUE ] [ FALSE ] t/f ] is check
-[ check [ #args [ i get-arg remove drop ] iterate ] [ usage ] t/f bye ] invoke
+[ check [ #args [ i arglist get-element remove drop ] iterate ] [ usage ] t/f bye ] invoke

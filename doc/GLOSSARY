@@ -6,6 +6,8 @@ xor      ( ab-c )    Perform a bitwise XOR
 get-arg  ( n-a )     Return a pointer to the 
                      requested argument.
 #args    (  -n )     Return the number of arguments
+arglist  (  -a )     Return a pointer to the 
+                     argument list.
 <        ( ab-f )    Compare 'a' and 'b', return
                      a flag
 >        ( ab-f )    Compare 'a' and 'b', return
@@ -31,6 +33,8 @@ c!        ( na- )    Store byte 'n' to memory
                      location 'a'
 copy     ( sdc- )    Copy 'c' bytes from 's' to
                      'd'
+cell-size ( -n )     Return the size of a cell
+char-size ( -n )     Return the size of a char
 :words   ( - )       Display a list of all named
                      quotes and data
 :stack   ( - )       Display all values on the

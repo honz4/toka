@@ -1,10 +1,3 @@
-/******************************************************
- * Toka                                       Prototype
- *
- * THIS IS NOT PRODUCTION QUALITY AND WILL LIKELY
- * CONTAIN NUMEROUS BUGS. USE AT YOUR OWN RISK.
- ******************************************************/
-
 void forth_class();
 void macro_class();
 void self_class();
