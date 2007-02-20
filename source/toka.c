@@ -19,7 +19,7 @@
  * USES gc initial interpret math parser quotes
  * USES stack vm
  *
- * LIBS dl
+ * LINUX_LIBS dl
  ******************************************************/
 
 #include <stdio.h>
