@@ -133,7 +133,7 @@
 #! ---------------------------------------
 #! Arrays
 #! ---------------------------------------
-[ malloc is ] is is-array
+[ malloc is-data ] is is-array
 [ swap cell-size * + @ ] is get-element
 [ swap cell-size * + ! ] is put-element
 [ swap char-size * + @ ] is get-char-element
