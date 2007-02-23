@@ -31,6 +31,9 @@ If compiling, compile a call to lit() and then
 inline TOS into the following location. Otherwise
 leave TOS alone.
 
+quote_super_class()
+Always invoke the quote.
+
 quote_class()
 Handler for quotes; this takes two cells, one
 which is a call to this function, the other is
@@ -182,6 +185,11 @@ name_quote()
 Attach a name (from the input stream) to the 
 specified quote address. This word is given the
 semantics of quote_forth_class().
+
+name_super()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_super_class().
 
 name_quote_macro()
 Attach a name (from the input stream) to the 
