@@ -84,6 +84,20 @@ void name_quote()
 }
 
 
+/******************************************************
+ *|G| is-super ( a"- )     Attach a name to a quote
+ *
+ *|F| name_super()
+ *|F| Attach a name (from the input stream) to the 
+ *|F| specified quote address. This word is given the
+ *|F| semantics of quote_super_class().
+ *|F|
+ ******************************************************/
+void name_super()
+{
+  name_attach(&quote_super_class);
+}
+
 
 /******************************************************
  *|G| is-macro ( a"- )     Attach a name to a quote

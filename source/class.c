@@ -63,6 +63,17 @@ void data_class()
 
 
 /******************************************************
+ *|F| quote_super_class()
+ *|F| Always invoke the quote.
+ *|F|
+ ******************************************************/
+void quote_super_class()
+{
+  invoke();
+}
+
+
+/******************************************************
  *|F| quote_class()
  *|F| Handler for quotes; this takes two cells, one
  *|F| which is a call to this function, the other is

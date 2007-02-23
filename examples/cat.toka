@@ -1,5 +1,5 @@
 #! /usr/bin/toka
 
-[ s" ./cat.toka filename [...]" type cr ] is usage
+[ " ./cat.toka filename [...]" type cr ] is usage
 [ #args 0 > [ TRUE ] [ FALSE ] t/f ] is check
 [ check [ #args [ i arglist get-element file.slurp type cr ] iterate ] [ usage ] t/f bye ] invoke
