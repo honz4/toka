@@ -10,7 +10,7 @@ needs scope
   [ start time drop
     invoke
     end time drop
-    end @ start @ - . s" seconds elapsed" type cr
+    end @ start @ - . " seconds elapsed" type cr
   ]
 } is :time
 

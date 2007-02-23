@@ -69,6 +69,7 @@ void build_dictionary()
   /* dictionary.c */
   add_entry("\\",        &return_quote,  &forth_class);
   add_entry("is",        &name_quote,    &forth_class);
+  add_entry("is-super",  &name_super,    &forth_class);
   add_entry("is-macro",  &name_macro,    &forth_class);
   add_entry("is-data",   &name_data,     &forth_class);
   add_entry("last",      &last,          &data_class);
