@@ -46,6 +46,7 @@ char-size ( -n )     Return the size of a char
                      the garbage collection list
 :see     (  "- )     Decompile the specified quote
 is       ( a"- )     Attach a name to a quote
+is-super ( a"- )     Attach a name to a quote
 is-macro ( a"- )     Attach a name to a quote
 is-data  ( a"- )     Attach a name to data memory
 \        ( "-a )     Return a quote corresponding
