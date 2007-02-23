@@ -68,7 +68,5 @@ tclean:
 install:
 	cp toka /usr/bin
 	mkdir -p /usr/share/toka
-	mkdir -p /usr/share/toka/library
 	cp bootstrap.toka /usr/share/toka
-	cp -r library/* /usr/share/toka/library
 # ==============================================
