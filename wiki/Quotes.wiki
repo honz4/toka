@@ -10,7 +10,7 @@ When first created a quote is anonymous; however a name and action can be associ
 To create quotes enclose the code in a *[* *]* pair. After closing the quote with *]*, a reference to the quote is left on the stack or compiled into the parent quote. An example follows. 
 
 {{{
-  [ 0 100 [ dup . 1 + ] iterate drop ]
+  [ 1 100 [ dup . 1 + ] iterate drop ]
 }}}
 
 Names can be given to quotes via *is* and *is-macro*. Most named quotes will be created via *is*. The *is-macro* form creates quotes that act as compiler macros. See WordClasses for further details.
@@ -18,7 +18,7 @@ Names can be given to quotes via *is* and *is-macro*. Most named quotes will be 
 Consider the earlier example: 
 
 {{{
-  [ 0 100 [ dup . 1 + ] iterate drop ] is count-to-100
+  [ 1 100 [ dup . 1 + ] iterate drop ] is count-to-100
 }}}
 
 This adds a name (*count-to-100*) refering to this quote to the dictionary. This is called a _word_. Now take a look at *is-macro*: 
