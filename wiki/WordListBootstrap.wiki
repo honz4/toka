@@ -2,13 +2,16 @@
 
 This is a list of words provided by the standard Toka bootstrap. You may also want to look at WordListPrimitives for the core words used to build these.
 
+== Arrays ==
+|| put-char-element || nia- || Store a character (/n/) into array /a/ at index /i/. ||
+|| get-char-element || ia-n || Read a character (/n/) from array /a/ at index /i/. ||
+|| put-element || nia- || Store a value (/n/) into array /a/ at index /i/. ||
+|| get-element || ia-n || Read a value from array /a/ at index /i/. ||
+|| is-array || n"- || Create a new array of /n/ size. ||
+
+
+== Files ==
 {{{
-:help
-put-char-element
-get-char-element
-put-element
-get-element
-is-array
 file.slurp
 END
 CURRENT
@@ -19,12 +22,43 @@ START
 "W"
 "R+"
 "R" 
-later 
+}}}
+
+== Stack ==
+{{{
+reset 
+2drop 
+2dup 
+tuck 
+over 
+-rot 
+rot 
+nip 
 r@ 
-false? 
-true? 
-TRUE 
-FALSE 
+}}}
+
+== Math ==
+{{{
+not 
+mod 
+/ 
+negate 
+1- 
+1+ 
+}}}
+
+== Conditionals ==
+{{{
+false?
+true?
+TRUE
+FALSE
+}}}
+
+== Unsorted ==
+{{{
+:help
+later 
 octal 
 binary 
 decimal 
@@ -41,20 +75,6 @@ cells
 char- 
 char+ 
 chars 
-not 
-mod 
-/ 
-negate 
-1- 
-1+ 
-reset 
-2drop 
-2dup 
-tuck 
-over 
--rot 
-rot 
-nip 
 clear 
 ^esc 
 t: 
