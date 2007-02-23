@@ -1,5 +1,7 @@
 #summary A list of all primitives and initial data elements.
 
+This list is also in doc/GLOSSARY and is rebuilt by TokaDoc before checkins to the SVN repository are done. When in doubt, check your local copy first as it may be slightly more up to date. Also see WordListBootstrap for the other words and data structures that are provided by the core Toka language.
+
 {{{
 <<       ( ab-c )    Shift 'b' left by 'a' bits
 >>       ( ab-c )    Shift 'b' right by 'a' bits
