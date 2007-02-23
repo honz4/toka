@@ -79,6 +79,7 @@ void stack_to_r()
  *
  *|F| stack_from_r()
  *|F| Pop TORS to the data stack
+ *|F|
  ******************************************************/
 void stack_from_r()
 {

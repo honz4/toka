@@ -480,6 +480,7 @@ Push TOS to return stack, DROP TOS
 
 stack_from_r()
 Pop TORS to the data stack
+
 stack_depth()
 Return the number of items on the stack
 
