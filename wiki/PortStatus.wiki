@@ -14,7 +14,8 @@ Toka was intended to be easily portable across a wide variety of systems. This p
  * FreeBSD
  * OpenBSD
  * DragonFly BSD
- * Windows XP, Vista 
+ * Windows XP, Vista (via Cygwin)
+ * BeOS
 
 == amd64 ==
 
