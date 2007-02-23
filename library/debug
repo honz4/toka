@@ -1,8 +1,0 @@
-#! Some additions to make the debugging words a bit nicer.
-#! Some of this is just adding new names which are closer to those
-#! used in traditional Forths.
-
-[ \ :see ] is see
-\ :stack is .s
-\ :words is words
-\ \ is '
