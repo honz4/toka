@@ -48,14 +48,26 @@ int main(int argv, char *argc[])
 {
   FILE *file;
 
+  char *homedir = (char *)getenv ("HOME");
+  char *personal = "/.toka";
+  char *custom;
+
   build_dictionary();
   build_arg_list(argc, (long)argv);
 
   isp = 0;
   input[isp] = stdin;
 
-  if(argv >= 2)
+  if (argv >= 2)
     include_file(argc[1]);
+
+  if (homedir)
+  {
+    custom = gc_alloc(strlen(homedir) + strlen(personal) + 1, sizeof(char), GC_TEMP);
+    strcpy(custom, homedir);
+    strcat(custom, personal);
+    include_file(custom);
+  }
 
   include_file(BOOTSTRAP);
   
