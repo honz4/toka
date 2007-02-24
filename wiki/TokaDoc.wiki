@@ -1,0 +1,52 @@
+#summary Describes the TokaDoc scripts
+#labels Phase-Implementation
+
+= Introduction =
+
+To help keep an up-to-date list of C functions and their Toka equivilents, the !TokaDoc scripts were developed. These seach C sources for specially formatted comments and extract them into various files. These files will be updated by /make docs/
+
+= Supporting !TokaDoc =
+
+At the start of each C file, have a comment header like this:
+
+{{{
+ /*
+  *|F|
+  *|F| FILE: filename
+  *|F|
+  */
+}}}
+
+
+Before any global variables, have a comment block like this:
+
+{{{
+/*
+ *|F| Variables:
+ *|F|   GCITEM gc_list[128]
+ *|F|   Holds the list of items marked as garbage.
+ *|F|
+ */
+}}}
+
+
+Before each function have a comment block like this:
+
+{{{
+ /*
+  *|F| <return type> functioname(<arguments>)
+  *|F| description of the function
+  *|F|
+  */
+}}}
+
+
+And for any functions having a Toka equivilent, have a block like:
+
+{{{
+ /*
+  *|G| wordname    stack-effect    description
+  */
+}}}
+
+Please try to keep columns lined up as much as possible for Toka wordlist comments.
