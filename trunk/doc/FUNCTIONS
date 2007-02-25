@@ -400,13 +400,13 @@ Attempt to open a file ("s") and add it to the
 top of the input stack.
 
 include()
-Parse for a file name, attempt to open it, and
-add it to the input stream if successful.
+Take a filename off the stack, attempt to open
+it and add it to the input stream if successful.
 
 needs()
-Parse for a file name, attempt to open it from
-the library, and add it to the input stream if 
-successful.
+Take a filename off the stack. Attempt to open it
+from the library, and add it to the input stream 
+if successful.
 
 
 FILE: quotes.c
