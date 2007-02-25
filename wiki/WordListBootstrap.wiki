@@ -57,41 +57,5 @@ FALSE
 
 == Unsorted ==
 {{{
-:help
-later 
-octal 
-binary 
-decimal 
-hex 
-variable 
-toggle 
-off 
-on 
--! 
-+! 
-cell- 
-cell+ 
-cells 
-char- 
-char+ 
-chars 
-clear 
-^esc 
-t: 
-tab 
-space 
-cr 
-s" 
-" 
-char: 
-char 
->char 
-lnparse 
-wsparse 
-TAB 
-ESC 
-LF 
-CR 
-SPACE 
-#! 
+:help needs include later octal binary decimal hex variable toggle off on -! +! cell- cell+ cells char- char+ chars clear ^esc t: tab space cr >char lnparse wsparse TAB ESC LF CR SPACE #! 
 }}}
