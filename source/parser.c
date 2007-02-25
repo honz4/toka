@@ -176,34 +176,32 @@ void include_file(char *s)
 
 
 /******************************************************
- *|G| include  ( "- )      Attempt to open a file and
+ *|G| :include  ( $- )     Attempt to open a file and
  *|G|                      add it to the input stack.
  *
  *|F| include()
- *|F| Parse for a file name, attempt to open it, and
- *|F| add it to the input stream if successful.
+ *|F| Take a filename off the stack, attempt to open
+ *|F| it and add it to the input stream if successful.
  *|F|
  ******************************************************/
 void include()
 {
   char *s;
-  s = gc_alloc(256, sizeof(char), GC_TEMP);
-
-  get_token(s, 256); DROP;
+  s = (char *)TOS; DROP;
   include_file(s);
 }
 
 
 
 /******************************************************
- *|G| needs    ( "- )      Attempt to include a file
+ *|G| :needs    ( $- )     Attempt to include a file
  *|G|                      from the library (normally
  *|G|                      /usr/share/toka/library)
  *
  *|F| needs()
- *|F| Parse for a file name, attempt to open it from
- *|F| the library, and add it to the input stream if 
- *|F| successful.
+ *|F| Take a filename off the stack. Attempt to open it
+ *|F| from the library, and add it to the input stream 
+ *|F| if successful.
  *|F|
  ******************************************************/
 void needs()
@@ -211,11 +209,10 @@ void needs()
   char *s;
   char *d;
 
-  s = gc_alloc(256, sizeof(char), GC_TEMP);
   d = gc_alloc(384, sizeof(char), GC_TEMP);
 
   strcpy(d, LIBRARY);
-  get_token(s, 256); DROP;
+  s = (char *)TOS; DROP;
   strcat(d, s);
 
   include_file(d);
