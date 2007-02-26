@@ -11,18 +11,16 @@ This is a list of words provided by the standard Toka bootstrap. You may also wa
 
 
 == Files ==
-{{{
-file.slurp
-END
-CURRENT
-START
-"A+"
-"A"
-"W+"
-"W"
-"R+"
-"R" 
-}}}
+|| file.slurp || $-a || Open a file (name passed by _$_) and read it into a dynamically allocated buffer (_a_). The file is then closed. ||
+|| "R" || -n || Open text file for reading. The stream is positioned at the beginning of the file. ||
+|| "R+" || -n || Open for reading and writing. The stream is positioned at the beginning of the file. ||
+|| "W" || -n || Open for reading and writing. The stream is positioned at the beginning of the file. ||
+|| "W+" || -n || Open for reading and writing. The file is created if it does not exist, otherwise it is truncated. The stream is positioned at the beginning of the file. ||
+|| "A" || -n || Open for appending (writing at end of file). The file is created if it does not exist. The stream is positioned at the end of the file. ||
+|| "A+" || -n || Open for reading and appending (writing at end of file). The file is created if it does not exist. The initial file position for reading is at the beginning of the file, but output is always appended to the end of the file. ||
+|| START || -n || For use with _file.setpos_. Seek from beginning of a file. ||
+|| CURRENT || -n || For use with _file.setpos_. Seek from current offset in a file. ||
+|| END || -n || For use with _file.setpos_. Seek from end of a file. || 
 
 == Stack ==
 {{{
