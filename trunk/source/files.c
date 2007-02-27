@@ -57,7 +57,7 @@ void file_open()
     case APLUS: f = fopen(s, "a+");
                 break;
   }
-  if(!f)
+  if (!f)
     push(0);
   else
     push((long)f);
@@ -141,7 +141,7 @@ void file_size()
 
   f = (FILE *)TOS; DROP;
 
-  if(fstat(fileno(f), &this) != 0)
+  if (fstat(fileno(f), &this) != 0)
     push(0);
   else
     push((long)this.st_size);

@@ -47,7 +47,7 @@ void words()
   printf("Primitives:\n");
   for(a = last-1; a >= 0; a--)
   {
-    if(dictionary[a].class == &forth_class || dictionary[a].class == &self_class)
+    if (dictionary[a].class == &forth_class || dictionary[a].class == &self_class)
     {
       printf("%s ", dictionary[a].name);
       primitives++;
@@ -57,7 +57,7 @@ void words()
   printf("\n\nQuotes:\n");
   for(a = last-1; a >= 0; a--)
   {
-    if(dictionary[a].class == &quote_forth_class || dictionary[a].class == &quote_macro_class)
+    if (dictionary[a].class == &quote_forth_class || dictionary[a].class == &quote_macro_class)
     {
       printf("%s ", dictionary[a].name);
       quotes++;
@@ -67,7 +67,7 @@ void words()
   printf("\n\nData:\n");
   for(a = last-1; a >= 0; a--)
   {
-    if(dictionary[a].class == &data_class)
+    if (dictionary[a].class == &data_class)
     {
       printf("%s ", dictionary[a].name);
       data++;

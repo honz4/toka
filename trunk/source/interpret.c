@@ -108,14 +108,14 @@ void interpret()
     get_token(scratch, 32);
     find_word();
     flag = TOS; DROP;
-    if(flag == 0)
+    if (flag == 0)
     {
-      if(strlen(scratch) != 0)
+      if (strlen(scratch) != 0)
       {
         push((long)scratch);
         to_number();
         a = TOS; DROP;
-        if(a == -1)
+        if (a == -1)
           data_class();
         else
           notfound();

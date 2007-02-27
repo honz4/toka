@@ -67,14 +67,14 @@ void to_number()
   t = s;
   flag = -1;
 
-  if(*t == '-')
+  if (*t == '-')
     *t++;
 
   for(; *t; *t++)
   {
-     if(base <= 10)
+     if (base <= 10)
      {
-       if(!isdigit(*t))
+       if (!isdigit(*t))
        {
          flag = 0;
          break;
@@ -82,7 +82,7 @@ void to_number()
      }
      else 
      {
-       if(!isxdigit(*t))
+       if (!isxdigit(*t))
        {
          flag = 0;
          break;
@@ -90,7 +90,7 @@ void to_number()
      }
   }
 
-  if(flag == -1)
+  if (flag == -1)
     push(strtol(s, (char **)NULL, base));
   else
      push((long)s);
@@ -139,15 +139,15 @@ void get_token(char *s, long delim)
 
   while (1)
   {
-    if((c = getc(input[isp])) == EOF)
+    if ((c = getc(input[isp])) == EOF)
     {
       fclose(input[isp]);
       isp--;
       break;
     }
-    if(c == 10 || c == 13 || c == delim)
+    if (c == 10 || c == 13 || c == delim)
       break;
-    if(c >= 32)
+    if (c >= 32)
       *t++ = (char)c;
   }
   *t++ = 0;
@@ -166,7 +166,7 @@ void include_file(char *s)
 {
   FILE *file;
   file = fopen(s, "r");
-  if(file)
+  if (file)
   {
     isp++;
     input[isp] = file;

@@ -27,7 +27,7 @@ extern Inst *heap;
 void forth_class()
 {
   Inst xt = (Inst)TOS; DROP;
-  if(compiler == ON)
+  if (compiler == ON)
     *heap++ = xt;
   else
     ((xt)());
@@ -55,7 +55,7 @@ void self_class()
  ******************************************************/
 void data_class()
 {
-  if(compiler == ON) {
+  if (compiler == ON) {
     *heap++ = (Inst)&lit;
     *heap++ = (Inst)TOS; DROP;
   }
@@ -95,7 +95,7 @@ void quote_class()
  ******************************************************/
 void quote_macro_class()
 {
-  if(compiler == ON)
+  if (compiler == ON)
     invoke();
   else
     DROP;
@@ -111,7 +111,7 @@ void quote_macro_class()
  ******************************************************/
 void quote_forth_class()
 {
-  if(compiler == ON)
+  if (compiler == ON)
   {
     *heap++ = &quote_class;
     *heap++ = (Inst)TOS; DROP;

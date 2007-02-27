@@ -73,7 +73,7 @@ void begin_quote()
   heap = gc_alloc(64, sizeof(Inst), GC_MEM);
   push((long)heap);
 
-  if(qdepth == 1)
+  if (qdepth == 1)
     top = (Inst)heap;
   compiler = ON;
 }
@@ -93,7 +93,7 @@ void end_quote()
   qdepth--;
   heap = (Inst *)quotes[qdepth].heap;
   compiler = quotes[qdepth].compiler;
-  if(compiler == ON)
+  if (compiler == ON)
   {
     *heap++ = (Inst)&qlit;
     *heap++ = (Inst)TOS; DROP;
@@ -174,7 +174,7 @@ void truefalse()
   true = (Inst)TOS; DROP;
   flag = TOS; DROP;
 
-  if(flag == -1)
+  if (flag == -1)
     push((long)true);
   else
     push((long)false);
