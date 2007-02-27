@@ -47,7 +47,7 @@ void ffi_invoke()
   args = TOS; DROP;
   xt = (Func)TOS; DROP;
 
-  if(a != 0)
+  if (a != 0)
   {
     for(a = args; a > 0; a--)
     {
@@ -87,7 +87,7 @@ void ffi_from()
   get_token(scratch, 32);
   library = dlopen((char *)TOS, RTLD_LAZY);
   DROP;
-  if(library == NULL)
+  if (library == NULL)
     printf("ffi: Unable to open %s\n", scratch);
 }
 
@@ -110,7 +110,7 @@ void ffi_import()
   scratch = gc_alloc(256, sizeof(char), GC_TEMP);
   get_token(scratch, 32); DROP;
   xt = (long)dlsym(library, scratch);
-  if(xt != (long)NULL)
+  if (xt != (long)NULL)
   {
     begin_quote();
       push(xt);

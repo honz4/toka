@@ -32,7 +32,7 @@ long resolve_name(Inst xt)
   long flag = 0, a;
   for(a = last-1; a >= 0; a--)
   {
-     if(dictionary[a].xt == xt && flag == 0)
+     if (dictionary[a].xt == xt && flag == 0)
      {
        printf("%s ", dictionary[a].name);
        flag = -1;
@@ -57,25 +57,25 @@ void decompile(Inst *xt)
   while(1) {
     this = (Inst)*xt++;
     resolve_name(this);
-    if(this == (Inst)0)
+    if (this == (Inst)0)
     {
       printf("] ");
       return;
     }
-    if(this == &lit)
+    if (this == &lit)
     {
       this = (Inst)*xt++;
-      if(resolve_name(this) == 0)
+      if (resolve_name(this) == 0)
         printf("%li ", (long)this);
     }
-    if(this == &qlit)
+    if (this == &qlit)
     {
       this = (Inst)*xt++;
       decompile((Inst *)this);
     }
-    if(this == &quote_class)
+    if (this == &quote_class)
       resolve_name((Inst)*xt++);
-    if(this == &ffi_invoke)
+    if (this == &ffi_invoke)
       printf("<ffi> ");
   }
 }

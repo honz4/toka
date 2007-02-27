@@ -68,16 +68,16 @@ void *gc_alloc(long items, long size, long type)
 {
   void *memory;
 
-  if(gc_depth == 127 || gc_tdepth == 127)
+  if (gc_depth == 127 || gc_tdepth == 127)
     gc();
 
   memory  = calloc((int)items, (int)size);
 
-  if(memory == NULL)
+  if (memory == NULL)
   {
     gc();
     memory = calloc((int)items, (int)size);
-    if(memory == NULL)
+    if (memory == NULL)
     {
       printf("gc: out of memory; aborting.\n");
       exit(1);
@@ -86,7 +86,7 @@ void *gc_alloc(long items, long size, long type)
 
   memset(memory, 0, size * items);
 
-  if(type == GC_MEM)
+  if (type == GC_MEM)
   {
     gc_list[gc_depth].xt = (Inst)memory;
     gc_list[gc_depth].size = size * items;
@@ -127,11 +127,11 @@ void gc_keep()
 
   for(a = 0; a != gc_depth; a++)
   {
-    if(gc_list[a].xt == item)
+    if (gc_list[a].xt == item)
       which = a;
   }
 
-  if(which != -1)
+  if (which != -1)
   {
     for(a = gc_depth; a > which; a--)
       gc_depth--;
@@ -154,7 +154,7 @@ void gc()
   long a, b;
 
   /* Allocations known to be temporary */
-  if(gc_tdepth < 64)
+  if (gc_tdepth < 64)
     b = gc_tdepth;
   else
     b = 64;
@@ -167,7 +167,7 @@ void gc()
     gc_objects--;
   }
 
-  if(b != gc_tdepth)
+  if (b != gc_tdepth)
   {
     for(a = 0; a != gc_tdepth; a++)
     {
@@ -180,7 +180,7 @@ void gc()
 
 
   /* General Allocations  */
-  if(gc_depth < 32)
+  if (gc_depth < 32)
     b = gc_depth;
   else
     b = 32;
@@ -193,7 +193,7 @@ void gc()
     gc_objects--;
   }
 
-  if(b != gc_depth)
+  if (b != gc_depth)
   {
     for(a = 0; a != gc_depth; a++)
     {

@@ -70,7 +70,7 @@ void get_arg_list()
 void build_arg_list(char *args[], long count)
 {
   long a;
-  if(count >= 2)
+  if (count >= 2)
   {
     for(a = 0; a < count; a++)
        arg_list[a] = args[a+1];

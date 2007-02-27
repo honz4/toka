@@ -62,12 +62,12 @@ void vm_run(Inst prog[])
  ******************************************************/
 void vm_stack_check()
 {
-  if(sp < 0 || sp > 127)
+  if (sp < 0 || sp > 127)
   {
     printf("vm: stack problem (sp=%li); aborting!\n", sp);
     exit(1);
   }
-  if(rsp < 0 || rsp > 1023)
+  if (rsp < 0 || rsp > 1023)
   {
     printf("vm: return stack problem (rsp=%li); aborting!\n", rsp);
     exit(1);
