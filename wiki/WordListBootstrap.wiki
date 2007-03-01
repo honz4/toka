@@ -22,38 +22,40 @@ This is a list of words provided by the standard Toka bootstrap. You may also wa
 || CURRENT || -n || For use with _file.setpos_. Seek from current offset in a file. ||
 || END || -n || For use with _file.setpos_. Seek from end of a file. || 
 
+
 == Stack ==
-{{{
-reset 
-2drop 
-2dup 
-tuck 
-over 
--rot 
-rot 
-nip 
-r@ 
-}}}
+|| reset || ...- || || 
+|| 2drop || nn- || || 
+|| 2dup || xy-xyxy || || 
+|| tuck || xy-yxy || || 
+|| over || xy-xyx || || 
+|| -rot || || || 
+|| rot || || || 
+|| nip || xy-y || || 
+|| r@ || || || 
+
 
 == Math ==
-{{{
-not 
-mod 
-/ 
-negate 
-1- 
-1+ 
-}}}
+|| not || x-y || ||
+|| mod || xy-z || ||
+|| / || xy-z || ||
+|| negate || x-y || ||
+|| 1- || x-y || ||
+|| 1+ || x-y || ||
+|| */ || abc-d || ||
+
 
 == Conditionals ==
-{{{
-false?
-true?
-TRUE
-FALSE
-}}}
+|| false? || nq- || || 
+|| true? || nq- || || 
+|| TRUE || -n || || 
+|| FALSE || -n || || 
+
 
 == Unsorted ==
 {{{
-:help needs include later octal binary decimal hex variable toggle off on -! +! cell- cell+ cells char- char+ chars clear ^esc t: tab space cr >char lnparse wsparse TAB ESC LF CR SPACE #! 
+:help needs include later octal binary decimal hex 
+variable toggle off on -! +! cell- cell+ cells 
+char- char+ chars clear ^esc t: tab space cr >char 
+lnparse wsparse TAB ESC LF CR SPACE #! 
 }}}
