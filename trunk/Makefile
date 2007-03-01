@@ -2,7 +2,7 @@
 # You may want to override CFLAGS to optimize
 # further or include debugging information.
 # ==============================================
-CFLAGS = -O3 -s
+CFLAGS = -O2 -s
 CC = gcc
 # ==============================================
 FILES = bits.c \
