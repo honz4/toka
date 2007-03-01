@@ -119,6 +119,7 @@ void ffi_import()
       make_literal();
       *heap++ = &ffi_invoke;
     end_quote();
+    gc_keep();
     add_entry(scratch, (void *)TOS, &quote_forth_class);
     DROP;
   }
