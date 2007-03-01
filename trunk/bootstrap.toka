@@ -79,6 +79,7 @@
 [ /mod nip ] is /
 [ /mod drop ] is mod
 [ -1 xor ] is not
+[ swap >r / r> * ] is */
 
 
 #! ---------------------------------------
