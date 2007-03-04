@@ -69,4 +69,5 @@ install:
 	cp toka /usr/bin
 	mkdir -p /usr/share/toka
 	cp bootstrap.toka /usr/share/toka
+	chmod +x examples/*
 # ==============================================
