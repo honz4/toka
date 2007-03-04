@@ -337,7 +337,9 @@ Variables:
 
 count()
 Perform strlen() on the string passed on TOS. This
-returns the string and the count on the stack.
+returns the string and the count on the stack. The
+count is increased by 1 to include the trailing 
+ASCII 0.
 
 notfound()
 Display an error message if a word was not found

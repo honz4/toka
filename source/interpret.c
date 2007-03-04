@@ -62,13 +62,15 @@ char *tib;
  *
  *|F| count()
  *|F| Perform strlen() on the string passed on TOS. This
- *|F| returns the string and the count on the stack.
+ *|F| returns the string and the count on the stack. The
+ *|F| count is increased by 1 to include the trailing 
+ *|F| ASCII 0.
  *|F|
  ******************************************************/
 void count()
 {
   char *s = (char *)TOS;
-  long length = strlen(s);
+  long length = strlen(s) + 1;
   push(length);
 }
 
