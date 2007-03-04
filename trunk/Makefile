@@ -57,8 +57,7 @@ docs:
 	cd source && mv FUNCTIONS GLOSSARY ../doc
 # ==============================================
 clean:
-	rm -f `find . | grep \~ `
-	rm -f source/*.o
+	make -s tclean
 	rm -f toka test.log
 # ==============================================
 tclean:
