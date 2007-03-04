@@ -53,6 +53,7 @@ tests:
 	cd examples && toka tests.toka >../test.log
 # ==============================================
 docs:
+	chmod +x scripts/*
 	cd source && ../scripts/tokadoc
 	cd source && mv FUNCTIONS GLOSSARY ../doc
 # ==============================================
