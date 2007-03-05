@@ -1,18 +1,36 @@
-Toka is a small programming language. It is considered experimental, and may change without warning.
+Toka is a small programming language. It is considered experimental, and 
+may change without warning.
 
-The language has been influenced by my experiences with RetroForth, HelFORTH, Factor, and other 
-languages. I find it fun and rewarding to work on, even if it's not as practical as other languages.
+The language has been influenced by my experiences with RetroForth, 
+HelFORTH, Factor, and other languages. I find it fun and rewarding to 
+work on, even if it's not as practical as other languages.
 
-The core language is described in GLOSSARY. A reference to the bootstrap is provided online. 
+The core language is described in GLOSSARY. A reference to the bootstrap 
+is provided online. 
 
 Homepage: http://code.google.com/p/toka
 
-At the homepage is information on how to obtain the latest source via Subversion, wiki pages documenting
-various parts of the language, and a bug tracker. 
+At the homepage is information on how to obtain the latest source via 
+Subversion, wiki pages documenting various parts of the language, and a 
+bug tracker. 
 
-You may also want to get the library. This is provided as a separate project at:
-http://code.google.com/p/toka-library
+You may also want to get the library. This is provided as a separate 
+project at:  http://code.google.com/p/toka-library
 
-The library adds several loadable modules that improve support for strings, debugging, add basic socket
-support, and more. The library is tested on Linux and BSD systems. In addition, it has experimental 
-Windows support (via Cygwin).
+The library adds several loadable modules that improve support for strings, 
+debugging, add basic socket support, and more. The library is tested on 
+Linux and BSD systems. In addition, it has experimental Windows support 
+(via Cygwin).
+--------------------------------------------------------------------------
+If you have the rebuild tool (http://code.google.com/p/rebuild) and would
+rather not use make, you can build and install Toka by doing:
+
+cd source
+rebuild toka
+cp toka /usr/bin
+cd ..
+mkdir -p /usr/share/toka
+cp bootstrap.toka /usr/share/toka
+
+You will probably need to be root, at least initially. Once installed, you
+can change the owner/permissions to allow a normal account to update it.
