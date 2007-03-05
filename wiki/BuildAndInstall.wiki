@@ -7,7 +7,7 @@ You will need the following things to build Toka:
  * C compiler (tested against GCC 2.95, 3.x, and 4.x)
  * Standard C Library ("libc")
  * Library providing dlopen() and dlsym() (BSD: libc, Linux, BeOS: libdl)
- * Make (either BSD or GNU)
+ * Make (either BSD or GNU) or Rebuild (http://code.google.com/p/rebuild)
 
 = Compiling =
 
@@ -27,6 +27,19 @@ In a default configuration, Toka will need to be installed if you want it to aut
 
 {{{
   make install
+}}}
+
+= Alternative: Using rebuild =
+
+If you are using the rebuild tool, do the following:
+
+{{{
+  cd source
+  rebuild toka
+  cp toka /usr/bin
+  cd ..
+  mkdir -p /usr/share/toka
+  cp bootstrap.toka /usr/share/toka
 }}}
 
 = Testing =
