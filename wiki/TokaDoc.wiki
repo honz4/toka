@@ -3,9 +3,9 @@
 
 = Introduction =
 
-To help keep an up-to-date list of C functions and their Toka equivilents, the !TokaDoc scripts were developed. These seach C sources for specially formatted comments and extract them into various files. These files will be updated by /make docs/
+To help keep an up-to-date list of C functions and their Toka equivilents, the !TokaDoc scripts were developed. These seach C sources for specially formatted comments and extract them into various files. These files will be updated by _make docs_
 
-= Supporting !TokaDoc =
+= Supporting TokaDoc =
 
 At the start of each C file, have a comment header like this:
 
