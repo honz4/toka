@@ -153,7 +153,7 @@
 #! ---------------------------------------
 [ 
   cr
-  " :help        Display this text" type cr
+  " help         Display this text" type cr
   " :words       Display a list of words" type cr
   " :stack       Display the current data stack contents" type cr
   " :gc          Display information about the current memory usage" type cr
@@ -161,4 +161,4 @@
   " \ <word>     Return a quote. If the requested word is a primitive" type cr
   "              or data structure, return the name in a new quote." type cr
   cr
-] is :help
+] is help
