@@ -14,11 +14,11 @@ Toka has a couple of words to make dealing with arrays easier. These are defined
 
 {{{
   10 cells is-array foo
-  0 foo get-element @ .
+  0 foo get-element .
   100 0 foo put-element 
   10 1 foo put-element 
-  0 foo get-element @ .
-  1 foo get-element @ .
+  0 foo get-element .
+  1 foo get-element .
 }}}
 
 = Tips =
@@ -27,4 +27,3 @@ Toka has a couple of words to make dealing with arrays easier. These are defined
     * At 0 is the name of the script
     * Actual arguments start at 1.
  * Be careful not to exceed the length of your array when giving an index
-
