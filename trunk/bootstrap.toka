@@ -137,8 +137,8 @@
 [ malloc is-data ] is is-array
 [ swap cell-size * + @ ] is get-element
 [ swap cell-size * + ! ] is put-element
-[ swap char-size * + @ ] is get-char-element
-[ swap char-size * + ! ] is put-char-element
+[ swap char-size * + c@ ] is get-char-element
+[ swap char-size * + c! ] is put-char-element
 
 
 #! ---------------------------------------
