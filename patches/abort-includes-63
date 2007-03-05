@@ -1,0 +1,324 @@
+diff -ur source/headers/parser.h experimental/headers/parser.h
+--- source/headers/parser.h	2007-03-05 18:29:55.000000000 -0500
++++ experimental/headers/parser.h	2007-03-05 18:29:47.000000000 -0500
+@@ -4,3 +4,4 @@
+ void include_file(char *s);
+ void include();
+ void needs();
++void force_eof();
+diff -ur source/headers/.svn/entries experimental/headers/.svn/entries
+--- source/headers/.svn/entries	2007-03-05 18:29:55.000000000 -0500
++++ experimental/headers/.svn/entries	2007-03-05 18:29:47.000000000 -0500
+@@ -12,11 +12,11 @@
+    repos="https://toka.googlecode.com/svn"
+    revision="62"/>
+ <entry
+-   committed-rev="2"
+-   name="initial.h"
+-   text-time="2007-02-18T22:26:17.000000Z"
+-   committed-date="2007-02-14T03:37:59.281641Z"
+-   checksum="c0d3ea5e8517258cc0fa6b103c348fc9"
++   committed-rev="19"
++   name="math.h"
++   text-time="2007-02-20T01:41:39.000000Z"
++   committed-date="2007-02-20T02:14:50.650704Z"
++   checksum="4b669ddebda754f7fc6805e9f64a8b81"
+    last-author="charles.childers"
+    kind="file"
+    prop-time="2007-02-18T22:26:13.000000Z"/>
+@@ -30,18 +30,18 @@
+    kind="file"
+    prop-time="2007-02-18T22:26:13.000000Z"/>
+ <entry
+-   committed-rev="19"
+-   name="math.h"
+-   text-time="2007-02-20T01:41:39.000000Z"
+-   committed-date="2007-02-20T02:14:50.650704Z"
+-   checksum="4b669ddebda754f7fc6805e9f64a8b81"
++   committed-rev="2"
++   name="initial.h"
++   text-time="2007-02-18T22:26:17.000000Z"
++   committed-date="2007-02-14T03:37:59.281641Z"
++   checksum="c0d3ea5e8517258cc0fa6b103c348fc9"
+    last-author="charles.childers"
+    kind="file"
+    prop-time="2007-02-18T22:26:13.000000Z"/>
+ <entry
+    committed-rev="2"
+    name="parser.h"
+-   text-time="2007-03-05T23:29:55.000000Z"
++   text-time="2007-02-18T22:26:17.000000Z"
+    committed-date="2007-02-14T03:37:59.281641Z"
+    checksum="121fcd2c48e80923144d94220974bef1"
+    last-author="charles.childers"
+@@ -57,15 +57,6 @@
+    kind="file"
+    prop-time="2007-02-18T22:26:13.000000Z"/>
+ <entry
+-   committed-rev="2"
+-   name="decompile.h"
+-   text-time="2007-02-18T22:26:17.000000Z"
+-   committed-date="2007-02-14T03:37:59.281641Z"
+-   checksum="237dae11c101dbedc26fdd7910877a3f"
+-   last-author="charles.childers"
+-   kind="file"
+-   prop-time="2007-02-18T22:26:13.000000Z"/>
+-<entry
+    committed-rev="19"
+    name="bits.h"
+    text-time="2007-02-20T01:41:46.000000Z"
+@@ -76,10 +67,10 @@
+    prop-time="2007-02-18T22:26:13.000000Z"/>
+ <entry
+    committed-rev="2"
+-   name="files.h"
++   name="decompile.h"
+    text-time="2007-02-18T22:26:17.000000Z"
+    committed-date="2007-02-14T03:37:59.281641Z"
+-   checksum="7c10368f977230aa907b3586a99b8c65"
++   checksum="237dae11c101dbedc26fdd7910877a3f"
+    last-author="charles.childers"
+    kind="file"
+    prop-time="2007-02-18T22:26:13.000000Z"/>
+@@ -93,6 +84,15 @@
+    kind="file"
+    prop-time="2007-02-18T22:26:13.000000Z"/>
+ <entry
++   committed-rev="2"
++   name="files.h"
++   text-time="2007-02-18T22:26:17.000000Z"
++   committed-date="2007-02-14T03:37:59.281641Z"
++   checksum="7c10368f977230aa907b3586a99b8c65"
++   last-author="charles.childers"
++   kind="file"
++   prop-time="2007-02-18T22:26:13.000000Z"/>
++<entry
+    committed-rev="19"
+    name="ffi.h"
+    text-time="2007-02-20T01:42:25.000000Z"
+@@ -102,38 +102,38 @@
+    kind="file"
+    prop-time="2007-02-18T22:26:15.000000Z"/>
+ <entry
+-   committed-rev="19"
+-   name="stack.h"
+-   text-time="2007-02-20T01:41:28.000000Z"
+-   committed-date="2007-02-20T02:14:50.650704Z"
+-   checksum="0302981978a1855b57862ff27402bbbe"
++   committed-rev="2"
++   name="config.h"
++   text-time="2007-02-18T22:26:17.000000Z"
++   committed-date="2007-02-14T03:37:59.281641Z"
++   checksum="b75016af43d71bab35c6f5da6189db40"
+    last-author="charles.childers"
+    kind="file"
+    prop-time="2007-02-18T22:26:15.000000Z"/>
+ <entry
+    committed-rev="32"
+-   name="class.h"
+-   text-time="2007-02-23T12:07:26.000000Z"
++   name="dictionary.h"
++   text-time="2007-02-24T02:26:53.000000Z"
+    committed-date="2007-02-23T12:15:58.390814Z"
+-   checksum="73e581412417f0ab9985ea27c74b6344"
++   checksum="4dc4dda7152ec2eb9e1ad2837698cb90"
+    last-author="charles.childers"
+    kind="file"
+    prop-time="2007-02-18T22:26:15.000000Z"/>
+ <entry
+    committed-rev="32"
+-   name="dictionary.h"
+-   text-time="2007-02-24T02:26:53.000000Z"
++   name="class.h"
++   text-time="2007-02-23T12:07:26.000000Z"
+    committed-date="2007-02-23T12:15:58.390814Z"
+-   checksum="4dc4dda7152ec2eb9e1ad2837698cb90"
++   checksum="73e581412417f0ab9985ea27c74b6344"
+    last-author="charles.childers"
+    kind="file"
+    prop-time="2007-02-18T22:26:15.000000Z"/>
+ <entry
+-   committed-rev="2"
+-   name="config.h"
+-   text-time="2007-02-18T22:26:17.000000Z"
+-   committed-date="2007-02-14T03:37:59.281641Z"
+-   checksum="b75016af43d71bab35c6f5da6189db40"
++   committed-rev="19"
++   name="stack.h"
++   text-time="2007-02-20T01:41:28.000000Z"
++   committed-date="2007-02-20T02:14:50.650704Z"
++   checksum="0302981978a1855b57862ff27402bbbe"
+    last-author="charles.childers"
+    kind="file"
+    prop-time="2007-02-18T22:26:15.000000Z"/>
+diff -ur source/initial.c experimental/initial.c
+--- source/initial.c	2007-03-05 18:29:55.000000000 -0500
++++ experimental/initial.c	2007-03-05 18:29:47.000000000 -0500
+@@ -108,6 +108,7 @@
+   add_entry(">number",   &to_number,     &forth_class);
+   add_entry(":include",  &include,       &forth_class);
+   add_entry(":needs",    &needs,         &forth_class);
++  add_entry(":eof",      &force_eof,     &forth_class);
+   add_entry("base",      &base,          &data_class);
+ 
+   /* quotes.c */
+diff -ur source/parser.c experimental/parser.c
+--- source/parser.c	2007-03-05 18:29:55.000000000 -0500
++++ experimental/parser.c	2007-03-05 18:29:47.000000000 -0500
+@@ -217,3 +217,20 @@
+ 
+   include_file(d);
+ }
++
++
++
++/******************************************************
++ *|G| :eof      ( - )      Remove the current file from
++ *|G|                      the input stack
++ *
++ *|F| force_eof()
++ *|F| Remove the current file from the input stack. This
++ *|F| can be used to abort an include.
++ *|F|
++ ******************************************************/
++void force_eof()
++{
++  fclose(input[isp]);
++  isp--;
++}
+diff -ur source/.svn/entries experimental/.svn/entries
+--- source/.svn/entries	2007-03-05 18:29:55.000000000 -0500
++++ experimental/.svn/entries	2007-03-05 18:29:47.000000000 -0500
+@@ -14,22 +14,13 @@
+ <entry
+    committed-rev="37"
+    name="toka.c"
+-   text-time="2007-03-05T23:29:55.000000Z"
++   text-time="2007-02-24T04:36:16.000000Z"
+    committed-date="2007-02-24T04:30:26.767070Z"
+    checksum="e91089250defb3c57979c14bc27e3722"
+    last-author="charles.childers"
+    kind="file"
+    prop-time="2007-02-18T22:26:07.000000Z"/>
+ <entry
+-   committed-rev="2"
+-   name="bits.c"
+-   text-time="2007-02-18T22:26:17.000000Z"
+-   committed-date="2007-02-14T03:37:59.281641Z"
+-   checksum="03ce3f608781132643634f1be1864868"
+-   last-author="charles.childers"
+-   kind="file"
+-   prop-time="2007-02-18T22:26:07.000000Z"/>
+-<entry
+    committed-rev="45"
+    name="decompile.c"
+    text-time="2007-02-27T02:11:08.000000Z"
+@@ -39,14 +30,14 @@
+    kind="file"
+    prop-time="2007-02-18T22:26:07.000000Z"/>
+ <entry
+-   committed-rev="45"
+-   name="files.c"
+-   text-time="2007-02-27T02:11:48.000000Z"
+-   committed-date="2007-02-27T02:08:51.854378Z"
+-   checksum="e94d00b55568bb53666f597c0b4c0670"
++   committed-rev="2"
++   name="bits.c"
++   text-time="2007-02-18T22:26:17.000000Z"
++   committed-date="2007-02-14T03:37:59.281641Z"
++   checksum="03ce3f608781132643634f1be1864868"
+    last-author="charles.childers"
+    kind="file"
+-   prop-time="2007-02-18T22:26:08.000000Z"/>
++   prop-time="2007-02-18T22:26:07.000000Z"/>
+ <entry
+    committed-rev="2"
+    name="console.c"
+@@ -57,6 +48,15 @@
+    kind="file"
+    prop-time="2007-02-18T22:26:08.000000Z"/>
+ <entry
++   committed-rev="45"
++   name="files.c"
++   text-time="2007-02-27T02:11:48.000000Z"
++   committed-date="2007-02-27T02:08:51.854378Z"
++   checksum="e94d00b55568bb53666f597c0b4c0670"
++   last-author="charles.childers"
++   kind="file"
++   prop-time="2007-02-18T22:26:08.000000Z"/>
++<entry
+    committed-rev="2"
+    name="toka.h"
+    text-time="2007-02-24T02:05:32.000000Z"
+@@ -75,14 +75,14 @@
+    kind="file"
+    prop-time="2007-02-18T22:26:08.000000Z"/>
+ <entry
+-   committed-rev="36"
+-   name="stack.c"
+-   text-time="2007-02-24T00:04:36.000000Z"
+-   committed-date="2007-02-23T23:58:13.896616Z"
+-   checksum="319613db5d7ed5af1f2b22736f6996dc"
++   committed-rev="32"
++   name="dictionary.c"
++   text-time="2007-02-24T02:26:23.000000Z"
++   committed-date="2007-02-23T12:15:58.390814Z"
++   checksum="63c2092441332db0ab520891958c3037"
+    last-author="charles.childers"
+    kind="file"
+-   prop-time="2007-02-18T22:26:08.000000Z"/>
++   prop-time="2007-02-18T22:26:09.000000Z"/>
+ <entry
+    committed-rev="45"
+    name="class.c"
+@@ -93,14 +93,14 @@
+    kind="file"
+    prop-time="2007-02-18T22:26:09.000000Z"/>
+ <entry
+-   committed-rev="32"
+-   name="dictionary.c"
+-   text-time="2007-02-24T02:26:23.000000Z"
+-   committed-date="2007-02-23T12:15:58.390814Z"
+-   checksum="63c2092441332db0ab520891958c3037"
++   committed-rev="36"
++   name="stack.c"
++   text-time="2007-02-24T00:04:36.000000Z"
++   committed-date="2007-02-23T23:58:13.896616Z"
++   checksum="319613db5d7ed5af1f2b22736f6996dc"
+    last-author="charles.childers"
+    kind="file"
+-   prop-time="2007-02-18T22:26:09.000000Z"/>
++   prop-time="2007-02-18T22:26:08.000000Z"/>
+ <entry
+    committed-rev="19"
+    name="data.c"
+@@ -167,7 +167,7 @@
+ <entry
+    committed-rev="39"
+    name="initial.c"
+-   text-time="2007-03-05T23:29:55.000000Z"
++   text-time="2007-02-25T20:05:03.000000Z"
+    committed-date="2007-02-25T20:01:26.139876Z"
+    checksum="1e4340d18d962ae5805ec71488a9ca6f"
+    last-author="charles.childers"
+@@ -197,7 +197,7 @@
+ <entry
+    committed-rev="45"
+    name="parser.c"
+-   text-time="2007-03-05T23:29:55.000000Z"
++   text-time="2007-02-27T02:13:00.000000Z"
+    committed-date="2007-02-27T02:08:51.854378Z"
+    checksum="aaa314ac8835cb63c53a65a48282baf3"
+    last-author="charles.childers"
+diff -ur source/toka.c experimental/toka.c
+--- source/toka.c	2007-03-05 18:29:55.000000000 -0500
++++ experimental/toka.c	2007-03-05 18:29:47.000000000 -0500
+@@ -70,8 +70,6 @@
+   }
+ 
+   include_file(BOOTSTRAP);
+-  
+   interpret();
+-
+   return 0;
+ }
