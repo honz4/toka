@@ -157,20 +157,27 @@ void get_token(char *s, long delim)
 
 
 /******************************************************
- *|F| include_file(char *s)
+ *|F| long include_file(char *s)
  *|F| Attempt to open a file ("s") and add it to the
  *|F| top of the input stack.
  *|F|
  ******************************************************/
-void include_file(char *s)
+long include_file(char *s)
 {
   FILE *file;
+  long flag;
+
   file = fopen(s, "r");
+  flag = FALSE;
+
   if (file)
   {
     isp++;
     input[isp] = file;
+    flag = TRUE;
   }
+
+  return flag;
 }
 
 

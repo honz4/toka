@@ -69,8 +69,9 @@ int main(int argv, char *argc[])
     include_file(custom);
   }
 
-  include_file(BOOTSTRAP);
-  
+  if (include_file("bootstrap.toka") == FALSE)
+    include_file(BOOTSTRAP);
+
   interpret();
 
   return 0;
