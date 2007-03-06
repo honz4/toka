@@ -28,11 +28,14 @@ FILES = bits.c \
         vm.c
 # ==============================================
 default:
-	@case "x$(UNAME)" in      \
-          xLinux)   make linux ;; \
-          xOpenBSD) make bsd   ;; \
-          xNetBSD)  make bsd   ;; \
-          xFreeBSD) make bsd   ;; \
+	@case "x$(UNAME)" in        \
+          xLinux)     make linux ;; \
+          xOpenBSD)   make bsd   ;; \
+          xNetBSD)    make bsd   ;; \
+          xFreeBSD)   make bsd   ;; \
+          xDragonFly) make bsd   ;; \
+          xBeOS)      make beos  ;; \
+          xCYGWIN_NT-6.0) make windows   ;; \
 	esac
 # ==============================================
 toka:
@@ -45,6 +48,9 @@ bsd:
 	cd source && $(CC) $(CFLAGS) $(FILES) -o ../toka
 windows:
 	@echo WARNING: Only tested under Cygwin
+	cd source && $(CC) $(CFLAGS) $(FILES) -ldl -o ../toka
+beos:
+	@echo Host appears to be BeOS...
 	cd source && $(CC) $(CFLAGS) $(FILES) -ldl -o ../toka
 # ==============================================
 tests:
