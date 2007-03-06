@@ -4,6 +4,7 @@
 # ==============================================
 CFLAGS = -O2 -s
 CC = gcc
+UNAME = `uname`
 # ==============================================
 FILES = bits.c \
         class.c \
@@ -27,26 +28,23 @@ FILES = bits.c \
         vm.c
 # ==============================================
 default:
-	@echo ================================================
-	@echo Valid targets are:
-	@echo - linux
-	@echo - bsd
-	@echo - windows
-	@echo ================================================
-	@echo Additional targets:
-	@echo - clean
-	@echo - install
-	@echo ================================================
-	@echo Tips:
-	@echo - Use GCC 3.x or 4.x if possible
-	@echo - Use Cygwin to compile under Windows
-	@echo ================================================
+	@case "x$(UNAME)" in      \
+          xLinux)   make linux ;; \
+          xOpenBSD) make bsd   ;; \
+          xNetBSD)  make bsd   ;; \
+          xFreeBSD) make bsd   ;; \
+	esac
 # ==============================================
+toka:
+	@make
 linux:
+	@echo Host appears to be Linux...
 	cd source && $(CC) $(CFLAGS) $(FILES) -ldl -o ../toka
 bsd:
+	@echo Host appears to be a BSD system...
 	cd source && $(CC) $(CFLAGS) $(FILES) -o ../toka
 windows:
+	@echo WARNING: Only tested under Cygwin
 	cd source && $(CC) $(CFLAGS) $(FILES) -ldl -o ../toka
 # ==============================================
 tests:
@@ -65,7 +63,7 @@ tclean:
 	rm -f `find . | grep \~ `
 	rm -f source/*.o
 # ==============================================
-install:
+install: toka
 	cp toka /usr/bin
 	mkdir -p /usr/share/toka
 	cp bootstrap.toka /usr/share/toka
