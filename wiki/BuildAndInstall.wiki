@@ -11,6 +11,15 @@ You will need the following things to build Toka:
 
 = Compiling =
 
+As of March 5, 2007, Toka's build system tries to detect the host system automatically. For most people, the following should work:
+
+{{{
+  make
+}}}
+
+
+If this fails, try one of the following:
+
 {{{
   make clean linux
 }}}
@@ -28,6 +37,7 @@ In a default configuration, Toka will need to be installed if you want it to aut
 {{{
   make install
 }}}
+
 
 = Alternative: Using rebuild =
 
