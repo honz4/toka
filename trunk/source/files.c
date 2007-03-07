@@ -107,7 +107,7 @@ void file_read()
  *|G|                      to file handle 'n'. Returns
  *|G|                      the number of bytes written.
  *
- *|F| file_read()
+ *|F| file_write()
  *|F| This is just a simple wrapper over fwrite().
  *|F|
  ******************************************************/
