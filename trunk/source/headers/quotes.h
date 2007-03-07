@@ -6,3 +6,4 @@ void truefalse();
 void recurse();
 void qlit();
 void quote_index();
+void quote_while();

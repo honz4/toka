@@ -247,7 +247,7 @@ This is just a simple wrapper over fclose().
 file_read()
 This is just a simple wrapper over fread().
 
-file_read()
+file_write()
 This is just a simple wrapper over fwrite().
 
 file_size()
@@ -397,7 +397,7 @@ Return a string (in "s") up to the specified
 delimiter or the end of the line. This also puts
 the resulting string on the stack.
 
-include_file(char *s)
+long include_file(char *s)
 Attempt to open a file ("s") and add it to the
 top of the input stack.
 
@@ -464,6 +464,10 @@ regular literals.
 
 quote_index()
 Return the current loop index (counter)
+
+quote_while()
+Return execution of a quote until the quote
+returns FALSE.
 
 
 FILE: stack.c
