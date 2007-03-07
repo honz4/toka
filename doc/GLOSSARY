@@ -103,6 +103,9 @@ t/f      ( fab- )    Invoke 'a' if 'f' flag is
 recurse  ( - )       Compile a call to the top
                      quote.
 i        ( -n )      Return the current loop index
+while    ( a- )      Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
 dup      ( n-nn )    Duplicate the TOS
 drop     ( n- )      Drop the TOS
 swap     ( ab-ba )   Exchange the TOS and NOS

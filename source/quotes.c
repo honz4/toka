@@ -228,3 +228,27 @@ void quote_index()
 {
   push(quote_counter);
 }
+
+
+/******************************************************
+ *|G| while    ( a- )      Execute quote. If the quote
+ *|G|                      returns TRUE, execute again.
+ *|G|                      otherwise end the cycle.
+ *
+ *|F| quote_while()
+ *|F| Return execution of a quote until the quote
+ *|F| returns FALSE.
+ *|F| 
+ ******************************************************/
+void quote_while()
+{
+  Inst quote = (Inst)TOS; DROP;
+  long flag = TRUE;
+  while(flag == TRUE)
+  {
+    rstack[rsp] = (long)ip;   rsp++;
+    vm_run((Inst *)quote);
+    flag = TOS; DROP;
+    rsp--; ip = (Inst *)rstack[rsp];
+  }
+}
