@@ -105,6 +105,9 @@ invoke   ( a- )      Execute a quote
 iterate  ( na- )     Execute a quote 'n' times
 t/f      ( fab- )    Invoke 'a' if 'f' flag is
                      true, 'b' if false.
+while    ( q-  f- )  Invoke a quote. If the quote
+                     returns TRUE, invoke it again.
+                     Repeat until it returns FALSE.
 recurse  ( - )       Compile a call to the top
                      quote.
 i        ( -n )      Return the current loop index
