@@ -1,0 +1,24 @@
+#summary What remains to be done before the next release
+
+= Release 0 =
+
+ * Test suite
+    * Ensure that all *core* functionality is tested
+    * Ensure that all *essential bootstrap* functionality is tested
+    * Ensure that all tests pass
+ * Documentation
+    * manpage
+    * GNU info pages (?)
+    * Wiki pages (?)
+    * Manual (pdf)
+ * Examples
+    * All examples should be commented.
+ * Confirm that toka builds, installs, and works, in a clean install of all supported OSes.
+ * Ports Desired (at a minimum)
+    * Linux/x86
+    * NetBSD/x86
+    * FreeBSD/x86
+    * OpenBSD/x86
+    * DragonFly BSD/x86
+    * BeOS/x86
+    * NetBSD/mips
