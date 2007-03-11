@@ -5,6 +5,8 @@
 CFLAGS = -O2 -s
 CC = gcc
 UNAME = `uname`
+
+BEOSFLAGS = -I/boot/develop/headers
 # ==============================================
 FILES = bits.c \
         class.c \
@@ -51,7 +53,7 @@ windows:
 	cd source && $(CC) $(CFLAGS) $(FILES) -ldl -o ../toka
 beos:
 	@echo Host appears to be BeOS...
-	cd source && $(CC) $(CFLAGS) $(FILES) -ldl -o ../toka
+	cd source && $(CC) $(CFLAGS) $(BEOSFLAGS) $(FILES) -ldl -o ../toka
 # ==============================================
 tests:
 	cd examples && toka tests.toka >../test.log
@@ -70,8 +72,25 @@ tclean:
 	rm -f source/*.o
 # ==============================================
 install: toka
+	@case "x$(UNAME)" in               \
+          xLinux)     make install-usr  ;; \
+          xOpenBSD)   make install-usr  ;; \
+          xNetBSD)    make install-usr  ;; \
+          xFreeBSD)   make install-usr  ;; \
+          xDragonFly) make install-usr  ;; \
+          xBeOS)      make install-beos ;; \
+	esac
+
+install-usr:
 	cp toka /usr/bin
 	mkdir -p /usr/share/toka
+	cp bootstrap.toka /usr/share/toka
+	chmod +x examples/*
+
+install-beos:
+	mkdir -p /usr/bin
+	mkdir -p /usr/share/toka
+	cp toka /usr/bin
 	cp bootstrap.toka /usr/share/toka
 	chmod +x examples/*
 # ==============================================
