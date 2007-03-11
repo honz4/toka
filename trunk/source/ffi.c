@@ -130,10 +130,10 @@ void ffi_import()
 
 /******************************************************
  *|G| as       ( "- )      Rename the last defined word
- *|G|
  *
  *|F| ffi_rename()
- *|F| Rename the most recently defined word in the dictionary
+ *|F| Rename the most recently defined word in the
+ *|F| dictionary.
  *|F|
  ******************************************************/
 void ffi_rename()

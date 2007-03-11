@@ -156,7 +156,7 @@ long resolve_name(Inst xt)
 Search for a name in the dictionary that corresponds
 to 'xt'. Display it if found, and return a flag.
 
-decompile()
+decompile(Inst *xt)
 Decompile a quote and its children and display the
 result on the screen.
 
@@ -230,7 +230,8 @@ Import and name an external function. This wraps
 the imported function in a quote.
 
 ffi_rename()
-Rename the most recently defined word in the dictionary
+Rename the most recently defined word in the
+dictionary.
 
 
 FILE: files.c
