@@ -50,7 +50,6 @@ from     ( "- )      Set the library to import from
 import   ( n"- )     Import a function taking 'n'
                      arguments.
 as       ( "- )      Rename the last defined word
-
 file.open  ( $m-n )  Open a specified file with
                      the specified mode.
 file.close ( n- )    Close the specified file handle

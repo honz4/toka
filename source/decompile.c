@@ -43,7 +43,7 @@ long resolve_name(Inst xt)
 
 
 /******************************************************
- *|F| decompile()
+ *|F| decompile(Inst *xt)
  *|F| Decompile a quote and its children and display the
  *|F| result on the screen.
  *|F|
