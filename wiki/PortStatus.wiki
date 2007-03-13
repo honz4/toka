@@ -8,7 +8,7 @@ Toka was intended to be easily portable across a wide variety of systems. This p
 || x86 || *Linux* || *NetBSD* || *FreeBSD* || *OpenBSD* || *DragonFly BSD* || _BeOS_ || _Cygwin_ ||
 || x86-64 || *Linux* ||
 || MIPS || *NetBSD/pmax* ||
-|| ARM || *NetBSD/cats* ||
+|| ARM || *NetBSD/cats* || *OpenBSD/cats* ||
 
 Ports shown in *bold* are fully supported. Ports shown in _italics_ work, but may have limitations or minor issues.
 
@@ -28,6 +28,6 @@ Ports shown in *bold* are fully supported. Ports shown in _italics_ work, but ma
  * Only tested under GXemul (http://gavare.se/gxemul/). 
  * All functionality works as expected
 
-== NetBSD/cats (ARM) ==
+== NetBSD/cats (ARM) and OpenBSD/cats (ARM) ==
  * Only tested under GXemul (http://gavare.se/gxemul/). 
  * All functionality works as expected
