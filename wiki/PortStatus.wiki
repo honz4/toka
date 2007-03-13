@@ -7,11 +7,12 @@ Toka was intended to be easily portable across a wide variety of systems. This p
 
 || x86 || *Linux* || *NetBSD* || *FreeBSD* || *OpenBSD* || *DragonFly BSD* || _BeOS_ || _Cygwin_ ||
 || x86-64 || *Linux* ||
-|| MIPS || *NetBSD* ||
+|| MIPS || *NetBSD/pmax* ||
+|| ARM || *NetBSD/cats* ||
 
 Ports shown in *bold* are fully supported. Ports shown in _italics_ work, but may have limitations or minor issues.
 
-= Limitations =
+= Limitations and Notes =
 
 == Cygwin (Windows) ==
  * Toka will compile and run on Windows under the Cygwin (http://cygwin.com) environment
@@ -23,8 +24,10 @@ Ports shown in *bold* are fully supported. Ports shown in _italics_ work, but ma
  * Requires libdl (http://bebits.com/app/2917)
  * May need a GCC 3.x, rather than 2.9x (http://bebits.com/app/4011)
 
-== NetBSD/MIPS ==
+== NetBSD/pmax (MIPS) ==
  * Only tested under GXemul (http://gavare.se/gxemul/). 
  * All functionality works as expected
 
-
+== NetBSD/cats (ARM) ==
+ * Only tested under GXemul (http://gavare.se/gxemul/). 
+ * All functionality works as expected
