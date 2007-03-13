@@ -7,7 +7,7 @@ Toka was intended to be easily portable across a wide variety of systems. This p
 
 || x86 || *Linux* || *NetBSD* || *FreeBSD* || *OpenBSD* || *DragonFly BSD* || _BeOS_ || _Cygwin_ ||
 || x86-64 || *Linux* ||
-|| MIPS || *NetBSD/pmax* ||
+|| MIPS || *Linux* || *NetBSD/pmax* ||
 || ARM || *NetBSD/cats* || *OpenBSD/cats* ||
 
 Ports shown in *bold* are fully supported. Ports shown in _italics_ work, but may have limitations or minor issues.
@@ -19,15 +19,17 @@ Ports shown in *bold* are fully supported. Ports shown in _italics_ work, but ma
  * Tested only on _Vista_ and _XP_
  * The FFI may not function properly; it has not been fully tested.
 
-== BSD ==
+== BeOS ==
  * _make install_ does not work
  * Requires libdl (http://bebits.com/app/2917)
- * May need a GCC 3.x, rather than 2.9x (http://bebits.com/app/4011)
+ * May need GCC 3.x, rather than 2.9x (http://bebits.com/app/4011)
 
-== NetBSD/pmax (MIPS) ==
+== MIPS ==
  * Only tested under GXemul (http://gavare.se/gxemul/). 
- * All functionality works as expected
+ * NetBSD/pmax: All functionality works as expected
+ * Debian/pmax: All functionality works as expected.
 
-== NetBSD/cats (ARM) and OpenBSD/cats (ARM) ==
+== ARM ==
  * Only tested under GXemul (http://gavare.se/gxemul/). 
- * All functionality works as expected
+ * NetBSD/cats: All functionality works as expected
+ * OpenBSD/cats: All functionality works as expected
