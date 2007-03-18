@@ -118,6 +118,7 @@ void build_dictionary()
   add_entry("recurse",   &recurse,       &self_class);
   add_entry("invoke",    &invoke,        &forth_class);
   add_entry("iterate",   &iterate,       &forth_class);
+  add_entry("+iterate",  &alt_iterate,   &forth_class);
   add_entry("i",         &quote_index,   &forth_class);
   add_entry("t/f",       &truefalse,     &forth_class);
   add_entry("while",     &quote_while,   &forth_class);

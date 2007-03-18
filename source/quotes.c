@@ -154,6 +154,39 @@ void iterate()
 
 
 /******************************************************
+ *|G| +iterate ( na- )     Execute a quote 'n' times
+ *
+ *|F| alt_iterate()
+ *|F| Repeat execution of a quote (passed on TOS), NOS
+ *|F| number of times.
+ *|F|
+ ******************************************************/
+void alt_iterate()
+{
+  long count, bottom, old_counter;
+  Inst quote;
+
+  quote = (Inst)TOS; DROP;
+  bottom = TOS + 1; DROP;
+  old_counter = quote_counter;
+  count = 1;
+
+  rstack[rsp] = (long)ip;
+  rsp++;
+
+  for(;count < bottom; count++)
+  {
+    quote_counter = count;
+    vm_run((Inst *)quote);
+  }
+  quote_counter = old_counter;
+
+  rsp--;
+  ip = (Inst *)rstack[rsp];
+}
+
+
+/******************************************************
  *|G| t/f      ( fab- )    Invoke 'a' if 'f' flag is
  *|G|                      true, 'b' if false.
  *

@@ -2,6 +2,7 @@ void begin_quote();
 void end_quote();
 void invoke();
 void iterate();
+void alt_iterate();
 void truefalse();
 void recurse();
 void qlit();
