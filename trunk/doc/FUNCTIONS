@@ -444,6 +444,10 @@ iterate()
 Repeat execution of a quote (passed on TOS), NOS
 number of times.
 
+alt_iterate()
+Repeat execution of a quote (passed on TOS), NOS
+number of times.
+
 truefalse()
 Takes three items (true-xt, false-xt, and a flag)
 from the stack. Stack should be passed in as:

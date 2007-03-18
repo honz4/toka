@@ -97,6 +97,7 @@ parse    ( d-a )     Parse until the character
 ]        ( - )       Close an open quote
 invoke   ( a- )      Execute a quote
 iterate  ( na- )     Execute a quote 'n' times
++iterate ( na- )     Execute a quote 'n' times
 t/f      ( fab- )    Invoke 'a' if 'f' flag is
                      true, 'b' if false.
 recurse  ( - )       Compile a call to the top
