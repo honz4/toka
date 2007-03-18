@@ -75,8 +75,10 @@ void decompile(Inst *xt)
     }
     if (this == &quote_class)
       resolve_name((Inst)*xt++);
+#ifndef NOFFI
     if (this == &ffi_invoke)
       printf("<ffi> ");
+#endif
   }
 }
 

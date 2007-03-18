@@ -75,9 +75,11 @@ void build_dictionary()
   add_entry("last",      &last,          &data_class);
 
   /* ffi.c */
+#ifndef NOFFI
   add_entry("from",      &ffi_from,      &forth_class);
   add_entry("import",    &ffi_import,    &forth_class);
   add_entry("as",        &ffi_rename,    &forth_class);
+#endif
 
   /* files.c */
   add_entry("file.open", &file_open,     &forth_class);

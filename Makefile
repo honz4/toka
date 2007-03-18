@@ -35,6 +35,26 @@ FILES = bits.c \
         stack.c \
         toka.c \
         vm.c
+
+NOFFI = bits.c \
+        class.c \
+        cmdline.c \
+        conditionals.c \
+        console.c \
+        data.c \
+        debug.c \
+        decompile.c \
+        dictionary.c \
+        files.c \
+        gc.c \
+        initial.c \
+        interpret.c \
+        math.c \
+        parser.c \
+        quotes.c \
+        stack.c \
+        toka.c \
+        vm.c
 # ==============================================
 default:
 	@case "x$(UNAME)" in        \
@@ -44,7 +64,7 @@ default:
           xFreeBSD)   make bsd   ;; \
           xDragonFly) make bsd   ;; \
           xBeOS)      make beos  ;; \
-          xCYGWIN_NT-6.0) make windows   ;; \
+          xCYGWIN_NT-6.0) make cygwin ;; \
 	esac
 # ==============================================
 toka:
@@ -55,12 +75,16 @@ linux:
 bsd:
 	@echo Host appears to be a BSD system...
 	cd source && $(CC) $(CFLAGS) $(FILES) -o ../toka
-windows:
-	@echo WARNING: Only tested under Cygwin
-	cd source && $(CC) $(CFLAGS) $(FILES) -ldl -o ../toka
+cygwin:
+	@echo Host appears to be Cygwin
+	cd source && $(CC) $(CFLAGS) $(NOFFI) -DNOFFI -o ../toka
 beos:
 	@echo Host appears to be BeOS...
 	cd source && $(CC) $(CFLAGS) $(BEOSFLAGS) $(FILES) -ldl -o ../toka
+
+vanilla:
+	@echo Host unknown - attempting build without FFI
+	cd source && $(CC) $(CFLAGS) $(NOFFI) -DNOFFI -o../toka
 # ==============================================
 tests:
 	cd examples && toka tests.toka >../test.log
