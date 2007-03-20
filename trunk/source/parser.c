@@ -145,7 +145,14 @@ void get_token(char *s, long delim)
       isp--;
       break;
     }
-    if (c == 10 || c == 13 || c == delim)
+
+    if (delim == 10 || delim == 32)
+    {
+      if (c == 10 || c == 13)
+        break;
+    }
+
+    if (c == delim)
       break;
     if (c >= 32)
       *t++ = (char)c;
