@@ -153,12 +153,14 @@
 #! ---------------------------------------
 [ 
   cr
-  " help         Display this text" type cr
-  " :words       Display a list of words" type cr
-  " :stack       Display the current data stack contents" type cr
-  " :gc          Display information about the current memory usage" type cr
-  " :see         Decompile a quote (passed on the stack)" type cr
-  " \ <word>     Return a quote. If the requested word is a primitive" type cr
-  "              or data structure, return the name in a new quote." type cr
-  cr
+"
+ help         Display this text
+ :words       Display a list of words
+ :stack       Display the current data stack contents
+ :gc          Display information about the current memory usage
+ :see         Decompile a quote (passed on the stack)
+ \ <word>     Return a quote. If the requested word is a primitive
+              or data structure, return the name in a new quote.
+"
+ type cr
 ] is help
