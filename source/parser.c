@@ -126,8 +126,8 @@ void parse()
 /******************************************************
  *|F| get_token(char *s, long delim)
  *|F| Return a string (in "s") up to the specified 
- *|F| delimiter or the end of the line. This also puts
- *|F| the resulting string on the stack.
+ *|F| delimiter. This also puts the resulting string 
+ *|F| on the stack.
  *|F|
  ******************************************************/
 void get_token(char *s, long delim)
@@ -154,7 +154,7 @@ void get_token(char *s, long delim)
 
     if (c == delim)
       break;
-    if (c >= 32)
+    if (c >= 32 || c == 10 || c == 13)
       *t++ = (char)c;
   }
   *t++ = 0;
