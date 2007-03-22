@@ -99,7 +99,7 @@
 [ -1 swap ! ] is on
 [  0 swap ! ] is off
 [ dup @ not swap ! ] is toggle
-[ cell-size malloc is-data ] is variable
+[ cell-size malloc parser @ [ swap ] false? is-data ] is variable
 
 
 #! ---------------------------------------
@@ -134,18 +134,13 @@
 #! ---------------------------------------
 #! Arrays
 #! ---------------------------------------
-[ malloc is-data ] is is-array
+[ parser @ 
+  [ malloc ] [ >r malloc r> ] t/f is-data 
+] is is-array
 [ swap cell-size * + @ ] is get-element
 [ swap cell-size * + ! ] is put-element
 [ swap char-size * + c@ ] is get-char-element
 [ swap char-size * + c! ] is put-char-element
-
-
-#! ---------------------------------------
-#! Other
-#! ---------------------------------------
-[ wsparse :include ] is include
-[ wsparse :needs ] is needs
 
 
 #! ---------------------------------------
