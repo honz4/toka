@@ -21,6 +21,7 @@ extern Inst *heap;
 extern long stack[], sp;
 extern ENTRY dictionary[];
 extern long last;
+extern long parser;
 
 typedef long (*Func)();
 
@@ -75,6 +76,7 @@ void ffi_invoke()
 
 /******************************************************
  *|G| from     ( "- )      Set the library to import from
+ *|G|          ( $- )      Non-parsing form
  *
  *|F| ffi_from()
  *|F| Select a library to load from.
@@ -83,10 +85,19 @@ void ffi_invoke()
 void ffi_from()
 {
   char *scratch;
-  scratch = gc_alloc(256, sizeof(char), GC_TEMP);
-  get_token(scratch, 32);
-  library = dlopen((char *)TOS, RTLD_LAZY);
-  DROP;
+
+  if (parser == TRUE)
+  {
+    scratch = gc_alloc(256, sizeof(char), GC_TEMP);
+    get_token(scratch, 32); DROP;
+  }
+  else
+  {
+    scratch = (char *)TOS; DROP;
+  }
+
+  library = dlopen(scratch, RTLD_LAZY);
+
   if (library == NULL)
     printf("ffi: Unable to open %s\n", scratch);
 }
@@ -95,6 +106,7 @@ void ffi_from()
 /******************************************************
  *|G| import   ( n"- )     Import a function taking 'n'
  *|G|                      arguments.
+ *|G|          ( n$- )     Non-parsing form
  *
  *|F| ffi_import()
  *|F| Import and name an external function. This wraps
@@ -106,10 +118,19 @@ void ffi_import()
   long args, xt;
   char *scratch;
 
+  if (parser == TRUE)
+  {
+    scratch = gc_alloc(256, sizeof(char), GC_TEMP);
+    get_token(scratch, 32); DROP;
+  }
+  else
+  {
+    scratch = (char *)TOS; DROP;
+  }
+
   args = TOS; DROP;
-  scratch = gc_alloc(256, sizeof(char), GC_TEMP);
-  get_token(scratch, 32); DROP;
   xt = (long)dlsym(library, scratch);
+
   if (xt != (long)NULL)
   {
     begin_quote();
@@ -130,6 +151,7 @@ void ffi_import()
 
 /******************************************************
  *|G| as       ( "- )      Rename the last defined word
+ *|G|          ( $-  )     Non-parsing form
  *
  *|F| ffi_rename()
  *|F| Rename the most recently defined word in the
@@ -139,7 +161,14 @@ void ffi_import()
 void ffi_rename()
 {
   char *name;
-  name = gc_alloc(256, sizeof(char), GC_TEMP);
-  get_token(name, 32); DROP;
+  if (parser == TRUE)
+  {
+    name = gc_alloc(256, sizeof(char), GC_TEMP);
+    get_token(name, 32); DROP;
+  }
+  else
+  {
+    name = (char *)TOS; DROP;
+  }
   strcpy(dictionary[last-1].name, name);
 }

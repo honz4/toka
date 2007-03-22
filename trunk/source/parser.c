@@ -35,14 +35,20 @@ extern long stack[], sp;
  *|F|   long base
  *|F|   Holds the current numeric base
  *|F|
+ *|F|   long parser
+ *|F|   When ON (TRUE), system parsing words will parse. When
+ *|F|   OFF (FALSE), they will take a string from the stack.
+ *|F|
  *
  *|G| base     ( -a )      Variable containg the current
  *|G|                      numeric base
+ *|G| parser   ( -a )      Variable holding current parser
+ *|G|                      mode.
  ******************************************************/
 FILE *input[8];
 long base=10;
 long isp=0;
-
+long parser=TRUE;
 
 
 /******************************************************
