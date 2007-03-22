@@ -22,6 +22,7 @@
 
 extern Inst *heap;
 extern long stack[], sp;
+extern long parser;
 
 
 /******************************************************
@@ -62,15 +63,26 @@ void add_entry(char *name, void *xt, void *class)
 void name_attach(void *class)
 {
   char *s;
+
+  if (parser == TRUE)
+  {
+    s = gc_alloc(128, sizeof(char), GC_TEMP);
+    get_token(s, 32); DROP;
+  }
+  else
+  {
+    s = (char *)TOS; DROP;
+  }
+
   Inst xt = (Inst)TOS; gc_keep(); DROP;
-  s = gc_alloc(128, sizeof(char), GC_TEMP);
-  get_token(s, 32); DROP;
+
   add_entry(s, xt, class);
 }
 
 
 /******************************************************
  *|G| is       ( a"- )     Attach a name to a quote
+ *|G|          ( a$- )     Non-parsing form
  *
  *|F| name_quote()
  *|F| Attach a name (from the input stream) to the 
@@ -86,6 +98,7 @@ void name_quote()
 
 /******************************************************
  *|G| is-super ( a"- )     Attach a name to a quote
+ *|G|          ( a$- )     Non-parsing form
  *
  *|F| name_super()
  *|F| Attach a name (from the input stream) to the 
@@ -101,6 +114,7 @@ void name_super()
 
 /******************************************************
  *|G| is-macro ( a"- )     Attach a name to a quote
+ *|G|          ( a$- )     Non-parsing form
  *
  *|F| name_quote_macro()
  *|F| Attach a name (from the input stream) to the 
@@ -116,6 +130,7 @@ void name_macro()
 
 /******************************************************
  *|G| is-data  ( a"- )     Attach a name to data memory
+ *|G|          ( a$- )     Non-parsing form
  *
  *|F| name_data()
  *|F| Attach a name (from the input stream) to the data
@@ -159,6 +174,7 @@ void find_word()
 /******************************************************
  *|G| \        ( "-a )     Return a quote corresponding
  *|G|                      to the specified word.
+ *|G|          ( $-a )     Non-parsing form
  *
  *|F| return_quote()
  *|F| Find a name (from the input stream) and return a
@@ -170,8 +186,14 @@ void return_quote()
   long flag;
   Inst class, xt;
 
-  char *s = gc_alloc(128, sizeof(char), GC_TEMP);
-  get_token(s, 32);
+  char *s;
+
+  if (parser == TRUE)
+  {
+    gc_alloc(128, sizeof(char), GC_TEMP);
+    get_token(s, 32);
+  }
+
   find_word();
   flag = TOS; DROP;
 

@@ -13,7 +13,7 @@
 
 #include "toka.h"
 
-extern long base, compiler, last, isp;
+extern long base, compiler, last, isp, parser;
 extern Inst *heap;
 
 
@@ -111,6 +111,7 @@ void build_dictionary()
   add_entry(":include",  &include,       &forth_class);
   add_entry(":needs",    &needs,         &forth_class);
   add_entry("base",      &base,          &data_class);
+  add_entry("parser",    &parser,        &data_class);
 
   /* quotes.c */
   add_entry("[",         &begin_quote,   &self_class);
