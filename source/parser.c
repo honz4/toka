@@ -196,8 +196,9 @@ long include_file(char *s)
 
 
 /******************************************************
- *|G| :include  ( $- )     Attempt to open a file and
+ *|G| include   ( "- )     Attempt to open a file and
  *|G|                      add it to the input stack.
+ *|G|           ( $- )     Non-parsing form
  *
  *|F| include()
  *|F| Take a filename off the stack, attempt to open
@@ -207,16 +208,27 @@ long include_file(char *s)
 void include()
 {
   char *s;
-  s = (char *)TOS; DROP;
+
+  if (parser == TRUE)
+  {
+    s = gc_alloc(256, sizeof(char), GC_TEMP);
+    get_token(s, 32); DROP;
+  }
+  else
+  {
+    s = (char *)TOS; DROP;
+  }
+
   include_file(s);
 }
 
 
 
 /******************************************************
- *|G| :needs    ( $- )     Attempt to include a file
+ *|G| needs     ( "- )     Attempt to include a file
  *|G|                      from the library (normally
  *|G|                      /usr/share/toka/library)
+ *|G|           ( $- )     Non-parsing form
  *
  *|F| needs()
  *|F| Take a filename off the stack. Attempt to open it
@@ -230,10 +242,19 @@ void needs()
   char *d;
 
   d = gc_alloc(384, sizeof(char), GC_TEMP);
-
   strcpy(d, LIBRARY);
-  s = (char *)TOS; DROP;
-  strcat(d, s);
 
+  if (parser == TRUE)
+  {
+    s = gc_alloc(256, sizeof(char), GC_TEMP);
+    get_token(s, 32); DROP;
+  }
+  else
+  {
+    display_stack();
+    s = (char *)TOS; DROP;
+  }
+
+  strcat(d, s);
   include_file(d);
 }
