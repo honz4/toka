@@ -117,7 +117,7 @@ void parse()
   char *s;
 
   delim = TOS; DROP;
-  s = gc_alloc(1024, sizeof(char), GC_MEM);
+  s = gc_alloc(4096, sizeof(char), GC_MEM);
   get_token(s, delim);
 }
 
