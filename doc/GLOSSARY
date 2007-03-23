@@ -98,11 +98,13 @@ parser   ( -a )      Variable holding current parser
 parse    ( d-a )     Parse until the character 
                      represented by 'd' is found.
                      Return a pointer to the string
-:include  ( $- )     Attempt to open a file and
+include   ( "- )     Attempt to open a file and
                      add it to the input stack.
-:needs    ( $- )     Attempt to include a file
+          ( $- )     Non-parsing form
+needs     ( "- )     Attempt to include a file
                      from the library (normally
                      /usr/share/toka/library)
+          ( $- )     Non-parsing form
 [        ( -a )      Create a new quote
 ]        ( - )       Close an open quote
 invoke   ( a- )      Execute a quote
