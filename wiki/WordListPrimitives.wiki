@@ -46,16 +46,23 @@ char-size ( -n )     Return the size of a char
                      the garbage collection list
 :see     (  "- )     Decompile the specified quote
 is       ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
 is-super ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
 is-macro ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
 is-data  ( a"- )     Attach a name to data memory
+         ( a$- )     Non-parsing form
 \        ( "-a )     Return a quote corresponding
                      to the specified word.
+         ( $-a )     Non-parsing form
 from     ( "- )      Set the library to import from
+         ( $- )      Non-parsing form
 import   ( n"- )     Import a function taking 'n'
                      arguments.
+         ( n$- )     Non-parsing form
 as       ( "- )      Rename the last defined word
-
+         ( $-  )     Non-parsing form
 file.open  ( $m-n )  Open a specified file with
                      the specified mode.
 file.close ( n- )    Close the specified file handle
@@ -89,28 +96,33 @@ count    ( a-ac )    Return an address/count pair
 /mod     ( ab-cd )   Divide and get remainder
 base     ( -a )      Variable containg the current
                      numeric base
+parser   ( -a )      Variable holding current parser
+                     mode.
 >number  ( a-nf )    Attempt to convert a string
                      to a number
 parse    ( d-a )     Parse until the character 
                      represented by 'd' is found.
                      Return a pointer to the string
-:include  ( $- )     Attempt to open a file and
+include   ( "- )     Attempt to open a file and
                      add it to the input stack.
-:needs    ( $- )     Attempt to include a file
+          ( $- )     Non-parsing form
+needs     ( "- )     Attempt to include a file
                      from the library (normally
                      /usr/share/toka/library)
+          ( $- )     Non-parsing form
 [        ( -a )      Create a new quote
 ]        ( - )       Close an open quote
 invoke   ( a- )      Execute a quote
 iterate  ( na- )     Execute a quote 'n' times
++iterate ( na- )     Execute a quote 'n' times
 t/f      ( fab- )    Invoke 'a' if 'f' flag is
                      true, 'b' if false.
-while    ( q-  f- )  Invoke a quote. If the quote
-                     returns TRUE, invoke it again.
-                     Repeat until it returns FALSE.
 recurse  ( - )       Compile a call to the top
                      quote.
 i        ( -n )      Return the current loop index
+while    ( a- )      Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
 dup      ( n-nn )    Duplicate the TOS
 drop     ( n- )      Drop the TOS
 swap     ( ab-ba )   Exchange the TOS and NOS
