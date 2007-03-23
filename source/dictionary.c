@@ -63,6 +63,7 @@ void add_entry(char *name, void *xt, void *class)
 void name_attach(void *class)
 {
   char *s;
+  Inst xt;
 
   if (parser == TRUE)
   {
@@ -74,7 +75,7 @@ void name_attach(void *class)
     s = (char *)TOS; DROP;
   }
 
-  Inst xt = (Inst)TOS; gc_keep(); DROP;
+  xt = (Inst)TOS; gc_keep(); DROP;
 
   add_entry(s, xt, class);
 }

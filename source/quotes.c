@@ -275,8 +275,12 @@ void quote_index()
  ******************************************************/
 void quote_while()
 {
-  Inst quote = (Inst)TOS; DROP;
-  long flag = TRUE;
+  Inst quote;
+  long flag;
+
+  quote = (Inst)TOS; DROP;
+  flag = TRUE;
+
   while(flag == TRUE)
   {
     rstack[rsp] = (long)ip;   rsp++;
