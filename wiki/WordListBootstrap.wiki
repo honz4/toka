@@ -76,8 +76,7 @@ This is a list of words provided by the standard Toka bootstrap. You may also wa
 || hex || - || Set the current base for numeric conversions to hexadecimal (base 16) ||
 
 {{{
-help needs include
 variable toggle off on -! +! cell- cell+ cells 
 char- char+ chars >char 
-lnparse wsparse #! 
+help lnparse wsparse #! 
 }}}
