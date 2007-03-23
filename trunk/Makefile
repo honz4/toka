@@ -41,6 +41,9 @@ default:
 	cd source && $(CC) $(CFLAGS) $(FILES) $(LDFLAGS) -o ../toka
 	make -s tclean
 
+toka:
+	make
+
 cygwin:
 	cd source && $(CC) $(CFLAGS) $(NOFFI) -DNOFFI -o ../toka
 	make -s tclean
