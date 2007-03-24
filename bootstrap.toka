@@ -100,6 +100,14 @@
 [  0 swap ! ] is off
 [ dup @ not swap ! ] is toggle
 [ cell-size malloc parser @ [ swap ] false? is-data ] is variable
+[ parser @ >r
+  parser off
+  [ 32 parse
+    dup c@ char: | <> 
+    [ variable TRUE ] [ drop FALSE ] t/f 
+  ] while
+  r> parser !
+] is variable|
 
 
 #! ---------------------------------------
@@ -141,6 +149,20 @@
 [ swap cell-size * + ! ] is put-element
 [ swap char-size * + c@ ] is get-char-element
 [ swap char-size * + c! ] is put-char-element
+
+
+#! ---------------------------------------
+#! Scope
+#! ---------------------------------------
+4 cells is-array <list>
+variable <level>
+
+[ last @ <level> @ <list> put-element
+  <level> @ 1 + <level> !
+] is {
+[ <level> @ 1 - <level> !
+  <level> @ <list> get-element last !
+] is }
 
 
 #! ---------------------------------------
