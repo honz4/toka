@@ -1,0 +1,98 @@
+#! -------------------------------------------------
+#! An editor
+#!
+#! This is modelled after the block editor in 
+#! RetroForth. The implementation is quite different
+#! though.
+#!
+#! 1) Edits *normal* files, not blocks with a fixed
+#!    line lengths.
+#! 2) Limits: 
+#!    a) 4,177,920 bytes of file size
+#!    b) 1024 blocks, 16 lines per block
+#!    c) 255 chars per line
+#!
+#! Todo:
+#!  . Load/save files
+#!  . Sliding window into the underlying file
+#! -------------------------------------------------
+3 import memset as fill
+
+
+#! -------------------------------------------------
+#! The global pool of blocks. This stores pointers
+#! to each block.
+#! -------------------------------------------------
+1025 cells is-array super-buffer
+1024 [ 17 cells malloc keep i super-buffer put-element ] +iterate
+
+
+variable buffer
+variable block
+
+#! -------------------------------------------------
+#! Allocate space foe each line in each of the blocks.
+#! -------------------------------------------------
+[ 16 [ 256 malloc keep i buffer @ put-element ] +iterate ] is make-block
+1024 [ i super-buffer get-element buffer ! make-block ] +iterate 
+1 super-buffer get-element buffer !
+1 block !
+
+
+#! -------------------------------------------------
+#! The editing commands
+#! -------------------------------------------------
+[ dup block ! block @ super-buffer get-element buffer ! ] is s
+[ block @ 1- s ] is p
+[ block @ 1+ s ] is n
+[ buffer @ get-element 0 256 fill drop ] is d
+[ 16 [ i d ] +iterate ] is x
+[ >r lnparse count r> buffer @ get-element swap copy ] is it
+
+
+#! -------------------------------------------------
+#! The code to view a block, in a nicely formatted
+#! fashion.
+#! -------------------------------------------------
+[ buffer @ get-element type cr ] is vl
+[ 3 [ space ] iterate 70 [ char: - emit ] iterate cr ] is ---
+[ --- 16 [ i dup . vl ] +iterate --- ] is v
+
+
+#! -------------------------------------------------
+#! Start of stubs to load/save files
+#! -------------------------------------------------
+1024 chars is-array filename
+1024 16 * is-data #-of-lines
+[ #-of-lines ! ] is set-#-of-lines
+[ ] is set-file
+[ ] is load
+[ ] is save
+
+#! -------------------------------------------------
+#! Start of a "help" word
+#! -------------------------------------------------
+[
+" Toka Editor
+  This is a small, block-style editor for Toka. It
+  has some differences, mainly in that it allows
+  for editing actual files. A brief command summary
+  follows:
+
+  n it .....      Insert ..... into line 'n'
+  n d             Delete the text on line 'n'
+    x             Delete the current block
+    v             View the current block
+  n vl            View line 'n' of the current block
+  n s             Select block 'n'
+    p             Select the previous block
+    n             Select the next block
+    set-file ...  Set ... as the file to load/save (STUB ONLY)
+    load          Load from the selected file (STUB ONLY)
+    save          Save to the selected file (STUB ONLY)
+    help          Display this text
+" type
+] is help
+
+t: Type 'help' (without the quotes) for a short
+t: summary of the editor commands
