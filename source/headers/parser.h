@@ -4,3 +4,4 @@ void to_number();
 long include_file(char *s);
 void include();
 void needs();
+void force_eof();

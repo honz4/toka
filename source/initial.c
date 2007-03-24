@@ -110,6 +110,7 @@ void build_dictionary()
   add_entry(">number",   &to_number,     &forth_class);
   add_entry("include",   &include,       &forth_class);
   add_entry("needs",     &needs,         &forth_class);
+  add_entry("end.",      &force_eof,     &forth_class);
   add_entry("base",      &base,          &data_class);
   add_entry("parser",    &parser,        &data_class);
 

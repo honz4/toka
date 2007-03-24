@@ -258,3 +258,19 @@ void needs()
   strcat(d, s);
   include_file(d);
 }
+
+
+/******************************************************
+ *|G| end.      ( - )      Remove the current file from
+ *|G|                      the input stack
+ *
+ *|F| force_eof()
+ *|F| Remove the current file from the input stack. This
+ *|F| can be used to abort an include.
+ *|F|
+ ******************************************************/
+void force_eof()
+{
+  fclose(input[isp]);
+  isp--;
+}
