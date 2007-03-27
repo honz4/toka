@@ -157,7 +157,6 @@
 #! Scope
 #! ---------------------------------------
 4 cells is-array <list>
-variable <level>
 
 [ last @ <list> @ 1+ <list> put-element
   1 <list> +!

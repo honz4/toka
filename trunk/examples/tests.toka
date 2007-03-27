@@ -26,6 +26,7 @@ include tests/data
 include tests/parser
 include tests/dictionary
 include tests/array
+include tests/scope
 include tests/gc
 
 i: ----------------------------------------------
