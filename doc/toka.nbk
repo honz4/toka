@@ -1,0 +1,288 @@
+# Notebook Database File
+
+#--------------------------------------------------
+# Building
+
+page Building {make
+} 1175216542
+
+
+#--------------------------------------------------
+# First Steps
+
+page {First Steps} {
+} 1175216561
+
+
+#--------------------------------------------------
+# Home
+
+page Home {Hello, and Welcome to Toka!
+
+Toka is a small language drawing influence primarily from Forth. It is
+designed to be easy to learn, expand on, and yet remains useful enough
+for actual programs to be written in it.
+
+* [Building] and [Installation]
+* [First Steps]
+} 1175216511
+
+
+#--------------------------------------------------
+# Index
+
+page Index {[@pageIndex@]} 1026586734
+
+
+#--------------------------------------------------
+# Installation
+
+page Installation {make install
+} 1175216551
+
+
+#--------------------------------------------------
+# New Pages
+
+page {New Pages} {To create a new page,
+
+* Add a link to it in this page (or on any other page where the link would
+  be more appropriate):
+** Press the "Edit" button.
+** Go to the bottom of the page (or anywhere, really).
+** Type the page's name in square brackets, &lb;Like This&rb;.
+** Press the "Done" button.
+* Click on the link.
+* On the Status Line, down at the bottom of the window, Notebook will ask
+  if you want to create the page.  Type "yes" or "y", and press Enter.
+
+<h>New Pages</h>
+
+* [Tour]
+* [Sandbox]} 1102291321
+
+
+#--------------------------------------------------
+# Recent Changes
+
+page {Recent Changes} {[@recentChanges@]} 1026585675
+
+
+#--------------------------------------------------
+# Sandbox
+
+page Sandbox {This is place to experiment with Notebook's way of marking up text.
+Edit this page to see how you type things; then save it to see what it looks
+like when you're browsing.
+
+= You Can Have Section Headers =
+
+*	You can have bulleted lists.
+*	You can type <b>bold</b>, <i>italic</i>, and <m>monospace</m> text,
+	or any combination.
+*   You can have <h>inline header text</h>.
+*	You can have <s>very small</s> text.
+*   You can <x>strike things out</x>.
+
+:	You can simply indent a paragraph without adding a bullet.
+
+Paragraphs end with the first blank line, bullet item, or indented line.
+No matter how many lines long a paragraph is, Notebook will wrap it for
+display so that it looks nice.
+
+ If you leave a space character at the beginning of a paragraph, the whole
+ paragraph is "Preformatted".  That means that it's displayed in a monospace
+ font, exactly as is.  It's conventional to put whitespace at the beginning of
+ every line of a preformatted paragraph, but that's not necessary.
+
+Preformatted text is useful for typing in tables and things like that.} 1113419698
+
+
+#--------------------------------------------------
+# Tour
+
+page Tour {Welcome to a tour of your new Notebook!
+
+Notebook has many features; this tour will touch on the highlights.  You
+can find more information about any of them via the [@helpbtn Help@] menu.
+
+<h>Pages are linked together</h>
+
+The most important feature of Notebook is that a notebook is a collection
+of pages, and the pages are linked together.  You've already discovered
+this, by clicking [Tour] to get to this page.
+
+: [Click here to continue...|Tour 2]} 1102291376
+
+
+#--------------------------------------------------
+# Tour 3
+
+page {Tour 3} {This page is part of a [tour] of Notebook's features.
+
+= You can style your text =
+
+You can use <b>boldface</b>, <i>italics</i>, and <m>monospace</m> text, or
+a combination of <b><i><m>all three</m></i></b>.
+
+You can <x>strikeout</x> any text you like.
+
+You can use a <h>large font</h> for emphasis, or a 
+<s>small font</s> for incidental notes.
+
+If you click the Edit button (the one with the pencil on it), you'll see
+that the above paragraphs look like this, only not indented:
+
+ You can use <b>boldface</b>, <i>italics</i>, and <m>monospace</m> text, or
+ a combination of <b><i><m>all three</m></i></b>.
+
+ You can <x>strikeout</x> any text you like.
+
+ You can use a <h>large font</h> for emphasis, or a 
+ <s>small font</s> for incidental notes.
+
+If you put whitespace at the beginning of a paragraph, like those two just
+above this have, then they get displayed "preformatted", just as you typed them.
+
+: [Click here to continue...|Tour 4]} 1113419869
+
+
+#--------------------------------------------------
+# Tour 5
+
+page {Tour 5} {This page is part of a [tour] of Notebook's features.
+
+<h>You can find your pages</h>
+
+You can always find any page you create in Notebook, even if you don't
+remember how to get there by clicking on links.
+
+* You can press the Index button (the one with the Book on it), or select
+  "Page/Index" from the menu, to see an alphabetical list of the pages in your Notebook.
+
+* You can select "Page/Recent Changes" from the menu to see a list of
+  all of your pages, starting with the ones you've edited most recently.
+
+* You can type any text you like in the "Search" field above, and press
+  Enter, and Notebook  
+  will show you a list of pages that contain it.
+
+Try it!  Once you're done, click the Back button (the one with the arrow
+pointing to the left) repeatedly until you're
+back to this page--or find [Tour 5] in the index!
+
+: [Click here to continue...|Tour 6]} 1113419918
+
+
+#--------------------------------------------------
+# Tour 6
+
+page {Tour 6} {This page is part of a [tour] of Notebook's features.
+
+<h>You can do magic!</h>
+
+Notebook is programmed in a language called Tcl.  
+You can use [@helpbtn "the Tcl language"@] in your pages to do magic.  There are
+two kinds of magic: [@helpbtn "magic button"@]s and 
+[@helpbtn "embedded macro"@]s.
+Both of them are represented on this page (you'll see them if you edit
+this page).
+
+A magic button looks like a link, but it's colored magenta instead of blue.
+Whereas a link just takes you to the named page, a magic button executes
+a [@helpbtn "Notebook command"@].  There are lots of magic buttons on 
+this page; see what happens if you click them.
+
+An embedded macro is a [@helpbtn "Notebook command"@] that's executed 
+whenever the page displays.  It returns some text that's included into
+the page just as though you'd typed it.  If you edit this page, then toward
+the top you'll see an embedded macro that looks like this:
+
+:	<m>&lb;@helpbtn "the Tcl language"@&rb;</m>
+
+Here, "helpbtn" is an embedded macro that creates a magic button that pops up
+the Help window with the named topic, as if you'd typed this:
+
+	[%the Tcl language|showhelp "the Tcl language"%]
+
+Of course, the macro is much shorter because it doesn't need to repeat the
+topic text.  "showhelp" is a command that pops up Notebook's on-line help
+and makes it go to the specified topic. 
+
+: [Click here to continue...|Tour 7]} 1102291940
+
+
+#--------------------------------------------------
+# Tour 7
+
+page {Tour 7} {This page is part of a [tour] of Notebook's features.
+
+<h>But wait--there's more!</h>
+
+Notebook can do lots of other things as well.  If you create a page you don't
+like, you can delete it.  If you decide you don't like a page's name, you can
+rename it; Notebook will automatically update all of the links.  You can
+define new [@helpbtn "Notebook commands"@] on your [User Code] page, 
+and use them in [@helpbtn "embedded macro"@]s and [@helpbtn "magic button"@]s.
+
+And that means you can do almost anything you can think of.} 1028999577
+
+
+#--------------------------------------------------
+# User Code
+
+page {User Code} {Use this page to extend Notebook using the 
+[@helpbtn "the Tcl language"@].  Commands you add here can be used as
+[@helpbtn "Magic Button"@]s and [@helpbtn "Embedded Macro"@]s.
+
+Note that you can intersperse normal prose in between blocks of Tcl code.
+
+= User Menu =
+
+The [@helpbtn "User Menu"@] pops up when you right-click or control-click 
+on a page in the [@helpbtn "Page Browser"@].  You can customize it however you like.
+
+#Tcl
+usermenu {
+    Back back-page
+    Home {goto-page Home}
+}
+#unTcl
+
+= Edit Menu =
+
+The [@helpbtn "Edit Menu"@] pops up when you right-click or control-click 
+on a page in the [@helpbtn "Page Editor"@].  You can customize it however you like.
+
+#Tcl
+editmenu {
+    Undo             undo-change
+    Redo             redo-change
+    separator {}
+    Cut              cut-string
+    Copy             copy-string
+    Paste            paste-string
+    "Insert Page..." insert-page
+}
+#unTcl
+
+= Example =
+
+The following [@helpbtn "embedded macro"@] used to be used by the
+[Tour] to create a [@helpbtn "magic button"@] that said 
+"Click here to continue..." and took you to the next page in the tour
+when you clicked it.  It's no longer needed, because now you can write
+such links directly, like this:
+
+  [Click here to continue...|Tour 2]
+
+Still, it's a nice example of how to write a macro that creates a button.
+
+#Tcl
+proc clickToContinue {name} {
+	return "\[%Click here to continue...|goto-page [list $name]%\]"
+}
+#unTcl} 1113420734
+
+
+# End of Notebook Database File
