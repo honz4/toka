@@ -3,7 +3,13 @@
 #--------------------------------------------------
 # bits.c
 
-page bits.c {#pre
+page bits.c {= Use =
+
+This file provides a handful of primitives for manipulating bits.
+
+= Functions Provided =
+
+#pre
 lshift()
 Shift TOS left by NOS bits
 
@@ -18,7 +24,18 @@ Perform a bitwise OR
 
 xor()
 Perform a bitwise XOR
-#unpre} 1175221783
+#unpre
+
+= Primitives Provided =
+
+#pre
+ <<
+ >>
+ and
+ or
+ xor
+#unpre
+} 1175234121
 
 
 #--------------------------------------------------
@@ -41,14 +58,20 @@ The process using Rebuild:
 #pre
   cd source
   rebuild toka
-#unpre
-} 1175233124
+#unpre} 1175233124
 
 
 #--------------------------------------------------
 # class.c
 
-page class.c {#pre
+page class.c {= Use =
+
+This is where the [word classes] are implemented. It does not export any
+functions directly to Toka.
+
+= Functions Provided =
+
+#pre
 forth_class()
 If compiling, compile the xt into the current
 quote. If interpreting, call the word.
@@ -77,13 +100,25 @@ quote_forth_class()
 Perform data_class() semantics, then, if 
 compiling, compile a call to invoke(). Otherwise,
 invoke() is called with the xt on TOS.
-#unpre} 1175221809
+#unpre
+
+= Primitives Provided =
+
+<i>None</i>
+} 1175293842
 
 
 #--------------------------------------------------
 # cmdline.c
 
-page cmdline.c {#pre
+page cmdline.c {= Use =
+
+Build the list of command line arguments that Toka programs can access.
+This is a subset of the full arguments passed to the <b>toka</b> executable.
+
+= Functions Provided =
+
+#pre
 Variables:
   long arg_count
   Holds the number of command line arguments
@@ -102,13 +137,28 @@ file names used to launch this program.
 build_arg_list(char *args[], long count)
 Copy pointers to the command line arguments to
 arg_list[]. Also sets arg_count.
-#unpre} 1175221831
+#unpre
+
+= Primitives Provided =
+
+#pre
+#args
+arglist
+#unpre
+} 1175293792
 
 
 #--------------------------------------------------
 # conditionals.c
 
-page conditionals.c {#pre
+page conditionals.c {= Use =
+
+Contains the implementation of the core conditionals. These are words
+which do comparisons, and return a flag on the stack.
+
+= Functions Provided =
+
+#pre
 less_than()
 Compare TOS and NOS, return a flag.
 
@@ -120,13 +170,30 @@ Compare TOS and NOS, return a flag.
 
 not_equals()
 Compare TOS and NOS, return a flag.
-#unpre} 1175221847
+#unpre
+
+= Primitives Provided =
+
+#pre
+<
+>
+=
+<>
+#unpre
+} 1175293903
 
 
 #--------------------------------------------------
 # console.c
 
-page console.c {#pre
+page console.c {= Use =
+
+Provide a very basic console interface. The provided interface is
+intentionally kept to a minimum, a better console interface can be loaded later.
+
+= Functions Provided =
+
+#pre
 dot()
 Display the number on TOS using the current base
 if possible.
@@ -141,13 +208,28 @@ Display the string TOS points to. Consumes TOS.
 bye()
 Quit Toka
 #unpre
-} 1175233346
+
+= Primitives Provided =
+
+#pre
+.
+emit
+type
+bye
+#unpre
+} 1175293981
 
 
 #--------------------------------------------------
 # data.c
 
-page data.c {#pre
+page data.c {= Use =
+
+These are words useful for accessing and modifying data.
+
+= Functions Provided =
+
+#pre
 make_literal()
 Compile a call to lit() and then place TOS into
 the next memory location.
@@ -180,13 +262,33 @@ Push the size of a cell to the stack.
 char_size()
 Push the size of a char to the stack
 #unpre
-} 1175233375
+
+= Primitives Provided =
+
+#pre
+char-size
+cell-size
+copy
+c!
+c@
+!
+@
+#
+#unpre
+} 1175294055
 
 
 #--------------------------------------------------
 # debug.c
 
-page debug.c {#pre
+page debug.c {= Use =
+
+The start of debugging support. This provides a few simple tools that can
+help when trying to track down a bug.
+
+= Functions Provided =
+
+#pre
 words()
 Display a list of all named words
 
@@ -196,13 +298,28 @@ Display all items on the stack.
 gc_info()
 Display information about Toka's memory use
 #unpre
-} 1175233399
+
+= Primitives Provided =
+
+#pre
+:words
+:stack
+:gc
+#unpre
+} 1175294124
 
 
 #--------------------------------------------------
 # decompile.c
 
-page decompile.c {#pre
+page decompile.c {= Use =
+
+This allows for decompiling a quote and displaying the source needed to
+recreate it. 
+
+= Functions Provided =
+
+#pre
 long resolve_name(Inst xt)
 Search for a name in the dictionary that corresponds
 to 'xt'. Display it if found, and return a flag.
@@ -214,65 +331,32 @@ result on the screen.
 see()
 Decompile the quote on the stack.
 #unpre
-} 1175233419
+
+= Primitives Provided =
+
+#pre
+:see
+#unpre
+} 1175294160
 
 
 #--------------------------------------------------
 # dictionary.c
 
-page dictionary.c {#pre
-Variables:
-  ENTRY dictionary[4096];
-  Holds the dictionary entries, up to 4096
-
-  long last
-  A pointer to the most recent dictionary entry
-
-add_entry(char *name, Inst xt, Inst class)
-Add an entry to the dictionary.
-
-name_attach(void *class)
-Attach a name (from the input stream) to the 
-specified quote address. This word is given the
-semantics of the specified class.
-
-name_quote()
-Attach a name (from the input stream) to the 
-specified quote address. This word is given the
-semantics of quote_forth_class().
-
-name_super()
-Attach a name (from the input stream) to the 
-specified quote address. This word is given the
-semantics of quote_super_class().
-
-name_quote_macro()
-Attach a name (from the input stream) to the 
-specified quote address. This word is given the
-semantics of quote_macro_class().
-
-name_data()
-Attach a name (from the input stream) to the data
-at the specified address. Semantics are the same
-as the data_class().
-
-find_word()
-Search for a word (name taken from the string
-passed on TOS) in the dictionary. Returns the
-xt, class, and a flag of -1 if found. If not
-found, returns only a flag of 0.
-
-return_quote()
-Find a name (from the input stream) and return a
-quote that corresponds to the word.
-#unpre
-} 1175233445
+page dictionary.c =\ Use\ =\n\nThis\ file\ provides\ the\ functionality\ to\ create\ new\ dictionary\ entries\ and\nsearch\ for\ a\ specific\ entry.\n\n=\ Functions\ Provided\ =\n\n#pre\nVariables:\n\ \ ENTRY\ dictionary\[4096\]\;\n\ \ Holds\ the\ dictionary\ entries,\ up\ to\ 4096\n\n\ \ long\ last\n\ \ A\ pointer\ to\ the\ most\ recent\ dictionary\ entry\n\nadd_entry(char\ *name,\ Inst\ xt,\ Inst\ class)\nAdd\ an\ entry\ to\ the\ dictionary.\n\nname_attach(void\ *class)\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ the\ specified\ class.\n\nname_quote()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_forth_class().\n\nname_super()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_super_class().\n\nname_quote_macro()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_macro_class().\n\nname_data()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ data\nat\ the\ specified\ address.\ Semantics\ are\ the\ same\nas\ the\ data_class().\n\nfind_word()\nSearch\ for\ a\ word\ (name\ taken\ from\ the\ string\npassed\ on\ TOS)\ in\ the\ dictionary.\ Returns\ the\nxt,\ class,\ and\ a\ flag\ of\ -1\ if\ found.\ If\ not\nfound,\ returns\ only\ a\ flag\ of\ 0.\n\nreturn_quote()\nFind\ a\ name\ (from\ the\ input\ stream)\ and\ return\ a\nquote\ that\ corresponds\ to\ the\ word.\n#unpre\n\n=\ Primitives\ Provided\ =\n\n#pre\nis\nis-data\nis-macro\nis-super\n\\\nlast\n#unpre\n 1175294300
 
 
 #--------------------------------------------------
 # ffi.c
 
-page ffi.c {#pre
+page ffi.c {= Use =
+
+Implements the [Foreign Function Interface], which allows use of external
+libraries.
+
+= Functions Provided =
+
+#pre
 Variables:
   void *library
   Pointer to the most recently opened library
@@ -292,13 +376,27 @@ ffi_rename()
 Rename the most recently defined word in the
 dictionary.
 #unpre
-} 1175233462
+
+= Primitives Provided =
+
+#pre
+from
+import
+as
+#unpre
+} 1175294401
 
 
 #--------------------------------------------------
 # files.c
 
-page files.c {#pre
+page files.c {= Use =
+
+Allows for reading and writing data to files.
+
+= Functions Provided =
+
+#pre
 file_open()
 Open a file using the specified mode. Modes are
 a direct map to the fopen() modes: "r", "r+", "w",
@@ -324,7 +422,19 @@ This is just a simple wrapper over fseek().
 file_pos()
 This is just a simple wrapper over ftell().
 #unpre
-} 1175233479
+
+= Primitives Provided =
+
+#pre
+file.open
+file.close
+file.read
+file.write
+file.size
+file.seek
+file.pos
+#unpre
+} 1175294463
 
 
 #--------------------------------------------------
@@ -336,7 +446,13 @@ page {First Steps} {} 1175216561
 #--------------------------------------------------
 # gc.c
 
-page gc.c {#pre
+page gc.c {= Use =
+
+Implements a memory allocator and basic garbage collector.
+
+= Functions Provided =
+
+#pre
 Variables:
   GCITEM gc_list[128]
   Holds the list of items marked as garbage
@@ -386,7 +502,15 @@ toka_malloc()
 Allocate TOS bytes of memory. Returns a pointer to
 the allocated memory.
 #unpre
-} 1175233499
+
+= Primitives Provided =
+
+#pre
+keep
+gc
+malloc
+#unpre
+} 1175294534
 
 
 #--------------------------------------------------
@@ -435,12 +559,22 @@ page Index {[@pageIndex@]} 1026586734
 #--------------------------------------------------
 # initial.c
 
-page initial.c {#pre
+page initial.c {= Use =
+
+Build the initial dictionary
+
+= Functions Provided =
+
+#pre
 build_dictionary()
 Attach names and classes to the various initial
 words in the Toka language.
 #unpre
-} 1175233515
+
+= Primitives Provided =
+
+<i>None</i>
+} 1175294584
 
 
 #--------------------------------------------------
@@ -481,7 +615,13 @@ basic information about your system (OS, CPU type)} 1175217069
 #--------------------------------------------------
 # interpret.c
 
-page interpret.c {#pre
+page interpret.c {= Use =
+
+The interpreter itself.
+
+= Functions Provided =
+
+#pre
 Variables:
   long compiler
   When set to 0, interpret; when set to -1, 
@@ -509,13 +649,26 @@ string from the stack.
 interpret()
 Accept and process input.
 #unpre
-} 1175233541
+
+= Primitives Provided =
+
+#pre
+compiler
+count
+#unpre
+} 1175294621
 
 
 #--------------------------------------------------
 # math.c
 
-page math.c {#pre
+page math.c {= Use =
+
+Basic math operations on the stack.
+
+= Functions Provided =
+
+#pre
 add()
 Add TOS to NOS
 
@@ -528,7 +681,16 @@ Multiply TOS by NOS
 divmod()
 Divide and return the result, including remainder
 #unpre
-} 1175233600
+
+= Primitives Provided =
+
+#pre
++
+-
+*
+/mod
+#unpre
+} 1175294665
 
 
 #--------------------------------------------------
@@ -555,7 +717,13 @@ page {New Pages} {To create a new page,
 #--------------------------------------------------
 # parser.c
 
-page parser.c {#pre
+page parser.c {= Use =
+
+Implement the parser.
+
+= Functions Provided =
+
+#pre
 Variables:
   FILE *input[]
   Current file stream to parse from. Setup as
@@ -607,13 +775,30 @@ force_eof()
 Remove the current file from the input stack. This
 can be used to abort an include.
 #unpre
-} 1175233637
+
+= Primitives Provided =
+
+#pre
+>number
+parser
+parse
+include
+needs
+end.
+#unpre
+} 1175294722
 
 
 #--------------------------------------------------
 # quotes.c
 
-page quotes.c {#pre
+page quotes.c {= Use =
+
+Build, operate on quotes.
+
+= Functions Provided =
+
+#pre
 Variables:
   QUOTE quotes[8]
   Holds details about the compiler state, heap,
@@ -674,7 +859,20 @@ quote_while()
 Return execution of a quote until the quote
 returns FALSE.
 #unpre
-} 1175233659
+
+= Primitives Provided =
+
+#pre
+[
+]
+recurse
+i
+while
+invoke
+iterate
++iterate
+#unpre
+} 1175294781
 
 
 #--------------------------------------------------
@@ -722,7 +920,13 @@ page Search {[@searchIndex@]} 1175217539
 #--------------------------------------------------
 # stack.c
 
-page stack.c {#pre
+page stack.c {= Use =
+
+Basic stack operations.
+
+= Functions Provided =
+
+#pre
 stack_dup()
 Duplicate the TOS
 
@@ -741,18 +945,39 @@ Pop TORS to the data stack
 stack_depth()
 Return the number of items on the stack
 #unpre
-} 1175233698
+
+= Primitives Provided =
+
+#pre
+dup
+drop
+swap
+>r
+r>
+depth
+#unpre
+} 1175294819
 
 
 #--------------------------------------------------
 # toka.c
 
-page toka.c {#pre
+page toka.c {= Use =
+
+Setup and call the interpreter.
+
+= Functions Provided =
+
+#pre
 main()
 The main entry point into Toka. Sets up the
 dictionary and calls interpret().
 #unpre
-} 1175233711
+
+= Primitives Provided =
+
+<i>None</i>
+} 1175294848
 
 
 #--------------------------------------------------
@@ -945,7 +1170,13 @@ proc clickToContinue {name} {
 #--------------------------------------------------
 # vm.c
 
-page vm.c {#pre
+page vm.c {= Use =
+
+Implements the heart of the virtual machine.
+
+= Functions Provided =
+
+#pre
 Variables:
   Inst *heap
   Pointer into the current heap
@@ -975,7 +1206,13 @@ lit()
 Push the value in the following memory location
 to the stack
 #unpre
-} 1175233730
+
+= Primitives Provided =
+
+#pre
+heap
+#unpre
+} 1175294932
 
 
 #--------------------------------------------------
