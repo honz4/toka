@@ -415,6 +415,10 @@ Take a filename off the stack. Attempt to open it
 from the library, and add it to the input stream 
 if successful.
 
+force_eof()
+Remove the current file from the input stack. This
+can be used to abort an include.
+
 
 FILE: quotes.c
 

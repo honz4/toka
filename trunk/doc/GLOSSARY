@@ -105,6 +105,8 @@ needs     ( "- )     Attempt to include a file
                      from the library (normally
                      /usr/share/toka/library)
           ( $- )     Non-parsing form
+end.      ( - )      Remove the current file from
+                     the input stack
 [        ( -a )      Create a new quote
 ]        ( - )       Close an open quote
 invoke   ( a- )      Execute a quote
