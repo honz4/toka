@@ -3,21 +3,37 @@
 #--------------------------------------------------
 # Building
 
-page Building {make
-} 1175216542
+page Building {To build Toka, you will need the following:
+
+* GCC 2.9x, 3.x, or 4.x
+* Make (GNU Make is recommended, though others may work)
+* Alternative: You can also use <em>Rebuild</em> instead of Make
+
+The process using Make:
+
+#pre
+  make
+#unpre
+
+The process using Rebuild:
+
+#pre
+  cd source
+  rebuild toka
+#unpre
+} 1175216900
 
 
 #--------------------------------------------------
 # First Steps
 
-page {First Steps} {
-} 1175216561
+page {First Steps} {} 1175216561
 
 
 #--------------------------------------------------
 # Home
 
-page Home {Hello, and Welcome to Toka!
+page Home {Hello, and welcome to Toka!
 
 Toka is a small language drawing influence primarily from Forth. It is
 designed to be easy to learn, expand on, and yet remains useful enough
@@ -25,7 +41,31 @@ for actual programs to be written in it.
 
 * [Building] and [Installation]
 * [First Steps]
-} 1175216511
+* [Words and Their Uses]
+
+
+Internals:
+* [bits.c]
+* [class.c]
+* [cmdline.c]
+* [conditionals.c]
+* [console.c]
+* [data.c]
+* [debug.c]
+* [decompile.c]
+* [dictionary.c]
+* [ffi.c]
+* [files.c]
+* [gc.c]
+* [initial.c]
+* [interpret.c]
+* [math.c]
+* [parser.c]
+* [quotes.c]
+* [stack.c]
+* [toka.c]
+* [vm.c]
+} 1175217413
 
 
 #--------------------------------------------------
@@ -37,8 +77,37 @@ page Index {[@pageIndex@]} 1026586734
 #--------------------------------------------------
 # Installation
 
-page Installation {make install
-} 1175216551
+page Installation {If you built it using Make:
+
+#pre
+  make install
+#unpre
+
+Or, if you built it using Rebuild:
+
+#pre
+  cp source/toka /usr/bin
+  mkdir -p /usr/share/toka
+  cp bootstrap.toka /usr/share/toka
+#unpre
+
+After installation, run the test suite:
+
+#pre
+  make tests
+#unpre
+
+Or:
+
+#pre
+  cd examples
+  toka tests.toka >test.log
+#unpre
+
+Look for any failures in the test.log. If you encounter a problem, please
+forward the test.log to charles.childers@gmail.com along with some
+basic information about your system (OS, CPU type)
+} 1175217069
 
 
 #--------------------------------------------------
