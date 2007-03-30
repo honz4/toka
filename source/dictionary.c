@@ -202,7 +202,7 @@ void return_quote()
   {
     class = (Inst)TOS; DROP;
     xt = (Inst)TOS; DROP;
-    if(class == &quote_macro_class)
+    if(class == &quote_macro_class || class == quote_super_class)
       class = &quote_forth_class;
     if(class == &self_class)
       class = &forth_class;
