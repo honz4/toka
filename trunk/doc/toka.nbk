@@ -29,13 +29,12 @@ Perform a bitwise XOR
 = Primitives Provided =
 
 #pre
- <<
- >>
- and
- or
- xor
-#unpre
-} 1175234121
+<<       ( ab-c )    Shift 'b' left by 'a' bits
+>>       ( ab-c )    Shift 'b' right by 'a' bits
+and      ( ab-c )    Perform a bitwise AND
+or       ( ab-c )    Perform a bitwise OR
+xor      ( ab-c )    Perform a bitwise XOR
+#unpre} 1175295170
 
 
 #--------------------------------------------------
@@ -45,7 +44,6 @@ page Building {To build Toka, you will need the following:
 
 * GCC 2.9x, 3.x, or 4.x
 * Make (GNU Make is recommended, though others may work)
-* Alternative: You can also use <i>Rebuild</i> instead of Make
 
 The process using Make:
 
@@ -53,12 +51,28 @@ The process using Make:
   make
 #unpre
 
-The process using Rebuild:
+The build system should be able to detect the need for libdl.so (Linux,
+BeOS) or whether dlopen() and dlsym() are provided by libc.so (BSD). You
+can also build a version without the [FFI], but this is not recommended
+as it reduces the usefulness of Toka significantly. This can be done via:
 
 #pre
-  cd source
-  rebuild toka
-#unpre} 1175233124
+  make vanilla
+#unpre
+
+If you are using the experimental Cygwin support, build using:
+
+#pre
+  make cygwin
+#unpre
+
+As a final note, some pieces of documentation can be updated automatically
+as well:
+
+#pre
+  make docs
+#unpre
+} 1175313386
 
 
 #--------------------------------------------------
@@ -104,8 +118,7 @@ invoke() is called with the xt on TOS.
 
 = Primitives Provided =
 
-<i>None</i>
-} 1175293842
+<i>None</i>} 1175293842
 
 
 #--------------------------------------------------
@@ -144,8 +157,7 @@ arg_list[]. Also sets arg_count.
 #pre
 #args
 arglist
-#unpre
-} 1175293792
+#unpre} 1175293792
 
 
 #--------------------------------------------------
@@ -179,8 +191,7 @@ Compare TOS and NOS, return a flag.
 >
 =
 <>
-#unpre
-} 1175293903
+#unpre} 1175293903
 
 
 #--------------------------------------------------
@@ -216,8 +227,7 @@ Quit Toka
 emit
 type
 bye
-#unpre
-} 1175293981
+#unpre} 1175293981
 
 
 #--------------------------------------------------
@@ -274,8 +284,7 @@ c@
 !
 @
 #
-#unpre
-} 1175294055
+#unpre} 1175294055
 
 
 #--------------------------------------------------
@@ -305,8 +314,7 @@ Display information about Toka's memory use
 :words
 :stack
 :gc
-#unpre
-} 1175294124
+#unpre} 1175294124
 
 
 #--------------------------------------------------
@@ -336,14 +344,13 @@ Decompile the quote on the stack.
 
 #pre
 :see
-#unpre
-} 1175294160
+#unpre} 1175294160
 
 
 #--------------------------------------------------
 # dictionary.c
 
-page dictionary.c =\ Use\ =\n\nThis\ file\ provides\ the\ functionality\ to\ create\ new\ dictionary\ entries\ and\nsearch\ for\ a\ specific\ entry.\n\n=\ Functions\ Provided\ =\n\n#pre\nVariables:\n\ \ ENTRY\ dictionary\[4096\]\;\n\ \ Holds\ the\ dictionary\ entries,\ up\ to\ 4096\n\n\ \ long\ last\n\ \ A\ pointer\ to\ the\ most\ recent\ dictionary\ entry\n\nadd_entry(char\ *name,\ Inst\ xt,\ Inst\ class)\nAdd\ an\ entry\ to\ the\ dictionary.\n\nname_attach(void\ *class)\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ the\ specified\ class.\n\nname_quote()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_forth_class().\n\nname_super()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_super_class().\n\nname_quote_macro()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_macro_class().\n\nname_data()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ data\nat\ the\ specified\ address.\ Semantics\ are\ the\ same\nas\ the\ data_class().\n\nfind_word()\nSearch\ for\ a\ word\ (name\ taken\ from\ the\ string\npassed\ on\ TOS)\ in\ the\ dictionary.\ Returns\ the\nxt,\ class,\ and\ a\ flag\ of\ -1\ if\ found.\ If\ not\nfound,\ returns\ only\ a\ flag\ of\ 0.\n\nreturn_quote()\nFind\ a\ name\ (from\ the\ input\ stream)\ and\ return\ a\nquote\ that\ corresponds\ to\ the\ word.\n#unpre\n\n=\ Primitives\ Provided\ =\n\n#pre\nis\nis-data\nis-macro\nis-super\n\\\nlast\n#unpre\n 1175294300
+page dictionary.c =\ Use\ =\n\nThis\ file\ provides\ the\ functionality\ to\ create\ new\ dictionary\ entries\ and\nsearch\ for\ a\ specific\ entry.\n\n=\ Functions\ Provided\ =\n\n#pre\nVariables:\n\ \ ENTRY\ dictionary\[4096\]\;\n\ \ Holds\ the\ dictionary\ entries,\ up\ to\ 4096\n\n\ \ long\ last\n\ \ A\ pointer\ to\ the\ most\ recent\ dictionary\ entry\n\nadd_entry(char\ *name,\ Inst\ xt,\ Inst\ class)\nAdd\ an\ entry\ to\ the\ dictionary.\n\nname_attach(void\ *class)\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ the\ specified\ class.\n\nname_quote()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_forth_class().\n\nname_super()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_super_class().\n\nname_quote_macro()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_macro_class().\n\nname_data()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ data\nat\ the\ specified\ address.\ Semantics\ are\ the\ same\nas\ the\ data_class().\n\nfind_word()\nSearch\ for\ a\ word\ (name\ taken\ from\ the\ string\npassed\ on\ TOS)\ in\ the\ dictionary.\ Returns\ the\nxt,\ class,\ and\ a\ flag\ of\ -1\ if\ found.\ If\ not\nfound,\ returns\ only\ a\ flag\ of\ 0.\n\nreturn_quote()\nFind\ a\ name\ (from\ the\ input\ stream)\ and\ return\ a\nquote\ that\ corresponds\ to\ the\ word.\n#unpre\n\n=\ Primitives\ Provided\ =\n\n#pre\nis\nis-data\nis-macro\nis-super\n\\\nlast\n#unpre 1175294300
 
 
 #--------------------------------------------------
@@ -383,8 +390,7 @@ dictionary.
 from
 import
 as
-#unpre
-} 1175294401
+#unpre} 1175294401
 
 
 #--------------------------------------------------
@@ -433,8 +439,7 @@ file.write
 file.size
 file.seek
 file.pos
-#unpre
-} 1175294463
+#unpre} 1175294463
 
 
 #--------------------------------------------------
@@ -444,11 +449,25 @@ page {First Steps} {} 1175216561
 
 
 #--------------------------------------------------
+# garbage collector
+
+page {garbage collector} {Toka makes use of a garbage collector for dynamic memory allocations. This allows fairly liberal use of dynamically allocated memory without worry of memory leaks. 
+
+The model is pretty simple. To allocate memory, gc_alloc() is called. This is passed the number of elements, the size of an element, and a hint regarding whether this is known to be temporary or may be permanent. 
+
+The garbage collector maintains two lists of allocations. When either of these is filled, the gc() routine is called to clean them up. Any item that was flagged as temporary using gc_alloc() is freed by gc(). It also frees up to 32 allocations from the primary list each time it is called. To help prevent temporary items from being corrupted by future allocations, only 64 temporary allocations will be freed per call of gc(). 
+
+Another routine, gc_keep() skims down through the list of allocations (most recent to oldest) to find a specific pointer. When found, that (and any allocation that follows, are removed from the list making them permanent allocations. (This assumes that subsequent allocations are referenced by the one you desire to keep. In a normal Toka build this is safe.) 
+
+Information regarding the current status of the garbage collection subsystem can be obtained via gc_info().} 1175295873
+
+
+#--------------------------------------------------
 # gc.c
 
 page gc.c {= Use =
 
-Implements a memory allocator and basic garbage collector.
+Implements a memory allocator and basic [garbage collector].
 
 = Functions Provided =
 
@@ -509,8 +528,7 @@ the allocated memory.
 keep
 gc
 malloc
-#unpre
-} 1175294534
+#unpre} 1175295862
 
 
 #--------------------------------------------------
@@ -527,7 +545,16 @@ for actual programs to be written in it.
 * [Words and Their Uses]
 
 
-Internals:
+= Internals =
+
+=== Topics ===
+
+* [garbage collector]
+* [threading model]
+* [TokaDoc]
+
+=== Source Files ===
+
 * [bits.c]
 * [class.c]
 * [cmdline.c]
@@ -547,7 +574,8 @@ Internals:
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1175217413
+* [vm.c]
+} 1175313017
 
 
 #--------------------------------------------------
@@ -573,26 +601,23 @@ words in the Toka language.
 
 = Primitives Provided =
 
-<i>None</i>
-} 1175294584
+<i>None</i>} 1175294584
 
 
 #--------------------------------------------------
 # Installation
 
-page Installation {If you built it using Make:
+page Installation {To get the most out of Toka, it needs to be installed. This can be done
+via the build system:
 
 #pre
   make install
 #unpre
 
-Or, if you built it using Rebuild:
+When done this way, the following files are installed:
 
-#pre
-  cp source/toka /usr/bin
-  mkdir -p /usr/share/toka
-  cp bootstrap.toka /usr/share/toka
-#unpre
+/usr/bin/toka
+/usr/share/toka/bootstrap.toka
 
 After installation, run the test suite:
 
@@ -600,16 +625,11 @@ After installation, run the test suite:
   make tests
 #unpre
 
-Or:
-
-#pre
-  cd examples
-  toka tests.toka >test.log
-#unpre
-
 Look for any failures in the test.log. If you encounter a problem, please
 forward the test.log to charles.childers@gmail.com along with some
-basic information about your system (OS, CPU type)} 1175217069
+basic information about your system (OS, CPU type, GCC version, Toka
+revision #)
+} 1175313503
 
 
 #--------------------------------------------------
@@ -655,8 +675,7 @@ Accept and process input.
 #pre
 compiler
 count
-#unpre
-} 1175294621
+#unpre} 1175294621
 
 
 #--------------------------------------------------
@@ -689,8 +708,7 @@ Divide and return the result, including remainder
 -
 *
 /mod
-#unpre
-} 1175294665
+#unpre} 1175294665
 
 
 #--------------------------------------------------
@@ -785,8 +803,7 @@ parse
 include
 needs
 end.
-#unpre
-} 1175294722
+#unpre} 1175294722
 
 
 #--------------------------------------------------
@@ -871,8 +888,7 @@ while
 invoke
 iterate
 +iterate
-#unpre
-} 1175294781
+#unpre} 1175294781
 
 
 #--------------------------------------------------
@@ -955,8 +971,39 @@ swap
 >r
 r>
 depth
+#unpre} 1175294819
+
+
+#--------------------------------------------------
+# threading model
+
+page {threading model} {Toka relies on <i>call threading</i>. This is an implementation technique
+in which a list of addresses is compiled. Each of these is then called in
+sequence. The model is similar to <i>direct threading</i> in the Forth
+world.
+
+There is one special address which marks the end of a threaded sequence.
+This address is <b>0</b>.
+
+As an example of this, consider the following quote:
+
+#pre
+ [ a b c 1 2 + . ]
 #unpre
-} 1175294819
+
+This is compiled into a list of addresses:
+
+#pre
+ a, b, c, lit, 1, lit 2, +, ., 0
+#unpre
+
+Note the special form for numbers. The lit() function pushes the value in
+the following cell to the stack.
+
+When this quote is invoked, <i>a</i> will be called. After it finishes
+executing, <i>b</i> will be called, and so on until <i>0</i> is
+encountered. At that point, the vm_run() function exits.
+} 1175312808
 
 
 #--------------------------------------------------
@@ -976,8 +1023,62 @@ dictionary and calls interpret().
 
 = Primitives Provided =
 
-<i>None</i>
-} 1175294848
+<i>None</i>} 1175294848
+
+
+#--------------------------------------------------
+# TokaDoc
+
+page TokaDoc {= Introduction =
+
+To help keep an up-to-date list of C functions and their Toka
+equivilents, the TokaDoc scripts were developed. These seach C sources
+for specially formatted comments and extract them into various files.
+These files can be updated when [building].
+
+= Supporting TokaDoc =
+
+At the start of each C file, have a comment header like this:
+
+#pre
+ /*
+  *|F|
+  *|F| FILE: filename
+  *|F|
+  */
+#unpre
+
+Before any global variables, have a comment block like this:
+
+#pre
+/*
+ *|F| Variables:
+ *|F|   GCITEM gc_list[128]
+ *|F|   Holds the list of items marked as garbage.
+ *|F|
+ */
+#unpre
+
+Before each function have a comment block like this:
+
+#pre
+ /*
+  *|F| <return type> functioname(<arguments>)
+  *|F| description of the function
+  *|F|
+  */
+#unpre
+
+And for any functions having a Toka equivilent, have a block like:
+
+#pre
+ /*
+  *|G| wordname    stack-effect    description
+  */
+#unpre
+
+Please try to keep columns lined up as much as possible for Toka wordlist comments.
+} 1175313140
 
 
 #--------------------------------------------------
@@ -1211,14 +1312,17 @@ to the stack
 
 #pre
 heap
-#unpre
-} 1175294932
+#unpre} 1175294932
 
 
 #--------------------------------------------------
 # Words and Their Uses
 
-page {Words and Their Uses} {Primitives:
+page {Words and Their Uses} {= Primitives =
+
+These are words that are built into the Toka executable. If the
+<b>bootstrap.toka</b> can not be found, these are the only words 
+that will be provided.
 
 #pre
 <<       ( ab-c )    Shift 'b' left by 'a' bits
@@ -1352,11 +1456,15 @@ depth    ( -n )      Return the number of items
                      on the stack
 #unpre
 
-Bootstrap:
+= Bootstrap =
+
+These are additional words, provided in <b>bootstrap.toka</b>.
+They significantly expand the core language.
 
 #pre
 ...
-#unpre} 1175221749
+#unpre
+} 1175301401
 
 
 # End of Notebook Database File
