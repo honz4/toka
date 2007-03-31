@@ -154,55 +154,54 @@ void gc()
   long a, b;
 
   /* Allocations known to be temporary */
-  if (gc_tdepth < 64)
-    b = gc_tdepth;
-  else
-    b = 64;
-
-  for(a = 0; a != b; a++)
+  if (gc_tdepth > 32)
   {
-    free(gc_trash[a].xt);
-    gc_used -= gc_trash[a].size;
-    gc_list[a].xt = 0;
-    gc_objects--;
-  }
+    b = gc_tdepth - 32;
 
-  if (b != gc_tdepth)
-  {
-    for(a = 0; a != gc_tdepth; a++)
+    for(a = 0; a != b; a++)
     {
-      gc_trash[a].xt = gc_trash[a+b].xt;
-      gc_trash[a].size = gc_trash[a+b].size;
+      free(gc_trash[a].xt);
+      gc_used -= gc_trash[a].size;
+      gc_list[a].xt = 0;
+      gc_objects--;
     }
+
+    if (b != gc_tdepth)
+    {
+      for(a = 0; a != gc_tdepth; a++)
+      {
+        gc_trash[a].xt = gc_trash[a+b].xt;
+        gc_trash[a].size = gc_trash[a+b].size;
+      }
+    }
+
+    gc_tdepth -= b;
   }
-
-  gc_tdepth -= b;
-
 
   /* General Allocations  */
-  if (gc_depth < 32)
-    b = gc_depth;
-  else
-    b = 32;
-
-  for(a = 0; a != b; a++)
+  if (gc_depth > 32)
   {
-    free(gc_list[a].xt);
-    gc_used -= gc_list[a].size;
-    gc_list[a].xt = 0;
-    gc_objects--;
-  }
+    b = gc_depth - 32;
 
-  if (b != gc_depth)
-  {
-    for(a = 0; a != gc_depth; a++)
+    for(a = 0; a != b; a++)
     {
-      gc_list[a].xt = gc_list[a+b].xt;
-      gc_list[a].size = gc_list[a+b].size;
+      free(gc_list[a].xt);
+      gc_used -= gc_list[a].size;
+      gc_list[a].xt = 0;
+      gc_objects--;
     }
-  }
 
-  gc_depth -= b;
+    if (b != gc_depth)
+    {
+      for(a = 0; a != gc_depth; a++)
+      {
+        gc_list[a].xt = gc_list[a+b].xt;
+        gc_list[a].size = gc_list[a+b].size;
+      }
+    }
+
+    gc_depth -= b;
+  }
 }
 
 
