@@ -68,11 +68,15 @@ void *gc_alloc(long items, long size, long type)
 {
   void *memory;
 
+  /* If the allocation lists are full, perform */
+  /* a collection before proceeding.           */
   if (gc_depth == 127 || gc_tdepth == 127)
     gc();
 
   memory  = calloc((int)items, (int)size);
 
+  /* If the allocation failed, collect garbage */
+  /* and try again.                            */
   if (memory == NULL)
   {
     gc();
@@ -84,8 +88,10 @@ void *gc_alloc(long items, long size, long type)
     }
   }
 
+  /* Leave the allocated memory in a known state */
   memset(memory, 0, size * items);
 
+  /* And finally, update the lists with the allocation */
   if (type == GC_MEM)
   {
     gc_list[gc_depth].xt = (Inst)memory;
@@ -145,8 +151,9 @@ void gc_keep()
  *
  *|F| gc()
  *|F| Free the oldest allocations on the garbage list.
- *|F| Will free up to 64 trash entries and 32 normal
- *|F| entries per call.
+ *|F| Will free up to 32 items from each list per
+ *|F| call. If there are 32 or less items remaining,
+ *|F| this code will leave the allocations alone.
  *|F|
  ******************************************************/
 void gc()
