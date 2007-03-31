@@ -71,8 +71,7 @@ as well:
 
 #pre
   make docs
-#unpre
-} 1175313386
+#unpre} 1175313386
 
 
 #--------------------------------------------------
@@ -459,7 +458,10 @@ The garbage collector maintains two lists of allocations. When either of these i
 
 Another routine, gc_keep() skims down through the list of allocations (most recent to oldest) to find a specific pointer. When found, that (and any allocation that follows, are removed from the list making them permanent allocations. (This assumes that subsequent allocations are referenced by the one you desire to keep. In a normal Toka build this is safe.) 
 
-Information regarding the current status of the garbage collection subsystem can be obtained via gc_info().} 1175295873
+To ensure that the most recent allocations are not lost, the collector
+will leave the most recent 32 items in each list allocated.
+
+Information regarding the current status of the garbage collection subsystem can be obtained via gc_info().} 1175365564
 
 
 #--------------------------------------------------
@@ -514,8 +516,9 @@ silently ignore it.
 
 gc()
 Free the oldest allocations on the garbage list.
-Will free up to 64 trash entries and 32 normal
-entries per call.
+Will free up to 32 entries from each list per call.
+This leaves the newest 32 entries on each stack
+intact.
 
 toka_malloc()
 Allocate TOS bytes of memory. Returns a pointer to
@@ -528,7 +531,8 @@ the allocated memory.
 keep
 gc
 malloc
-#unpre} 1175295862
+#unpre
+} 1175366480
 
 
 #--------------------------------------------------
@@ -574,8 +578,7 @@ for actual programs to be written in it.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1175313017
+* [vm.c]} 1175313017
 
 
 #--------------------------------------------------
@@ -628,8 +631,7 @@ After installation, run the test suite:
 Look for any failures in the test.log. If you encounter a problem, please
 forward the test.log to charles.childers@gmail.com along with some
 basic information about your system (OS, CPU type, GCC version, Toka
-revision #)
-} 1175313503
+revision #)} 1175313503
 
 
 #--------------------------------------------------
@@ -1002,8 +1004,7 @@ the following cell to the stack.
 
 When this quote is invoked, <i>a</i> will be called. After it finishes
 executing, <i>b</i> will be called, and so on until <i>0</i> is
-encountered. At that point, the vm_run() function exits.
-} 1175312808
+encountered. At that point, the vm_run() function exits.} 1175312808
 
 
 #--------------------------------------------------
@@ -1077,138 +1078,7 @@ And for any functions having a Toka equivilent, have a block like:
   */
 #unpre
 
-Please try to keep columns lined up as much as possible for Toka wordlist comments.
-} 1175313140
-
-
-#--------------------------------------------------
-# Tour
-
-page Tour {Welcome to a tour of your new Notebook!
-
-Notebook has many features; this tour will touch on the highlights.  You
-can find more information about any of them via the [@helpbtn Help@] menu.
-
-<h>Pages are linked together</h>
-
-The most important feature of Notebook is that a notebook is a collection
-of pages, and the pages are linked together.  You've already discovered
-this, by clicking [Tour] to get to this page.
-
-: [Click here to continue...|Tour 2]} 1102291376
-
-
-#--------------------------------------------------
-# Tour 3
-
-page {Tour 3} {This page is part of a [tour] of Notebook's features.
-
-= You can style your text =
-
-You can use <b>boldface</b>, <i>italics</i>, and <m>monospace</m> text, or
-a combination of <b><i><m>all three</m></i></b>.
-
-You can <x>strikeout</x> any text you like.
-
-You can use a <h>large font</h> for emphasis, or a 
-<s>small font</s> for incidental notes.
-
-If you click the Edit button (the one with the pencil on it), you'll see
-that the above paragraphs look like this, only not indented:
-
- You can use <b>boldface</b>, <i>italics</i>, and <m>monospace</m> text, or
- a combination of <b><i><m>all three</m></i></b>.
-
- You can <x>strikeout</x> any text you like.
-
- You can use a <h>large font</h> for emphasis, or a 
- <s>small font</s> for incidental notes.
-
-If you put whitespace at the beginning of a paragraph, like those two just
-above this have, then they get displayed "preformatted", just as you typed them.
-
-: [Click here to continue...|Tour 4]} 1113419869
-
-
-#--------------------------------------------------
-# Tour 5
-
-page {Tour 5} {This page is part of a [tour] of Notebook's features.
-
-<h>You can find your pages</h>
-
-You can always find any page you create in Notebook, even if you don't
-remember how to get there by clicking on links.
-
-* You can press the Index button (the one with the Book on it), or select
-  "Page/Index" from the menu, to see an alphabetical list of the pages in your Notebook.
-
-* You can select "Page/Recent Changes" from the menu to see a list of
-  all of your pages, starting with the ones you've edited most recently.
-
-* You can type any text you like in the "Search" field above, and press
-  Enter, and Notebook  
-  will show you a list of pages that contain it.
-
-Try it!  Once you're done, click the Back button (the one with the arrow
-pointing to the left) repeatedly until you're
-back to this page--or find [Tour 5] in the index!
-
-: [Click here to continue...|Tour 6]} 1113419918
-
-
-#--------------------------------------------------
-# Tour 6
-
-page {Tour 6} {This page is part of a [tour] of Notebook's features.
-
-<h>You can do magic!</h>
-
-Notebook is programmed in a language called Tcl.  
-You can use [@helpbtn "the Tcl language"@] in your pages to do magic.  There are
-two kinds of magic: [@helpbtn "magic button"@]s and 
-[@helpbtn "embedded macro"@]s.
-Both of them are represented on this page (you'll see them if you edit
-this page).
-
-A magic button looks like a link, but it's colored magenta instead of blue.
-Whereas a link just takes you to the named page, a magic button executes
-a [@helpbtn "Notebook command"@].  There are lots of magic buttons on 
-this page; see what happens if you click them.
-
-An embedded macro is a [@helpbtn "Notebook command"@] that's executed 
-whenever the page displays.  It returns some text that's included into
-the page just as though you'd typed it.  If you edit this page, then toward
-the top you'll see an embedded macro that looks like this:
-
-:	<m>&lb;@helpbtn "the Tcl language"@&rb;</m>
-
-Here, "helpbtn" is an embedded macro that creates a magic button that pops up
-the Help window with the named topic, as if you'd typed this:
-
-	[%the Tcl language|showhelp "the Tcl language"%]
-
-Of course, the macro is much shorter because it doesn't need to repeat the
-topic text.  "showhelp" is a command that pops up Notebook's on-line help
-and makes it go to the specified topic. 
-
-: [Click here to continue...|Tour 7]} 1102291940
-
-
-#--------------------------------------------------
-# Tour 7
-
-page {Tour 7} {This page is part of a [tour] of Notebook's features.
-
-<h>But wait--there's more!</h>
-
-Notebook can do lots of other things as well.  If you create a page you don't
-like, you can delete it.  If you decide you don't like a page's name, you can
-rename it; Notebook will automatically update all of the links.  You can
-define new [@helpbtn "Notebook commands"@] on your [User Code] page, 
-and use them in [@helpbtn "embedded macro"@]s and [@helpbtn "magic button"@]s.
-
-And that means you can do almost anything you can think of.} 1028999577
+Please try to keep columns lined up as much as possible for Toka wordlist comments.} 1175313140
 
 
 #--------------------------------------------------
@@ -1352,9 +1222,9 @@ bye      ( - )       Quit Toka
                      location 'a'
 !        ( na- )     Store 'n' to memory location
                      'a'
-c@        ( a-n )    Fetch a byte from memory
+c@       ( a-n )     Fetch a byte from memory
                      location 'a'
-c!        ( na- )    Store byte 'n' to memory
+c!       ( na- )     Store byte 'n' to memory
                      location 'a'
 copy     ( sdc- )    Copy 'c' bytes from 's' to
                      'd'
@@ -1425,14 +1295,14 @@ parser   ( -a )      Variable holding current parser
 parse    ( d-a )     Parse until the character 
                      represented by 'd' is found.
                      Return a pointer to the string
-include   ( "- )     Attempt to open a file and
+include  ( "- )      Attempt to open a file and
                      add it to the input stack.
-          ( $- )     Non-parsing form
-needs     ( "- )     Attempt to include a file
+         ( $- )      Non-parsing form
+needs    ( "- )      Attempt to include a file
                      from the library (normally
                      /usr/share/toka/library)
-          ( $- )     Non-parsing form
-end.      ( - )      Remove the current file from
+         ( $- )      Non-parsing form
+end.     ( - )       Remove the current file from
                      the input stack
 [        ( -a )      Create a new quote
 ]        ( - )       Close an open quote
@@ -1462,9 +1332,80 @@ These are additional words, provided in <b>bootstrap.toka</b>.
 They significantly expand the core language.
 
 #pre
-...
+#!
+SPACE
+CR
+LF
+ESC
+TAB
+wsparse
+lnparse
+FALSE
+TRUE
+true?
+false?
+>char
+char:
+"
+cr
+space
+tab
+t:
+^esc
+clear
+nip
+rot
+-rot
+over
+tuck
+2dup
+2drop
+reset
+r@
+1+
+1-
+negate
+/
+mod
+not
+*/
+chars
+char+
+char-
+cells
+cell+
+cell-
++!
+-!
+on
+off
+toggle
+variable
+variable|
+hex
+decimal
+binary
+octal
+"R"
+"R+"
+"W"
+"W+"
+"A"
+"A+"
+START
+CURRENT
+END
+file.slurp
+is-array
+get-element
+put-element
+get-char-element
+put-char-element
+<list>
+{
+}
 #unpre
-} 1175301401
+} 1175366419
 
 
 # End of Notebook Database File

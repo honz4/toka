@@ -27,8 +27,8 @@ include tests/parser
 include tests/dictionary
 include tests/array
 include tests/scope
-include tests/gc
 
+cr
 i: ----------------------------------------------
 i: This test has also made use of the following
 i: words:

@@ -1,4 +1,4 @@
-i: Scope (no output if successful)
+i: Scope
 t: { }
   100 is-data foo
   {
