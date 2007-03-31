@@ -1,4 +1,4 @@
-i: Arrays (no output if successful)
+i: Arrays
 t: is-array
   10 cells is-array foo
   10 chars is-array bar

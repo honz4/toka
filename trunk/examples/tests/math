@@ -1,4 +1,4 @@
-i: Basic Math (no output if successful)
+i: Basic Math
 t:   Addition
    1 2 + 3 try
 t:   Subtraction
