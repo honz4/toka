@@ -72,6 +72,9 @@ int main(int argv, char *argc[])
   if (include_file("bootstrap.toka") == FALSE)
     include_file(BOOTSTRAP);
 
+  if (argv == 1)
+    printf("toka (svn build)\n");
+
   interpret();
 
   return 0;

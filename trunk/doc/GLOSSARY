@@ -33,7 +33,7 @@ copy     ( sdc- )    Copy 'c' bytes from 's' to
                      'd'
 cell-size ( -n )     Return the size of a cell
 char-size ( -n )     Return the size of a char
-:words   ( - )       Display a list of all named
+:names   ( - )       Display a list of all named
                      quotes and data
 :stack   ( - )       Display all values on the
                      data stack

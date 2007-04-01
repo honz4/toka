@@ -30,14 +30,14 @@ extern GCITEM gc_trash[];
 
 
 /******************************************************
- *|G| :words   ( - )       Display a list of all named
+ *|G| :names   ( - )       Display a list of all named
  *|G|                      quotes and data
  *
- *|F| words()
- *|F| Display a list of all named words
+ *|F| names()
+ *|F| Display a list of all named items
  *|F|
  ******************************************************/
-void words()
+void names()
 {
   long primitives, data, quotes;
   long a;
