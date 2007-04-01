@@ -450,18 +450,34 @@ page {First Steps} {} 1175216561
 #--------------------------------------------------
 # garbage collector
 
-page {garbage collector} {Toka makes use of a garbage collector for dynamic memory allocations. This allows fairly liberal use of dynamically allocated memory without worry of memory leaks. 
+page {garbage collector} {The Toka implementation makes heavy use of dynamically allocated memory.
+To help avoid memory leaks, the memory allocation provides a very simple
+form of <i>garbage collection</i>.
 
-The model is pretty simple. To allocate memory, gc_alloc() is called. This is passed the number of elements, the size of an element, and a hint regarding whether this is known to be temporary or may be permanent. 
+The model is very simple. A list containing pointers to each allocation,
+and the corresponding size (in bytes) is kept. Each time memory is
+requested, the code adds the request to the list. When the list is filled,
+or if the allocation fails, the 16 oldest items are freed and all later
+entries are shifted down.
 
-The garbage collector maintains two lists of allocations. When either of these is filled, the gc() routine is called to clean them up. Any item that was flagged as temporary using gc_alloc() is freed by gc(). It also frees up to 32 allocations from the primary list each time it is called. To help prevent temporary items from being corrupted by future allocations, only 64 temporary allocations will be freed per call of gc(). 
+Obviously there is also a way to mark entries as permanent. This is done
+by <b>keep</b> (the <b>gc_keep()</b> function). This routine skims
+through the list of allocations (from most recent to oldest) looking for
+a specific pointer. When found, that entry (and any subsequent
+allocations -- in Toka these will almost always be subquotes, strings,
+etc) are removed from the list.
 
-Another routine, gc_keep() skims down through the list of allocations (most recent to oldest) to find a specific pointer. When found, that (and any allocation that follows, are removed from the list making them permanent allocations. (This assumes that subsequent allocations are referenced by the one you desire to keep. In a normal Toka build this is safe.) 
+In actual practice things are just a little more complex. Toka actually
+maintains two lists; one for general allocations and a second one for
+internal use. The second one is only used for allocations that are known
+to be temporary. 
 
-To ensure that the most recent allocations are not lost, the collector
-will leave the most recent 32 items in each list allocated.
-
-Information regarding the current status of the garbage collection subsystem can be obtained via gc_info().} 1175365564
+In addition, the code will always leave the 16 newest allocations in each
+list alone to prevent them from falling out of scope.
+ 
+Information regarding the current status of the garbage collection
+subsystem can be obtained via <b>:gc</b> (the <b>gc_info()</b> function).
+} 1175389158
 
 
 #--------------------------------------------------
@@ -516,8 +532,8 @@ silently ignore it.
 
 gc()
 Free the oldest allocations on the garbage list.
-Will free up to 32 entries from each list per call.
-This leaves the newest 32 entries on each stack
+Will free up to 16 entries from each list per call.
+This leaves the newest 16 entries on each stack
 intact.
 
 toka_malloc()
@@ -532,7 +548,7 @@ keep
 gc
 malloc
 #unpre
-} 1175366480
+} 1175389338
 
 
 #--------------------------------------------------
@@ -540,9 +556,14 @@ malloc
 
 page Home {Hello, and welcome to Toka!
 
-Toka is a small language drawing influence primarily from Forth. It is
-designed to be easy to learn, expand on, and yet remains useful enough
-for actual programs to be written in it.
+Toka is a small programming language. It is considered experimental, and 
+may change without warning.
+
+The language has been influenced by my experiences with RetroForth, 
+HelFORTH, Factor, and other languages. I find it fun and rewarding to 
+work on, even if it's not as practical as other languages.
+
+= General Topics =
 
 * [Building] and [Installation]
 * [First Steps]
@@ -578,7 +599,8 @@ for actual programs to be written in it.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1175313017
+* [vm.c]
+} 1175389467
 
 
 #--------------------------------------------------
@@ -1332,80 +1354,85 @@ These are additional words, provided in <b>bootstrap.toka</b>.
 They significantly expand the core language.
 
 #pre
-#!
-SPACE
-CR
-LF
-ESC
-TAB
-wsparse
-lnparse
-FALSE
-TRUE
-true?
-false?
->char
-char:
-"
-cr
-space
-tab
-t:
-^esc
-clear
-nip
-rot
--rot
-over
-tuck
-2dup
-2drop
-reset
-r@
-1+
-1-
-negate
-/
-mod
-not
-*/
-chars
-char+
-char-
-cells
-cell+
-cell-
-+!
--!
-on
-off
-toggle
-variable
-variable|
-hex
-decimal
-binary
-octal
-"R"
-"R+"
-"W"
-"W+"
-"A"
-"A+"
-START
-CURRENT
-END
-file.slurp
-is-array
-get-element
-put-element
-get-char-element
-put-char-element
-<list>
-{
-}
+         ( - )       ...
+#!       ( - )       Parse to the end of the line
+                     and scrap the results.
+SPACE    ( - )       ASCII value for SPACE character
+CR       ( - )       ASCII value for CR character
+LF       ( - )       ASCII value for LF character
+ESC      ( - )       ASCII value for ESC character
+TAB      ( - )       ASCII value for TAB character
+wsparse  ( - )       ...
+lnparse  ( - )       Parse to the end of the line,
+                     leave the resulting string on the
+                     stack.
+FALSE    ( - )       Value returned for FALSE
+TRUE     ( - )       Value returned for TRUE
+true?    ( - )       ...
+false?   ( - )       ...
+>char    ( - )       ...
+char:    ( - )       ...1
+"        ( - )       ...
+cr       ( - )       Display a CR character
+space    ( - )       Display a space
+tab      ( - )       Display a tab
+t:       ( - )       Parse to the end of the line, display
+                     the results.
+^esc     ( - )       ...
+clear    ( - )       Clear the screen
+nip      ( - )       ...
+rot      ( - )       ...
+-rot     ( - )       ...
+over     ( - )       ...
+tuck     ( - )       ...
+2dup     ( - )       ...
+2drop    ( - )       ...
+reset    ( - )       ...
+r@       ( - )       ...
+1+       ( - )       ...
+1-       ( - )       ...
+negate   ( - )       ...
+/        ( - )       ...
+mod      ( - )       ...
+not      ( - )       ...
+*/       ( - )       ...
+chars    ( - )       ...
+char+    ( - )       ...
+char-    ( - )       ...
+cells    ( - )       ...
+cell+    ( - )       ...
+cell-    ( - )       ...
++!       ( - )       ...
+-!       ( - )       ...
+on       ( - )       ...
+off      ( - )       ...
+toggle   ( - )       ...
+variable ( - )       ...
+variable| ( - )      ...
+hex      ( - )       ...
+decimal  ( - )       ...
+binary   ( - )       ...
+octal    ( - )       ...
+"R"      ( - )       ...
+"R+"     ( - )       ...
+"W"      ( - )       ...
+"W+"     ( - )       ...
+"A"      ( - )       ...
+"A+"     ( - )       ...
+START    ( - )       ...
+CURRENT  ( - )       ...
+END      ( - )       ...
+file.slurp        ( - )       ...
+is-array          ( - )       ...
+get-element       ( - )       ...
+put-element       ( - )       ...
+get-char-element  ( - )       ...
+put-char-element  ( - )       ...
+<list>   ( - )       ...
+{        ( - )       ...
+}        ( - )       ...
 #unpre
-} 1175366419
+} 1175390025
 
 
 # End of Notebook Database File
