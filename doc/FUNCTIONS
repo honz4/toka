@@ -140,8 +140,8 @@ Push the size of a char to the stack
 
 FILE: debug.c
 
-words()
-Display a list of all named words
+names()
+Display a list of all named items
 
 display_stack()
 Display all items on the stack.

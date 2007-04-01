@@ -444,7 +444,324 @@ file.pos
 #--------------------------------------------------
 # First Steps
 
-page {First Steps} {} 1175216561
+page {First Steps} {At present, Toka provides a basic <i>listener</i> as the only interface.
+This is a console-based enviroment where you can type commands and get
+instant feedback. Let's get started:
+
+#pre
+  crc@strider: toka
+#unpre
+
+If you built and installed Toka properly, it should start, displaying a
+message like:
+
+#pre
+  toka (svn build)
+#unpre
+
+At this point, you can begin entering code. Let's start by exploring the
+enviroment a little:
+
+#pre
+  :names
+#unpre
+
+Invoking <b>:names</b> will display all named elements in the currently
+running Toka. Don't panic at the number of items -- you only need to
+learn a handful of them to write code in Toka.  The list is divided into
+three groups:
+
+* Primitives, the building blocks everything else is based on
+* Quotes, everything in the <i>bootstrap.toka</i> and anything you write
+* Data, for variables, arrays, and other data structures
+
+Now let's delve into actually using Toka a bit.
+
+=== The Stack ===
+
+The language makes use of a stack to pass data between functions (called
+<i>quotes</i> in toka). Imagine a stack of blocks with numbers on them.
+You can add or remove numbers from the top of the stack. You can also
+rearrange the order of the numbers.
+
+The stack is initially empty. Let's start by putting some numbers on the
+stack. Type in:
+
+#pre
+  23 7 9182
+#unpre
+
+Excellent! Now print the number on top of the stack using <b>.</b>, which
+is pronounced "dot". This is a hard word to write about in a manual
+because it is just a single period.
+
+Enter: 
+
+#pre
+  .
+#unpre
+
+You should see the last number you entered, 9182, printed. Each time
+<b>.</b> is used, the top element on the stack is lost. If you want to
+see what is on the stack, you can use <b>:stack</b>. Try this:
+
+#pre
+  :stack
+#unpre
+
+You should see:
+
+#pre
+  <2> 23 7
+#unpre
+
+The number on the left, enclosed in brackets, is the number of items on
+the stack. The number to the far right is the top of the stack, or
+<i>TOS</i>. It should be mentioned that <b>:stack</b> leaves the stack
+unchanged.
+
+Since Toka uses the stack to hold data being operated on, and it uses the
+stack to pass data between quotes, it is very important to practice using
+it. Quotes generally take what they need off of the stack, and put their
+results back on it. To help understand exactly what each quote consumes
+and leaves, we use <i>stack diagrams</i>. As an example:
+
+ 
+#pre
+  . ( x- )
+#unpre
+
+That is to say, <b>.</b> takes one word off the stack (the 'x') and puts
+nothing on the stack. In other words, it consumes the TOS.
+
+In the examples that follow, you do not need to type in the comments.
+When you are programming, of course, liberal use of comments and stack
+diagrams may make your code more readable and maintainable.
+
+Between examples, you may wish to clear the stack. If you enter
+<b>reset</b>, the stack will be cleared. Since the stack is central to
+Forth, it is important to be able to alter it easily. Let's look at some
+more functions that manipulate the stack. Enter: 
+
+#pre
+  reset
+  777 dup :stack
+#unpre
+
+You will notice that there are two copies of 777 on the stack. The quote
+<b>dup</b> duplicates TOS. This is useful when you want to use the TOS
+and still have a copy. The stack diagram for <b>dup</b> would be:
+
+#pre
+  dup ( x-xx )
+#unpre
+
+Another useful quote is <b>swap</b>. Enter:
+
+#pre
+  reset
+  23 7 :stack
+  swap :stack
+#unpre
+
+The stack should look like: 
+
+#pre
+  <2> 7 23
+#unpre
+
+The stack diagram for <b>swap</b> would be:
+
+#pre
+  swap ( xy-yx )
+#unpre
+
+Now enter: 
+
+#pre
+  over :stack
+#unpre
+
+You should see:
+
+#pre
+  <3> 23 7 23
+#unpre
+
+<b>over</b> causes a copy of the second item on the stack to leapfrog
+over the first. Its stack diagram would be: 
+
+#pre
+  over ( xy-xyx )
+#unpre
+
+Here is another commonly used function:
+
+#pre
+  drop ( x- )
+#unpre
+
+Can you guess what we will see if we enter:
+
+#pre
+  drop :stack
+#unpre
+
+Another handy function for manipulating the stack is <b>rot</b> (short
+for rotate). Enter: 
+
+#pre
+  11 22 33 44 :stack
+  rot :stack
+#unpre
+
+The stack diagram for <b>rot</b> is, therefore: 
+
+#pre
+  rot ( xyz-yzx )
+#unpre
+
+You have now learned the more important stack manipulation words. These
+will be present in almost every non-trivial Toka program. I will say that
+if you see heavy use of these words in your code, you may want to examine
+and reorganize (<i>refactor</i>) your code. Use of variables and arrays
+(which we will discuss later) can also help clean things up.
+
+Here are stack diagrams for some other useful stack manipulation
+functions. Try experimenting with them by putting numbers on the stack
+and calling them to get a feel for what they do. Again, the text in
+parentheses is just a comment and need not be entered.
+
+#pre
+  2drop ( xyz--x )
+  2dup ( xy-xyxy )
+  nip ( xyz-xz )
+  tuck ( xy-yxy )
+#unpre
+
+=== Math ===
+
+Toka provides a very basic set of math functionality, sufficient for many
+purposes. The functions are:
+
+#pre
+  +        ( ab-c )    Add TOS and NOS
+  -        ( ab-c )    Subtract TOS from NOS
+  *        ( ab-c )    Multiply TOS by NOS
+  /mod     ( ab-cd )   Divide and get remainder
+#unpre
+
+=== Variables ===
+
+To hold data for longer periods of time, variables can be used. Variables
+are pointers to memory locations large enough to hold a number. There are
+two primary ways to create variables:
+
+#pre
+  variable foo
+  variable bar
+  variable baz
+#unpre
+
+The above would create three new variables, named <b>foo</b>, <b>bar</b>,
+and <b>baz</b>. When creating multiple variables, it is more readable to
+use <b>variable|</b> though:
+
+#pre
+  variable| foo bar baz |
+#unpre
+
+You can use <b>@</b> (fetch) and <b>!</b> (store) to alter the contents
+of a variable:
+
+#pre
+  variable foo
+  100 foo !
+  foo @ .
+#unpre
+
+For reading/writing character-sized values, <b>c@</b> and <b>c!</b> are
+also provided. A full list of functions for working with variables follows:
+
+#pre
+  variable ( "- )      Parse ahead and create a named entry
+                       corresponding to a memory location
+  variable| ( |- )     Parse and create variables until | 
+                       is encountered.
+  @        ( a-n )     Fetch the value from variable 'a'
+  !        ( na- )     Store 'n' to variable 'a'
+  c@       ( a-n )     Fetch a byte from variable 'a'
+  c!       ( na- )     Store byte 'n' to variable 'a'
+#unpre
+
+=== Quotes ===
+
+With the functions described above, many small programs can be written.
+Toka has much more functionality, but before proceeding further, we need
+to take a look at how to create new functions (called <i>quotes</i>).
+
+In Toka, a <i>quote</i> is the basic building block. At the simplest
+level, they are anonymous blocks of code and data. Quotes are created by
+encolsing the code and/or data in brackets:
+
+#pre
+  [ ]
+#unpre
+
+The above will create an empty quote and leave a pointer to it on the
+stack. You can attach a name to a quote with <b>is</b>:
+
+#pre
+  [ ] is empty-quote
+#unpre
+
+Names can include any characters, other than space, tab, cr, or lf (enter
+key). (<i>There are other forms of <b>is</b>, but this is the most common
+one; the others will be discussed later</i>).
+
+Let's look at how quotes are used in Toka.
+
+* Loops
+* Conditionals
+* Functions
+
+Toka provides several types of loop using quotes.
+
+#pre
+  10 [ i . ] iterate
+#unpre
+
+This will count <i>down</i> from 10 to 1. <b>i</b> returns the loop index.
+
+#pre
+  10 [ i . ] +iterate
+#unpre
+
+This will count <i>up</i> from 1 to 10. Again, <b>i</b> returns the loop
+index.
+
+#pre
+  1 [ dup . 1 + dup 101 < ] while
+#unpre
+
+This will count from 1 to 100. It does not update the loop index. The
+<b>while</b> loop repeats, taking a flag off the stack at the end of each
+loop. If the flag is TRUE, execution of the loop continues. If FALSE,
+execution stops.
+
+Conditionals are also handled using quotes:
+
+#pre
+  1 100 = [ 1 . ] true?
+  1 100 = [ 2 . ] false?
+  1 100 = [ 3 . ] [ 4 . ] t/f
+#unpre
+
+The first case will invoke the quote if the flag returned by <b>=</b> is
+TRUE. The second invokes the quote if the flag is FALSE, and the third
+form invokes the <b>[ 3 . ]</b> quote if TRUE, or the <b>[ 4 . ]</b>
+quote if FALSE.
+} 1175465847
 
 
 #--------------------------------------------------
@@ -476,8 +793,7 @@ In addition, the code will always leave the 16 newest allocations in each
 list alone to prevent them from falling out of scope.
  
 Information regarding the current status of the garbage collection
-subsystem can be obtained via <b>:gc</b> (the <b>gc_info()</b> function).
-} 1175389158
+subsystem can be obtained via <b>:gc</b> (the <b>gc_info()</b> function).} 1175389158
 
 
 #--------------------------------------------------
@@ -547,8 +863,7 @@ the allocated memory.
 keep
 gc
 malloc
-#unpre
-} 1175389338
+#unpre} 1175389338
 
 
 #--------------------------------------------------
@@ -599,8 +914,7 @@ work on, even if it's not as practical as other languages.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1175389467
+* [vm.c]} 1175389467
 
 
 #--------------------------------------------------
@@ -1431,8 +1745,7 @@ put-char-element  ( - )       ...
 <list>   ( - )       ...
 {        ( - )       ...
 }        ( - )       ...
-#unpre
-} 1175390025
+#unpre} 1175390025
 
 
 # End of Notebook Database File

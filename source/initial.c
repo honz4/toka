@@ -59,7 +59,7 @@ void build_dictionary()
   add_entry("char-size", &char_size,     &forth_class);
 
   /* debug.c */
-  add_entry(":words",    &words,         &forth_class);
+  add_entry(":names",    &names,         &forth_class);
   add_entry(":stack",    &display_stack, &forth_class);
   add_entry(":gc",       &gc_info,       &forth_class);
 
