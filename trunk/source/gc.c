@@ -151,8 +151,8 @@ void gc_keep()
  *
  *|F| gc()
  *|F| Free the oldest allocations on the garbage list.
- *|F| Will free up to 32 items from each list per
- *|F| call. If there are 32 or less items remaining,
+ *|F| Will free up to 16 items from each list per
+ *|F| call. If there are 16 or less items remaining,
  *|F| this code will leave the allocations alone.
  *|F|
  ******************************************************/
@@ -161,9 +161,9 @@ void gc()
   long a, b;
 
   /* Allocations known to be temporary */
-  if (gc_tdepth > 32)
+  if (gc_tdepth > 16)
   {
-    b = gc_tdepth - 32;
+    b = gc_tdepth - 16;
 
     for(a = 0; a != b; a++)
     {
@@ -186,9 +186,9 @@ void gc()
   }
 
   /* General Allocations  */
-  if (gc_depth > 32)
+  if (gc_depth > 16)
   {
-    b = gc_depth - 32;
+    b = gc_depth - 16;
 
     for(a = 0; a != b; a++)
     {
