@@ -152,6 +152,21 @@ void get_token(char *s, long delim)
       break;
     }
 
+    if (c == '\\' && delim == '"')
+    {
+      c = getc(input[isp]);
+      if (c == 'n')
+      {
+        *t++ = 10;
+        c = 1;
+      }
+      if (c == '"')
+      {
+        *t++ = (char)c;
+        c = 1;
+      }      
+    }
+
     if (delim == 10 || delim == 32)
     {
       if (c == 10 || c == 13)
