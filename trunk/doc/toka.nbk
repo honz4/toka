@@ -760,8 +760,7 @@ Conditionals are also handled using quotes:
 The first case will invoke the quote if the flag returned by <b>=</b> is
 TRUE. The second invokes the quote if the flag is FALSE, and the third
 form invokes the <b>[ 3 . ]</b> quote if TRUE, or the <b>[ 4 . ]</b>
-quote if FALSE.
-} 1175465847
+quote if FALSE.} 1175465847
 
 
 #--------------------------------------------------
@@ -880,6 +879,7 @@ work on, even if it's not as practical as other languages.
 
 = General Topics =
 
+* [License]
 * [Building] and [Installation]
 * [First Steps]
 * [Words and Their Uses]
@@ -914,7 +914,7 @@ work on, even if it's not as practical as other languages.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1175389467
+* [vm.c]} 1175645185
 
 
 #--------------------------------------------------
@@ -1014,6 +1014,31 @@ Accept and process input.
 compiler
 count
 #unpre} 1175294621
+
+
+#--------------------------------------------------
+# License
+
+page License {Toka is Copyright (c) 2007 Charles R. Childers
+
+
+Permission is hereby granted, free of charge, to any person obtaining a copy 
+of this software and associated documentation files (the "Software"), to deal 
+in the Software without restriction, including without limitation the rights 
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom the Software is furnished 
+to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in 
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
+IN THE SOFTWARE.} 1175645279
 
 
 #--------------------------------------------------
@@ -1669,39 +1694,39 @@ They significantly expand the core language.
 
 #pre
          ( - )       ...
-#!       ( - )       Parse to the end of the line
+#!       ( "- )      Parse to the end of the line
                      and scrap the results.
-SPACE    ( - )       ASCII value for SPACE character
-CR       ( - )       ASCII value for CR character
-LF       ( - )       ASCII value for LF character
-ESC      ( - )       ASCII value for ESC character
-TAB      ( - )       ASCII value for TAB character
-wsparse  ( - )       ...
-lnparse  ( - )       Parse to the end of the line,
+SPACE    ( -n )      ASCII value for SPACE character
+CR       ( -n )      ASCII value for CR character
+LF       ( -n )      ASCII value for LF character
+ESC      ( -n )      ASCII value for ESC character
+TAB      ( -n )      ASCII value for TAB character
+wsparse  ( -a )      ...
+lnparse  ( -a )      Parse to the end of the line,
                      leave the resulting string on the
                      stack.
-FALSE    ( - )       Value returned for FALSE
-TRUE     ( - )       Value returned for TRUE
-true?    ( - )       ...
-false?   ( - )       ...
->char    ( - )       ...
-char:    ( - )       ...1
-"        ( - )       ...
+FALSE    ( -f )      Value returned for FALSE
+TRUE     ( -f )      Value returned for TRUE
+true?    ( fq- )     Execute quote ('q') if flag ('f') is TRUE
+false?   ( fq- )     Execute quote ('q') if flag ('f') is FALSE
+>char    ( n-c )     Convert the value on TOS to a single character
+char:    ( "-c )     Parse ahead and return one character
+"        ( "-$ )     Parse until " is encountered and return a string
 cr       ( - )       Display a CR character
 space    ( - )       Display a space
 tab      ( - )       Display a tab
-t:       ( - )       Parse to the end of the line, display
+t:       ( "- )      Parse to the end of the line, display
                      the results.
-^esc     ( - )       ...
+^esc     ( $- )      Display ASCII code 32, followed by a string
 clear    ( - )       Clear the screen
-nip      ( - )       ...
+nip      ( xy-y )    Remove the second item on the stack
 rot      ( - )       ...
 -rot     ( - )       ...
-over     ( - )       ...
-tuck     ( - )       ...
-2dup     ( - )       ...
-2drop    ( - )       ...
-reset    ( - )       ...
+over     ( xy-xyx )  Put a copy of NOS above the TOS
+tuck     ( xy-yxy )  Put a copy of TOS under NOS     
+2dup     ( xy-xyxy ) Duplicate the top two items on the stack
+2drop    ( xy- )     Drop TOS and NOS
+reset    ( *- )      Drop all items on the stack
 r@       ( - )       ...
 1+       ( - )       ...
 1-       ( - )       ...
@@ -1745,7 +1770,8 @@ put-char-element  ( - )       ...
 <list>   ( - )       ...
 {        ( - )       ...
 }        ( - )       ...
-#unpre} 1175390025
+#unpre
+} 1175730434
 
 
 # End of Notebook Database File
