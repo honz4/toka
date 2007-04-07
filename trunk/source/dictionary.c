@@ -35,7 +35,7 @@ extern long parser;
  *|F|
  ******************************************************/
 ENTRY dictionary[4096];
-long   last=0;
+long  last=0;
 
 
 /******************************************************
@@ -76,7 +76,6 @@ void name_attach(void *class)
   }
 
   xt = (Inst)TOS; gc_keep(); DROP;
-
   add_entry(s, xt, class);
 }
 
@@ -149,8 +148,8 @@ void name_data()
  *|F| find_word()
  *|F| Search for a word (name taken from the string
  *|F| passed on TOS) in the dictionary. Returns the
- *|F| xt, class, and a flag of -1 if found. If not
- *|F| found, returns only a flag of 0.
+ *|F| xt, class, and a flag of TRUE if found. If not
+ *|F| found, returns only a flag of FALSE.
  *|F|
  ******************************************************/
 void find_word()
@@ -161,11 +160,11 @@ void find_word()
   flag = 0;
   for(a = last-1; a >= 0; a--)
   {
-    if((strcmp(dictionary[a].name, s) == 0) && flag == 0) 
+    if((strcmp(dictionary[a].name, s) == 0) && flag == FALSE) 
     {
       push((long)dictionary[a].xt);
       push((long)dictionary[a].class);
-      flag = -1;
+      flag = TRUE;
     }
   }
   push(flag);
@@ -198,7 +197,7 @@ void return_quote()
   find_word();
   flag = TOS; DROP;
 
-  if(flag == -1)
+  if(flag == TRUE)
   {
     class = (Inst)TOS; DROP;
     xt = (Inst)TOS; DROP;

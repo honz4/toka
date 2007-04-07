@@ -207,7 +207,7 @@ void truefalse()
   true = (Inst)TOS; DROP;
   flag = TOS; DROP;
 
-  if (flag == -1)
+  if (flag == TRUE)
     push((long)true);
   else
     push((long)false);

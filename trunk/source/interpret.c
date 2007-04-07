@@ -30,7 +30,7 @@ extern long stack[], sp;
 /******************************************************
  *|F| Variables:
  *|F|   long compiler
- *|F|   When set to 0, interpret; when set to -1, 
+ *|F|   When set to FALSE, interpret; when set to TRUE, 
  *|F|   compile. This is checked by the various word
  *|F|   classes defined in class.c
  *|F|
@@ -117,7 +117,7 @@ void interpret()
         push((long)scratch);
         to_number();
         a = TOS; DROP;
-        if (a == -1)
+        if (a == TRUE)
           data_class();
         else
           notfound();
