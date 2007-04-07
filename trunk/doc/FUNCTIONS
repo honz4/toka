@@ -204,8 +204,8 @@ as the data_class().
 find_word()
 Search for a word (name taken from the string
 passed on TOS) in the dictionary. Returns the
-xt, class, and a flag of -1 if found. If not
-found, returns only a flag of 0.
+xt, class, and a flag of TRUE if found. If not
+found, returns only a flag of FALSE.
 
 return_quote()
 Find a name (from the input stream) and return a
@@ -326,7 +326,7 @@ FILE: interpret.c
 
 Variables:
   long compiler
-  When set to 0, interpret; when set to -1, 
+  When set to FALSE, interpret; when set to TRUE, 
   compile. This is checked by the various word
   classes defined in class.c
 

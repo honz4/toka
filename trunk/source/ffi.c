@@ -48,7 +48,7 @@ void ffi_invoke()
   args = TOS; DROP;
   xt = (Func)TOS; DROP;
 
-  if (a != 0)
+  if (args != 0)
   {
     for(a = args; a > 0; a--)
     {
