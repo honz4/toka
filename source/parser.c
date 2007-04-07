@@ -96,7 +96,7 @@ void to_number()
      }
   }
 
-  if (flag == -1)
+  if (flag == TRUE)
     push(strtol(s, (char **)NULL, base));
   else
      push((long)s);
