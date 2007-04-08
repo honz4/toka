@@ -105,9 +105,9 @@
 [ parser @ >r
   parser off
   [ 32 parse
-    dup c@ char: | <> 
-    [ variable TRUE ] [ drop FALSE ] t/f 
-  ] while
+    dup c@ char: | <>
+    [ variable TRUE ] [ drop FALSE ] t/f
+  ] whileTrue
   r> parser !
 ] is variable|
 
@@ -136,7 +136,7 @@
 
 [ "R" file.open dup dup
   file.size 1 + dup malloc dup >r swap
-  file.read drop 
+  file.read drop
   file.close r>
 ] is file.slurp
 
@@ -144,7 +144,7 @@
 #! ---------------------------------------
 #! Arrays
 #! ---------------------------------------
-[ parser @ 
+[ parser @
   [ malloc ] [ >r malloc r> ] t/f is-data 
 ] is is-array
 [ swap cell-size * + @ ] is get-element

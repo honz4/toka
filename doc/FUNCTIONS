@@ -479,9 +479,13 @@ regular literals.
 quote_index()
 Return the current loop index (counter)
 
-quote_while()
+quote_while_true()
 Return execution of a quote until the quote
 returns FALSE.
+
+quote_while_false()
+Return execution of a quote until the quote
+returns TRUE.
 
 
 FILE: stack.c

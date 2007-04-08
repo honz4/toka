@@ -7,4 +7,5 @@ void truefalse();
 void recurse();
 void qlit();
 void quote_index();
-void quote_while();
+void quote_while_true();
+void quote_while_false();

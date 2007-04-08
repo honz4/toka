@@ -264,16 +264,16 @@ void quote_index()
 
 
 /******************************************************
- *|G| while    ( a- )      Execute quote. If the quote
+ *|G| whileTrue  ( a- )    Execute quote. If the quote
  *|G|                      returns TRUE, execute again.
  *|G|                      otherwise end the cycle.
  *
- *|F| quote_while()
+ *|F| quote_while_true()
  *|F| Return execution of a quote until the quote
  *|F| returns FALSE.
  *|F| 
  ******************************************************/
-void quote_while()
+void quote_while_true()
 {
   Inst quote;
   long flag;
@@ -282,6 +282,34 @@ void quote_while()
   flag = TRUE;
 
   while(flag == TRUE)
+  {
+    rstack[rsp] = (long)ip;   rsp++;
+    vm_run((Inst *)quote);
+    flag = TOS; DROP;
+    rsp--; ip = (Inst *)rstack[rsp];
+  }
+}
+
+
+/******************************************************
+ *|G| whileFalse ( a- )    Execute quote. If the quote
+ *|G|                      returns TRUE, execute again.
+ *|G|                      otherwise end the cycle.
+ *
+ *|F| quote_while_false()
+ *|F| Return execution of a quote until the quote
+ *|F| returns TRUE.
+ *|F| 
+ ******************************************************/
+void quote_while_false()
+{
+  Inst quote;
+  long flag;
+
+  quote = (Inst)TOS; DROP;
+  flag = FALSE;
+
+  while(flag == FALSE)
   {
     rstack[rsp] = (long)ip;   rsp++;
     vm_run((Inst *)quote);
