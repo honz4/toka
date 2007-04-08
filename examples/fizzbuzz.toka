@@ -1,5 +1,5 @@
 #! /usr/bin/toka
 [ 3 mod 0 = [ " Fizz " type TRUE ] [ FALSE ] t/f ] is fizz?
 [ 5 mod 0 = [ " Buzz " type TRUE ] [ FALSE ] t/f ] is buzz?
-[ 100 [ i fizz? i buzz? or [ i . ] false? ] iterate ] is gb
+[ 100 [ i fizz? i buzz? or [ i . ] false? ] +iterate ] is gb
 gb bye
