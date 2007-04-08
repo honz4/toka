@@ -123,7 +123,8 @@ void build_dictionary()
   add_entry("+iterate",  &alt_iterate,   &forth_class);
   add_entry("i",         &quote_index,   &forth_class);
   add_entry("t/f",       &truefalse,     &forth_class);
-  add_entry("while",     &quote_while,   &forth_class);
+  add_entry("whileTrue",  &quote_while_true,  &forth_class);
+  add_entry("whileFalse", &quote_while_false, &forth_class);
 
   /* stack.c */
   add_entry("dup",       &stack_dup,     &forth_class);

@@ -1235,9 +1235,13 @@ regular literals.
 quote_index()
 Return the current loop index (counter)
 
-quote_while()
+quote_while_true()
 Return execution of a quote until the quote
 returns FALSE.
+
+quote_while_false()
+Return execution of a quote until the quote
+returns TRUE.
 #unpre
 
 = Primitives Provided =
@@ -1247,11 +1251,13 @@ returns FALSE.
 ]
 recurse
 i
-while
+whileTrue
+whileFalse
 invoke
 iterate
 +iterate
-#unpre} 1175294781
+#unpre
+} 1176067286
 
 
 #--------------------------------------------------
@@ -1675,8 +1681,11 @@ t/f      ( fab- )    Invoke 'a' if 'f' flag is
 recurse  ( - )       Compile a call to the top
                      quote.
 i        ( -n )      Return the current loop index
-while    ( a- )      Execute quote. If the quote
+whileTrue  ( a- )    Execute quote. If the quote
                      returns TRUE, execute again.
+                     otherwise end the cycle.
+whileFalse ( a- )    Execute quote. If the quote
+                     returns FALSE, execute again.
                      otherwise end the cycle.
 dup      ( n-nn )    Duplicate the TOS
 drop     ( n- )      Drop the TOS
@@ -1771,7 +1780,7 @@ put-char-element  ( - )       ...
 {        ( - )       ...
 }        ( - )       ...
 #unpre
-} 1175730434
+} 1176067250
 
 
 # End of Notebook Database File
