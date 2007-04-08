@@ -2,6 +2,6 @@
 [ arglist get-element type cr ] is show-arg
 [ dup . char: = emit space ] is #=
 #args 0 = [ " No arguments passed!" type cr ] true?
-#args [ i #= show-arg ] iterate
+#args [ i #= show-arg ] +iterate
 bye
 

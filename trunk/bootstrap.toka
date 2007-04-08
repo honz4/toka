@@ -104,7 +104,7 @@
 ] is variable
 [ parser @ >r
   parser off
-  [ 32 parse
+  [ SPACE parse
     dup c@ char: | <>
     [ variable TRUE ] [ drop FALSE ] t/f
   ] whileTrue
