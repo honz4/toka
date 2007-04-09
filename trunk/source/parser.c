@@ -60,8 +60,8 @@ long parser=TRUE;
  *|F| This accepts a format of:
  *|F|   [-]number
  *|F| If successful, it leaves the number and a flag of
- *|F| -1 on the stack. Otherwise, it leaves the original
- *|F| string, and a flag of 0.
+ *|F| TRUE on the stack. Otherwise, it leaves the original
+ *|F| string, and a flag of FALSE.
  *|F|
  ******************************************************/
 void to_number()
@@ -71,7 +71,7 @@ void to_number()
 
   s = (char *)TOS; DROP;
   t = s;
-  flag = -1;
+  flag = TRUE;
 
   if (*t == '-')
     *t++;
@@ -82,7 +82,7 @@ void to_number()
      {
        if (!isdigit(*t))
        {
-         flag = 0;
+         flag = FALSE;
          break;
        } 
      }
@@ -90,7 +90,7 @@ void to_number()
      {
        if (!isxdigit(*t))
        {
-         flag = 0;
+         flag = FALSE;
          break;
        } 
      }

@@ -39,6 +39,7 @@ void file_open()
   char *s;
   FILE *f;
 
+  f = 0;
   mode = TOS; DROP;
   s = (char *)TOS; DROP;
   
@@ -163,6 +164,7 @@ void file_seek()
   long mode, offset, a;
   FILE *f;
 
+  a = 0;
   mode = TOS; DROP;
   offset = TOS; DROP;
   f = (FILE *)TOS; DROP;

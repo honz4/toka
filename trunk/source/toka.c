@@ -46,8 +46,6 @@ extern long stack[], sp;
  ******************************************************/
 int main(int argv, char *argc[])
 {
-  FILE *file;
-
   char *homedir = (char *)getenv ("HOME");
   char *personal = "/.toka";
   char *custom;
