@@ -2,7 +2,7 @@
 # You may want to override CFLAGS to optimize
 # further or include debugging information.
 # ==============================================
-CFLAGS = -O2 -s
+CFLAGS = -O2 -s -Wall
 CC = gcc
 UNAME = `uname`
 DL  = `$(CC) ../other/needdl.c -ldl 2>/dev/null &&  echo "-ldl"`
