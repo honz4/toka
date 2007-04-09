@@ -45,7 +45,6 @@ long  last=0;
  ******************************************************/
 void add_entry(char *name, void *xt, void *class)
 {
-  char *s;
   dictionary[last].xt = (Inst)xt;
   dictionary[last].class = (Inst)class;
   strcpy(dictionary[last].name, name);
@@ -190,7 +189,7 @@ void return_quote()
 
   if (parser == TRUE)
   {
-    gc_alloc(128, sizeof(char), GC_TEMP);
+    s = gc_alloc(128, sizeof(char), GC_TEMP);
     get_token(s, 32);
   }
 

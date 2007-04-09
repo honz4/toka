@@ -51,10 +51,6 @@ long   compiler=0;
 char *scratch;
 char *tib;
 
-#define ON -1
-#define OFF 0
-
-
 
 /******************************************************
  *|G| count    ( a-ac )    Return an address/count pair
@@ -84,7 +80,7 @@ void count()
  ******************************************************/
 void notfound()
 {
-  printf("%s was not found!\n", (char *)TOS);
+  printf("E0: %s was not found!\n", (char *)TOS);
   DROP;
 }
 
@@ -98,26 +94,25 @@ void interpret()
 {
   Inst class;
   long flag;
-  long a;
 
   scratch = calloc(1024, sizeof(char));
 
   while(1)
   {
-    flag = 0; a = 0; class = 0;
+    flag = FALSE; class = 0;
     fflush(stdout);
     vm_stack_check();
     get_token(scratch, 32);
     find_word();
     flag = TOS; DROP;
-    if (flag == 0)
+    if (flag == FALSE)
     {
       if (strlen(scratch) != 0)
       {
         push((long)scratch);
         to_number();
-        a = TOS; DROP;
-        if (a == TRUE)
+        flag = TOS; DROP;
+        if (flag == TRUE)
           data_class();
         else
           notfound();
