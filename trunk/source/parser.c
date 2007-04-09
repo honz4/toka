@@ -74,9 +74,9 @@ void to_number()
   flag = TRUE;
 
   if (*t == '-')
-    *t++;
+    t++;
 
-  for(; *t; *t++)
+  for(; *t; t++)
   {
      if (base <= 10)
      {
