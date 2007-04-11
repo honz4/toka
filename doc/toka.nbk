@@ -71,8 +71,7 @@ as well:
 
 #pre
   make docs
-#unpre
-} 1176257547
+#unpre} 1176257547
 
 
 #--------------------------------------------------
@@ -292,8 +291,9 @@ c@
 
 page debug.c {= Use =
 
-The start of debugging support. This provides a few simple tools that can
-help when trying to track down a bug.
+This provides a very small collection of simple tools that can be helpful
+when trying to track down bugs. It is not intended to be a full-scale
+debugging tool.
 
 = Functions Provided =
 
@@ -314,7 +314,8 @@ Display information about Toka's memory use
 :words
 :stack
 :gc
-#unpre} 1175294124
+#unpre
+} 1176258298
 
 
 #--------------------------------------------------
@@ -377,6 +378,7 @@ function will always have a return value, even for <i>void</i> functions.
 
 You can also make use of <b>as</b> to rename the imported function.
 
+#---
 Example:
 
 #pre
@@ -385,7 +387,13 @@ Example:
   2 import printf as printf.2
   " %i\n" 100 printf.2
 #unpre
-} 1176257885
+
+#---
+The FFI is optional, and can be disabled at build time. Doing so reduces
+the overall functionality of Toka, so doing this is only recommended if
+you are using a system without dlopen()/dlsym(), or if you need more 
+direct control over the functionality provided.
+} 1176258153
 
 
 #--------------------------------------------------
@@ -425,8 +433,7 @@ dictionary.
 from
 import
 as
-#unpre
-} 1176257909
+#unpre} 1176257909
 
 
 #--------------------------------------------------
@@ -798,8 +805,7 @@ Conditionals are also handled using quotes:
 The first case will invoke the quote if the flag returned by <b>=</b> is
 TRUE. The second invokes the quote if the flag is FALSE, and the third
 form invokes the <b>[ 3 . ]</b> quote if TRUE, or the <b>[ 4 . ]</b>
-quote if FALSE.
-} 1176257329
+quote if FALSE.} 1176257329
 
 
 #--------------------------------------------------
@@ -831,8 +837,7 @@ In addition, the code will always leave the 16 newest allocations in each
 list alone to prevent them from falling out of scope.
  
 Information regarding the current status of the garbage collection
-subsystem can be obtained via <b>:gc</b> (the <b>[gc_info()|gc.c]</b> function).
-} 1176257478
+subsystem can be obtained via <b>:gc</b> (the <b>[gc_info()|gc.c]</b> function).} 1176257478
 
 
 #--------------------------------------------------
@@ -955,8 +960,7 @@ work on, even if it's not as practical as other languages.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1176257899
+* [vm.c]} 1176257899
 
 
 #--------------------------------------------------
@@ -1348,7 +1352,9 @@ page Search {[@searchIndex@]} 1175217539
 
 page stack.c {= Use =
 
-Basic stack operations.
+Implements the basic stack operations. This is intentionally kept
+minimal, though additional primitives can be added to improve overall
+performance.
 
 = Functions Provided =
 
@@ -1381,7 +1387,8 @@ swap
 >r
 r>
 depth
-#unpre} 1175294819
+#unpre
+} 1176258218
 
 
 #--------------------------------------------------
@@ -1412,8 +1419,7 @@ the following cell to the stack.
 
 When this quote is invoked, <i>a</i> will be called. After it finishes
 executing, <i>b</i> will be called, and so on until <i>0</i> is
-encountered. At that point, the [vm_run()|vm.c] function exits.
-} 1176257425
+encountered. At that point, the [vm_run()|vm.c] function exits.} 1176257425
 
 
 #--------------------------------------------------
@@ -1771,57 +1777,58 @@ t:       ( "- )      Parse to the end of the line, display
 ^esc     ( $- )      Display ASCII code 32, followed by a string
 clear    ( - )       Clear the screen
 nip      ( xy-y )    Remove the second item on the stack
-rot      ( - )       ...
--rot     ( - )       ...
+rot      ( abc-bca ) ...
+-rot     ( abc-acb ) ...
 over     ( xy-xyx )  Put a copy of NOS above the TOS
 tuck     ( xy-yxy )  Put a copy of TOS under NOS     
 2dup     ( xy-xyxy ) Duplicate the top two items on the stack
 2drop    ( xy- )     Drop TOS and NOS
 reset    ( *- )      Drop all items on the stack
-r@       ( - )       ...
-1+       ( - )       ...
-1-       ( - )       ...
-negate   ( - )       ...
-/        ( - )       ...
-mod      ( - )       ...
-not      ( - )       ...
-*/       ( - )       ...
-chars    ( - )       ...
-char+    ( - )       ...
-char-    ( - )       ...
-cells    ( - )       ...
-cell+    ( - )       ...
-cell-    ( - )       ...
-+!       ( - )       ...
--!       ( - )       ...
-on       ( - )       ...
-off      ( - )       ...
-toggle   ( - )       ...
-variable ( - )       ...
-variable| ( - )      ...
-hex      ( - )       ...
-decimal  ( - )       ...
-binary   ( - )       ...
-octal    ( - )       ...
-"R"      ( - )       ...
-"R+"     ( - )       ...
-"W"      ( - )       ...
-"W+"     ( - )       ...
-"A"      ( - )       ...
-"A+"     ( - )       ...
-START    ( - )       ...
-CURRENT  ( - )       ...
-END      ( - )       ...
-file.slurp        ( - )       ...
-is-array          ( - )       ...
-get-element       ( - )       ...
-put-element       ( - )       ...
-get-char-element  ( - )       ...
-put-char-element  ( - )       ...
-<list>   ( - )       ...
-{        ( - )       ...
-}        ( - )       ...
-#unpre} 1176067250
+r@       ( -x )      ...
+1+       ( x-y )     Increase value on stack by 1
+1-       ( x-y )     Decrease value on stack by 1
+negate   ( x-y )     Invert the sign of TOS
+/        ( xy-z )    Divide two numbers
+mod      ( xy-z )    Divide two numbers and get remainder
+not      ( x-y )     ...
+*/       ( abc-d )   ...
+chars    ( x-y )     Multiply TOS by char-size. Useful w/arrays
+char+    ( x-y )     Increase TOS by char-size
+char-    ( x-y )     Decrease TOS by char-size
+cells    ( x-y )     Multiply TOS by cell-size. Useful w/arrays
+cell+    ( x-y )     Increase TOS by cell-size
+cell-    ( x-y )     Decrease TOS by cell-size
++!       ( xa- )     ...
+-!       ( xa- )     ...
+on       ( a- )      Set a variable to TRUE
+off      ( a- )      Set a variable to FALSE
+toggle   ( a- )      Toggle a variable between TRUE and FALSE
+variable ( "- )      Create a variable
+variable| ( "- )     Create multiple variables
+hex      ( - )       Set the base to hexadecimal (16)
+decimal  ( - )       Set the base to decimal (10)
+binary   ( - )       Set the base to binary (2)
+octal    ( - )       Set the base to octal (8)
+"R"      ( -x )      ...
+"R+"     ( -x )      ...
+"W"      ( -x )      ...
+"W+"     ( -x )      ...
+"A"      ( -x )      ...
+"A+"     ( -x )      ...
+START    ( -x )      ...
+CURRENT  ( -x )      ...
+END      ( -x )      ...
+file.slurp        ( $-a )   Read a file 
+is-array          ( n"- )   ...
+get-element       ( ia-n )  ...
+put-element       ( nia- )  ...
+get-char-element  ( ia-n )  ...
+put-char-element  ( nia- )  Store a character (n)
+<list>   ( -a )      Stores a list of pointers used by { and }
+{        ( - )       Start a scoped area
+}        ( - )       End a scoped area
+#unpre
+} 1176259191
 
 
 # End of Notebook Database File
