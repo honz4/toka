@@ -71,7 +71,8 @@ as well:
 
 #pre
   make docs
-#unpre} 1175313386
+#unpre
+} 1176257547
 
 
 #--------------------------------------------------
@@ -353,11 +354,46 @@ page dictionary.c =\ Use\ =\n\nThis\ file\ provides\ the\ functionality\ to\ cre
 
 
 #--------------------------------------------------
+# FFI
+
+page FFI {To allow use of external libraries, Toka provides a simple <i>Foreign
+Function Interface</i> (FFI). This is built around the following
+primitives:
+
+#pre
+  from LIBRARY
+#unpre
+
+Set the import source to LIBRARY. This should be a fully-qualified
+filename; it may require a path as well as the .so extension.
+
+#pre
+  N import FUNCTION
+#unpre
+
+Import FUNCTION from the previously specified library. A new quote named
+FUNCTION will be created, and will take N arguments off the stack. This
+function will always have a return value, even for <i>void</i> functions.
+
+You can also make use of <b>as</b> to rename the imported function.
+
+Example:
+
+#pre
+  #! Linux libc = libc.so.6, BSD libc = libc.so
+  from libc.so.6
+  2 import printf as printf.2
+  " %i\n" 100 printf.2
+#unpre
+} 1176257885
+
+
+#--------------------------------------------------
 # ffi.c
 
 page ffi.c {= Use =
 
-Implements the [Foreign Function Interface], which allows use of external
+Implements the [Foreign Function Interface|FFI], which allows use of external
 libraries.
 
 = Functions Provided =
@@ -389,7 +425,8 @@ dictionary.
 from
 import
 as
-#unpre} 1175294401
+#unpre
+} 1176257909
 
 
 #--------------------------------------------------
@@ -741,13 +778,14 @@ This will count <i>up</i> from 1 to 10. Again, <b>i</b> returns the loop
 index.
 
 #pre
-  1 [ dup . 1 + dup 101 < ] while
+  1 [ dup . 1 + dup 101 < ] whileTrue
 #unpre
 
 This will count from 1 to 100. It does not update the loop index. The
-<b>while</b> loop repeats, taking a flag off the stack at the end of each
+<b>whileTrue</b> loop repeats, taking a flag off the stack at the end of each
 loop. If the flag is TRUE, execution of the loop continues. If FALSE,
-execution stops.
+execution stops. A <b>whileFalse</b> primitive is also provided, which
+continues if the flag is FALSE, and stops the loop when it is TRUE.
 
 Conditionals are also handled using quotes:
 
@@ -760,7 +798,8 @@ Conditionals are also handled using quotes:
 The first case will invoke the quote if the flag returned by <b>=</b> is
 TRUE. The second invokes the quote if the flag is FALSE, and the third
 form invokes the <b>[ 3 . ]</b> quote if TRUE, or the <b>[ 4 . ]</b>
-quote if FALSE.} 1175465847
+quote if FALSE.
+} 1176257329
 
 
 #--------------------------------------------------
@@ -777,7 +816,7 @@ or if the allocation fails, the 16 oldest items are freed and all later
 entries are shifted down.
 
 Obviously there is also a way to mark entries as permanent. This is done
-by <b>keep</b> (the <b>gc_keep()</b> function). This routine skims
+by <b>keep</b> (the <b>[gc_keep()|gc.c]</b> function). This routine skims
 through the list of allocations (from most recent to oldest) looking for
 a specific pointer. When found, that entry (and any subsequent
 allocations -- in Toka these will almost always be subquotes, strings,
@@ -792,7 +831,8 @@ In addition, the code will always leave the 16 newest allocations in each
 list alone to prevent them from falling out of scope.
  
 Information regarding the current status of the garbage collection
-subsystem can be obtained via <b>:gc</b> (the <b>gc_info()</b> function).} 1175389158
+subsystem can be obtained via <b>:gc</b> (the <b>[gc_info()|gc.c]</b> function).
+} 1176257478
 
 
 #--------------------------------------------------
@@ -889,6 +929,7 @@ work on, even if it's not as practical as other languages.
 
 === Topics ===
 
+* [FFI]
 * [garbage collector]
 * [threading model]
 * [TokaDoc]
@@ -914,7 +955,8 @@ work on, even if it's not as practical as other languages.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1175645185
+* [vm.c]
+} 1176257899
 
 
 #--------------------------------------------------
@@ -1256,8 +1298,7 @@ whileFalse
 invoke
 iterate
 +iterate
-#unpre
-} 1176067286
+#unpre} 1176067286
 
 
 #--------------------------------------------------
@@ -1366,12 +1407,13 @@ This is compiled into a list of addresses:
  a, b, c, lit, 1, lit 2, +, ., 0
 #unpre
 
-Note the special form for numbers. The lit() function pushes the value in
+Note the special form for numbers. The [lit()|vm.c] function pushes the value in
 the following cell to the stack.
 
 When this quote is invoked, <i>a</i> will be called. After it finishes
 executing, <i>b</i> will be called, and so on until <i>0</i> is
-encountered. At that point, the vm_run() function exits.} 1175312808
+encountered. At that point, the [vm_run()|vm.c] function exits.
+} 1176257425
 
 
 #--------------------------------------------------
@@ -1779,8 +1821,7 @@ put-char-element  ( - )       ...
 <list>   ( - )       ...
 {        ( - )       ...
 }        ( - )       ...
-#unpre
-} 1176067250
+#unpre} 1176067250
 
 
 # End of Notebook Database File
