@@ -314,8 +314,7 @@ Display information about Toka's memory use
 :words
 :stack
 :gc
-#unpre
-} 1176258298
+#unpre} 1176258298
 
 
 #--------------------------------------------------
@@ -392,8 +391,7 @@ Example:
 The FFI is optional, and can be disabled at build time. Doing so reduces
 the overall functionality of Toka, so doing this is only recommended if
 you are using a system without dlopen()/dlsym(), or if you need more 
-direct control over the functionality provided.
-} 1176258153
+direct control over the functionality provided.} 1176258153
 
 
 #--------------------------------------------------
@@ -1387,8 +1385,7 @@ swap
 >r
 r>
 depth
-#unpre
-} 1176258218
+#unpre} 1176258218
 
 
 #--------------------------------------------------
@@ -1750,7 +1747,6 @@ These are additional words, provided in <b>bootstrap.toka</b>.
 They significantly expand the core language.
 
 #pre
-         ( - )       ...
 #!       ( "- )      Parse to the end of the line
                      and scrap the results.
 SPACE    ( -n )      ASCII value for SPACE character
@@ -1758,7 +1754,7 @@ CR       ( -n )      ASCII value for CR character
 LF       ( -n )      ASCII value for LF character
 ESC      ( -n )      ASCII value for ESC character
 TAB      ( -n )      ASCII value for TAB character
-wsparse  ( -a )      ...
+wsparse  ( -a )      Parse until a SPACE is encountered
 lnparse  ( -a )      Parse to the end of the line,
                      leave the resulting string on the
                      stack.
@@ -1777,29 +1773,29 @@ t:       ( "- )      Parse to the end of the line, display
 ^esc     ( $- )      Display ASCII code 32, followed by a string
 clear    ( - )       Clear the screen
 nip      ( xy-y )    Remove the second item on the stack
-rot      ( abc-bca ) ...
--rot     ( abc-acb ) ...
+rot      ( abc-bca ) Rotate top three values on stack
+-rot     ( abc-acb ) Rotate top three values on stack twice
 over     ( xy-xyx )  Put a copy of NOS above the TOS
 tuck     ( xy-yxy )  Put a copy of TOS under NOS     
 2dup     ( xy-xyxy ) Duplicate the top two items on the stack
 2drop    ( xy- )     Drop TOS and NOS
 reset    ( *- )      Drop all items on the stack
-r@       ( -x )      ...
+r@       ( -x )      Get a copy of the top item on the return stack
 1+       ( x-y )     Increase value on stack by 1
 1-       ( x-y )     Decrease value on stack by 1
 negate   ( x-y )     Invert the sign of TOS
 /        ( xy-z )    Divide two numbers
 mod      ( xy-z )    Divide two numbers and get remainder
-not      ( x-y )     ...
-*/       ( abc-d )   ...
+not      ( x-y )     Invert the value 'x'
+*/       ( abc-d )   (a*b)/c
 chars    ( x-y )     Multiply TOS by char-size. Useful w/arrays
 char+    ( x-y )     Increase TOS by char-size
 char-    ( x-y )     Decrease TOS by char-size
 cells    ( x-y )     Multiply TOS by cell-size. Useful w/arrays
 cell+    ( x-y )     Increase TOS by cell-size
 cell-    ( x-y )     Decrease TOS by cell-size
-+!       ( xa- )     ...
--!       ( xa- )     ...
++!       ( xa- )     Add 'x' to the value in address 'a'
+-!       ( xa- )     Subtract 'x' from the value in address 'a'
 on       ( a- )      Set a variable to TRUE
 off      ( a- )      Set a variable to FALSE
 toggle   ( a- )      Toggle a variable between TRUE and FALSE
@@ -1809,26 +1805,28 @@ hex      ( - )       Set the base to hexadecimal (16)
 decimal  ( - )       Set the base to decimal (10)
 binary   ( - )       Set the base to binary (2)
 octal    ( - )       Set the base to octal (8)
-"R"      ( -x )      ...
-"R+"     ( -x )      ...
-"W"      ( -x )      ...
-"W+"     ( -x )      ...
-"A"      ( -x )      ...
-"A+"     ( -x )      ...
-START    ( -x )      ...
-CURRENT  ( -x )      ...
-END      ( -x )      ...
-file.slurp        ( $-a )   Read a file 
-is-array          ( n"- )   ...
-get-element       ( ia-n )  ...
-put-element       ( nia- )  ...
-get-char-element  ( ia-n )  ...
-put-char-element  ( nia- )  Store a character (n)
+"R"      ( -x )      Mode for file.open
+"R+"     ( -x )      Mode for file.open
+"W"      ( -x )      Mode for file.open
+"W+"     ( -x )      Mode for file.open
+"A"      ( -x )      Mode for file.open
+"A+"     ( -x )      Mode for file.open
+START    ( -x )      Mode for file.seek
+CURRENT  ( -x )      Mode for file.seek
+END      ( -x )      Mode for file.seek
+file.slurp        ( $-a )   Read a file into a dynamically allocated buffer 
+is-array          ( n"- )   Create an array of size 'n'
+get-element       ( ia-n )  Get element 'i' from array 'a'
+put-element       ( nia- )  Put value 'n' into element 'i' of array 'a'
+get-char-element  ( ia-n )  Get char-size element 'i' from 
+                            array 'a'
+put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of 
+                            array 'a'
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
 #unpre
-} 1176259191
+} 1176346125
 
 
 # End of Notebook Database File
