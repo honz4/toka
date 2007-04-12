@@ -45,7 +45,9 @@ page Building {To build Toka, you will need the following:
 * GCC 2.9x, 3.x, or 4.x
 * Make (GNU Make is recommended, though others may work)
 
-The process using Make:
+For most people, the following should work. If it fails, try checking the
+[Ports] page to see if there are any platform-specific instructions. The
+process using Make:
 
 #pre
   make
@@ -71,7 +73,8 @@ as well:
 
 #pre
   make docs
-#unpre} 1176257547
+#unpre
+} 1176347063
 
 
 #--------------------------------------------------
@@ -926,7 +929,7 @@ work on, even if it's not as practical as other languages.
 * [Building] and [Installation]
 * [First Steps]
 * [Words and Their Uses]
-
+* [Ports]
 
 = Internals =
 
@@ -958,7 +961,8 @@ work on, even if it's not as practical as other languages.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1176257899
+* [vm.c]
+} 1176346477
 
 
 #--------------------------------------------------
@@ -1211,6 +1215,75 @@ include
 needs
 end.
 #unpre} 1175294722
+
+
+#--------------------------------------------------
+# Ports
+
+page Ports {This page lists the supported platforms and includes notes on building
+for specific targets.
+
+#---
+Quick Summary:
+
+* x86
+** Linux
+** Net, Free, Open, and DragonFly BSD
+** OpenSolaris
+** BeOS
+** Cygwin
+* ARM
+** OpenBSD
+** NetBSD
+* MIPS
+** NetBSD
+** Linux
+
+#---
+= Linux =
+
+* x86
+* x86-64
+* MIPS
+
+#---
+= BSD =
+
+=== OpenBSD ===
+* x86
+* ARM (cats)
+
+=== FreeBSD ===
+* x86
+
+=== NetBSD ===
+* x86
+* MIPS (pmax)
+* ARM (cats)
+
+=== DragonFly BSD ===
+* x86
+
+#---
+= BeOS =
+* x86
+* FFI requires libdl.so (not standard part of BeOS)
+** http://bebits.com/app/2917
+* You <i>may</i> need a newer GCC
+** http://bebits.com/app/4011
+* <i>make beos</i>
+
+#---
+= Cygwin =
+* x86
+* Tested under Windows XP and Vista
+* FFI may be buggy
+* <i>make cygwin</i>
+
+#---
+= OpenSolaris =
+* x86
+} 1176347197
 
 
 #--------------------------------------------------

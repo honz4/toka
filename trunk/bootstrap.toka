@@ -96,8 +96,8 @@
 [ cell-size - ] is cell-
 [ dup @ rot + swap ! ] is +!
 [ dup @ rot - swap ! ] is -!
-[ -1 swap ! ] is on
-[  0 swap ! ] is off
+[ TRUE  swap ! ] is on
+[ FALSE swap ! ] is off
 [ dup @ not swap ! ] is toggle
 [ cell-size malloc 
   parser @ [ swap ] false? is-data 
