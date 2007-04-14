@@ -4,14 +4,15 @@
 # ==============================================
 CFLAGS = -O2 -s -Wall
 CC = gcc
-UNAME = `uname`
-DL  = `$(CC) ../other/needdl.c -ldl 2>/dev/null &&  echo "-ldl"`
+DL  = `$(CC) ../other/needdl.c -ldl 2>/dev/null && echo "-ldl" && rm a.out`
 LDFLAGS = $(DL)
+
 
 # ==============================================
 # Additional flags required by specific OSes
 # ==============================================
 BEOSFLAGS = -I/boot/develop/headers
+
 
 # ==============================================
 NOFFI = bits.c \
@@ -39,13 +40,9 @@ FILES = $(NOFFI) \
 # ==============================================
 default:
 	cd source && $(CC) $(CFLAGS) $(FILES) $(LDFLAGS) -o ../toka
-	make -s tclean
-
-toka:
-	make
 
 cygwin:
-	cd source && $(CC) $(CFLAGS) $(NOFFI) -DNOFFI -o ../toka
+	cd source && $(CC) $(CFLAGS) $(NOFFI) -DNOFFI -o ../toka.exe
 	make -s tclean
 
 beos:
@@ -65,14 +62,11 @@ docs:
 	cd source && mv FUNCTIONS GLOSSARY ../doc
 # ==============================================
 clean:
-	make -s tclean
-	rm -f toka test.log
-# ==============================================
-tclean:
 	rm -f `find . | grep \~ `
 	rm -f source/*.o source/a.out
+	rm -f toka test.log
 # ==============================================
-install: toka
+install:
 	cp toka /usr/bin
 	mkdir -p /usr/share/toka
 	cp bootstrap.toka /usr/share/toka

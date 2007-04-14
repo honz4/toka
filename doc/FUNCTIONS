@@ -389,8 +389,8 @@ Attempt to convert a string (on TOS) to a number.
 This accepts a format of:
   [-]number
 If successful, it leaves the number and a flag of
--1 on the stack. Otherwise, it leaves the original
-string, and a flag of 0.
+TRUE on the stack. Otherwise, it leaves the original
+string, and a flag of FALSE.
 
 parse()
 Parse the input buffer until the character passed
