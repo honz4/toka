@@ -73,8 +73,7 @@ as well:
 
 #pre
   make docs
-#unpre
-} 1176347063
+#unpre} 1176347063
 
 
 #--------------------------------------------------
@@ -838,7 +837,8 @@ In addition, the code will always leave the 16 newest allocations in each
 list alone to prevent them from falling out of scope.
  
 Information regarding the current status of the garbage collection
-subsystem can be obtained via <b>:gc</b> (the <b>[gc_info()|gc.c]</b> function).} 1176257478
+subsystem can be obtained via <b>:gc</b> (the <b>[gc_info()|debug.c]</b> function).
+} 1176697195
 
 
 #--------------------------------------------------
@@ -961,8 +961,7 @@ work on, even if it's not as practical as other languages.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1176346477
+* [vm.c]} 1176346477
 
 
 #--------------------------------------------------
@@ -1246,6 +1245,9 @@ Quick Summary:
 * x86-64
 * MIPS
 
+Toka has been built and tested on Debian and SuSE, using
+GCC versions 2.95, 3.0, and 4.1
+
 #---
 = BSD =
 
@@ -1253,10 +1255,10 @@ Quick Summary:
 * x86
 * ARM (cats)
 
-=== FreeBSD ===
+=== FreeBSD 4.x - 6.x ===
 * x86
 
-=== NetBSD ===
+=== NetBSD 3 ===
 * x86
 * MIPS (pmax)
 * ARM (cats)
@@ -1283,7 +1285,7 @@ Quick Summary:
 #---
 = OpenSolaris =
 * x86
-} 1176347197
+} 1176697155
 
 
 #--------------------------------------------------
@@ -1898,8 +1900,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre
-} 1176346125
+#unpre} 1176346125
 
 
 # End of Notebook Database File
