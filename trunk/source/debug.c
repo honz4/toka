@@ -30,13 +30,13 @@ extern GCITEM gc_trash[];
 
 
 /******************************************************
- *|F| int display_names_by_class(void *class)
+ *|F| long display_names_by_class(void *class)
  *|F| Display a list of all named items with the 
  *|F| specified class. Returns the number of named 
  *|F| items displayed.
  *|F|
  ******************************************************/
-int display_names_by_class(void *class)
+long display_names_by_class(void *class)
 {
   long names, a;
 
@@ -133,8 +133,8 @@ void gc_info()
     tsize += gc_trash[a].size;
 
   a = (sizeof(GCITEM) * 128)*2;
-  printf("gc: %li KiB (%li bytes) used for bookkeeping\n", a/1024, a);
-  printf("gc: %li objects totaling %li KiB (%li bytes)\n", gc_objects, gc_used/1024, gc_used);
-  printf("gc: Temporary:  %li (%li KiB, %li bytes)\n", gc_depth, size/1024, size);
-  printf("gc: Trash:      %li (%li KiB, %li bytes)\n", gc_tdepth, tsize/1024, tsize);
+  printf("gc: %lu KiB (%lu bytes) used for bookkeeping\n", a/1024, a);
+  printf("gc: %lu objects totaling %lu KiB (%lu bytes)\n", gc_objects, gc_used/1024, gc_used);
+  printf("gc: Temporary:  %lu (%lu KiB, %lu bytes)\n", gc_depth, size/1024, size);
+  printf("gc: Trash:      %lu (%lu KiB, %lu bytes)\n", gc_tdepth, tsize/1024, tsize);
 }
