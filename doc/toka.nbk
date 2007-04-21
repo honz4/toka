@@ -436,8 +436,7 @@ is-macro
 is-super
 `
 last
-#unpre
-} 1177182595
+#unpre} 1177182595
 
 
 #--------------------------------------------------
@@ -462,7 +461,15 @@ by the [FFI].
 
 = E4 =
 Nonfatal. This error arises when a symbol can not be found in the
-currently open library.} 1177180141
+currently open library.
+
+= E5 =
+<b>Fatal</b>. When the return stack overflows or underflows, this error
+is thrown and Toka exits.
+
+Nonfatal. When the data stack overflows or underflows, this error is
+thrown and Toka resets the stack pointer to the beginning of the stack.
+} 1177189326
 
 
 #--------------------------------------------------
@@ -482,7 +489,12 @@ Display a given error by code
 
 = Primitives Provided =
 
-<i>None</i>} 1177177214
+<i>None</i>
+
+= See Also =
+
+[ErrorCodes]
+} 1177189370
 
 
 #--------------------------------------------------
@@ -2081,8 +2093,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre
-} 1177182607
+#unpre} 1177182607
 
 
 # End of Notebook Database File
