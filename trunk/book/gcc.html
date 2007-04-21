@@ -1,0 +1,86 @@
+<html><head><title>toka.nbk: gc.c</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="home.html">Home</a> | Previous Page: <a href="garbage_collector.html">garbage collector</a></p>
+
+<hr>
+
+<h1>&nbsp;gc.c</h1>
+
+
+<h2>Use</h2>
+
+<p>Implements the memory allocator and basic <a href="garbage_collector.html">garbage collector</a>.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  GCITEM gc_list[128]
+  Holds the list of items marked as garbage
+
+  long gc_depth
+  A pointer to the top of the garbage collection
+  list
+
+  GCITEM gc_trash[128]
+  Holds the short list of items marked as garbage
+
+  long gc_tdepth
+  A pointer to the top of the short garbage
+  collection list
+
+  long gc_used
+  Contains the total size of all currently used
+  memory, including permanent quotes.
+
+  long gc_objects
+  Contains the total number of objects that are
+  currently existing, including permanent ones.
+
+gc_alloc(long items, long size, long type)
+Allocate the requested memory and add it to the
+garbage collection list.
+If type is set to 0, add to the normal garbage
+collection list. If set to 1, add to the short
+list of known garbage items which can be safely
+freed at the next gc().
+If the allocation fails, gc() is called, and the
+allocation is retried. If it still fails, an
+error is reported and Toka is terminated.
+
+gc_keep()
+Remove the specified address (and any childern it
+has registered) from the garbage collection list.
+If the TOS is not an allocated address, this will
+silently ignore it.
+
+gc()
+Free the oldest allocations on the garbage list.
+Will free up to 16 items from each list per
+call. If there are 16 or less items remaining,
+this code will leave the allocations alone.
+
+toka_malloc()
+Allocate TOS bytes of memory. Returns a pointer to
+the allocated memory.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>keep
+gc
+malloc
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="home.html">Home</a> | Previous Page: <a href="garbage_collector.html">garbage collector</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

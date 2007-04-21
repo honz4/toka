@@ -1,0 +1,59 @@
+<html><head><title>toka.nbk: Variables</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="vmc.html">vm.c</a> | Previous Page: <a href="usingthestack.html">UsingTheStack</a></p>
+
+<hr>
+
+<h1>&nbsp;Variables</h1>
+
+
+<p>To hold data for longer periods of time than is practical with the stack,
+variables can be used. Variables are pointers to memory locations large
+enough to hold a number. There are two primary ways to create variables:
+</p>
+<pre>  variable foo
+  variable bar
+  variable baz
+</pre>
+
+<p>The above would create three new variables, named <b>foo</b>, <b>bar</b>,
+and <b>baz</b>. When creating multiple variables, it is more readable to
+use <b>variable|</b> though:
+</p>
+<pre>  variable| foo bar baz |
+</pre>
+
+<p>You can use <b>@</b> (fetch) and <b>!</b> (store) to alter the contents
+of a variable:
+</p>
+<pre>  variable foo
+  100 foo !
+  foo @ .
+</pre>
+
+<p>For reading/writing character-sized values, <b>c@</b> and <b>c!</b> are
+also provided. A full list of functions for working with variables follows:
+</p>
+<pre>  variable ( "- )      Parse ahead and create a named entry
+                       corresponding to a memory location
+  variable| ( |- )     Parse and create variables until | 
+                       is encountered.
+  @        ( a-n )     Fetch the value from variable 'a'
+  !        ( na- )     Store 'n' to variable 'a'
+  c@       ( a-n )     Fetch a byte from variable 'a'
+  c!       ( na- )     Store byte 'n' to variable 'a'
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="vmc.html">vm.c</a> | Previous Page: <a href="usingthestack.html">UsingTheStack</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

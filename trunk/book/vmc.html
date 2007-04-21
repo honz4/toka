@@ -1,0 +1,63 @@
+<html><head><title>toka.nbk: vm.c</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="words_and_their_uses.html">Words and Their Uses</a> | Previous Page: <a href="variables.html">Variables</a></p>
+
+<hr>
+
+<h1>&nbsp;vm.c</h1>
+
+
+<h2>Use</h2>
+
+<p>Implements the heart of the virtual machine.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  Inst *heap
+  Pointer into the current heap
+
+  Inst *ip
+  The instruction pointer
+
+  long stack[100], rstack[100]
+  The data and return stacks
+
+  long sp, rsp
+  The stack pointers
+
+vm_run(Inst)
+Run through a list of instructions
+Side effects:
+  modifes *ip
+
+vm_stack_check()
+Check for over/underflow and reset if detected
+If the return stack over/underflows, exit Toka
+
+push(long a)
+Push a number to the stack.
+
+lit()
+Push the value in the following memory location
+to the stack
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>heap
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="words_and_their_uses.html">Words and Their Uses</a> | Previous Page: <a href="variables.html">Variables</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

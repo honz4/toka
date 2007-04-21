@@ -1,0 +1,73 @@
+<html><head><title>toka.nbk: data.c</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="debugc.html">debug.c</a> | Previous Page: <a href="consolec.html">console.c</a></p>
+
+<hr>
+
+<h1>&nbsp;data.c</h1>
+
+
+<h2>Use</h2>
+
+<p>These are words useful for accessing and modifying data.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>make_literal()
+Compile a call to lit() and then place TOS into
+the next memory location.
+
+fetch()
+Fetch the value in the memory location pointed to
+by TOS.
+
+store()
+Store NOS into the memory location specified by
+TOS.
+
+fetch_char()
+Fetch the value in the memory location pointed to
+by TOS. This version reads a single byte.
+
+store_char()
+Store NOS into the memory location specified by
+TOS. This version stores a single byte.
+
+copy()
+Copies 'count' bytes from 'source' to 'dest'. The
+stack form for this is:
+  source dest count
+The memory locations can overlap.
+
+cell_size()
+Push the size of a cell to the stack.
+
+char_size()
+Push the size of a char to the stack
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>char-size
+cell-size
+copy
+c!
+c@
+!
+@
+#
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="debugc.html">debug.c</a> | Previous Page: <a href="consolec.html">console.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

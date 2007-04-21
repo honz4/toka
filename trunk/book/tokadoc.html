@@ -1,0 +1,67 @@
+<html><head><title>toka.nbk: TokaDoc</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="user_code.html">User Code</a> | Previous Page: <a href="tokac.html">toka.c</a></p>
+
+<hr>
+
+<h1>&nbsp;TokaDoc</h1>
+
+
+<h2>Introduction</h2>
+
+<p>To help keep an up-to-date list of C functions and their Toka
+equivilents, the TokaDoc scripts were developed. These seach C sources
+for specially formatted comments and extract them into various files.
+These files can be updated when <a href="building.html">building</a>.
+</p>
+<h2>Supporting TokaDoc</h2>
+
+<p>At the start of each C file, have a comment header like this:
+</p>
+<pre> /*
+  *|F|
+  *|F| FILE: filename
+  *|F|
+  */
+</pre>
+
+<p>Before any global variables, have a comment block like this:
+</p>
+<pre>/*
+ *|F| Variables:
+ *|F|   GCITEM gc_list[128]
+ *|F|   Holds the list of items marked as garbage.
+ *|F|
+ */
+</pre>
+
+<p>Before each function have a comment block like this:
+</p>
+<pre> /*
+  *|F| &lt;return type&gt; functioname(&lt;arguments&gt;)
+  *|F| description of the function
+  *|F|
+  */
+</pre>
+
+<p>And for any functions having a Toka equivilent, have a block like:
+</p>
+<pre> /*
+  *|G| wordname    stack-effect    description
+  */
+</pre>
+
+<p>Please try to keep columns lined up as much as possible for Toka wordlist comments.</p>
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="user_code.html">User Code</a> | Previous Page: <a href="tokac.html">toka.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>
