@@ -5,12 +5,18 @@
 
 Toka was intended to be easily portable across a wide variety of systems. This page lists each system tested thus far, and provides additional notes concerning limitations for specific ports at the end.
 
-|| x86 || *Linux* || *NetBSD* || *FreeBSD* || *OpenBSD* || *DragonFly BSD* || *OpenSolaris* || _BeOS_ || _Cygwin_ ||
-|| x86-64 || *Linux* ||
-|| MIPS || *NetBSD/pmax* || Linux ||
-|| ARM || *NetBSD/cats* || *OpenBSD/cats* ||
 
-Ports shown in *bold* are fully supported. Ports shown in _italics_ work, but may have limitations or minor issues.
+|| *x86* || *x86-64* || *MIPS* || *ARM* ||
+|| Linux || Linux || NetBSD/pmax || NetBSD/cats ||
+|| NetBSD || || Linux || OpenBSD/cats ||
+|| FreeBSD || || || ||
+|| OpenBSD || || || ||
+|| DragonFly BSD || || || ||
+|| OpenSolaris || || || ||
+|| _BeOS_ || || || ||
+|| _Cygwin_ || || || ||
+
+Ports shown in _italics_ work, but may have limitations or minor issues.
 
 = Limitations and Notes =
 
