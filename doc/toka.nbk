@@ -377,6 +377,32 @@ page dictionary.c =\ Use\ =\n\nThis\ file\ provides\ the\ functionality\ to\ cre
 
 
 #--------------------------------------------------
+# ErrorCodes
+
+page ErrorCodes {= E0 =
+Nonfatal. This error is when a token can not be found in the dictionary
+or converted to a number.
+
+= E1 =
+<b>Fatal</b>. This error is when the garbage collector fails to allocate enough
+memory to fill a <b>[gc_alloc()|gc.c]</b> request.
+
+= E2 =
+Nonfatal. This error is given when an alien function (handled by the
+[FFI]) is invoked with too many arguments for Toka to handle. You
+shouldn't see it often.
+
+= E3 =
+Nonfatal. This error arises when a library can not be located for opening
+by the [FFI]. 
+
+= E4 =
+Nonfatal. This error arises when a symbol can not be found in the
+currently open library.
+} 1177180141
+
+
+#--------------------------------------------------
 # errors.c
 
 page errors.c {= Use =
@@ -393,8 +419,7 @@ Display a given error by code
 
 = Primitives Provided =
 
-<i>None</i>
-} 1177177214
+<i>None</i>} 1177177214
 
 
 #--------------------------------------------------
@@ -673,7 +698,8 @@ the allocated memory.
 keep
 gc
 malloc
-#unpre} 1177018702
+#unpre
+} 1177180123
 
 
 #--------------------------------------------------
@@ -706,6 +732,7 @@ work on, even if it's not as practical as other languages.
 * [garbage collector]
 * [threading model]
 * [TokaDoc]
+* [ErrorCodes]
 
 === Source Files ===
 
@@ -730,7 +757,7 @@ work on, even if it's not as practical as other languages.
 * [stack.c]
 * [toka.c]
 * [vm.c]
-} 1177177126
+} 1177179746
 
 
 #--------------------------------------------------
@@ -824,8 +851,7 @@ Accept and process input.
 #pre
 compiler
 count
-#unpre
-} 1177177233
+#unpre} 1177177233
 
 
 #--------------------------------------------------
@@ -1994,8 +2020,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre
-} 1177177102
+#unpre} 1177177102
 
 
 # End of Notebook Database File
