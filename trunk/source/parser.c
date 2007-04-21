@@ -175,7 +175,7 @@ void get_token(char *s, long delim)
       {
         *t++ = 27;
         c = 1;
-      }      
+      }
     }
 
     if (delim == 10 || delim == 32)

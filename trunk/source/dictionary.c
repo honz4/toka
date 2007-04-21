@@ -171,7 +171,7 @@ void find_word()
 
 
 /******************************************************
- *|G| \        ( "-a )     Return a quote corresponding
+ *|G| `        ( "-a )     Return a quote corresponding
  *|G|                      to the specified word.
  *|G|          ( $-a )     Non-parsing form
  *

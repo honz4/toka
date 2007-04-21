@@ -1,11 +1,12 @@
 #! /usr/bin/toka
+
 [ = [ " Failed" type cr bye ] false? ] is try
 [ cr
   " ----------------------------------------------" type cr
   include
 ] is include
 
-\ t: is i:
+` t: is i:
 [ lnparse type SPACE emit ] is t:
 
 i: TESTS BEGIN
