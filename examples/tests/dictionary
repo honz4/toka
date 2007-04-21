@@ -8,5 +8,5 @@ t:   is
 t:   is-data
    100 malloc dup is-data foo
    foo try
-t:   \
-   [ ] dup is foo \ foo try
+t:   `
+   [ ] dup is foo ` foo try

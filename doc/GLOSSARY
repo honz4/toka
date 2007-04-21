@@ -48,7 +48,7 @@ is-macro ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form
 is-data  ( a"- )     Attach a name to data memory
          ( a$- )     Non-parsing form
-\        ( "-a )     Return a quote corresponding
+`        ( "-a )     Return a quote corresponding
                      to the specified word.
          ( $-a )     Non-parsing form
 from     ( "- )      Set the library to import from

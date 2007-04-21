@@ -67,7 +67,7 @@ void build_dictionary()
   add_entry(":see",      &see,           &forth_class);
 
   /* dictionary.c */
-  add_entry("\\",        &return_quote,  &forth_class);
+  add_entry("`",         &return_quote,  &forth_class);
   add_entry("is",        &name_quote,    &forth_class);
   add_entry("is-super",  &name_super,    &forth_class);
   add_entry("is-macro",  &name_macro,    &forth_class);

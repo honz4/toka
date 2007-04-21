@@ -373,7 +373,71 @@ Decompile the quote on the stack.
 #--------------------------------------------------
 # dictionary.c
 
-page dictionary.c =\ Use\ =\n\nThis\ file\ provides\ the\ functionality\ to\ create\ new\ dictionary\ entries\ and\nsearch\ for\ a\ specific\ entry.\n\n=\ Functions\ Provided\ =\n\n#pre\nVariables:\n\ \ ENTRY\ dictionary\[4096\]\;\n\ \ Holds\ the\ dictionary\ entries,\ up\ to\ 4096\n\n\ \ long\ last\n\ \ A\ pointer\ to\ the\ most\ recent\ dictionary\ entry\n\nadd_entry(char\ *name,\ Inst\ xt,\ Inst\ class)\nAdd\ an\ entry\ to\ the\ dictionary.\n\nname_attach(void\ *class)\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ the\ specified\ class.\n\nname_quote()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_forth_class().\n\nname_super()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_super_class().\n\nname_quote_macro()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ \nspecified\ quote\ address.\ This\ word\ is\ given\ the\nsemantics\ of\ quote_macro_class().\n\nname_data()\nAttach\ a\ name\ (from\ the\ input\ stream)\ to\ the\ data\nat\ the\ specified\ address.\ Semantics\ are\ the\ same\nas\ the\ data_class().\n\nfind_word()\nSearch\ for\ a\ word\ (name\ taken\ from\ the\ string\npassed\ on\ TOS)\ in\ the\ dictionary.\ Returns\ the\nxt,\ class,\ and\ a\ flag\ of\ -1\ if\ found.\ If\ not\nfound,\ returns\ only\ a\ flag\ of\ 0.\n\nreturn_quote()\nFind\ a\ name\ (from\ the\ input\ stream)\ and\ return\ a\nquote\ that\ corresponds\ to\ the\ word.\n#unpre\n\n=\ Primitives\ Provided\ =\n\n#pre\nis\nis-data\nis-macro\nis-super\n\\\nlast\n#unpre 1175294300
+page dictionary.c {= Use =
+
+This file provides the functionality to create new dictionary entries and
+search for a specific entry.
+
+= Functions Provided =
+
+#pre
+Variables:
+  ENTRY dictionary[4096];
+  Holds the dictionary entries, up to 4096
+
+  long last
+  A pointer to the most recent dictionary entry
+
+add_entry(char *name, Inst xt, Inst class)
+Add an entry to the dictionary.
+
+name_attach(void *class)
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of the specified class.
+
+name_quote()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_forth_class().
+
+name_super()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_super_class().
+
+name_quote_macro()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_macro_class().
+
+name_data()
+Attach a name (from the input stream) to the data
+at the specified address. Semantics are the same
+as the data_class().
+
+find_word()
+Search for a word (name taken from the string
+passed on TOS) in the dictionary. Returns the
+xt, class, and a flag of -1 if found. If not
+found, returns only a flag of 0.
+
+return_quote()
+Find a name (from the input stream) and return a
+quote that corresponds to the word.
+#unpre
+
+= Primitives Provided =
+
+#pre
+is
+is-data
+is-macro
+is-super
+`
+last
+#unpre
+} 1177182595
 
 
 #--------------------------------------------------
@@ -398,8 +462,7 @@ by the [FFI].
 
 = E4 =
 Nonfatal. This error arises when a symbol can not be found in the
-currently open library.
-} 1177180141
+currently open library.} 1177180141
 
 
 #--------------------------------------------------
@@ -698,8 +761,7 @@ the allocated memory.
 keep
 gc
 malloc
-#unpre
-} 1177180123
+#unpre} 1177180123
 
 
 #--------------------------------------------------
@@ -756,8 +818,7 @@ work on, even if it's not as practical as other languages.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1177179746
+* [vm.c]} 1177179746
 
 
 #--------------------------------------------------
@@ -1833,7 +1894,7 @@ is-macro ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form
 is-data  ( a"- )     Attach a name to data memory
          ( a$- )     Non-parsing form
-\        ( "-a )     Return a quote corresponding
+`        ( "-a )     Return a quote corresponding
                      to the specified word.
          ( $-a )     Non-parsing form
 from     ( "- )      Set the library to import from
@@ -2020,7 +2081,8 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre} 1177177102
+#unpre
+} 1177182607
 
 
 # End of Notebook Database File
