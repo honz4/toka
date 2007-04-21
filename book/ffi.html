@@ -1,0 +1,55 @@
+<html><head><title>toka.nbk: FFI</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="ffic.html">ffi.c</a> | Previous Page: <a href="errorsc.html">errors.c</a></p>
+
+<hr>
+
+<h1>&nbsp;FFI</h1>
+
+
+<p>To allow use of external libraries, Toka provides a simple <i>Foreign
+Function Interface</i> (FFI). This is built around the following
+primitives:
+</p>
+<pre>  from LIBRARY
+</pre>
+
+<p>Set the import source to LIBRARY. This should be a fully-qualified
+filename; it may require a path as well as the .so extension.
+</p>
+<pre>  N import FUNCTION
+</pre>
+
+<p>Import FUNCTION from the previously specified library. A new quote named
+FUNCTION will be created, and will take N arguments off the stack. This
+function will always have a return value, even for <i>void</i> functions.
+</p>
+<p>You can also make use of <b>as</b> to rename the imported function.
+</p>
+<hr>
+<p>Example:
+</p>
+<pre>  #! Linux libc = libc.so.6, BSD libc = libc.so
+  from libc.so.6
+  2 import printf as printf.2
+  " %i\n" 100 printf.2
+</pre>
+
+<hr>
+<p>The FFI is optional, and can be disabled at build time. Doing so reduces
+the overall functionality of Toka, so doing this is only recommended if
+you are using a system without dlopen()/dlsym(), or if you need more 
+direct control over the functionality provided.</p>
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="ffic.html">ffi.c</a> | Previous Page: <a href="errorsc.html">errors.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

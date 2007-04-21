@@ -1,0 +1,73 @@
+<html><head><title>toka.nbk: User Code</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="usingthestack.html">UsingTheStack</a> | Previous Page: <a href="tokadoc.html">TokaDoc</a></p>
+
+<hr>
+
+<h1>&nbsp;User Code</h1>
+
+
+<p>Use this page to extend Notebook using the 
+the Tcl language.  Commands you add here can be used as
+Magic Buttons and Embedded Macros.
+</p>
+<p>Note that you can intersperse normal prose in between blocks of Tcl code.
+</p>
+<h2>User Menu</h2>
+
+<p>The User Menu pops up when you right-click or control-click 
+on a page in the Page Browser.  You can customize it however you like.
+</p>
+<pre>usermenu {
+    Back back-page
+    Home {goto-page Home}
+}
+</pre>
+
+<h2>Edit Menu</h2>
+
+<p>The Edit Menu pops up when you right-click or control-click 
+on a page in the Page Editor.  You can customize it however you like.
+</p>
+<pre>editmenu {
+    Undo             undo-change
+    Redo             redo-change
+    separator {}
+    Cut              cut-string
+    Copy             copy-string
+    Paste            paste-string
+    "Insert Page..." insert-page
+}
+</pre>
+
+<h2>Example</h2>
+
+<p>The following embedded macro used to be used by the
+<span style="color: red;">[Tour]</span> to create a magic button that said 
+"Click here to continue..." and took you to the next page in the tour
+when you clicked it.  It's no longer needed, because now you can write
+such links directly, like this:
+</p>
+<pre>  [Click here to continue...|Tour 2]
+</pre>
+
+<p>Still, it's a nice example of how to write a macro that creates a button.
+</p>
+<pre>proc clickToContinue {name} {
+	return "\[%Click here to continue...|goto-page [list $name]%\]"
+}
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="usingthestack.html">UsingTheStack</a> | Previous Page: <a href="tokadoc.html">TokaDoc</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

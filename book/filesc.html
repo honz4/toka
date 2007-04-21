@@ -1,0 +1,65 @@
+<html><head><title>toka.nbk: files.c</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="first_steps.html">First Steps</a> | Previous Page: <a href="ffic.html">ffi.c</a></p>
+
+<hr>
+
+<h1>&nbsp;files.c</h1>
+
+
+<h2>Use</h2>
+
+<p>Allows for reading and writing data to files.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>file_open()
+Open a file using the specified mode. Modes are
+a direct map to the fopen() modes: "r", "r+", "w",
+"w+", "a", and "a+". Numeric values for these are
+1 - 6, in that order.
+
+file_close()
+This is just a simple wrapper over fclose().
+
+file_read()
+This is just a simple wrapper over fread().
+
+file_write()
+This is just a simple wrapper over fwrite().
+
+file_size()
+This is just a simple wrapper over fstat() which
+returns the size of the file.
+
+file_seek()
+This is just a simple wrapper over fseek().
+
+file_pos()
+This is just a simple wrapper over ftell().
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>file.open
+file.close
+file.read
+file.write
+file.size
+file.seek
+file.pos
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="first_steps.html">First Steps</a> | Previous Page: <a href="ffic.html">ffi.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

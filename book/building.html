@@ -1,0 +1,57 @@
+<html><head><title>toka.nbk: Building</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="classc.html">class.c</a> | Previous Page: <a href="bitsc.html">bits.c</a></p>
+
+<hr>
+
+<h1>&nbsp;Building</h1>
+
+
+<p>To build Toka, you will need the following:
+</p>
+
+<ul>
+<li> GCC 2.9x, 3.x, or 4.x
+<li> Make (GNU Make is recommended, though others may work)
+
+</ul>
+
+<p>For most people, the following should work. If it fails, try checking the
+<a href="ports.html">Ports</a> page to see if there are any platform-specific instructions. The
+process using Make:
+</p>
+<pre>  make
+</pre>
+
+<p>The build system should be able to detect the need for libdl.so (Linux,
+BeOS) or whether dlopen() and dlsym() are provided by libc.so (BSD). You
+can also build a version without the <a href="ffi.html">FFI</a>, but this is not recommended
+as it reduces the usefulness of Toka significantly. This can be done via:
+</p>
+<pre>  make vanilla
+</pre>
+
+<p>If you are using the experimental Cygwin support, build using:
+</p>
+<pre>  make cygwin
+</pre>
+
+<p>As a final note, some pieces of documentation can be updated automatically
+as well:
+</p>
+<pre>  make docs
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="classc.html">class.c</a> | Previous Page: <a href="bitsc.html">bits.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

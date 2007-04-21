@@ -1,0 +1,46 @@
+<html><head><title>toka.nbk: threading model</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="tokac.html">toka.c</a> | Previous Page: <a href="stackc.html">stack.c</a></p>
+
+<hr>
+
+<h1>&nbsp;threading model</h1>
+
+
+<p>Toka relies on <i>call threading</i>. This is an implementation technique
+in which a list of addresses is compiled. Each of these is then called in
+sequence. The model is similar to <i>direct threading</i> in the Forth
+world.
+</p>
+<p>There is one special address which marks the end of a threaded sequence.
+This address is <b>0</b>.
+</p>
+<p>As an example of this, consider the following quote:
+</p>
+<pre> [ a b c 1 2 + . ]
+</pre>
+
+<p>This is compiled into a list of addresses:
+</p>
+<pre> a, b, c, lit, 1, lit 2, +, ., 0
+</pre>
+
+<p>Note the special form for numbers. The <a href="vmc.html">lit()</a> function pushes the value in
+the following cell to the stack.
+</p>
+<p>When this quote is invoked, <i>a</i> will be called. After it finishes
+executing, <i>b</i> will be called, and so on until <i>0</i> is
+encountered. At that point, the <a href="vmc.html">vm_run()</a> function exits.</p>
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="tokac.html">toka.c</a> | Previous Page: <a href="stackc.html">stack.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

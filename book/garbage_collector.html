@@ -1,0 +1,49 @@
+<html><head><title>toka.nbk: garbage collector</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="gcc.html">gc.c</a> | Previous Page: <a href="first_steps.html">First Steps</a></p>
+
+<hr>
+
+<h1>&nbsp;garbage collector</h1>
+
+
+<p>The Toka implementation makes heavy use of dynamically allocated memory.
+To help avoid memory leaks, the memory allocation provides a very simple
+form of <i>garbage collection</i>.
+</p>
+<p>The model is very simple. A list containing pointers to each allocation,
+and the corresponding size (in bytes) is kept. Each time memory is
+requested, the code adds the request to the list. When the list is filled,
+or if the allocation fails, the 16 oldest items are freed and all later
+entries are shifted down.
+</p>
+<p>Obviously there is also a way to mark entries as permanent. This is done
+by <b>keep</b> (the <b><a href="gcc.html">gc_keep()</a></b> function). This routine skims
+through the list of allocations (from most recent to oldest) looking for
+a specific pointer. When found, that entry (and any subsequent
+allocations -- in Toka these will almost always be subquotes, strings,
+etc) are removed from the list.
+</p>
+<p>In actual practice things are just a little more complex. Toka actually
+maintains two lists; one for general allocations and a second one for
+internal use. The second one is only used for allocations that are known
+to be temporary. 
+</p>
+<p>In addition, the code will always leave the 16 newest allocations in each
+list alone to prevent them from falling out of scope.
+</p>
+<p>Information regarding the current status of the garbage collection
+subsystem can be obtained via <b>:gc</b> (the <b><a href="debugc.html">gc_info()</a></b> function).</p>
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="gcc.html">gc.c</a> | Previous Page: <a href="first_steps.html">First Steps</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>

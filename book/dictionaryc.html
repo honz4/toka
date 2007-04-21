@@ -1,0 +1,85 @@
+<html><head><title>toka.nbk: dictionary.c</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="errorcodes.html">ErrorCodes</a> | Previous Page: <a href="decompilec.html">decompile.c</a></p>
+
+<hr>
+
+<h1>&nbsp;dictionary.c</h1>
+
+
+<h2>Use</h2>
+
+<p>This file provides the functionality to create new dictionary entries and
+search for a specific entry.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  ENTRY dictionary[4096];
+  Holds the dictionary entries, up to 4096
+
+  long last
+  A pointer to the most recent dictionary entry
+
+add_entry(char *name, Inst xt, Inst class)
+Add an entry to the dictionary.
+
+name_attach(void *class)
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of the specified class.
+
+name_quote()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_forth_class().
+
+name_super()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_super_class().
+
+name_quote_macro()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_macro_class().
+
+name_data()
+Attach a name (from the input stream) to the data
+at the specified address. Semantics are the same
+as the data_class().
+
+find_word()
+Search for a word (name taken from the string
+passed on TOS) in the dictionary. Returns the
+xt, class, and a flag of -1 if found. If not
+found, returns only a flag of 0.
+
+return_quote()
+Find a name (from the input stream) and return a
+quote that corresponds to the word.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>is
+is-data
+is-macro
+is-super
+`
+last
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="errorcodes.html">ErrorCodes</a> | Previous Page: <a href="decompilec.html">decompile.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Saturday, 21 April 2007, 15:16:46 PM EDT</i></p>
+
+</body></html>
