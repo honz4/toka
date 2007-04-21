@@ -140,6 +140,11 @@ Push the size of a char to the stack
 
 FILE: debug.c
 
+long display_names_by_class(void *class)
+Display a list of all named items with the 
+specified class. Returns the number of named 
+items displayed.
+
 names()
 Display a list of all named items
 
@@ -210,6 +215,12 @@ found, returns only a flag of FALSE.
 return_quote()
 Find a name (from the input stream) and return a
 quote that corresponds to the word.
+
+
+FILE: errors.c
+
+error(long code)
+Display a given error by code
 
 
 FILE: ffi.c
@@ -343,11 +354,6 @@ returns the string and the count on the stack. The
 count is increased by 1 to include the trailing 
 ASCII 0.
 
-notfound()
-Display an error message if a word was not found
-or able to be converted to a number. It takes a
-string from the stack.
-
 interpret()
 Accept and process input.
 
@@ -383,6 +389,10 @@ Variables:
   long parser
   When ON (TRUE), system parsing words will parse. When
   OFF (FALSE), they will take a string from the stack.
+
+  long escapes
+  When ON (TRUE), escape sequences will be handled
+  by the parser. When OFF (FALSE), they will be ignored.
 
 to_number()
 Attempt to convert a string (on TOS) to a number.

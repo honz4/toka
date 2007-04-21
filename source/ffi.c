@@ -68,7 +68,7 @@ void ffi_invoke()
     case 6: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5])); break;
     case 7: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6])); break;
     case 8: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7])); break;
-    default: printf("ffi: too many arguments\n"); break;
+    default: error(ERROR_FFI_ARGUMENTS); break;
   }
   push(a);
 }
@@ -99,7 +99,10 @@ void ffi_from()
   library = dlopen(scratch, RTLD_LAZY);
 
   if (library == NULL)
-    printf("ffi: Unable to open %s\n", scratch);
+  {
+    push((long)scratch);
+    error(ERROR_FFI_LIBRARY_NOT_FOUND);
+  }
 }
 
 
@@ -145,7 +148,10 @@ void ffi_import()
     DROP;
   }
   else
-    printf("ffi: %s not found in library!\n", scratch);
+  {
+    push((long)scratch);
+    error(ERROR_FFI_FUNCTION_NOT_FOUND);
+  }
 }
 
 

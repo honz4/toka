@@ -82,10 +82,7 @@ void *gc_alloc(long items, long size, long type)
     gc();
     memory = calloc((int)items, (int)size);
     if (memory == NULL)
-    {
-      printf("gc: out of memory; aborting.\n");
-      exit(1);
-    }
+      error(ERROR_NO_MEM);
   }
 
   /* Leave the allocated memory in a known state */

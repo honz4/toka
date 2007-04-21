@@ -93,6 +93,8 @@ base     ( -a )      Variable containg the current
                      numeric base
 parser   ( -a )      Variable holding current parser
                      mode.
+escape-sequences ( -a)  Variable determining if
+                        escape sequences are used.
 >number  ( a-nf )    Attempt to convert a string
                      to a number
 parse    ( d-a )     Parse until the character 

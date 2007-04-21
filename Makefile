@@ -27,6 +27,7 @@ DEPS =  source/bits.c \
         source/debug.c \
         source/decompile.c \
         source/dictionary.c \
+        source/errors.c \
         source/files.c \
         source/gc.c \
         source/initial.c \
@@ -48,6 +49,7 @@ OBJS =  source/bits.o \
         source/debug.o \
         source/decompile.o \
         source/dictionary.o \
+        source/errors.o \
         source/files.o \
         source/gc.o \
         source/initial.o \

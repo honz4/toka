@@ -22,6 +22,7 @@ typedef void (*Inst)();
 #include "headers/debug.h"
 #include "headers/decompile.h"
 #include "headers/dictionary.h"
+#include "headers/errors.h"
 #include "headers/ffi.h"
 #include "headers/files.h"
 #include "headers/gc.h"
