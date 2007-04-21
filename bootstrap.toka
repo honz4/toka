@@ -58,6 +58,29 @@
 
 
 #! ---------------------------------------
+#! Colors
+#! ---------------------------------------
+[ " \^[0m"  type ] is normal
+[ " \^[1m"  type ] is bold
+[ " \^[30m" type ] is black
+[ " \^[31m" type ] is red
+[ " \^[32m" type ] is green
+[ " \^[33m" type ] is yellow
+[ " \^[34m" type ] is blue
+[ " \^[35m" type ] is magenta
+[ " \^[36m" type ] is cyan
+[ " \^[37m" type ] is white
+[ " \^[40m" type ] is onBlack
+[ " \^[41m" type ] is onRed
+[ " \^[42m" type ] is onGreen
+[ " \^[43m" type ] is onYellow
+[ " \^[44m" type ] is onBlue
+[ " \^[45m" type ] is onMagenta
+[ " \^[46m" type ] is onCyan
+[ " \^[47m" type ] is onWhite
+
+
+#! ---------------------------------------
 #! Stack manipulation
 #! ---------------------------------------
 [ swap drop ] is nip
