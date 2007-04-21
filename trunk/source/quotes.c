@@ -141,7 +141,7 @@ void iterate()
   rstack[rsp] = (long)ip;
   rsp++;
 
-  for(;count > 0; count--)
+  for (;count > 0; count--)
   {
     quote_counter = count;
     vm_run((Inst *)quote);
@@ -174,7 +174,7 @@ void alt_iterate()
   rstack[rsp] = (long)ip;
   rsp++;
 
-  for(;count < bottom; count++)
+  for (;count < bottom; count++)
   {
     quote_counter = count;
     vm_run((Inst *)quote);
@@ -281,7 +281,7 @@ void quote_while_true()
   quote = (Inst)TOS; DROP;
   flag = TRUE;
 
-  while(flag == TRUE)
+  while (flag == TRUE)
   {
     rstack[rsp] = (long)ip;   rsp++;
     vm_run((Inst *)quote);
@@ -309,7 +309,7 @@ void quote_while_false()
   quote = (Inst)TOS; DROP;
   flag = FALSE;
 
-  while(flag == FALSE)
+  while (flag == FALSE)
   {
     rstack[rsp] = (long)ip;   rsp++;
     vm_run((Inst *)quote);

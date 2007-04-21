@@ -157,9 +157,9 @@ void find_word()
   char *s = (char *)TOS; DROP;
 
   flag = 0;
-  for(a = last-1; a >= 0; a--)
+  for (a = last-1; a >= 0; a--)
   {
-    if((strcmp(dictionary[a].name, s) == 0) && flag == FALSE) 
+    if ((strcmp(dictionary[a].name, s) == 0) && flag == FALSE) 
     {
       push((long)dictionary[a].xt);
       push((long)dictionary[a].class);
@@ -196,13 +196,13 @@ void return_quote()
   find_word();
   flag = TOS; DROP;
 
-  if(flag == TRUE)
+  if (flag == TRUE)
   {
     class = (Inst)TOS; DROP;
     xt = (Inst)TOS; DROP;
-    if(class == &quote_macro_class || class == quote_super_class)
+    if (class == &quote_macro_class || class == quote_super_class)
       class = &quote_forth_class;
-    if(class == &self_class)
+    if (class == &self_class)
       class = &forth_class;
   }
   else
@@ -211,7 +211,7 @@ void return_quote()
     xt = 0;
   }
 
-  if(class != &quote_forth_class && class != &quote_macro_class)
+  if (class != &quote_forth_class && class != &quote_macro_class)
   {
      begin_quote();
        push((long)xt);

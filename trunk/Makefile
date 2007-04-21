@@ -6,7 +6,7 @@
 CC = gcc
 CFLAGS = -O2 -s -Wall
 LDFLAGS = `$(CC) other/needdl.c -ldl 2>/dev/null && echo "-ldl" && rm a.out`
-HEADERS = -I/boot/develop/headers
+#HEADERS = -I/boot/develop/headers
 
 
 # ==============================================
@@ -65,7 +65,7 @@ default: toka
 toka: $(OBJS)
 	$(CC) -o toka $^ $(CFLAGS) $(LDFLAGS)
 
-%.o: %.c $(DEPS)
+%.o: %.c #$(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(HEADERS)
 # ==============================================
 clean:

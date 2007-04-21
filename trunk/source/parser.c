@@ -39,17 +39,23 @@ extern long stack[], sp;
  *|F|   When ON (TRUE), system parsing words will parse. When
  *|F|   OFF (FALSE), they will take a string from the stack.
  *|F|
+ *|F|   long escapes
+ *|F|   When ON (TRUE), escape sequences will be handled
+ *|F|   by the parser. When OFF (FALSE), they will be ignored.
+ *|F|
  *
  *|G| base     ( -a )      Variable containg the current
  *|G|                      numeric base
  *|G| parser   ( -a )      Variable holding current parser
  *|G|                      mode.
+ *|G| escape-sequences ( -a)  Variable determining if
+ *|G|                         escape sequences are used.
  ******************************************************/
 FILE *input[8];
 long base=10;
 long isp=0;
 long parser=TRUE;
-
+long escapes=TRUE;
 
 /******************************************************
  *|G| >number  ( a-nf )    Attempt to convert a string
@@ -76,7 +82,7 @@ void to_number()
   if (*t == '-')
     t++;
 
-  for(; *t; t++)
+  for (; *t; t++)
   {
      if (base <= 10)
      {
@@ -152,7 +158,7 @@ void get_token(char *s, long delim)
       break;
     }
 
-    if (c == '\\' && delim == '"')
+    if (c == '\\' && escapes == TRUE)
     {
       c = getc(input[isp]);
       if (c == 'n')
@@ -163,6 +169,11 @@ void get_token(char *s, long delim)
       if (c == '"')
       {
         *t++ = (char)c;
+        c = 1;
+      }      
+      if (c == '^')
+      {
+        *t++ = 27;
         c = 1;
       }      
     }

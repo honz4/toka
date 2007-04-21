@@ -97,7 +97,7 @@ void interpret()
 
   scratch = calloc(1024, sizeof(char));
 
-  while(1)
+  while (1)
   {
     flag = FALSE; class = 0;
     fflush(stdout);

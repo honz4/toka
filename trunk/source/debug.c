@@ -30,6 +30,33 @@ extern GCITEM gc_trash[];
 
 
 /******************************************************
+ *|F| int display_names_by_class(void *class)
+ *|F| Display a list of all named items with the 
+ *|F| specified class. Returns the number of named 
+ *|F| items displayed.
+ *|F|
+ ******************************************************/
+int display_names_by_class(void *class)
+{
+  long names, a;
+
+  names = 0;
+
+  for (a = last-1; a >= 0; a--)
+  {
+    if (dictionary[a].class == class)
+    {
+      printf("%s ", dictionary[a].name);
+      names++;
+    }
+  }
+
+  return names;
+}
+
+
+
+/******************************************************
  *|G| :names   ( - )       Display a list of all named
  *|G|                      quotes and data
  *
@@ -40,39 +67,23 @@ extern GCITEM gc_trash[];
 void names()
 {
   long primitives, data, quotes;
-  long a;
 
   primitives = 0; data = 0; quotes = 0;
 
-  printf("Primitives:\n");
-  for(a = last-1; a >= 0; a--)
-  {
-    if (dictionary[a].class == &forth_class || dictionary[a].class == &self_class)
-    {
-      printf("%s ", dictionary[a].name);
-      primitives++;
-    }
-  }
+  printf("Primitives (self)\n");
+  primitives = display_names_by_class(&self_class);
+  printf("\n\nPrimitives (normal)\n");
+  primitives += display_names_by_class(&forth_class);
 
-  printf("\n\nQuotes:\n");
-  for(a = last-1; a >= 0; a--)
-  {
-    if (dictionary[a].class == &quote_forth_class || dictionary[a].class == &quote_macro_class)
-    {
-      printf("%s ", dictionary[a].name);
-      quotes++;
-    }
-  }
+  printf("\n\nQuotes (super)\n");
+  quotes = display_names_by_class(&quote_super_class);
+  printf("\n\nQuotes (normal)\n");
+  quotes = display_names_by_class(&quote_forth_class);
+  printf("\n\nQuotes (macro)\n");
+  quotes += display_names_by_class(&quote_macro_class);
 
-  printf("\n\nData:\n");
-  for(a = last-1; a >= 0; a--)
-  {
-    if (dictionary[a].class == &data_class)
-    {
-      printf("%s ", dictionary[a].name);
-      data++;
-    }
-  }
+  printf("\n\nData\n");
+  data = display_names_by_class(&data_class);
 
   printf("\n\nTotal: %li.\n", last);
   printf(" - %li primitives.\n", primitives);
@@ -94,7 +105,7 @@ void display_stack()
 {
   long a;
   printf("<%li> ", sp);
-  for(a = 1; a <= sp; a++)
+  for (a = 1; a <= sp; a++)
   {
     printf("%li ", stack[a]);
   }
@@ -116,9 +127,9 @@ void gc_info()
   long a;
   long size = 0, tsize = 0;
 
-  for(a = 0; a != gc_depth; a++)
+  for (a = 0; a != gc_depth; a++)
     size += gc_list[a].size;
-  for(a = 0; a != gc_tdepth; a++)
+  for (a = 0; a != gc_tdepth; a++)
     tsize += gc_trash[a].size;
 
   a = (sizeof(GCITEM) * 128)*2;

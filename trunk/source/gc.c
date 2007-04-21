@@ -131,7 +131,7 @@ void gc_keep()
   Inst item = (Inst)TOS;
   which = -1;
 
-  for(a = 0; a != gc_depth; a++)
+  for (a = 0; a != gc_depth; a++)
   {
     if (gc_list[a].xt == item)
       which = a;
@@ -139,7 +139,7 @@ void gc_keep()
 
   if (which != -1)
   {
-    for(a = gc_depth; a > which; a--)
+    for (a = gc_depth; a > which; a--)
       gc_depth--;
   }
 }
@@ -165,7 +165,7 @@ void gc()
   {
     b = gc_tdepth - 16;
 
-    for(a = 0; a != b; a++)
+    for (a = 0; a != b; a++)
     {
       free(gc_trash[a].xt);
       gc_used -= gc_trash[a].size;
@@ -175,7 +175,7 @@ void gc()
 
     if (b != gc_tdepth)
     {
-      for(a = 0; a != gc_tdepth; a++)
+      for (a = 0; a != gc_tdepth; a++)
       {
         gc_trash[a].xt = gc_trash[a+b].xt;
         gc_trash[a].size = gc_trash[a+b].size;
@@ -190,7 +190,7 @@ void gc()
   {
     b = gc_depth - 16;
 
-    for(a = 0; a != b; a++)
+    for (a = 0; a != b; a++)
     {
       free(gc_list[a].xt);
       gc_used -= gc_list[a].size;
@@ -200,7 +200,7 @@ void gc()
 
     if (b != gc_depth)
     {
-      for(a = 0; a != gc_depth; a++)
+      for (a = 0; a != gc_depth; a++)
       {
         gc_list[a].xt = gc_list[a+b].xt;
         gc_list[a].size = gc_list[a+b].size;
