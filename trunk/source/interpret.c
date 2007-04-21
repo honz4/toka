@@ -72,20 +72,6 @@ void count()
 
 
 /******************************************************
- *|F| notfound()
- *|F| Display an error message if a word was not found
- *|F| or able to be converted to a number. It takes a
- *|F| string from the stack.
- *|F|
- ******************************************************/
-void notfound()
-{
-  printf("E0: %s was not found!\n", (char *)TOS);
-  DROP;
-}
-
-
-/******************************************************
  *|F| interpret()
  *|F| Accept and process input.
  *|F|
@@ -115,7 +101,7 @@ void interpret()
         if (flag == TRUE)
           data_class();
         else
-          notfound();
+          error(ERROR_WORD_NOT_FOUND);
       }   
     }
     else
