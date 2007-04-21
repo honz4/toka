@@ -31,7 +31,7 @@ void error(long code)
   switch (code)
   {
     case ERROR_WORD_NOT_FOUND:
-         printf("%s was not found!\n", (char *)TOS);
+         printf("%s is not a word or a number.\n", (char *)TOS);
          DROP;
          break;
     case ERROR_NO_MEM:
