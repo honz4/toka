@@ -30,7 +30,7 @@ extern long last;
 long resolve_name(Inst xt)
 {
   long flag = 0, a;
-  for(a = last-1; a >= 0; a--)
+  for (a = last-1; a >= 0; a--)
   {
      if (dictionary[a].xt == xt && flag == 0)
      {
@@ -54,7 +54,7 @@ void decompile(Inst *xt)
 
   printf("[ ");
 
-  while(1) {
+  while (1) {
     this = (Inst)*xt++;
     resolve_name(this);
     if (this == (Inst)0)

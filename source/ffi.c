@@ -50,7 +50,7 @@ void ffi_invoke()
 
   if (args != 0)
   {
-    for(a = args; a > 0; a--)
+    for (a = args; a > 0; a--)
     {
       arg[a-1] = TOS; DROP;
     }

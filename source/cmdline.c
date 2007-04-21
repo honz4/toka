@@ -72,7 +72,7 @@ void build_arg_list(char *args[], long count)
   long a;
   if (count >= 2)
   {
-    for(a = 0; a < count; a++)
+    for (a = 0; a < count; a++)
        arg_list[a] = args[a+1];
     arg_count = count - 2;
   }
