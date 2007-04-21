@@ -179,8 +179,7 @@ Basic examples:
 The first case will invoke the quote if the flag returned by <b>=</b> is
 TRUE. The second invokes the quote if the flag is FALSE, and the third
 form invokes the <b>[ 3 . ]</b> quote if TRUE, or the <b>[ 4 . ]</b>
-quote if FALSE.
-} 1177019564
+quote if FALSE.} 1177019564
 
 
 #--------------------------------------------------
@@ -378,6 +377,27 @@ page dictionary.c =\ Use\ =\n\nThis\ file\ provides\ the\ functionality\ to\ cre
 
 
 #--------------------------------------------------
+# errors.c
+
+page errors.c {= Use =
+
+This is where errors are handled. It does not export any functions
+directly to Toka.
+
+= Functions Provided =
+
+#pre
+error(long code)
+Display a given error by code
+#unpre
+
+= Primitives Provided =
+
+<i>None</i>
+} 1177177214
+
+
+#--------------------------------------------------
 # FFI
 
 page FFI {To allow use of external libraries, Toka provides a simple <i>Foreign
@@ -551,8 +571,7 @@ Now let's delve into actually using Toka a bit.
 * [Quotes]
 * [Loops]
 * [Conditionals]
-* [Variables]
-} 1177020293
+* [Variables]} 1177020293
 
 
 #--------------------------------------------------
@@ -654,8 +673,7 @@ the allocated memory.
 keep
 gc
 malloc
-#unpre
-} 1177018702
+#unpre} 1177018702
 
 
 #--------------------------------------------------
@@ -700,6 +718,7 @@ work on, even if it's not as practical as other languages.
 * [debug.c]
 * [decompile.c]
 * [dictionary.c]
+* [errors.c]
 * [ffi.c]
 * [files.c]
 * [gc.c]
@@ -711,7 +730,7 @@ work on, even if it's not as practical as other languages.
 * [stack.c]
 * [toka.c]
 * [vm.c]
-} 1177018802
+} 1177177126
 
 
 #--------------------------------------------------
@@ -796,11 +815,6 @@ returns the string and the count on the stack. The
 count is increased by 1 to include the trailing 
 ASCII 0.
 
-notfound()
-Display an error message if a word was not found
-or able to be converted to a number. It takes a
-string from the stack.
-
 interpret()
 Accept and process input.
 #unpre
@@ -810,7 +824,8 @@ Accept and process input.
 #pre
 compiler
 count
-#unpre} 1175294621
+#unpre
+} 1177177233
 
 
 #--------------------------------------------------
@@ -884,8 +899,7 @@ Some examples:
 #pre
   1 [ dup . 1 + dup 101 < ] whileTrue
   101 [ dup . 1 - dup 1 < ] whileFalse
-#unpre
-} 1177019422
+#unpre} 1177019422
 
 
 #--------------------------------------------------
@@ -944,8 +958,7 @@ In addition, the standard bootstrap adds some additional operations:
   mod      ( xy-z )    Divide two numbers and get remainder
   not      ( x-y )     Invert the value 'x'
   */       ( abc-d )   (a*b)/c
-#unpre
-} 1177020107
+#unpre} 1177020107
 
 
 #--------------------------------------------------
@@ -1138,8 +1151,7 @@ stack. You can attach a name to a quote with <b>is</b>:
 
 Names can include any characters, other than space, tab, cr, or lf (enter
 key). (<i>There are other forms of <b>is</b>, but this is the most common
-one; the others will be discussed later</i>).
-} 1177020262
+one; the others will be discussed later</i>).} 1177020262
 
 
 #--------------------------------------------------
@@ -1640,8 +1652,7 @@ parentheses is just a comment and need not be entered.
   2dup ( xy-xyxy )
   nip ( xyz-xz )
   tuck ( xy-yxy )
-#unpre
-} 1177020020
+#unpre} 1177020020
 
 
 #--------------------------------------------------
@@ -1686,8 +1697,7 @@ also provided. A full list of functions for working with variables follows:
   !        ( na- )     Store 'n' to variable 'a'
   c@       ( a-n )     Fetch a byte from variable 'a'
   c!       ( na- )     Store byte 'n' to variable 'a'
-#unpre
-} 1177020319
+#unpre} 1177020319
 
 
 #--------------------------------------------------
@@ -1842,6 +1852,8 @@ base     ( -a )      Variable containg the current
                      numeric base
 parser   ( -a )      Variable holding current parser
                      mode.
+escape-sequences ( -a)  Variable determining if
+                        escape sequences are used.
 >number  ( a-nf )    Attempt to convert a string
                      to a number
 parse    ( d-a )     Parse until the character 
@@ -1910,8 +1922,25 @@ space    ( - )       Display a space
 tab      ( - )       Display a tab
 t:       ( "- )      Parse to the end of the line, display
                      the results.
-^esc     ( $- )      Display ASCII code 32, followed by a string
 clear    ( - )       Clear the screen
+normal   ( - )       Set the colors back to the default
+bold     ( - )       Set the bold attribute for the foreground color
+black    ( - )       Set the foreground color to black
+red      ( - )       Set the foreground color to red
+green    ( - )       Set the foreground color to green
+yellow   ( - )       Set the foreground color to yellow
+blue     ( - )       Set the foreground color to blue
+magenta  ( - )       Set the foreground color to magenta
+cyan     ( - )       Set the foreground color to cyan
+white    ( - )       Set the foreground color to white
+onBlack  ( - )       Set the background color to black
+onRed    ( - )       Set the background color to red
+onGreen  ( - )       Set the background color to green
+onYellow ( - )       Set the background color to yellow
+onBlue   ( - )       Set the background color to blue
+onMagenta( - )       Set the background color to magenta
+onCyan   ( - )       Set the background color to cyan
+onWhite  ( - )       Set the background color to white
 nip      ( xy-y )    Remove the second item on the stack
 rot      ( abc-bca ) Rotate top three values on stack
 -rot     ( abc-acb ) Rotate top three values on stack twice
@@ -1965,7 +1994,8 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre} 1176346125
+#unpre
+} 1177177102
 
 
 # End of Notebook Database File
