@@ -24,12 +24,12 @@ extern long stack[], sp;
  *|F|   long arg_count
  *|F|   Holds the number of command line arguments
  *|F|
- *|F|   char *arg_list[12]
+ *|F|   char *arg_list[128]
  *|F|   Holds the list of command line arguments. 
  *|F|
  ******************************************************/
 long arg_count;
-char *arg_list[12];
+char *arg_list[128];
 
 
 /******************************************************
