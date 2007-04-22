@@ -12,63 +12,13 @@ LDFLAGS = `$(CC) other/needdl.c -ldl 2>/dev/null && echo "-ldl" && rm a.out`
 # ==============================================
 # Do the following to disable FFI:
 #
-# Remove source/ffi.c from DEPS and source/ffi.o
-# from OBJS
-#
+# Remove source/ffi.c
 # Add -DNOFFI to CFLAGS
-# ==============================================
-
-DEPS =  source/bits.c \
-        source/class.c \
-        source/cmdline.c \
-        source/conditionals.c \
-        source/console.c \
-        source/data.c \
-        source/debug.c \
-        source/decompile.c \
-        source/dictionary.c \
-        source/errors.c \
-        source/files.c \
-        source/gc.c \
-        source/initial.c \
-        source/interpret.c \
-        source/math.c \
-        source/parser.c \
-        source/quotes.c \
-        source/stack.c \
-        source/toka.c \
-        source/vm.c \
-        source/ffi.c
-
-OBJS =  source/bits.o \
-        source/class.o \
-        source/cmdline.o \
-        source/conditionals.o \
-        source/console.o \
-        source/data.o \
-        source/debug.o \
-        source/decompile.o \
-        source/dictionary.o \
-        source/errors.o \
-        source/files.o \
-        source/gc.o \
-        source/initial.o \
-        source/interpret.o \
-        source/math.o \
-        source/parser.o \
-        source/quotes.o \
-        source/stack.o \
-        source/toka.o \
-        source/vm.o \
-        source/ffi.o
 # ==============================================
 default: toka
 
-toka: $(OBJS)
-	$(CC) -o toka $^ $(CFLAGS) $(LDFLAGS)
-
-%.o: %.c #$(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS) $(HEADERS)
+toka:
+	$(CC) -o toka source/*.c $(CFLAGS) $(LDFLAGS) $(HEADERS)
 # ==============================================
 clean:
 	rm -f `find . | grep \~ `
