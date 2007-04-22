@@ -155,10 +155,14 @@
 [ 2 ] is CURRENT
 [ 3 ] is END
 
-[ "R" file.open dup dup
-  file.size 1 + dup malloc dup >r swap
-  file.read drop
-  file.close r>
+[ "R" file.open 
+  dup 0 <> [
+    dup dup
+    file.size 1 + dup malloc dup >r swap
+    file.read drop
+    file.close r>
+  ]
+  [ ] t/f
 ] is file.slurp
 
 
