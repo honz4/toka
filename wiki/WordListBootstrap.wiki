@@ -1,4 +1,5 @@
 #summary A list and summary of all words provided by bootstrap.toka
+#labels Deprecated
 
 This is a list of words provided by the standard Toka bootstrap. You may also want to look at WordListPrimitives for the core words used to build these.
 
