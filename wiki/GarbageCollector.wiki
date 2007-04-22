@@ -1,4 +1,5 @@
 #summary A summary of the garbage collector in Toka
+#labels Deprecated
 
 = Garbage Collection =
 
