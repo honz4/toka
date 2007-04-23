@@ -15,7 +15,7 @@
 
 <ul>
 <li> GCC 2.9x, 3.x, or 4.x
-<li> Make (GNU Make is recommended, though others may work)
+<li> Make (Either GNU Make or a BSD Make should work)
 
 </ul>
 
@@ -31,12 +31,8 @@ BeOS) or whether dlopen() and dlsym() are provided by libc.so (BSD). You
 can also build a version without the <a href="ffi.html">FFI</a>, but this is not recommended
 as it reduces the usefulness of Toka significantly. This can be done via:
 </p>
-<pre>  make vanilla
-</pre>
-
-<p>If you are using the experimental Cygwin support, build using:
-</p>
-<pre>  make cygwin
+<pre>  rm source/ffi
+  make CFLAGS=-DNOFFI
 </pre>
 
 <p>As a final note, some pieces of documentation can be updated automatically
@@ -52,6 +48,6 @@ as well:
 
 <hr>
 
-<p><i>Notebook exported on Saturday, 21 April 2007, 17:03:34 PM EDT</i></p>
+<p><i>Notebook exported on Monday, 23 April 2007, 18:30:13 PM EDT</i></p>
 
 </body></html>
