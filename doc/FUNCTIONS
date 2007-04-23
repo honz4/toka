@@ -55,7 +55,7 @@ Variables:
   long arg_count
   Holds the number of command line arguments
 
-  char *arg_list[12]
+  char *arg_list[128]
   Holds the list of command line arguments. 
 
 num_args()

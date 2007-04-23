@@ -1,6 +1,42 @@
 # Notebook Database File
 
 #--------------------------------------------------
+# Arrays
+
+page Arrays {The standard bootstrap adds support for arrays. These are a superset of
+variables, and hold either character or numeric data.
+
+The words provided are:
+
+#pre
+  is-array          n"-     Create an array of size n. Parses for the name.
+  put-element       nia-    Put value (n) into array (a) at index (i)
+  get-element       ia-n    Get the value (n) from array (a) at index (i)
+  put-char-element  nia-    Put character value (n) into array (a) at index (i)
+  get-char-element  ia-n    Get the character value (n) from array (a) at 
+                            index (i)
+#unpre
+
+= Example =
+
+#pre
+  10 cells is-array foo
+  0 foo get-element .
+  100 0 foo put-element 
+  10 1 foo put-element 
+  0 foo get-element .
+  1 foo get-element .
+#unpre
+
+= Tips =
+
+* The command line arguments are stored in an array (*arglist*).
+** At 0 is the name of the script
+** Actual arguments start at 1.
+* Be careful not to exceed the length of your array when giving an index} 1177366441
+
+
+#--------------------------------------------------
 # bits.c
 
 page bits.c {= Use =
@@ -43,7 +79,7 @@ xor      ( ab-c )    Perform a bitwise XOR
 page Building {To build Toka, you will need the following:
 
 * GCC 2.9x, 3.x, or 4.x
-* Make (GNU Make is recommended, though others may work)
+* Make (Either GNU Make or a BSD Make should work)
 
 For most people, the following should work. If it fails, try checking the
 [Ports] page to see if there are any platform-specific instructions. The
@@ -59,13 +95,8 @@ can also build a version without the [FFI], but this is not recommended
 as it reduces the usefulness of Toka significantly. This can be done via:
 
 #pre
-  make vanilla
-#unpre
-
-If you are using the experimental Cygwin support, build using:
-
-#pre
-  make cygwin
+  rm source/ffi
+  make CFLAGS=-DNOFFI
 #unpre
 
 As a final note, some pieces of documentation can be updated automatically
@@ -73,7 +104,7 @@ as well:
 
 #pre
   make docs
-#unpre} 1176347063
+#unpre} 1177366685
 
 
 #--------------------------------------------------
@@ -137,7 +168,7 @@ Variables:
   long arg_count
   Holds the number of command line arguments
 
-  char *arg_list[12]
+  char *arg_list[128]
   Holds the list of command line arguments. 
 
 num_args()
@@ -158,7 +189,8 @@ arg_list[]. Also sets arg_count.
 #pre
 #args
 arglist
-#unpre} 1175293792
+#unpre
+} 1177367383
 
 
 #--------------------------------------------------
@@ -468,8 +500,7 @@ currently open library.
 is thrown and Toka exits.
 
 Nonfatal. When the data stack overflows or underflows, this error is
-thrown and Toka resets the stack pointer to the beginning of the stack.
-} 1177189326
+thrown and Toka resets the stack pointer to the beginning of the stack.} 1177189326
 
 
 #--------------------------------------------------
@@ -493,8 +524,7 @@ Display a given error by code
 
 = See Also =
 
-[ErrorCodes]
-} 1177189370
+[ErrorCodes]} 1177189370
 
 
 #--------------------------------------------------
@@ -579,6 +609,34 @@ as
 
 
 #--------------------------------------------------
+# Files
+
+page Files {Toka provides functionality roughly identical to the standard C file I/O
+functionality (fopen, fread, etc). 
+
+#pre
+  file.open  ( $m-n )  Open a specified file with
+                       the specified mode.
+  file.close ( n- )    Close the specified file handle
+  file.read  ( nbl-r ) Read 'l' bytes into buffer 'b'
+                       from file handle 'n'. Returns
+                       the number of bytes read.
+  file.write ( nbl-w ) Write 'l' bytes from buffer 'b'
+                       to file handle 'n'. Returns
+                       the number of bytes written.
+  file.size  ( n-s )   Return the size (in bytes)
+                       of the specified file.
+  file.seek  ( nom-a ) Seek a new position in the
+                       file. Valid modes are
+                       START, CURRENT, and END. These
+                       have values of 1, 2, and 3.
+  file.pos   ( n-a )   Return a pointer to the current
+                       offset into the file.
+  file.slurp ( $-a )   Read file '$' into a new buffer.
+#unpre} 1177367257
+
+
+#--------------------------------------------------
 # files.c
 
 page files.c {= Use =
@@ -655,10 +713,10 @@ enviroment a little:
 Invoking <b>:names</b> will display all named elements in the currently
 running Toka. Don't panic at the number of items -- you only need to
 learn a handful of them to write code in Toka.  The list is divided into
-three groups:
+several groups:
 
 * Primitives, the building blocks everything else is based on
-* Quotes, everything in the <i>bootstrap.toka</i> and anything you write
+* Quotes, everything in the <i>bootstrap.toka</i> and any code you write
 * Data, for variables, arrays, and other data structures
 
 Now let's delve into actually using Toka a bit.
@@ -671,7 +729,14 @@ Now let's delve into actually using Toka a bit.
 * [Quotes]
 * [Loops]
 * [Conditionals]
-* [Variables]} 1177020293
+
+=== Data Structures ===
+* [Variables]
+* [Arrays]
+
+=== Interfacing with the Word ===
+* [Files]
+* [FFI]} 1177367021
 
 
 #--------------------------------------------------
@@ -788,6 +853,9 @@ The language has been influenced by my experiences with RetroForth,
 HelFORTH, Factor, and other languages. I find it fun and rewarding to 
 work on, even if it's not as practical as other languages.
 
+<i>If you can't find something, try the [index]. A more structured set of
+topics can be found in [First Steps].</i> 
+
 = General Topics =
 
 * [License]
@@ -800,13 +868,10 @@ work on, even if it's not as practical as other languages.
 
 === Topics ===
 
-* [FFI]
-* [Loops]
-* [Conditionals]
-* [garbage collector]
-* [threading model]
-* [TokaDoc]
-* [ErrorCodes]
+* How the [garbage collector] works
+* Notes on the [threading model]
+* Using [TokaDoc] to comment C code
+* [ErrorCodes] that can arise
 
 === Source Files ===
 
@@ -830,7 +895,7 @@ work on, even if it's not as practical as other languages.
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1177179746
+* [vm.c]} 1177366992
 
 
 #--------------------------------------------------
@@ -871,8 +936,10 @@ via the build system:
 
 When done this way, the following files are installed:
 
-/usr/bin/toka
-/usr/share/toka/bootstrap.toka
+#pre
+  /usr/bin/toka
+  /usr/share/toka/bootstrap.toka
+#unpre
 
 After installation, run the test suite:
 
@@ -883,7 +950,7 @@ After installation, run the test suite:
 Look for any failures in the test.log. If you encounter a problem, please
 forward the test.log to charles.childers@gmail.com along with some
 basic information about your system (OS, CPU type, GCC version, Toka
-revision #)} 1175313503
+revision #)} 1177366737
 
 
 #--------------------------------------------------
