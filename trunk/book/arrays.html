@@ -1,0 +1,59 @@
+<html><head><title>toka.nbk: Arrays</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="bitsc.html">bits.c</a></p>
+
+<hr>
+
+<h1>&nbsp;Arrays</h1>
+
+
+<p>The standard bootstrap adds support for arrays. These are a superset of
+variables, and hold either character or numeric data.
+</p>
+<p>The words provided are:
+</p>
+<pre>  is-array          n"-     Create an array of size n. Parses for the name.
+  put-element       nia-    Put value (n) into array (a) at index (i)
+  get-element       ia-n    Get the value (n) from array (a) at index (i)
+  put-char-element  nia-    Put character value (n) into array (a) at index (i)
+  get-char-element  ia-n    Get the character value (n) from array (a) at 
+                            index (i)
+</pre>
+
+<h2>Example</h2>
+
+<pre>  10 cells is-array foo
+  0 foo get-element .
+  100 0 foo put-element 
+  10 1 foo put-element 
+  0 foo get-element .
+  1 foo get-element .
+</pre>
+
+<h2>Tips</h2>
+
+
+<ul>
+<li> The command line arguments are stored in an array (*arglist*).
+
+<ul>
+<li> At 0 is the name of the script
+<li> Actual arguments start at 1.
+</ul>
+
+<li> Be careful not to exceed the length of your array when giving an index</ul>
+
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="bitsc.html">bits.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Monday, 23 April 2007, 20:13:23 PM EDT</i></p>
+
+</body></html>
