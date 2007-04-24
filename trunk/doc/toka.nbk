@@ -189,8 +189,7 @@ arg_list[]. Also sets arg_count.
 #pre
 #args
 arglist
-#unpre
-} 1177367383
+#unpre} 1177367383
 
 
 #--------------------------------------------------
@@ -633,7 +632,28 @@ functionality (fopen, fread, etc).
   file.pos   ( n-a )   Return a pointer to the current
                        offset into the file.
   file.slurp ( $-a )   Read file '$' into a new buffer.
-#unpre} 1177367257
+  "R"        ( -x )    Mode for file.open
+  "R+"       ( -x )    Mode for file.open
+  "W"        ( -x )    Mode for file.open
+  "W+"       ( -x )    Mode for file.open
+  "A"        ( -x )    Mode for file.open
+  "A+"       ( -x )    Mode for file.open
+  START      ( -x )    Mode for file.seek
+  CURRENT    ( -x )    Mode for file.seek
+  END        ( -x )    Mode for file.seek
+#unpre
+
+= Examples =
+
+#pre
+  variable fid
+  " /etc/motd" "R" file.open fid !
+  fid @ file.size .
+  fid @ file.close
+
+  " /etc/motd" file.slurp [ type cr ] true?
+#unpre
+} 1177371051
 
 
 #--------------------------------------------------
@@ -734,9 +754,10 @@ Now let's delve into actually using Toka a bit.
 * [Variables]
 * [Arrays]
 
-=== Interfacing with the Word ===
+=== Interfacing with the World ===
 * [Files]
-* [FFI]} 1177367021
+* [FFI]
+} 1177372705
 
 
 #--------------------------------------------------
