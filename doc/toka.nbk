@@ -652,8 +652,7 @@ functionality (fopen, fread, etc).
   fid @ file.close
 
   " /etc/motd" file.slurp [ type cr ] true?
-#unpre
-} 1177371051
+#unpre} 1177371051
 
 
 #--------------------------------------------------
@@ -756,8 +755,7 @@ Now let's delve into actually using Toka a bit.
 
 === Interfacing with the World ===
 * [Files]
-* [FFI]
-} 1177372705
+* [FFI]} 1177372705
 
 
 #--------------------------------------------------
@@ -1787,7 +1785,7 @@ Now enter:
 You should see:
 
 #pre
-  <3> 23 7 23
+  <3> 7 23 7
 #unpre
 
 <b>over</b> causes a copy of the second item on the stack to leapfrog
@@ -1839,7 +1837,8 @@ parentheses is just a comment and need not be entered.
   2dup ( xy-xyxy )
   nip ( xyz-xz )
   tuck ( xy-yxy )
-#unpre} 1177020020
+#unpre
+} 1177452284
 
 
 #--------------------------------------------------
