@@ -756,7 +756,9 @@ Now let's delve into actually using Toka a bit.
 
 === Interfacing with the World ===
 * [Files]
-* [FFI]} 1177459455
+* [FFI]
+* [Libraries]
+} 1177537288
 
 
 #--------------------------------------------------
@@ -1016,6 +1018,37 @@ count
 
 
 #--------------------------------------------------
+# Libraries
+
+page Libraries {Toka has an optional set of external libraries that allow significantly
+more functionality. These are not included with a standard Toka
+distribution and can be obtained at:
+
+#pre
+  http://code.google.com/p/toka-library
+#unpre
+
+Libraries can be loaded with <b>needs</b>. For example, to load the
+<i>strings</i> library (if installed), do:
+
+#pre
+  needs strings
+#unpre
+
+A master library, <i>everything</i>, is provided to import all current
+libraries. This makes it easy to access all provided functionality in any
+project.
+
+=== Library Documentation ===
+
+* [StringsLibrary] 
+* [TimeLibrary]
+* [MathLibrary] 
+* [SocketLibrary]
+} 1177537412
+
+
+#--------------------------------------------------
 # License
 
 page License {Toka is Copyright (c) 2007 Charles R. Childers
@@ -1149,8 +1182,7 @@ page MathLibrary {#pre
 
      sqrt-closer
      Used internally by sqrt
-#unpre
-} 1177464193
+#unpre} 1177464193
 
 
 #--------------------------------------------------
@@ -1184,26 +1216,6 @@ In addition, the standard bootstrap adds some additional operations:
 
 page {Missing Pieces} {The following areas need addressed:
 
-* [Types], or the lack thereof
-** Difference between @ ! and c@ c!
-** How types are represented in memory
-** Pointers and types
-*** [Arrays]
-*** [Variables]
-*** [Strings]
-** Why are they important?
-* Pointers
-** Allow for direct memory access/manipulation
-** Use carefully (since all memory is dynamically allocated)
-* More details on quotes
-** [ ] leaves an address. Explain why.
-** The words <b>is</b> <b>is-macro</b> <b>is-super</b> <b>is-data</b>
-   bind a name to a pointer.
-* [Libraries]
-** [StringsLibrary]
-** [TimeLibrary]
-** [MathLibrary]
-** [SocketLibrary]
 * Examples
 ** FFI
 ** For libraries
@@ -1212,7 +1224,8 @@ page {Missing Pieces} {The following areas need addressed:
 *** Needed for scripts!
 *** Note that it uses [Arrays]
 
-#---} 1177463559
+#---
+} 1177537603
 
 
 #--------------------------------------------------
@@ -1397,7 +1410,7 @@ encolsing the code and/or data in brackets:
 #unpre
 
 The above will create an empty quote and leave a pointer to it on the
-stack. You can attach a name to a quote with <b>is</b>:
+stack. You can attach a name to this pointer with <b>is</b>:
 
 #pre
   [ ] is empty-quote
@@ -1405,7 +1418,8 @@ stack. You can attach a name to a quote with <b>is</b>:
 
 Names can include any characters, other than space, tab, cr, or lf (enter
 key). (<i>There are other forms of <b>is</b>, but this is the most common
-one; the others will be discussed later</i>).} 1177020262
+one; the others are discussed [elsewhere|WordClasses]</i>).
+} 1177465671
 
 
 #--------------------------------------------------
@@ -1572,8 +1586,7 @@ page SocketLibrary {#pre
     pClose
     ( s-x )
     Attempt to close socket 's'.
-#unpre
-} 1177464305
+#unpre} 1177464305
 
 
 #--------------------------------------------------
@@ -1653,7 +1666,17 @@ in a string:
   #! Now change the lowercase 'h' to uppercase.
   char: H 0 hello put-char-element
   hello type cr
-#unpre} 1177463333
+#unpre
+
+=== Tips ===
+
+* <b>char-size</b> is normally equal to <i>1</i>, corresponding to one
+  byte.
+* It is possible (though not likely) to have a <b>char-size</b> larger
+  than one byte.
+* Use <b>c@</b> and <b>c!</b> when manipulating <b>char-size</b> elements.
+* Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).
+} 1177537581
 
 
 #--------------------------------------------------
@@ -1715,8 +1738,7 @@ page StringsLibrary {#pre
             ( a-b )
             Append a carriage return (ascii 10) to a string. Returns
             a new string.
-#unpre
-} 1177464135
+#unpre} 1177464135
 
 
 #--------------------------------------------------
@@ -1764,8 +1786,7 @@ page TimeLibrary {#pre
      ctime
      .time
      :time
-#unpre
-} 1177464226
+#unpre} 1177464226
 
 
 #--------------------------------------------------
@@ -2193,6 +2214,13 @@ to the stack
 #pre
 heap
 #unpre} 1175294932
+
+
+#--------------------------------------------------
+# WordClasses
+
+page WordClasses {An implementation strategy adopted from HelFORTH.
+} 1177465699
 
 
 #--------------------------------------------------
