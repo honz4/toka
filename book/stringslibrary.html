@@ -1,0 +1,64 @@
+<html><head><title>StringsLibrary</title></head>
+<body>
+
+<h1>StringsLibrary</h1>
+
+<pre> Provides (from libc):
+   strcpy   strncpy   strcat   strncat   strcmp   strncmp
+   strchr   strstr    strlen   strrchr   strtok
+
+ Provides:
+   Data:    $[cr]     $[lf]
+   Words:
+            grow-string
+            ( an-b )  
+            Allocate a new string 'n' chars longer than the original
+            'a' and copy the original string to it. Returns a pointer
+            to the new string ('b').
+
+            append-string
+            ( ab-c )
+            Combine strings 'a' and 'b' into a new string 'c'. This
+            allocates the necessary space for the new string
+            automatically.
+
+            clone-string
+            ( a-b )
+            Create a new string ('b') identical to string 'a'. Space
+            is allocated automatically.
+
+            string-find-token
+            ( ac-b )
+            Search for character 'c' in string 'a'. Returns a new
+            string containing everything up to, but not including
+            'c'.
+
+            string-find-substring
+            ( ab-c )
+            Search for string 'b' in string 'a'. Return a new string
+            'c' starting with string 'b' and containing the rest of
+            string 'a'.
+
+            string-find-char
+            ( ac-b )
+            Search string 'a' for character 'c'. Return a new string
+            'b' that starts with character 'c'.
+
+            after-"
+            ( a"-b )
+            A parsing word. Parse ahead until " is encountered, then
+            append string 'a' to it. Returns a new string 'b'.
+
+            +lf
+            ( a-b )
+            Append a linefeed (ascii 13) to a string. Returns a new
+            string.
+
+            +cr
+            ( a-b )
+            Append a carriage return (ascii 10) to a string. Returns
+            a new string.
+</pre>
+
+</body>
+</html>

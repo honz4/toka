@@ -1123,6 +1123,37 @@ Divide and return the result, including remainder
 
 
 #--------------------------------------------------
+# MathLibrary
+
+page MathLibrary {#pre
+ Provides:
+     abs
+     ( n-n )
+     Returns the absolute value of 'n'
+
+     random
+     ( -n )
+     Returns a random number
+
+     srandom
+     ( s-x )
+     Set a new seed for the random number generator
+
+     ^
+     ( xy-z )
+     Returns x^y power
+
+     sqrt
+     ( x-y )
+     Returns the square root of x
+
+     sqrt-closer
+     Used internally by sqrt
+#unpre
+} 1177464193
+
+
+#--------------------------------------------------
 # MathOperations
 
 page MathOperations {Toka provides a very basic set of math functionality, sufficient for many
@@ -1181,8 +1212,7 @@ page {Missing Pieces} {The following areas need addressed:
 *** Needed for scripts!
 *** Note that it uses [Arrays]
 
-#---
-} 1177463559
+#---} 1177463559
 
 
 #--------------------------------------------------
@@ -1511,6 +1541,42 @@ page Search {[@searchIndex@]} 1175217539
 
 
 #--------------------------------------------------
+# SocketLibrary
+
+page SocketLibrary {#pre
+ Requires:
+    sockets.so
+
+ Provides:
+    pBind
+    ( n-x )
+    Bind to a specific port
+
+    pConnect
+    ( $n-s )
+    Connect to host (string '$') at port 'n'. Returns a socket.
+
+    pAccept
+    ( n-x )
+
+    pRead
+    ( sbl-n )
+    Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
+    the number of bytes read.
+
+    pWrite
+    ( sbl-n )
+    Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
+    the number of bytes written.
+
+    pClose
+    ( s-x )
+    Attempt to close socket 's'.
+#unpre
+} 1177464305
+
+
+#--------------------------------------------------
 # stack.c
 
 page stack.c {= Use =
@@ -1587,8 +1653,70 @@ in a string:
   #! Now change the lowercase 'h' to uppercase.
   char: H 0 hello put-char-element
   hello type cr
+#unpre} 1177463333
+
+
+#--------------------------------------------------
+# StringsLibrary
+
+page StringsLibrary {#pre
+ Provides (from libc):
+   strcpy   strncpy   strcat   strncat   strcmp   strncmp
+   strchr   strstr    strlen   strrchr   strtok
+
+ Provides:
+   Data:    $[cr]     $[lf]
+   Words:
+            grow-string
+            ( an-b )  
+            Allocate a new string 'n' chars longer than the original
+            'a' and copy the original string to it. Returns a pointer
+            to the new string ('b').
+
+            append-string
+            ( ab-c )
+            Combine strings 'a' and 'b' into a new string 'c'. This
+            allocates the necessary space for the new string
+            automatically.
+
+            clone-string
+            ( a-b )
+            Create a new string ('b') identical to string 'a'. Space
+            is allocated automatically.
+
+            string-find-token
+            ( ac-b )
+            Search for character 'c' in string 'a'. Returns a new
+            string containing everything up to, but not including
+            'c'.
+
+            string-find-substring
+            ( ab-c )
+            Search for string 'b' in string 'a'. Return a new string
+            'c' starting with string 'b' and containing the rest of
+            string 'a'.
+
+            string-find-char
+            ( ac-b )
+            Search string 'a' for character 'c'. Return a new string
+            'b' that starts with character 'c'.
+
+            after-"
+            ( a"-b )
+            A parsing word. Parse ahead until " is encountered, then
+            append string 'a' to it. Returns a new string 'b'.
+
+            +lf
+            ( a-b )
+            Append a linefeed (ascii 13) to a string. Returns a new
+            string.
+
+            +cr
+            ( a-b )
+            Append a carriage return (ascii 10) to a string. Returns
+            a new string.
 #unpre
-} 1177463333
+} 1177464135
 
 
 #--------------------------------------------------
@@ -1620,6 +1748,24 @@ the following cell to the stack.
 When this quote is invoked, <i>a</i> will be called. After it finishes
 executing, <i>b</i> will be called, and so on until <i>0</i> is
 encountered. At that point, the [vm_run()|vm.c] function exits.} 1176257425
+
+
+#--------------------------------------------------
+# TimeLibrary
+
+page TimeLibrary {#pre
+ Provides:
+   Data:
+     time_t
+     
+   Words:
+     time
+     difftime
+     ctime
+     .time
+     :time
+#unpre
+} 1177464226
 
 
 #--------------------------------------------------
@@ -1733,8 +1879,7 @@ accessing and setting individual elements in an array trivial.
 
 You are strongly encouraged to use <b>cell-size</b> and <b>char-size</b>
 instead of hard coding the sizes for data. This helps ensure readability
-and portability.
-} 1177462962
+and portability.} 1177462962
 
 
 #--------------------------------------------------

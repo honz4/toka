@@ -1,0 +1,37 @@
+<html><head><title>SocketLibrary</title></head>
+<body>
+
+<h1>SocketLibrary</h1>
+
+<pre> Requires:
+    sockets.so
+
+ Provides:
+    pBind
+    ( n-x )
+    Bind to a specific port
+
+    pConnect
+    ( $n-s )
+    Connect to host (string '$') at port 'n'. Returns a socket.
+
+    pAccept
+    ( n-x )
+
+    pRead
+    ( sbl-n )
+    Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
+    the number of bytes read.
+
+    pWrite
+    ( sbl-n )
+    Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
+    the number of bytes written.
+
+    pClose
+    ( s-x )
+    Attempt to close socket 's'.
+</pre>
+
+</body>
+</html>
