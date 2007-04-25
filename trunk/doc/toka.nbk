@@ -750,12 +750,13 @@ Now let's delve into actually using Toka a bit.
 * [Conditionals]
 
 === Data Structures ===
+* [Types]
 * [Variables]
 * [Arrays]
 
 === Interfacing with the World ===
 * [Files]
-* [FFI]} 1177372705
+* [FFI]} 1177459455
 
 
 #--------------------------------------------------
@@ -882,6 +883,7 @@ topics can be found in [First Steps].</i>
 * [First Steps]
 * [Words and Their Uses]
 * [Ports]
+* [Missing Pieces] of documentation
 
 = Internals =
 
@@ -914,7 +916,7 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1177366992
+* [vm.c]} 1177452547
 
 
 #--------------------------------------------------
@@ -1144,6 +1146,43 @@ In addition, the standard bootstrap adds some additional operations:
   not      ( x-y )     Invert the value 'x'
   */       ( abc-d )   (a*b)/c
 #unpre} 1177020107
+
+
+#--------------------------------------------------
+# Missing Pieces
+
+page {Missing Pieces} {The following areas need addressed:
+
+* [Types], or the lack thereof
+** Difference between @ ! and c@ c!
+** How types are represented in memory
+** Pointers and types
+*** [Arrays]
+*** [Variables]
+*** [Strings]
+** Why are they important?
+* Pointers
+** Allow for direct memory access/manipulation
+** Use carefully (since all memory is dynamically allocated)
+* More details on quotes
+** [ ] leaves an address. Explain why.
+** The words <b>is</b> <b>is-macro</b> <b>is-super</b> <b>is-data</b>
+   bind a name to a pointer.
+* [Libraries]
+** [StringsLibrary]
+** [TimeLibrary]
+** [MathLibrary]
+** [SocketLibrary]
+* Examples
+** FFI
+** For libraries
+** Working with files
+** Command line processing
+*** Needed for scripts!
+*** Note that it uses [Arrays]
+
+#---
+} 1177463559
 
 
 #--------------------------------------------------
@@ -1515,6 +1554,44 @@ depth
 
 
 #--------------------------------------------------
+# strings
+
+page strings {Strings are sequences of characters. Specifically a string is any
+sequence of ASCII characters (each character can have a length identical
+to <b>char-size</b>), and ending with the literal value 0.
+
+Strings are created by parsing, or can be manually constructed as an
+array. For example the following two are functionally identical:
+
+#pre
+  " hello" is-data hello
+  hello type cr
+
+  5 chars is-array hello
+  char: h 0 hello put-char-element
+  char: e 1 hello put-char-element
+  char: l 2 hello put-char-element
+  char: l 3 hello put-char-element
+  char: o 4 hello put-char-element
+        0 5 hello put-char-element
+  hello type cr
+#unpre
+
+Since all strings are arrays, you can also manipulate individual elements
+in a string:
+
+#pre
+  " hello" is-data hello
+  hello type cr
+
+  #! Now change the lowercase 'h' to uppercase.
+  char: H 0 hello put-char-element
+  hello type cr
+#unpre
+} 1177463333
+
+
+#--------------------------------------------------
 # threading model
 
 page {threading model} {Toka relies on <i>call threading</i>. This is an implementation technique
@@ -1617,6 +1694,47 @@ And for any functions having a Toka equivilent, have a block like:
 #unpre
 
 Please try to keep columns lined up as much as possible for Toka wordlist comments.} 1175313140
+
+
+#--------------------------------------------------
+# Types
+
+page Types {Toka has one data type, called the <i>cell</i>. This is a machine
+dependent sized memory area that can hold a single number or pointer. On
+32-bit systems, cells are 4 bytes in length, and on 64-bit systems, they
+take 8 bytes. A constant, <b>cell-size</b>, returns the exact length
+provided by Toka on your system.
+
+Cells can hold numbers, pointers to allocated memory, and pointers to
+quotes. When Toka encounters a number or a pointer, it is placed on the
+stack. For more permanent storage, you can store cell values into memory
+locations for later use. 
+
+This is where a number of abstractions arise. Memory allocated for
+storage of values is called [variables]. Memory allocated for sequences
+of values are called [arrays]. And a special class of array is used for
+sequences of characters. These are called [strings].
+
+In all of these, when you reference them, a <i>pointer</i> is left on the
+stack. Pointers are simply numbers corresponding to an actual memory
+address. <i>It is up to you to know what abstract data type a pointer
+represents</i>.
+
+When dealing with variables, you can use <b>@</b> (fetch) and <b>!</b>
+(store) to set and obtain the values stored in them. If you need to fetch
+or store single characters (as may arise when manipulating strings), you
+can use <b>c@</b> and <b>c!</b> instead.
+
+Arrays have an entire abstracted set of words for dealing with them. It's
+well worth learning to use these, as they are portable, and make
+accessing and setting individual elements in an array trivial.
+
+=== Tips ===
+
+You are strongly encouraged to use <b>cell-size</b> and <b>char-size</b>
+instead of hard coding the sizes for data. This helps ensure readability
+and portability.
+} 1177462962
 
 
 #--------------------------------------------------
@@ -1837,8 +1955,7 @@ parentheses is just a comment and need not be entered.
   2dup ( xy-xyxy )
   nip ( xyz-xz )
   tuck ( xy-yxy )
-#unpre
-} 1177452284
+#unpre} 1177452284
 
 
 #--------------------------------------------------
