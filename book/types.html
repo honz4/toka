@@ -1,0 +1,58 @@
+<html><head><title>toka.nbk: Types</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="user_code.html">User Code</a> | Previous Page: <a href="tokadoc.html">TokaDoc</a></p>
+
+<hr>
+
+<h1>&nbsp;Types</h1>
+
+
+<p>Toka has one data type, called the <i>cell</i>. This is a machine
+dependent sized memory area that can hold a single number or pointer. On
+32-bit systems, cells are 4 bytes in length, and on 64-bit systems, they
+take 8 bytes. A constant, <b>cell-size</b>, returns the exact length
+provided by Toka on your system.
+</p>
+<p>Cells can hold numbers, pointers to allocated memory, and pointers to
+quotes. When Toka encounters a number or a pointer, it is placed on the
+stack. For more permanent storage, you can store cell values into memory
+locations for later use. 
+</p>
+<p>This is where a number of abstractions arise. Memory allocated for
+storage of values is called <a href="variables.html">variables</a>. Memory allocated for sequences
+of values are called <a href="arrays.html">arrays</a>. And a special class of array is used for
+sequences of characters. These are called <a href="strings.html">strings</a>.
+</p>
+<p>In all of these, when you reference them, a <i>pointer</i> is left on the
+stack. Pointers are simply numbers corresponding to an actual memory
+address. <i>It is up to you to know what abstract data type a pointer
+represents</i>.
+</p>
+<p>When dealing with variables, you can use <b>@</b> (fetch) and <b>!</b>
+(store) to set and obtain the values stored in them. If you need to fetch
+or store single characters (as may arise when manipulating strings), you
+can use <b>c@</b> and <b>c!</b> instead.
+</p>
+<p>Arrays have an entire abstracted set of words for dealing with them. It's
+well worth learning to use these, as they are portable, and make
+accessing and setting individual elements in an array trivial.
+</p>
+<h4>Tips</h4>
+
+<p>You are strongly encouraged to use <b>cell-size</b> and <b>char-size</b>
+instead of hard coding the sizes for data. This helps ensure readability
+and portability.
+</p>
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="user_code.html">User Code</a> | Previous Page: <a href="tokadoc.html">TokaDoc</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Tuesday, 24 April 2007, 21:13:09 PM EDT</i></p>
+
+</body></html>

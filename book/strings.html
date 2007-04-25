@@ -1,0 +1,53 @@
+<html><head><title>toka.nbk: strings</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="threading_model.html">threading model</a> | Previous Page: <a href="stackc.html">stack.c</a></p>
+
+<hr>
+
+<h1>&nbsp;strings</h1>
+
+
+<p>Strings are sequences of characters. Specifically a string is any
+sequence of ASCII characters (each character can have a length identical
+to <b>char-size</b>), and ending with the literal value 0.
+</p>
+<p>Strings are created by parsing, or can be manually constructed as an
+array. For example the following two are functionally identical:
+</p>
+<pre>  " hello" is-data hello
+  hello type cr
+
+  5 chars is-array hello
+  char: h 0 hello put-char-element
+  char: e 1 hello put-char-element
+  char: l 2 hello put-char-element
+  char: l 3 hello put-char-element
+  char: o 4 hello put-char-element
+        0 5 hello put-char-element
+  hello type cr
+</pre>
+
+<p>Since all strings are arrays, you can also manipulate individual elements
+in a string:
+</p>
+<pre>  " hello" is-data hello
+  hello type cr
+
+  #! Now change the lowercase 'h' to uppercase.
+  char: H 0 hello put-char-element
+  hello type cr
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="threading_model.html">threading model</a> | Previous Page: <a href="stackc.html">stack.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Tuesday, 24 April 2007, 21:13:09 PM EDT</i></p>
+
+</body></html>
