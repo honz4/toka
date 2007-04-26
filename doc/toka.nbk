@@ -919,8 +919,7 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1177554141
+* [vm.c]} 1177554141
 
 
 #--------------------------------------------------
@@ -1084,8 +1083,7 @@ page Limitations {* Cell size is machine dependent, generally 32 bits (4 bytes) 
 * Quotes can be up to 32 elements (values, primitives, embedded quotes,
   calls to other quotes, string pointers, etc) in length.
 * The data stack can hold up to 100 cells.
-* The return stack can hold up to 1024 cells.
-} 1177554362
+* The return stack can hold up to 1024 cells.} 1177554362
 
 
 #--------------------------------------------------
@@ -2281,7 +2279,29 @@ heap
 #--------------------------------------------------
 # WordClasses
 
-page WordClasses {An implementation strategy adopted from HelFORTH.} 1177465699
+page WordClasses {An implementation strategy adopted from HelFORTH.
+
+
+== is ==
+
+Compiling: compile a call to the quote.
+Interpreting: invoke the quote.
+
+== is-macro ==
+
+Compiling: invoke the quote.
+Interpreting: do nothing.
+
+== is-super ==
+
+Compiling: invoke the quote.
+Interpreting: invoke the quote.
+
+== is-data ==
+
+Compiling: compile the value into the quote.
+Interpreting: leave the value on the stack.
+} 1177556822
 
 
 #--------------------------------------------------
