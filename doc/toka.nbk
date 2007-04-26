@@ -757,8 +757,9 @@ Now let's delve into actually using Toka a bit.
 === Interfacing with the World ===
 * [Files]
 * [FFI]
+* [Scripts]
 * [Libraries]
-} 1177537288
+} 1177552004
 
 
 #--------------------------------------------------
@@ -1044,8 +1045,7 @@ project.
 * [StringsLibrary] 
 * [TimeLibrary]
 * [MathLibrary] 
-* [SocketLibrary]
-} 1177537412
+* [SocketLibrary]} 1177537412
 
 
 #--------------------------------------------------
@@ -1220,12 +1220,9 @@ page {Missing Pieces} {The following areas need addressed:
 ** FFI
 ** For libraries
 ** Working with files
-** Command line processing
-*** Needed for scripts!
-*** Note that it uses [Arrays]
 
 #---
-} 1177537603
+} 1177553636
 
 
 #--------------------------------------------------
@@ -1418,8 +1415,7 @@ stack. You can attach a name to this pointer with <b>is</b>:
 
 Names can include any characters, other than space, tab, cr, or lf (enter
 key). (<i>There are other forms of <b>is</b>, but this is the most common
-one; the others are discussed [elsewhere|WordClasses]</i>).
-} 1177465671
+one; the others are discussed [elsewhere|WordClasses]</i>).} 1177465671
 
 
 #--------------------------------------------------
@@ -1549,6 +1545,60 @@ Preformatted text is useful for typing in tables and things like that.} 11134196
 
 
 #--------------------------------------------------
+# Scripts
+
+page Scripts {Toka can be used to write scripts. Start your code with the following:
+
+#pre
+  #! /usr/bin/toka
+#unpre
+
+And set the permissions to executable (<i>+x</i>), and you can run your
+code directly at the command line (assuming that Toka is
+[installed|installation]).
+
+To make the most of your scripts, you will probably want to handle
+command line arguments. Toka allows for this using the following words:
+
+#pre
+  #args        ( -n )   Returns the number of command line arguments
+  arglist      ( -a )   An array containing the arguments
+  get-element  ( ia-n ) Return a pointer to an element in the array
+#unpre
+
+Toka accepts a command line like the following:
+
+#pre
+  toka <script> <arg0> <arg1> ... <argN>
+#unpre
+
+If no arguments are given to Toka, <i>excluding than the optional script
+filename</i>, <b>#args</b> will be set to <i>0</i>. In any other case,
+<b>#args</b> will contain the number of arguments <i>following</i> the
+script name. For example, in the following example, <b>#args</b> will
+return <i>3</i>:
+
+#pre
+  toka foo.toka apple banana carrot
+#unpre
+
+The breakdown in the <b>arglist</b> will then be as follows:
+
+* Element 0 is the name of the script, in this case <i>foo.toka</i>
+* Element 1 is <i>apple</i>
+* Element 2 is <i>banana</i>
+* Element 3 is <i>carrot</i>
+
+You can iterate over the arguments to process them. For instance, if we
+wanted to display each of the script arguments, we could do:
+
+#pre
+  #args [ i arglist get-element type cr ] +iterate
+#unpre
+} 1177553596
+
+
+#--------------------------------------------------
 # Search
 
 page Search {[@searchIndex@]} 1175217539
@@ -1675,8 +1725,7 @@ in a string:
 * It is possible (though not likely) to have a <b>char-size</b> larger
   than one byte.
 * Use <b>c@</b> and <b>c!</b> when manipulating <b>char-size</b> elements.
-* Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).
-} 1177537581
+* Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).} 1177537581
 
 
 #--------------------------------------------------
@@ -2219,8 +2268,7 @@ heap
 #--------------------------------------------------
 # WordClasses
 
-page WordClasses {An implementation strategy adopted from HelFORTH.
-} 1177465699
+page WordClasses {An implementation strategy adopted from HelFORTH.} 1177465699
 
 
 #--------------------------------------------------
