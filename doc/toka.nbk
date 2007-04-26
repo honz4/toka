@@ -758,8 +758,7 @@ Now let's delve into actually using Toka a bit.
 * [Files]
 * [FFI]
 * [Scripts]
-* [Libraries]
-} 1177552004
+* [Libraries]} 1177552004
 
 
 #--------------------------------------------------
@@ -896,6 +895,7 @@ topics can be found in [First Steps].</i>
 * Notes on the [threading model]
 * Using [TokaDoc] to comment C code
 * [ErrorCodes] that can arise
+* [Limitations]
 
 === Source Files ===
 
@@ -919,7 +919,8 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1177452547
+* [vm.c]
+} 1177554141
 
 
 #--------------------------------------------------
@@ -1074,6 +1075,20 @@ IN THE SOFTWARE.} 1175645279
 
 
 #--------------------------------------------------
+# Limitations
+
+page Limitations {* Cell size is machine dependent, generally 32 bits (4 bytes) or 64 bits
+  (8 bytes) in size. <b>cell-size</b> returns the actual size in bytes.
+* Character size is machine and OS dependent.  Normally 8 bits (1 byte).
+  <b>char-size</b> returns the actual size in bytes.
+* Quotes can be up to 32 elements (values, primitives, embedded quotes,
+  calls to other quotes, string pointers, etc) in length.
+* The data stack can hold up to 100 cells.
+* The return stack can hold up to 1024 cells.
+} 1177554362
+
+
+#--------------------------------------------------
 # Loops
 
 page Loops {Toka provides a limited collection of primitives for building various
@@ -1221,8 +1236,7 @@ page {Missing Pieces} {The following areas need addressed:
 ** For libraries
 ** Working with files
 
-#---
-} 1177553636
+#---} 1177553636
 
 
 #--------------------------------------------------
@@ -1594,8 +1608,7 @@ wanted to display each of the script arguments, we could do:
 
 #pre
   #args [ i arglist get-element type cr ] +iterate
-#unpre
-} 1177553596
+#unpre} 1177553596
 
 
 #--------------------------------------------------
