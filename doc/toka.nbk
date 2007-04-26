@@ -759,8 +759,7 @@ Now let's delve into actually using Toka a bit.
 * [Files]
 * [FFI]
 * [Scripts]
-* [Libraries]
-} 1177557692
+* [Libraries]} 1177557692
 
 
 #--------------------------------------------------
@@ -2320,8 +2319,7 @@ This is the second most common class. It is used for all data structures,
 including variables, arrays, and strings.
 
 * Compiling: compile the value into the quote.
-* Interpreting: leave the value on the stack.
-} 1177558078
+* Interpreting: leave the value on the stack.} 1177558078
 
 
 #--------------------------------------------------
@@ -2478,6 +2476,8 @@ They significantly expand the core language.
 #pre
 #!       ( "- )      Parse to the end of the line
                      and scrap the results.
+(        ( "- )      Parse until ) is found and scrap
+                     the results
 SPACE    ( -n )      ASCII value for SPACE character
 CR       ( -n )      ASCII value for CR character
 LF       ( -n )      ASCII value for LF character
@@ -2571,7 +2571,8 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre} 1177182607
+#unpre
+} 1177626947
 
 
 # End of Notebook Database File
