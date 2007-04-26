@@ -1,0 +1,55 @@
+<html><head><title>Scripts</title></head>
+<body>
+
+<h1>Scripts</h1>
+
+<p>Toka can be used to write scripts. Start your code with the following:
+</p>
+<pre>  #! /usr/bin/toka
+</pre>
+
+<p>And set the permissions to executable (<i>+x</i>), and you can run your
+code directly at the command line (assuming that Toka is
+installed).
+</p>
+<p>To make the most of your scripts, you will probably want to handle
+command line arguments. Toka allows for this using the following words:
+</p>
+<pre>  #args        ( -n )   Returns the number of command line arguments
+  arglist      ( -a )   An array containing the arguments
+  get-element  ( ia-n ) Return a pointer to an element in the array
+</pre>
+
+<p>Toka accepts a command line like the following:
+</p>
+<pre>  toka &lt;script&gt; &lt;arg0&gt; &lt;arg1&gt; ... &lt;argN&gt;
+</pre>
+
+<p>If no arguments are given to Toka, <i>excluding than the optional script
+filename</i>, <b>#args</b> will be set to <i>0</i>. In any other case,
+<b>#args</b> will contain the number of arguments <i>following</i> the
+script name. For example, in the following example, <b>#args</b> will
+return <i>3</i>:
+</p>
+<pre>  toka foo.toka apple banana carrot
+</pre>
+
+<p>The breakdown in the <b>arglist</b> will then be as follows:
+</p>
+
+<ul>
+<li> Element 0 is the name of the script, in this case <i>foo.toka</i>
+<li> Element 1 is <i>apple</i>
+<li> Element 2 is <i>banana</i>
+<li> Element 3 is <i>carrot</i>
+
+</ul>
+
+<p>You can iterate over the arguments to process them. For instance, if we
+wanted to display each of the script arguments, we could do:
+</p>
+<pre>  #args [ i arglist get-element type cr ] +iterate
+</pre>
+
+</body>
+</html>
