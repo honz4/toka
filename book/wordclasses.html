@@ -3,27 +3,61 @@
 
 <h1>WordClasses</h1>
 
-<p>An implementation strategy adopted from HelFORTH.
+<p>An implementation strategy adopted from HelFORTH. Each quote, primitive,
+and data structure has a <i>class</i> assigned to it. These classes are
+aware of the current compiler state (<i>on</i> or <i>off</i>), and may be
+aware of other aspects of the Toka system as well.
+</p>
+<p>When an item is found, the corresponding <i>class handler</i> is invoked.
+The primary classes you will encounter in Toka are:
 </p>
 <h3>is</h3>
 
-<p>Compiling: compile a call to the quote.
-Interpreting: invoke the quote.
+<p>This is the most common class. 
 </p>
+
+<ul>
+<li> Compiling: compile a call to the quote.
+<li> Interpreting: invoke the quote.
+
+</ul>
+
 <h3>is-macro</h3>
 
-<p>Compiling: invoke the quote.
-Interpreting: do nothing.
+<p>A special case, this is used for <i>compiler macros</i>, pieces of code
+that are only relevant during compilation.
 </p>
+
+<ul>
+<li> Compiling: invoke the quote.
+<li> Interpreting: do nothing.
+
+</ul>
+
 <h3>is-super</h3>
 
-<p>Compiling: invoke the quote.
-Interpreting: invoke the quote.
+<p>Another special case, these are used for quotes that need to be invoked
+whenever they are encountered. Super class is used for creating strings
+(via <b>"</b>) and symbolic creation of characters (via <b>char:</b>).
 </p>
+
+<ul>
+<li> Compiling: invoke the quote.
+<li> Interpreting: invoke the quote.
+
+</ul>
+
 <h3>is-data</h3>
 
-<p>Compiling: compile the value into the quote.
-Interpreting: leave the value on the stack.
+<p>This is the second most common class. It is used for all data structures,
+including variables, arrays, and strings.
 </p>
+
+<ul>
+<li> Compiling: compile the value into the quote.
+<li> Interpreting: leave the value on the stack.
+</ul>
+
+
 </body>
 </html>
