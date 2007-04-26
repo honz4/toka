@@ -61,7 +61,7 @@ void error(long code)
            sp = 0;
            TOS = 0;
          }
-         if (sp > 127)
+         if (sp > 99)
          {
            printf("data stack overflow\n");
            sp = 0;

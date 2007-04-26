@@ -62,7 +62,7 @@ void vm_run(Inst prog[])
  ******************************************************/
 void vm_stack_check()
 {
-  if ((sp < 0 || sp > 127) || (rsp < 0 || rsp > 1023))
+  if ((sp < 0 || sp > 99) || (rsp < 0 || rsp > 1023))
     error(ERROR_STACK);
 }
 
