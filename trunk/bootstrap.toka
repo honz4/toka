@@ -1,4 +1,5 @@
 [ 10 parse drop ] is #!
+[ 41 parse drop ] is-super (
 
 #! ---------------------------------------
 #! Constants for various ASCII values
