@@ -746,6 +746,7 @@ Now let's delve into actually using Toka a bit.
 
 === Intermediate Exploration ===
 * [Quotes]
+* [WordClasses]
 * [Loops]
 * [Conditionals]
 
@@ -758,7 +759,8 @@ Now let's delve into actually using Toka a bit.
 * [Files]
 * [FFI]
 * [Scripts]
-* [Libraries]} 1177552004
+* [Libraries]
+} 1177557692
 
 
 #--------------------------------------------------
@@ -2279,29 +2281,47 @@ heap
 #--------------------------------------------------
 # WordClasses
 
-page WordClasses {An implementation strategy adopted from HelFORTH.
+page WordClasses {An implementation strategy adopted from HelFORTH. Each quote, primitive,
+and data structure has a <i>class</i> assigned to it. These classes are
+aware of the current compiler state (<i>on</i> or <i>off</i>), and may be
+aware of other aspects of the Toka system as well.
+
+When an item is found, the corresponding <i>class handler</i> is invoked.
+The primary classes you will encounter in Toka are:
 
 
 == is ==
 
-Compiling: compile a call to the quote.
-Interpreting: invoke the quote.
+This is the most common class. 
+
+* Compiling: compile a call to the quote.
+* Interpreting: invoke the quote.
 
 == is-macro ==
 
-Compiling: invoke the quote.
-Interpreting: do nothing.
+A special case, this is used for <i>compiler macros</i>, pieces of code
+that are only relevant during compilation.
+
+* Compiling: invoke the quote.
+* Interpreting: do nothing.
 
 == is-super ==
 
-Compiling: invoke the quote.
-Interpreting: invoke the quote.
+Another special case, these are used for quotes that need to be invoked
+whenever they are encountered. Super class is used for creating strings
+(via <b>"</b>) and symbolic creation of characters (via <b>char:</b>).
+
+* Compiling: invoke the quote.
+* Interpreting: invoke the quote.
 
 == is-data ==
 
-Compiling: compile the value into the quote.
-Interpreting: leave the value on the stack.
-} 1177556822
+This is the second most common class. It is used for all data structures,
+including variables, arrays, and strings.
+
+* Compiling: compile the value into the quote.
+* Interpreting: leave the value on the stack.
+} 1177558078
 
 
 #--------------------------------------------------
