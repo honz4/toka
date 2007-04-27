@@ -112,7 +112,7 @@ as well:
 
 page class.c {= Use =
 
-This is where the [word classes] are implemented. It does not export any
+This is where the [WordClasses] are implemented. It does not export any
 functions directly to Toka.
 
 = Functions Provided =
@@ -150,7 +150,8 @@ invoke() is called with the xt on TOS.
 
 = Primitives Provided =
 
-<i>None</i>} 1175293842
+<i>None</i>
+} 1177714839
 
 
 #--------------------------------------------------
@@ -190,6 +191,67 @@ arg_list[]. Also sets arg_count.
 #args
 arglist
 #unpre} 1177367383
+
+
+#--------------------------------------------------
+# Commenting Code
+
+page {Commenting Code} {It is generally a good idea to comment your code. Comments will make it
+much easier to remember what's going on, can help you locate bugs, and
+also be of significant benefit to others who may work on your code at a
+later time.
+
+Toka provides two ways to comment your code.
+
+=== In The Listener ===
+
+At the listener (the top level interpreter), you can use <b>#!</b>
+comments. These are comments that start with <b>#!</b> and end at the end
+of the current line. For example, I often start my programs with a short
+information block such as the following:
+
+#pre
+  #! ---------------------------------------------------------------
+  #! A small HTTP server for Toka
+  #!
+  #! Developed by:
+  #!  Charles R. Childers
+  #!  erider
+  #!
+  #! ---------------------------------------------------------------
+#unpre
+
+This style comment works well for blocks, and thus can be very useful at
+the start of a function:
+
+#pre
+  #! ---------------------------------------------------------------
+  #! get-request
+  #! This reads a client request of up to 1k into the buffer. The
+  #! number of bytes read is returned.
+  #! ---------------------------------------------------------------
+#unpre
+
+<b>#!</b> comments can <i>not be used inside quotes</i>.
+
+=== Inside Quotes ===
+
+Inside a quote, you can use <b>( ... )</b> comments. These start with a
+<b>(</b> and end when <b>)</b> is encountered. Unlike <b>#!</b> comments,
+these can span multiple lines and be used inside of quotes. An example:
+
+#pre
+  [ 
+    connection     (  -a )
+    @              ( a-n )
+    pClose         ( n-  )
+  ] is end-connection
+#unpre
+
+In this example, each stack action is mapped out using a <i>stack
+comment</i>. This is helpful when learning to use Toka, as it makes it
+easier to visualize the stack at each step.
+} 1177715575
 
 
 #--------------------------------------------------
@@ -731,12 +793,7 @@ enviroment a little:
 
 Invoking <b>:names</b> will display all named elements in the currently
 running Toka. Don't panic at the number of items -- you only need to
-learn a handful of them to write code in Toka.  The list is divided into
-several groups:
-
-* Primitives, the building blocks everything else is based on
-* Quotes, everything in the <i>bootstrap.toka</i> and any code you write
-* Data, for variables, arrays, and other data structures
+learn a handful of them to write code in Toka.
 
 Now let's delve into actually using Toka a bit.
 
@@ -759,7 +816,12 @@ Now let's delve into actually using Toka a bit.
 * [Files]
 * [FFI]
 * [Scripts]
-* [Libraries]} 1177557692
+* [Libraries]
+
+=== Practical Matters ===
+* [Commenting Code]
+* [Stack Comments]
+} 1177715615
 
 
 #--------------------------------------------------
@@ -1649,6 +1711,44 @@ page SocketLibrary {#pre
     ( s-x )
     Attempt to close socket 's'.
 #unpre} 1177464305
+
+
+#--------------------------------------------------
+# Stack Comments
+
+page {Stack Comments} {Stack comments provide a way to specify the action of a quote as it
+relates to the stack. It's normally a good idea to keep a list of words
+with their description and stack comments on hand if they are not part of
+the source.
+
+A typical stack comment will resemble the following:
+
+#pre
+  ( abc-d )
+#unpre
+
+The dash shows the before/after split. In the example above, the quote
+takes three elements from the stack (a, b, and c) and leaves a new one
+(d). 
+
+Words that parse use <i>"</i> as a symbol to denote this. For example:
+
+#pre
+  ( a"-b )
+#unpre
+
+This is a stack comment for a word that takes a string (a), parses the
+input until a specified symbol is encountered, and returns a new string
+(b).
+
+The exact meaning of the symbols is up to you. Generally in a
+description, you can explain them better, but the stack comment form is
+just a general overview.
+
+<i>When you are learning Toka, it may be helpful to write out stack
+comments for each step in a quote. This can help you keep track of the
+stack and become more comfortable using it.</i>
+} 1177716268
 
 
 #--------------------------------------------------
@@ -2571,8 +2671,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre
-} 1177626947
+#unpre} 1177626947
 
 
 # End of Notebook Database File
