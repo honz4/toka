@@ -23,7 +23,7 @@ forth_class()
 If compiling, compile the xt into the current
 quote. If interpreting, call the word.
 
-self_class()
+macro_class()
 Always call the word
 
 data_class()
@@ -31,17 +31,13 @@ If compiling, compile a call to lit() and then
 inline TOS into the following location. Otherwise
 leave TOS alone.
 
-quote_super_class()
+quote_macro_class()
 Always invoke the quote.
 
 quote_class()
 Handler for quotes; this takes two cells, one
 which is a call to this function, the other is
 the pointer to the quote to invoke.
-
-quote_macro_class()
-If compiling, invoke the quote. If interpreting,
-silently ignore it.
 
 quote_forth_class()
 Perform data_class() semantics, then, if 
@@ -191,12 +187,7 @@ Attach a name (from the input stream) to the
 specified quote address. This word is given the
 semantics of quote_forth_class().
 
-name_super()
-Attach a name (from the input stream) to the 
-specified quote address. This word is given the
-semantics of quote_super_class().
-
-name_quote_macro()
+name_macro()
 Attach a name (from the input stream) to the 
 specified quote address. This word is given the
 semantics of quote_macro_class().

@@ -69,7 +69,6 @@ void build_dictionary()
   /* dictionary.c */
   add_entry("`",         &return_quote,  &forth_class);
   add_entry("is",        &name_quote,    &forth_class);
-  add_entry("is-super",  &name_super,    &forth_class);
   add_entry("is-macro",  &name_macro,    &forth_class);
   add_entry("is-data",   &name_data,     &forth_class);
   add_entry("last",      &last,          &data_class);
@@ -116,9 +115,9 @@ void build_dictionary()
   add_entry("escape-sequences",&escapes, &data_class);
 
   /* quotes.c */
-  add_entry("[",         &begin_quote,   &self_class);
-  add_entry("]",         &end_quote,     &self_class);
-  add_entry("recurse",   &recurse,       &self_class);
+  add_entry("[",         &begin_quote,   &macro_class);
+  add_entry("]",         &end_quote,     &macro_class);
+  add_entry("recurse",   &recurse,       &macro_class);
   add_entry("invoke",    &invoke,        &forth_class);
   add_entry("iterate",   &iterate,       &forth_class);
   add_entry("+iterate",  &alt_iterate,   &forth_class);

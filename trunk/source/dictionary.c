@@ -96,26 +96,10 @@ void name_quote()
 
 
 /******************************************************
- *|G| is-super ( a"- )     Attach a name to a quote
- *|G|          ( a$- )     Non-parsing form
- *
- *|F| name_super()
- *|F| Attach a name (from the input stream) to the 
- *|F| specified quote address. This word is given the
- *|F| semantics of quote_super_class().
- *|F|
- ******************************************************/
-void name_super()
-{
-  name_attach(&quote_super_class);
-}
-
-
-/******************************************************
  *|G| is-macro ( a"- )     Attach a name to a quote
  *|G|          ( a$- )     Non-parsing form
  *
- *|F| name_quote_macro()
+ *|F| name_macro()
  *|F| Attach a name (from the input stream) to the 
  *|F| specified quote address. This word is given the
  *|F| semantics of quote_macro_class().
@@ -200,9 +184,9 @@ void return_quote()
   {
     class = (Inst)TOS; DROP;
     xt = (Inst)TOS; DROP;
-    if (class == &quote_macro_class || class == quote_super_class)
+    if (class == &quote_macro_class)
       class = &quote_forth_class;
-    if (class == &self_class)
+    if (class == &macro_class)
       class = &forth_class;
   }
   else

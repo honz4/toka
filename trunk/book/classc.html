@@ -21,7 +21,7 @@ functions directly to Toka.
 If compiling, compile the xt into the current
 quote. If interpreting, call the word.
 
-self_class()
+macro_class()
 Always call the word
 
 data_class()
@@ -29,17 +29,13 @@ If compiling, compile a call to lit() and then
 inline TOS into the following location. Otherwise
 leave TOS alone.
 
-quote_super_class()
+quote_macro_class()
 Always invoke the quote.
 
 quote_class()
 Handler for quotes; this takes two cells, one
 which is a call to this function, the other is
 the pointer to the quote to invoke.
-
-quote_macro_class()
-If compiling, invoke the quote. If interpreting,
-silently ignore it.
 
 quote_forth_class()
 Perform data_class() semantics, then, if 
@@ -49,8 +45,7 @@ invoke() is called with the xt on TOS.
 
 <h2>Primitives Provided</h2>
 
-<p><i>None</i>
-</p>
+<p><i>None</i></p>
 
 <hr>
 
@@ -58,6 +53,6 @@ invoke() is called with the xt on TOS.
 
 <hr>
 
-<p><i>Notebook exported on Friday, 27 April 2007, 19:24:46 PM EDT</i></p>
+<p><i>Notebook exported on Saturday, 28 April 2007, 01:04:40 AM EDT</i></p>
 
 </body></html>
