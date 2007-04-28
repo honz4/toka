@@ -70,17 +70,15 @@ void names()
 
   primitives = 0; data = 0; quotes = 0;
 
-  printf("Primitives (self)\n");
-  primitives = display_names_by_class(&self_class);
+  printf("Primitives (macro)\n");
+  primitives = display_names_by_class(&macro_class);
   printf("\n\nPrimitives (normal)\n");
   primitives += display_names_by_class(&forth_class);
 
-  printf("\n\nQuotes (super)\n");
-  quotes = display_names_by_class(&quote_super_class);
+  printf("\n\nQuotes (macro)\n");
+  quotes = display_names_by_class(&quote_macro_class);
   printf("\n\nQuotes (normal)\n");
   quotes = display_names_by_class(&quote_forth_class);
-  printf("\n\nQuotes (macro)\n");
-  quotes += display_names_by_class(&quote_macro_class);
 
   printf("\n\nData\n");
   data = display_names_by_class(&data_class);

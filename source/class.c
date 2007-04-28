@@ -35,11 +35,11 @@ void forth_class()
 
 
 /******************************************************
- *|F| self_class()
+ *|F| macro_class()
  *|F| Always call the word
  *|F|
  ******************************************************/
-void self_class()
+void macro_class()
 {
   Inst xt = (Inst)TOS; DROP;
   ((xt)());
@@ -63,11 +63,11 @@ void data_class()
 
 
 /******************************************************
- *|F| quote_super_class()
+ *|F| quote_macro_class()
  *|F| Always invoke the quote.
  *|F|
  ******************************************************/
-void quote_super_class()
+void quote_macro_class()
 {
   invoke();
 }
@@ -84,21 +84,6 @@ void quote_class()
 {
   lit();
   invoke();
-}
-
-
-/******************************************************
- *|F| quote_macro_class()
- *|F| If compiling, invoke the quote. If interpreting,
- *|F| silently ignore it.
- *|F|
- ******************************************************/
-void quote_macro_class()
-{
-  if (compiler == ON)
-    invoke();
-  else
-    DROP;
 }
 
 

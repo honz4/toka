@@ -1,5 +1,5 @@
 [ 10 parse drop ] is #!
-[ 41 parse drop ] is-super (
+[ 41 parse drop ] is-macro (
 
 #! ---------------------------------------
 #! Constants for various ASCII values
@@ -33,7 +33,7 @@
 [ 255 and ] is >char
 [ SPACE parse @ >char
   compiler @ [ # ] true?
-] is-super char:
+] is-macro char:
 
 
 #! ---------------------------------------
@@ -43,7 +43,7 @@
   compiler @
   [ count dup malloc dup # swap copy ]
   true?
-] is-super "
+] is-macro "
 
 
 #! ---------------------------------------

@@ -122,7 +122,7 @@ forth_class()
 If compiling, compile the xt into the current
 quote. If interpreting, call the word.
 
-self_class()
+macro_class()
 Always call the word
 
 data_class()
@@ -130,17 +130,13 @@ If compiling, compile a call to lit() and then
 inline TOS into the following location. Otherwise
 leave TOS alone.
 
-quote_super_class()
+quote_macro_class()
 Always invoke the quote.
 
 quote_class()
 Handler for quotes; this takes two cells, one
 which is a call to this function, the other is
 the pointer to the quote to invoke.
-
-quote_macro_class()
-If compiling, invoke the quote. If interpreting,
-silently ignore it.
 
 quote_forth_class()
 Perform data_class() semantics, then, if 
@@ -150,8 +146,7 @@ invoke() is called with the xt on TOS.
 
 = Primitives Provided =
 
-<i>None</i>
-} 1177714839
+<i>None</i>} 1177736547
 
 
 #--------------------------------------------------
@@ -250,8 +245,7 @@ these can span multiple lines and be used inside of quotes. An example:
 
 In this example, each stack action is mapped out using a <i>stack
 comment</i>. This is helpful when learning to use Toka, as it makes it
-easier to visualize the stack at each step.
-} 1177715575
+easier to visualize the stack at each step.} 1177715575
 
 
 #--------------------------------------------------
@@ -494,11 +488,6 @@ Attach a name (from the input stream) to the
 specified quote address. This word is given the
 semantics of quote_forth_class().
 
-name_super()
-Attach a name (from the input stream) to the 
-specified quote address. This word is given the
-semantics of quote_super_class().
-
 name_quote_macro()
 Attach a name (from the input stream) to the 
 specified quote address. This word is given the
@@ -526,10 +515,10 @@ quote that corresponds to the word.
 is
 is-data
 is-macro
-is-super
 `
 last
-#unpre} 1177182595
+#unpre
+} 1177736642
 
 
 #--------------------------------------------------
@@ -820,8 +809,7 @@ Now let's delve into actually using Toka a bit.
 
 === Practical Matters ===
 * [Commenting Code]
-* [Stack Comments]
-} 1177715615
+* [Stack Comments]} 1177715615
 
 
 #--------------------------------------------------
@@ -1747,8 +1735,7 @@ just a general overview.
 
 <i>When you are learning Toka, it may be helpful to write out stack
 comments for each step in a quote. This can help you keep track of the
-stack and become more comfortable using it.</i>
-} 1177716268
+stack and become more comfortable using it.</i>} 1177716268
 
 
 #--------------------------------------------------
@@ -2398,16 +2385,8 @@ This is the most common class.
 
 == is-macro ==
 
-A special case, this is used for <i>compiler macros</i>, pieces of code
-that are only relevant during compilation.
-
-* Compiling: invoke the quote.
-* Interpreting: do nothing.
-
-== is-super ==
-
-Another special case, these are used for quotes that need to be invoked
-whenever they are encountered. Super class is used for creating strings
+A special case, these are used for quotes that need to be invoked
+whenever they are encountered. Macro class is used for creating strings
 (via <b>"</b>) and symbolic creation of characters (via <b>char:</b>).
 
 * Compiling: invoke the quote.
@@ -2419,7 +2398,7 @@ This is the second most common class. It is used for all data structures,
 including variables, arrays, and strings.
 
 * Compiling: compile the value into the quote.
-* Interpreting: leave the value on the stack.} 1177558078
+* Interpreting: leave the value on the stack.} 1177736583
 
 
 #--------------------------------------------------
@@ -2475,8 +2454,6 @@ char-size ( -n )     Return the size of a char
                      the garbage collection list
 :see     (  "- )     Decompile the specified quote
 is       ( a"- )     Attach a name to a quote
-         ( a$- )     Non-parsing form
-is-super ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form
 is-macro ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form
@@ -2671,7 +2648,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre} 1177626947
+#unpre} 1177736517
 
 
 # End of Notebook Database File
