@@ -166,6 +166,11 @@ void get_token(char *s, long delim)
         *t++ = 10;
         c = 1;
       }
+      if (c == 'r')
+      {
+        *t++ = 13;
+        c = 1;
+      }
       if (c == '"')
       {
         *t++ = (char)c;
