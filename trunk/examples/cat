@@ -8,6 +8,6 @@
 
 #args [ i arglist get-element 
         file.slurp dup 0 <> 
-        [ type ] [ drop i arglist get-element error ] t/f 
+        [ type ] [ drop i arglist get-element error ] ifTrueFalse
       ] +iterate 
 bye

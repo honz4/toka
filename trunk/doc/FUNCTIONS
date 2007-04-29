@@ -468,7 +468,7 @@ otherwise.
 recurse()
 Compiles a call to the top-level quote. As a
 trivial example:
-  [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] true? ] is fib
+  [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] ifTrue ] is fib
 
 qlit()
 Push the value in the following memory location
