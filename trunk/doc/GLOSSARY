@@ -112,7 +112,7 @@ end.      ( - )      Remove the current file from
 invoke   ( a- )      Execute a quote
 iterate  ( na- )     Execute a quote 'n' times
 +iterate ( na- )     Execute a quote 'n' times
-t/f      ( fab- )    Invoke 'a' if 'f' flag is
+ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
                      true, 'b' if false.
 recurse  ( - )       Compile a call to the top
                      quote.
