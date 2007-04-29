@@ -258,15 +258,16 @@ two quotes that extend the conditional functions.
 Basic examples:
 
 #pre
-  1 100 = [ 1 . ] true?
-  1 100 = [ 2 . ] false?
-  1 100 = [ 3 . ] [ 4 . ] t/f
+  1 100 = [ 1 . ] ifTrue
+  1 100 = [ 2 . ] ifFalse
+  1 100 = [ 3 . ] [ 4 . ] ifTrueFalse
 #unpre
 
 The first case will invoke the quote if the flag returned by <b>=</b> is
 TRUE. The second invokes the quote if the flag is FALSE, and the third
 form invokes the <b>[ 3 . ]</b> quote if TRUE, or the <b>[ 4 . ]</b>
-quote if FALSE.} 1177019564
+quote if FALSE.
+} 1177812670
 
 
 #--------------------------------------------------
@@ -517,8 +518,7 @@ is-data
 is-macro
 `
 last
-#unpre
-} 1177736642
+#unpre} 1177736642
 
 
 #--------------------------------------------------
@@ -702,8 +702,9 @@ functionality (fopen, fread, etc).
   fid @ file.size .
   fid @ file.close
 
-  " /etc/motd" file.slurp [ type cr ] true?
-#unpre} 1177371051
+  " /etc/motd" file.slurp [ type cr ] ifTrue
+#unpre
+} 1177812690
 
 
 #--------------------------------------------------
@@ -1535,7 +1536,7 @@ otherwise.
 recurse()
 Compiles a call to the top-level quote. As a
 trivial example:
-  [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] true? ] is fib
+  [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] ifTrue ] is fib
 
 qlit()
 Push the value in the following memory location
@@ -1568,7 +1569,9 @@ whileFalse
 invoke
 iterate
 +iterate
-#unpre} 1176067286
+ifTrueFalse
+#unpre
+} 1177812770
 
 
 #--------------------------------------------------
@@ -2525,7 +2528,7 @@ end.     ( - )       Remove the current file from
 invoke   ( a- )      Execute a quote
 iterate  ( na- )     Execute a quote 'n' times
 +iterate ( na- )     Execute a quote 'n' times
-t/f      ( fab- )    Invoke 'a' if 'f' flag is
+ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
                      true, 'b' if false.
 recurse  ( - )       Compile a call to the top
                      quote.
@@ -2566,8 +2569,8 @@ lnparse  ( -a )      Parse to the end of the line,
                      stack.
 FALSE    ( -f )      Value returned for FALSE
 TRUE     ( -f )      Value returned for TRUE
-true?    ( fq- )     Execute quote ('q') if flag ('f') is TRUE
-false?   ( fq- )     Execute quote ('q') if flag ('f') is FALSE
+ifTrue   ( fq- )     Execute quote ('q') if flag ('f') is TRUE
+ifFalse  ( fq- )     Execute quote ('q') if flag ('f') is FALSE
 >char    ( n-c )     Convert the value on TOS to a single character
 char:    ( "-c )     Parse ahead and return one character
 "        ( "-$ )     Parse until " is encountered and return a string
@@ -2648,7 +2651,8 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre} 1177736517
+#unpre
+} 1177812647
 
 
 # End of Notebook Database File

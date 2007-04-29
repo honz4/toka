@@ -1,6 +1,6 @@
 #! /usr/bin/toka
 
-[ = [ " Failed" type cr bye ] false? ] is try
+[ = [ " Failed" type cr bye ] ifFalse ] is try
 [ cr
   " ----------------------------------------------" type cr
   include

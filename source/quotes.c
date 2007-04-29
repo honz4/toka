@@ -187,7 +187,7 @@ void alt_iterate()
 
 
 /******************************************************
- *|G| t/f      ( fab- )    Invoke 'a' if 'f' flag is
+ *|G| ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
  *|G|                      true, 'b' if false.
  *
  *|F| truefalse()
@@ -223,7 +223,7 @@ void truefalse()
  *|F| recurse()
  *|F| Compiles a call to the top-level quote. As a
  *|F| trivial example:
- *|F|   [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] true? ] is fib
+ *|F|   [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] ifTrue ] is fib
  *|F| 
  ******************************************************/
 void recurse()

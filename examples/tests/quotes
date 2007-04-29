@@ -10,6 +10,6 @@ t:   Iteration
    count
    5 try  4 try  3 try  2 try  1 try
 t:   Recursion
-   [ dup 0 <> [ dup 1 - recurse ] [ drop ] t/f ] is count2
+   [ dup 0 <> [ dup 1 - recurse ] [ drop ] ifTrueFalse ] is count2
    5 count2
    1 try  2 try  3 try  4 try  5 try

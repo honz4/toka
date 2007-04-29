@@ -1,4 +1,4 @@
 #! /usr/bin/toka
-[ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] true? ] is fib
+[ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] ifTrue ] is fib
 35 fib . cr
 bye
