@@ -1,7 +1,7 @@
 #! /usr/bin/toka
 [ arglist get-element type cr ] is show-arg
 [ dup . char: = emit space ] is #=
-#args 0 = [ " No arguments passed!" type cr ] true?
+#args 0 = [ " No arguments passed!" type cr ] ifTrue
 #args [ i #= show-arg ] +iterate
 bye
 
