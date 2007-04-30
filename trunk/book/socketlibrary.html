@@ -3,50 +3,58 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="stack_comments.html">Stack Comments</a> | Previous Page: <a href="search.html">Search</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="stack_comments.html">Stack Comments</a> | Previous Page: <a href="shelllibrary.html">ShellLibrary</a></p>
 
 <hr>
 
 <h1>&nbsp;SocketLibrary</h1>
 
 
-<pre> Requires:
-    sockets.so
+<p>The socket library is a <i>hybrid library</i>. It provides both a C
+library module and a set of Toka bindings. The functionality is dependent
+on both.
+</p>
+<p>The provided API is as follows:
+</p>
+<pre>  pBind
+  ( n-x )
+  Bind to a specific port
 
- Provides:
-    pBind
-    ( n-x )
-    Bind to a specific port
+  pConnect
+  ( $n-s )
+  Connect to host (string '$') at port 'n'. Returns a socket.
 
-    pConnect
-    ( $n-s )
-    Connect to host (string '$') at port 'n'. Returns a socket.
+  pAccept
+  ( n-x )
+  Accept a new connection upon a socket.  Return the new client.
 
-    pAccept
-    ( n-x )
+  pRead
+  ( sbl-n )
+  Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
+  the number of bytes read.
 
-    pRead
-    ( sbl-n )
-    Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
-    the number of bytes read.
-
-    pWrite
-    ( sbl-n )
-    Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
+  pWrite
+  ( sbl-n )
+  Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
     the number of bytes written.
 
-    pClose
-    ( s-x )
-    Attempt to close socket 's'.
+  pClose
+  ( s-x )
+  Attempt to close socket 's'.
 </pre>
 
+<p>This API, while minimalistic, is sufficient to allow development of both
+client and server applications. It has been used in conjunction with the
+<a href="stringslibrary.html">StringsLibrary</a> and the <a href="shelllibrary.html">ShellLibrary</a> to implement a working HTTP
+server.
+</p>
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="stack_comments.html">Stack Comments</a> | Previous Page: <a href="search.html">Search</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="stack_comments.html">Stack Comments</a> | Previous Page: <a href="shelllibrary.html">ShellLibrary</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Sunday, 29 April 2007, 20:06:30 PM EDT</i></p>
+<p><i>Notebook exported on Sunday, 29 April 2007, 22:56:50 PM EDT</i></p>
 
 </body></html>

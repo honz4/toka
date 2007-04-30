@@ -24,8 +24,9 @@ filename; it may require a path as well as the .so extension.
 </pre>
 
 <p>Import FUNCTION from the previously specified library. A new quote named
-FUNCTION will be created, and will take N arguments off the stack. This
-function will always have a return value, even for <i>void</i> functions.
+FUNCTION will be created, and will take <i>N</i> arguments off the stack.
+This function will always have a return value, even for <i>void</i>
+functions.
 </p>
 <p>You can also make use of <b>as</b> to rename the imported function.
 </p>
@@ -42,7 +43,16 @@ function will always have a return value, even for <i>void</i> functions.
 <p>The FFI is optional, and can be disabled at build time. Doing so reduces
 the overall functionality of Toka, so doing this is only recommended if
 you are using a system without dlopen()/dlsym(), or if you need more 
-direct control over the functionality provided.</p>
+direct control over the functionality provided. To build a version of
+Toka without the FFI, do:
+</p>
+<pre>  rm source/ffi.c
+  make CFLAGS=-DNOFFI
+</pre>
+
+<p>Again, <i>this is only recommended if your system does not support
+dlopen()/dlsym()</i>.
+</p>
 
 <hr>
 
@@ -50,6 +60,6 @@ direct control over the functionality provided.</p>
 
 <hr>
 
-<p><i>Notebook exported on Sunday, 29 April 2007, 20:06:30 PM EDT</i></p>
+<p><i>Notebook exported on Sunday, 29 April 2007, 22:56:50 PM EDT</i></p>
 
 </body></html>
