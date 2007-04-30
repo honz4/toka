@@ -357,8 +357,7 @@ which can also be used at the listener or inside quotes.
 
 The use of constants is encouraged as it makes code easier to read and
 maintain. They have minimal impact on performance, and are significantly
-faster to use than variables.
-} 1177888754
+faster to use than variables.} 1177888754
 
 
 #--------------------------------------------------
@@ -617,8 +616,9 @@ filename; it may require a path as well as the .so extension.
 #unpre
 
 Import FUNCTION from the previously specified library. A new quote named
-FUNCTION will be created, and will take N arguments off the stack. This
-function will always have a return value, even for <i>void</i> functions.
+FUNCTION will be created, and will take <i>N</i> arguments off the stack.
+This function will always have a return value, even for <i>void</i>
+functions.
 
 You can also make use of <b>as</b> to rename the imported function.
 
@@ -636,7 +636,17 @@ Example:
 The FFI is optional, and can be disabled at build time. Doing so reduces
 the overall functionality of Toka, so doing this is only recommended if
 you are using a system without dlopen()/dlsym(), or if you need more 
-direct control over the functionality provided.} 1176258153
+direct control over the functionality provided. To build a version of
+Toka without the FFI, do:
+
+#pre
+  rm source/ffi.c
+  make CFLAGS=-DNOFFI
+#unpre
+
+Again, <i>this is only recommended if your system does not support
+dlopen()/dlsym()</i>.
+} 1177901033
 
 
 #--------------------------------------------------
@@ -811,7 +821,7 @@ Now let's delve into actually using Toka a bit.
 * [The Stack|UsingTheStack]
 * [Basic Math|MathOperations]
 
-=== Intermediate Exploration ===
+=== Writing Functions ===
 * [Quotes]
 * [WordClasses]
 * [Loops]
@@ -832,7 +842,7 @@ Now let's delve into actually using Toka a bit.
 === Practical Matters ===
 * [Commenting Code]
 * [Stack Comments]
-} 1177888442
+} 1177900864
 
 
 #--------------------------------------------------
@@ -960,7 +970,6 @@ topics can be found in [First Steps].</i>
 * [First Steps]
 * [Words and Their Uses]
 * [Ports]
-* [Missing Pieces] of documentation
 
 = Internals =
 
@@ -995,7 +1004,7 @@ topics can be found in [First Steps].</i>
 * [stack.c]
 * [toka.c]
 * [vm.c]
-} 1177891572
+} 1177901796
 
 
 #--------------------------------------------------
@@ -1114,14 +1123,24 @@ Libraries can be loaded with <b>needs</b>. For example, to load the
 
 A master library, <i>everything</i>, is provided to import all current
 libraries. This makes it easy to access all provided functionality in any
-project.
+project. To make use of this, use this at the start of a program:
+
+#pre
+  needs everything
+#unpre
 
 === Library Documentation ===
+
+Each library module contains some documentation at the start of its code.
+A few of the more significant library modules are documented here for
+your use.
 
 * [StringsLibrary] 
 * [TimeLibrary]
 * [MathLibrary] 
-* [SocketLibrary]} 1177537412
+* [SocketLibrary]
+* [ShellLibrary]
+} 1177901771
 
 
 #--------------------------------------------------
@@ -1247,8 +1266,11 @@ Divide and return the result, including remainder
 #--------------------------------------------------
 # MathLibrary
 
-page MathLibrary {#pre
- Provides:
+page MathLibrary {This library extends the core math functionality of Toka in minor ways. 
+
+The provided API follows:
+
+#pre
      abs
      ( n-n )
      Returns the absolute value of 'n'
@@ -1271,7 +1293,8 @@ page MathLibrary {#pre
 
      sqrt-closer
      Used internally by sqrt
-#unpre} 1177464193
+#unpre
+} 1177901677
 
 
 #--------------------------------------------------
@@ -1298,19 +1321,6 @@ In addition, the standard bootstrap adds some additional operations:
   not      ( x-y )     Invert the value 'x'
   */       ( abc-d )   (a*b)/c
 #unpre} 1177020107
-
-
-#--------------------------------------------------
-# Missing Pieces
-
-page {Missing Pieces} {The following areas need addressed:
-
-* Examples
-** FFI
-** For libraries
-** Working with files
-
-#---} 1177553636
 
 
 #--------------------------------------------------
@@ -1693,38 +1703,67 @@ page Search {[@searchIndex@]} 1175217539
 
 
 #--------------------------------------------------
+# ShellLibrary
+
+page ShellLibrary {This library provides the fundamental support for calling external files
+and doing actions normally done at the shell.
+
+The provided API follows:
+
+#pre
+  remove
+  ( $-n )
+  Delete file '$'
+
+  system
+  ( $-n )
+  Run string '$' as a shell command
+#unpre
+} 1177901415
+
+
+#--------------------------------------------------
 # SocketLibrary
 
-page SocketLibrary {#pre
- Requires:
-    sockets.so
+page SocketLibrary {The socket library is a <i>hybrid library</i>. It provides both a C
+library module and a set of Toka bindings. The functionality is dependent
+on both.
 
- Provides:
-    pBind
-    ( n-x )
-    Bind to a specific port
+The provided API is as follows:
 
-    pConnect
-    ( $n-s )
-    Connect to host (string '$') at port 'n'. Returns a socket.
+#pre
+  pBind
+  ( n-x )
+  Bind to a specific port
 
-    pAccept
-    ( n-x )
+  pConnect
+  ( $n-s )
+  Connect to host (string '$') at port 'n'. Returns a socket.
 
-    pRead
-    ( sbl-n )
-    Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
-    the number of bytes read.
+  pAccept
+  ( n-x )
+  Accept a new connection upon a socket.  Return the new client.
 
-    pWrite
-    ( sbl-n )
-    Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
+  pRead
+  ( sbl-n )
+  Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
+  the number of bytes read.
+
+  pWrite
+  ( sbl-n )
+  Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
     the number of bytes written.
 
-    pClose
-    ( s-x )
-    Attempt to close socket 's'.
-#unpre} 1177464305
+  pClose
+  ( s-x )
+  Attempt to close socket 's'.
+#unpre
+
+This API, while minimalistic, is sufficient to allow development of both
+client and server applications. It has been used in conjunction with the
+[StringsLibrary] and the [ShellLibrary] to implement a working HTTP
+server.
+} 1177901287
 
 
 #--------------------------------------------------
@@ -1856,7 +1895,11 @@ in a string:
 #--------------------------------------------------
 # StringsLibrary
 
-page StringsLibrary {#pre
+page StringsLibrary {Toka provides a [loose abstraction|types] for strings. The strings
+library is an attempt to significantly expand on that abstraction and
+allow for many common actions to be done quickly and easily.
+
+#pre
  Provides (from libc):
    strcpy   strncpy   strcat   strncat   strcmp   strncmp
    strchr   strstr    strlen   strrchr   strtok
@@ -1912,7 +1955,8 @@ page StringsLibrary {#pre
             ( a-b )
             Append a carriage return (ascii 10) to a string. Returns
             a new string.
-#unpre} 1177464135
+#unpre
+} 1177901521
 
 
 #--------------------------------------------------
@@ -1949,8 +1993,10 @@ encountered. At that point, the [vm_run()|vm.c] function exits.} 1176257425
 #--------------------------------------------------
 # TimeLibrary
 
-page TimeLibrary {#pre
- Provides:
+page TimeLibrary {This library allows obtaining the system time, timing functions, and
+similar activities.
+
+#pre
    Data:
      time_t
      
@@ -1960,7 +2006,25 @@ page TimeLibrary {#pre
      ctime
      .time
      :time
-#unpre} 1177464226
+#unpre
+
+#---
+
+=== Examples ===
+
+#pre
+  needs time
+  time_t today
+  today time drop
+  today ctime type
+#unpre
+
+#pre
+  needs time
+  [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] [ ] ifTrueFalse ] is fib
+  [ 35 fib . cr ] :time
+#unpre
+} 1177901642
 
 
 #--------------------------------------------------

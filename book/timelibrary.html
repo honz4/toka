@@ -10,8 +10,10 @@
 <h1>&nbsp;TimeLibrary</h1>
 
 
-<pre> Provides:
-   Data:
+<p>This library allows obtaining the system time, timing functions, and
+similar activities.
+</p>
+<pre>   Data:
      time_t
      
    Words:
@@ -22,6 +24,21 @@
      :time
 </pre>
 
+<hr>
+
+<h4>Examples</h4>
+
+<pre>  needs time
+  time_t today
+  today time drop
+  today ctime type
+</pre>
+
+<pre>  needs time
+  [ dup 1 &gt; [ dup 1 - recurse swap 2 - recurse + ] [ ] ifTrueFalse ] is fib
+  [ 35 fib . cr ] :time
+</pre>
+
 
 <hr>
 
@@ -29,6 +46,6 @@
 
 <hr>
 
-<p><i>Notebook exported on Sunday, 29 April 2007, 20:06:30 PM EDT</i></p>
+<p><i>Notebook exported on Sunday, 29 April 2007, 22:56:50 PM EDT</i></p>
 
 </body></html>
