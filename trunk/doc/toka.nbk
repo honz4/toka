@@ -645,8 +645,7 @@ Toka without the FFI, do:
 #unpre
 
 Again, <i>this is only recommended if your system does not support
-dlopen()/dlsym()</i>.
-} 1177901033
+dlopen()/dlsym()</i>.} 1177901033
 
 
 #--------------------------------------------------
@@ -841,8 +840,52 @@ Now let's delve into actually using Toka a bit.
 
 === Practical Matters ===
 * [Commenting Code]
-* [Stack Comments]
-} 1177900864
+* [Stack Comments]} 1177900864
+
+
+#--------------------------------------------------
+# FloatsLibrary
+
+page FloatsLibrary {This library adds support for floating point numbers and math. As with
+many Forth implementations, it provides a separate stack for floating
+point numbers, and alternative versions of the main stack and math words.
+ 
+#pre
+  float:    ( "-n )     Parse ahead for a new floating point
+                        number
+  fvariable ( "- )      Create a new floating-point variable
+  f@        ( a-n )     Fetch the value in memory location 'a'
+  f!        ( na- )     Store 'n' to memory location 'a'
+  fdup      ( n-nn )    Duplicate the TOS
+  fdrop     ( n- )      Drop the TOS
+  fswap     ( ab-ba )   Exchange the TOS and NOS
+  fdepth    ( -n )      Return the number of items on the stack
+  fnip      ( xy-y )    Remove the second item on the stack
+  frot      ( abc-bca ) Rotate top three values on stack
+  f-rot     ( abc-acb ) Rotate top three values on stack twice
+  fover     ( xy-xyx )  Put a copy of NOS above the TOS
+  ftuck     ( xy-yxy )  Put a copy of TOS under NOS     
+  f2dup     ( xy-xyxy ) Duplicate the top two items on the stack
+  f2drop    ( xy- )     Drop TOS and NOS
+  freset    ( *- )      Drop all items on the stack
+  f+        ( ab-c )    Add TOS and NOS
+  f-        ( ab-c )    Subtract TOS from NOS
+  f*        ( ab-c )    Multiply TOS by NOS
+  f/        ( ab-c )    Divide and get remainder
+  :fstack   ( - )       Display all items on the float stack
+  f.        ( n- )      Display the top item on the float stack
+#unpre
+
+=== Example ===
+
+#pre
+  needs floats
+  float: 100
+  float: 200.12
+  f+
+  f.
+#unpre
+} 1178151284
 
 
 #--------------------------------------------------
@@ -976,6 +1019,7 @@ topics can be found in [First Steps].</i>
 === Topics ===
 
 * How the [garbage collector] works
+* How the [parser] works
 * Notes on the [threading model]
 * Using [TokaDoc] to comment C code
 * [ErrorCodes] that can arise
@@ -1003,8 +1047,7 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1177901796
+* [vm.c]} 1177977999
 
 
 #--------------------------------------------------
@@ -1140,7 +1183,8 @@ your use.
 * [MathLibrary] 
 * [SocketLibrary]
 * [ShellLibrary]
-} 1177901771
+* [FloatsLibrary]
+} 1178150659
 
 
 #--------------------------------------------------
@@ -1293,8 +1337,7 @@ The provided API follows:
 
      sqrt-closer
      Used internally by sqrt
-#unpre
-} 1177901677
+#unpre} 1177901677
 
 
 #--------------------------------------------------
@@ -1345,11 +1388,73 @@ page {New Pages} {To create a new page,
 
 
 #--------------------------------------------------
+# parser
+
+page parser {Toka's parser is fairly simple. It only handles input coming from a
+<i>file stream</i> (which includes <i>stdin</i>). Input sources are
+implemented as a stack.
+
+At the bottom is the <i>stdin</i> file. Generally on startup, the
+<i>bootstrap.toka</i>. A script would be at the third position, and any
+files that includes get added above it.
+
+The parser will read from the top file until either <b>end.</b> or an EOF
+(end of file) is detected. At this point, it closes the file and drops to
+the next one on the stack.
+
+Internally, the fundamental function for parsing is <b>get_token()</b>.
+This accepts two arguments, a pointer to a buffer to place the resulting
+string, and a delimiter character. Parsing ends when the delimiter
+character is encountered. <b>get_token()</b> also leaves a pointer to the
+resulting token on the stack. A Toka-level wrapper, <b>parse()</b>, makes
+use of <b>get_token()</b>.
+
+When parsing, a number of <i>escape sequences</i> are recognized. These
+are listed below:
+
+#pre
+  \n
+  Embed a carriage return (ASCII 10) into the token
+ 
+  \r
+  Embed a line feed (ASCII 13) into the token
+
+  \^
+  Embed ASCII 27 into the token. Useful with VT100/ANSI terminal
+  escape sequences
+
+  \\
+  Embed a \ character into the token
+
+  \"
+  Embed a quote into the token
+#unpre
+
+Processing of escape sequences can be enabled or disabled by turning the
+<b>escape-sequences</b> variable <b>on</b> or <b>off</b>. For example:
+
+#pre
+  escape-sequences off
+  " \\ hello \\" type cr
+  escape-sequences on
+  " \\ hello \\" type cr
+#unpre
+
+
+=== Tips ===
+* Tokens have a maximum size of 4096 characters
+* If the delimiter = 10, <b>get_token()</b> will also break on
+  encountering ASCII 13.
+* If the delimiter = 32, <b>get_token()</b> will also break on
+  encountering ASCII 10 or ASCII 13.} 1177990380
+
+
+#--------------------------------------------------
 # parser.c
 
 page parser.c {= Use =
 
-Implement the parser.
+Implement the [parser].
 
 = Functions Provided =
 
@@ -1415,7 +1520,7 @@ parse
 include
 needs
 end.
-#unpre} 1175294722
+#unpre} 1178016664
 
 
 #--------------------------------------------------
@@ -1475,18 +1580,18 @@ GCC versions 2.95, 3.0, and 4.1
 ** http://bebits.com/app/2917
 * You <i>may</i> need a newer GCC
 ** http://bebits.com/app/4011
-* <i>make beos</i>
+* <i>make CFLAGS=-I/beos/develop/headers</i>
 
 #---
 = Cygwin =
 * x86
 * Tested under Windows XP and Vista
 * FFI may be buggy
-* <i>make cygwin</i>
 
 #---
 = OpenSolaris =
-* x86} 1176697155
+* x86
+* Tested under Nexenta} 1178018092
 
 
 #--------------------------------------------------
@@ -1718,8 +1823,7 @@ The provided API follows:
   system
   ( $-n )
   Run string '$' as a shell command
-#unpre
-} 1177901415
+#unpre} 1177901415
 
 
 #--------------------------------------------------
@@ -1762,8 +1866,7 @@ The provided API is as follows:
 This API, while minimalistic, is sufficient to allow development of both
 client and server applications. It has been used in conjunction with the
 [StringsLibrary] and the [ShellLibrary] to implement a working HTTP
-server.
-} 1177901287
+server.} 1177901287
 
 
 #--------------------------------------------------
@@ -1955,8 +2058,7 @@ allow for many common actions to be done quickly and easily.
             ( a-b )
             Append a carriage return (ascii 10) to a string. Returns
             a new string.
-#unpre
-} 1177901521
+#unpre} 1177901521
 
 
 #--------------------------------------------------
@@ -2023,8 +2125,7 @@ similar activities.
   needs time
   [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] [ ] ifTrueFalse ] is fib
   [ 35 fib . cr ] :time
-#unpre
-} 1177901642
+#unpre} 1177901642
 
 
 #--------------------------------------------------

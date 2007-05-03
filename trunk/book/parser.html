@@ -1,0 +1,80 @@
+<html><head><title>toka.nbk: parser</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="parserc.html">parser.c</a> | Previous Page: <a href="new_pages.html">New Pages</a></p>
+
+<hr>
+
+<h1>&nbsp;parser</h1>
+
+
+<p>Toka's parser is fairly simple. It only handles input coming from a
+<i>file stream</i> (which includes <i>stdin</i>). Input sources are
+implemented as a stack.
+</p>
+<p>At the bottom is the <i>stdin</i> file. Generally on startup, the
+<i>bootstrap.toka</i>. A script would be at the third position, and any
+files that includes get added above it.
+</p>
+<p>The parser will read from the top file until either <b>end.</b> or an EOF
+(end of file) is detected. At this point, it closes the file and drops to
+the next one on the stack.
+</p>
+<p>Internally, the fundamental function for parsing is <b>get_token()</b>.
+This accepts two arguments, a pointer to a buffer to place the resulting
+string, and a delimiter character. Parsing ends when the delimiter
+character is encountered. <b>get_token()</b> also leaves a pointer to the
+resulting token on the stack. A Toka-level wrapper, <b>parse()</b>, makes
+use of <b>get_token()</b>.
+</p>
+<p>When parsing, a number of <i>escape sequences</i> are recognized. These
+are listed below:
+</p>
+<pre>  \n
+  Embed a carriage return (ASCII 10) into the token
+ 
+  \r
+  Embed a line feed (ASCII 13) into the token
+
+  \^
+  Embed ASCII 27 into the token. Useful with VT100/ANSI terminal
+  escape sequences
+
+  \\
+  Embed a \ character into the token
+
+  \"
+  Embed a quote into the token
+</pre>
+
+<p>Processing of escape sequences can be enabled or disabled by turning the
+<b>escape-sequences</b> variable <b>on</b> or <b>off</b>. For example:
+</p>
+<pre>  escape-sequences off
+  " \\ hello \\" type cr
+  escape-sequences on
+  " \\ hello \\" type cr
+</pre>
+
+<h4>Tips</h4>
+
+<ul>
+<li> Tokens have a maximum size of 4096 characters
+<li> If the delimiter = 10, <b>get_token()</b> will also break on
+  encountering ASCII 13.
+<li> If the delimiter = 32, <b>get_token()</b> will also break on
+  encountering ASCII 10 or ASCII 13.</ul>
+
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="parserc.html">parser.c</a> | Previous Page: <a href="new_pages.html">New Pages</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Wednesday,  2 May 2007, 20:15:03 PM EDT</i></p>
+
+</body></html>
