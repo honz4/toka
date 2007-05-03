@@ -1,0 +1,60 @@
+<html><head><title>toka.nbk: FloatsLibrary</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="garbage_collector.html">garbage collector</a> | Previous Page: <a href="first_steps.html">First Steps</a></p>
+
+<hr>
+
+<h1>&nbsp;FloatsLibrary</h1>
+
+
+<p>This library adds support for floating point numbers and math. As with
+many Forth implementations, it provides a separate stack for floating
+point numbers, and alternative versions of the main stack and math words.
+</p>
+<pre>  float:    ( "-n )     Parse ahead for a new floating point
+                        number
+  fvariable ( "- )      Create a new floating-point variable
+  f@        ( a-n )     Fetch the value in memory location 'a'
+  f!        ( na- )     Store 'n' to memory location 'a'
+  fdup      ( n-nn )    Duplicate the TOS
+  fdrop     ( n- )      Drop the TOS
+  fswap     ( ab-ba )   Exchange the TOS and NOS
+  fdepth    ( -n )      Return the number of items on the stack
+  fnip      ( xy-y )    Remove the second item on the stack
+  frot      ( abc-bca ) Rotate top three values on stack
+  f-rot     ( abc-acb ) Rotate top three values on stack twice
+  fover     ( xy-xyx )  Put a copy of NOS above the TOS
+  ftuck     ( xy-yxy )  Put a copy of TOS under NOS     
+  f2dup     ( xy-xyxy ) Duplicate the top two items on the stack
+  f2drop    ( xy- )     Drop TOS and NOS
+  freset    ( *- )      Drop all items on the stack
+  f+        ( ab-c )    Add TOS and NOS
+  f-        ( ab-c )    Subtract TOS from NOS
+  f*        ( ab-c )    Multiply TOS by NOS
+  f/        ( ab-c )    Divide and get remainder
+  :fstack   ( - )       Display all items on the float stack
+  f.        ( n- )      Display the top item on the float stack
+</pre>
+
+<h4>Example</h4>
+
+<pre>  needs floats
+  float: 100
+  float: 200.12
+  f+
+  f.
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="garbage_collector.html">garbage collector</a> | Previous Page: <a href="first_steps.html">First Steps</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Wednesday,  2 May 2007, 20:15:03 PM EDT</i></p>
+
+</body></html>
