@@ -66,7 +66,7 @@ char *tib;
 void count()
 {
   char *s = (char *)TOS;
-  long length = strlen(s) + 1;
+  long length = strlen(s) + sizeof(char);
   push(length);
 }
 
