@@ -44,24 +44,24 @@ extern long stack[], sp;
  *|F| dictionary and calls interpret().
  *|F|
  ******************************************************/
-int main(int argv, char *argc[])
+int main(int argc, char *argv[])
 {
-  char *homedir = (char *)getenv ("HOME");
+  char *homedir = getenv("HOME");
   char *personal = "/.toka";
   char *custom;
 
   build_dictionary();
-  build_arg_list(argc, (long)argv);
+  build_arg_list(argv, (long)argc);
 
   isp = 0;
   input[isp] = stdin;
 
-  if (argv >= 2)
-    include_file(argc[1]);
+  if (argc >= 2)
+    include_file(argv[1]);
 
   if (homedir)
   {
-    custom = gc_alloc(strlen(homedir) + strlen(personal) + 1, sizeof(char), GC_TEMP);
+    custom = gc_alloc(strlen(homedir) + strlen(personal) + sizeof(char), sizeof(char), GC_TEMP);
     strcpy(custom, homedir);
     strcat(custom, personal);
     include_file(custom);
@@ -70,7 +70,7 @@ int main(int argv, char *argc[])
   if (include_file("bootstrap.toka") == FALSE)
     include_file(BOOTSTRAP);
 
-  if (argv == 1)
+  if (argc == 1)
     printf("toka (svn build)\n");
 
   interpret();
