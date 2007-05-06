@@ -884,8 +884,7 @@ point numbers, and alternative versions of the main stack and math words.
   float: 200.12
   f+
   f.
-#unpre
-} 1178151284
+#unpre} 1178151284
 
 
 #--------------------------------------------------
@@ -1183,8 +1182,7 @@ your use.
 * [MathLibrary] 
 * [SocketLibrary]
 * [ShellLibrary]
-* [FloatsLibrary]
-} 1178150659
+* [FloatsLibrary]} 1178150659
 
 
 #--------------------------------------------------
@@ -1219,10 +1217,11 @@ page Limitations {* Cell size is machine dependent, generally 32 bits (4 bytes) 
   (8 bytes) in size. <b>cell-size</b> returns the actual size in bytes.
 * Character size is machine and OS dependent.  Normally 8 bits (1 byte).
   <b>char-size</b> returns the actual size in bytes.
-* Quotes can be up to 32 elements (values, primitives, embedded quotes,
+* Quotes can be up to 64 elements (values, primitives, embedded quotes,
   calls to other quotes, string pointers, etc) in length.
 * The data stack can hold up to 100 cells.
-* The return stack can hold up to 1024 cells.} 1177554362
+* The return stack can hold up to 1024 cells.
+} 1178430367
 
 
 #--------------------------------------------------
