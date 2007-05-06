@@ -151,7 +151,7 @@ void get_token(char *s, long delim)
 
   while (1)
   {
-    if ((c = getc(input[isp])) == EOF)
+    if ((c = getc(input[isp])) == EOF && input[isp] != stdin)
     {
       fclose(input[isp]);
       isp--;
