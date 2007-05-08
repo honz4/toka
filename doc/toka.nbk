@@ -1013,6 +1013,17 @@ topics can be found in [First Steps].</i>
 * [Words and Their Uses]
 * [Ports]
 
+= Tutorial =
+* [Lesson 0] - Motivation and Basic Syntax 
+* [Lesson 1] - Stack and Numbers 
+* [Lesson 2] - Stack diagrams and Comments 
+* [Lesson 3] - Arithmetic Operators and Calculations 
+* [Lesson 4] - Making New Definitions 
+* [Lesson 5] - Introspection 
+* [Lesson 6] - Variables and Data Storage 
+* [Lesson 7] - Control Structures 
+* [Lesson 8] - Strings 
+
 = Internals =
 
 === Topics ===
@@ -1046,7 +1057,8 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1177977999
+* [vm.c]
+} 1178666070
 
 
 #--------------------------------------------------
@@ -1143,6 +1155,413 @@ Accept and process input.
 compiler
 count
 #unpre} 1177177233
+
+
+#--------------------------------------------------
+# Lesson 0
+
+page {Lesson 0} {= Why Bother? =
+
+Toka is weird compared to most popular computer languages. Until you
+learn how, it is hard to read because it is not based on the syntax of
+algebraic expressions.
+
+But it is worth learning because a running Toka system gives you an
+extraordinary degree of low-level control over the system. Unlike most
+other programming environments that put up walls to hide or block access
+to "unauthorized" things, Toka makes it easy to get at anything, at any
+level from low to high.
+
+= Toka Syntax =
+
+Here is syntactically-valid line of Toka code: 
+
+#pre
+ this is a test 123 456
+#unpre
+
+Don't try to guess what it does; in fact it doesn't necessarily actually
+work, because some of the symbols might not be defined. But it is
+syntactically valid. It consists of 6 words, "this" "is" "a" "test" "123"
+"456". Words are separated by white space - spaces, tabs, and newlines.
+In most cases, spaces and newlines are the same.
+
+Another syntactically valid line: 
+
+#pre
+ asdf  foo  jello  @W#$%^,T/%$  1a2qw2   gibbet
+#unpre
+
+That's 6 words. One of them is pretty strange, consisting mostly of
+punctuation, but it is a word nevertheless. Any string of printing
+characters is a word. Toka limits word names to 255 characters.
+ 
+= Left to Right Execution =
+
+The Toka interpreter is very simple. It parses the next word (i.e. it
+skips whitespace, then collects characters until it sees another
+whitespace character) and executes it.
+
+That is it in a nutshell. So if you are trying to understand a Toka
+program in detail, you have to look at each word in turn and work out
+what it does. That sounds simple, but it will trip you up if you insist
+on looking for algebra. Just go left to right, one word at a time.
+
+With practice, you will learn enough of the Toka vocabulary (the meanings
+of standard words) so that you can see what is going on at a glance,
+without having to puzzle out each individual word. It is just like
+learning to read - it is tedious until you get the basic vocabulary down,
+then it is easy. 
+
+<i>Thus endeth the lesson.</i>
+} 1178666311
+
+
+#--------------------------------------------------
+# Lesson 1
+
+page {Lesson 1} {= Review =
+
+In the previous lesson we learned that: 
+* The top-level parser only looks for whitespace, so Forth words must be
+  separated by one or more spaces
+* Execution proceeds from left to right. Get a word, execute it. 
+
+Today we will start trying some commands. 
+
+= The Stack =
+
+Toka has an explicitly visible stack that is used to pass numbers between
+words (commands). Using Toka effectively requires you to think in terms
+of the stack. That can be hard at first, but as with anything, it becomes
+much easier with practice.
+
+Toka also has a secondary stack - the "return stack" - that is used for
+return addresses and a few other things. Toka automatically manages the
+return stack so you don't have to think about it for the most part (but
+you can get at it if you need to; Toka doesn't block you from doing
+anything). 
+
+== Displaying the Stack ==
+
+#pre
+  :stack
+#unpre
+
+Doing this will cause Toka to show you what is on the stack. If the stack
+contained the numbers 5678 and 112233, you would see:
+
+#pre
+ <2> 5678 112233
+#unpre
+
+The number to the right is the top of the stack and the number in
+brackets on the left is the number of items on the stack. 
+
+== Putting Numbers on the Stack ==
+
+If you type a number, it gets pushed onto the stack: 
+#pre
+ 12345 998877
+ :stack
+ <2> 12345 998877
+#unpre
+
+What we see here is that the two numbers did get pushed onto the stack,
+and since <b>:stack</b> was called, the stack contents were displayed.
+
+= First Words =
+
+#pre
+ 12345 998877 + :stack
+ <1> 1011222
+#unpre
+
+The <b>+</b> word pops two numbers from the stack, adds them, and pushes
+the sum back on the stack. Note that: 
+
+* + doesn't display the result, it just pushes the result back on the stack. In this case, however, we are assuming that "showstack" mode is on, so the interpreter displayed the stack for us automatically before the next prompt. 
+* The numbers are in decimal. Toka can operate in bases 2, 8, 10, and 16,
+  however it can not display binary numbers at present. The default base
+  is decimal. You can change the base at any time by typing <b>hex</b> or
+  <b>decimal</b>. All of the examples in this tutorial series will use
+  decimal as the default base.
+* The current number base applies to both number input and number output. 
+
+= Displaying Numbers =
+
+#pre
+ 12345
+#unpre
+
+Now the number is on the stack. It can be displayed:
+
+#pre
+ :stack
+ <1> 12345
+ :stack
+ <1> 12345
+#unpre
+
+<b>:stack displays the entire stack, non-destructively. 
+
+#pre
+ 12345
+ .
+ 12345
+ :stack
+ <0>
+#unpre
+
+<b>.</b> pops the top of the stack and displays that number. Afterwards,
+the number is no longer there.
+
+
+= How the Interpreter Works =
+
+The Toka interpreter is very simple. It just does this over and over: 
+
+* Read a line of input 
+* While there is more data in the line: 
+* Parse a whitespace-delimited word 
+* Lookup the word in a list of defined words. If found, execute the code
+  for that word. 
+* Otherwise, try to interpret the word as a number in the current number
+  base. If so, push it on the stack. 
+* Otherwise display an error message 
+
+<i>Thus endeth the lesson.</i>
+} 1178666959
+
+
+#--------------------------------------------------
+# Lesson 2
+
+page {Lesson 2} {= Review =
+
+In the previous lesson we learned to: 
+
+* Display the stack with <b>:stack</b> 
+* Push numbers on the stack by typing them 
+* Control the number base with <b>hex</b> and <b>decimal</b> 
+* Execute words by typing their names 
+
+= Stack Diagrams =
+
+Pay attention to this section because it introduces notation that will be
+used over and over.
+
+Since Toka words use the stack for arguments and results, their
+description must tell you the arguments that they pop from the stack and
+the results that they push back on the stack. That is done with a <i>stack
+diagram</i>.
+
+#pre
+ +  ( n1 n2 -- n3 )
+#unpre
+
+That indicates that the Toka word <b>+</b>, which we saw in the last lesson,
+pops two numbers n1 and n2 from the stack and pushes back one number n3.
+The list of items before the "--" is the arguments, the list after is the
+results. In each list, the items at the right is the top of the stack.
+
+In general, Toka words can take any number of arguments and leave any
+number of results.
+
+This is purely a notation convention. The Toka interpreter does not
+process stack diagrams other than to skip them. The way it knows to skip
+them is because the Toka word <b>(</b> introduces a comment, which is
+terminated by the next <b>)</b>. 
+
+Another example:
+
+#pre 
+ :stack  ( -- )
+#unpre
+
+That means that <b>:stack</b> has no net stack effect. It doesn't pop
+anything off the stack (no arguments) and it doesn't leave any extra
+items on the stack after it finishes. It might push and pop numbers while
+it is executing, but when it is done, the stack is the same as it was
+before.
+
+#pre 
+ .  ( n -- )
+#unpre
+
+The word <b>.</b> (which displays a number), pops its one argument from the
+stack and leaves nothing in its place.
+
+The names in the argument and result lists (e.g. "n1", "n2", "n3") are
+arbitrary, but as an aid to understanding, they are often chosen to
+convey extra information. For example: 
+
+#pre
+ type  ( adr -- )
+#unpre
+
+We haven't seen the word <b>type</b> yet, but clearly it takes one
+argument, an address. It pops the argument from the stack, leaving
+nothing in its place. 
+
+Conventionally, stack item names beginning with "n" refer to signed
+integers, "u" to unsigned integers, "d" to double numbers (two stack
+numbers interpreted as a 64-bit integer), "adr" to addresses, "flag" to
+values that are either true (0xfffffff) or false (0). But that is not a
+hard and fast rule.
+
+Toka also has a shorter form of stack comments that is often used. See
+[Stack Comments] for further details on the short form.
+
+= How Comments Work =
+
+The following is in some sense an implementation detail, but it's good to
+understand it, because it is key to Toka's approach to syntax, which is
+vastly different to most other languages.
+
+In the section above I mentioned that the word <b>(</b> skips to the next
+<b>)</b>. That might seem like an exception to the rule that the
+interpreter only parses whitespace-delimited words, but it is not.
+
+What actually happens is that the main interpreter loop only sees the
+<b>(</b>. The <b>(</b> must be followed by whitespace, otherwise the
+interpreter will not parse just </b>(</b> but rather some longer string
+beginning with </b>(</b>. The interpreter then looks in the list of
+defined words for one named <b>(</b>, and executes it.
+
+The behavior of the <b>(</b> word is to call the parser, asking it to collect a sequence of characters delimited by <b>)</b>, and then to discard the result. So
+Any word can call the input parser, not just the main interpreter.
+
+The parser itself can use any character as a delimiter, not just
+whitespace. The main interpreter only asks the parser for
+whitespace-delimited words, but other words can and do parse using other
+delimiters.
+
+This same approach (main interpreter calls a word that then parses using
+a different delimiter) is also used for string literals where the
+delimiter is <b>"</b>. 
+
+You can, if you wish, call the parser yourself from user code, to collect
+any kind of string you want. It's best to use this capability sparingly
+to avoid confusion, but it illustrates the fact that the entire Toka
+system is available to you; nothing is magic or hidden.
+
+= Comment to End of Line =
+
+The <b>( .... )</b> comment form stops at the <b>)</b>; stuff after it will be interpreted as usual. To comment out everything else on the line, use <b>#!</b>. 
+
+#pre
+ #! everything after the first #! will be ignored
+#unpre
+
+Note that the <b>#!</b> must be followed by whitespace, because <b>#!</b>
+is just a word like anything else. The way that <b>#!</b> works is to
+call the parser with a delimiter value (10) that matches a line ending
+character, discarding the result. The parser will stop at the end of the
+line, having found the delimiter. 
+
+<i>Thus endeth the lesson</i>
+} 1178668132
+
+
+#--------------------------------------------------
+# Lesson 3
+
+page {Lesson 3} {= Review =
+
+In the previous lesson we learned that: 
+* Toka words are described by stack diagrams like: ( argn .. arg0 --
+  resultm .. result0 ) 
+* Comments are either <b>( this is a comment )</b> or <b>#! the rest of the line is a comment</b>
+* Both <b>(</b> and <b>#!</b> must be followed by whitespace 
+* Comments work by executing a word that then explicitly calls the input parser 
+
+= Arithmetic and Logical Operators =
+
+We have already seen <b>+</b>, which pops two numbers, adds them, and
+pushes the result. Here are some more numeric operators with their stack
+diagrams:
+
+#pre
+ +       ( n1 n2 -- n1+n2 )
+ -       ( n1 n2 -- n1-n2 )
+ *       ( n1 n2 -- n1*n2 )   \ Signed multiplication
+ /       ( n1 n2 -- n1/n2 )   \ Signed division
+ mod     ( n1 n2 -- n1%n2 )
+ /mod    ( n1 n2 -- n1%n2 n1/n2 )
+ and     ( n1 n2 -- n1&n2 )
+ or      ( n1 n2 -- n1|n2 )
+ xor     ( n1 n2 -- n1^n2 )
+ <<      ( n1 n2 -- n1<<n2 )  \ Shift bits left
+ >>      ( n1 n2 -- n1>>n2 )  \ Shift bits right
+ not     ( n -- ~n )          \ Bitwise logical inversion
+ negate  ( n -- -n )          \ Arithmetic negation, i.e. 0-n
+ 1-      ( n -- n-1 )         \ Decrement by 1
+ 1+      ( n -- n+1 )         \ Increment by 1  
+#unpre
+
+All of the above operators work on integers of the natural size for the
+machine (32 bits on 32-bit processors). 
+
+= Using Toka as a Calculator =
+
+Armed with those operators, plus the <b>.</b> (pop and display) word that
+we have already seen, we can use Toka as an integer calculator. But since
+everything is stack based, we have to use Reverse Polish instead of
+algebraic syntax. Instead of writing down an algebraic expression with
+parentheses to control the grouping, we have to think about what to do
+first, and then do it.
+
+So, suppose that we want to calculate ( 5 + ( 4 * 7 ) ). The
+multiplication has to be done first, before we can add the 5. We could
+perform that calculation in Toka with:
+
+#pre
+ 4 7 * 5 + .
+#unpre
+
+Breaking this down into the individual steps, 
+
+* push 4 on the stack 
+* push 7 on the stack 
+* pop two items from the stack, multiply them, and push the result (28)
+  back on the stack 
+* push 5 on the stack 
+* pop two items from the stack, add them, and push the result (33) back
+  on the stack
+* pop the stack and display it 
+
+The same calculation can be written in a different way 
+
+#pre
+ 5 4 7 * + .
+#unpre
+
+In this version, we push all three numbers onto the stack at once, then
+perform the arithmetic - first the multiplication of 4 and 7, and finally
+the addition of 5 to the product.
+
+The key to using RPN is that you have to think in terms of doing steps in
+order instead of writing a picture of the algebraic expression and
+letting the compiler sort it out.
+
+= Stack Operators =
+
+Sometimes you need to copy or rearrange the stack to bring items to the
+correct position for further use. Four basic stack operators get the most
+use. 
+
+#pre
+ dup  ( a -- a a )
+ drop ( a -- )
+ swap ( a b -- b a )
+ over ( a b -- a b a )
+#unpre
+
+Stack operators will be examined in more detail in a later lesson. 
+ 
+<i>Thus endeth the lesson</i>
+} 1178668498
 
 
 #--------------------------------------------------
@@ -1592,8 +2011,7 @@ GCC versions 2.95, 3.0, and 4.1
 #---
 = OpenSolaris =
 * x86
-* Tested under Nexenta
-} 1178435650
+* Tested under Nexenta} 1178435650
 
 
 #--------------------------------------------------
