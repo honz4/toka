@@ -1,0 +1,138 @@
+<html><head><title>toka.nbk: Lesson 1</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="lesson_2.html">Lesson 2</a> | Previous Page: <a href="lesson_0.html">Lesson 0</a></p>
+
+<hr>
+
+<h1>&nbsp;Lesson 1</h1>
+
+
+<h2>Review</h2>
+
+<p>In the previous lesson we learned that: 
+</p>
+<ul>
+<li> The top-level parser only looks for whitespace, so Forth words must be
+  separated by one or more spaces
+<li> Execution proceeds from left to right. Get a word, execute it. 
+
+</ul>
+
+<p>Today we will start trying some commands. 
+</p>
+<h2>The Stack</h2>
+
+<p>Toka has an explicitly visible stack that is used to pass numbers between
+words (commands). Using Toka effectively requires you to think in terms
+of the stack. That can be hard at first, but as with anything, it becomes
+much easier with practice.
+</p>
+<p>Toka also has a secondary stack - the "return stack" - that is used for
+return addresses and a few other things. Toka automatically manages the
+return stack so you don't have to think about it for the most part (but
+you can get at it if you need to; Toka doesn't block you from doing
+anything). 
+</p>
+<h3>Displaying the Stack</h3>
+
+<pre>  :stack
+</pre>
+
+<p>Doing this will cause Toka to show you what is on the stack. If the stack
+contained the numbers 5678 and 112233, you would see:
+</p>
+<pre> &lt;2&gt; 5678 112233
+</pre>
+
+<p>The number to the right is the top of the stack and the number in
+brackets on the left is the number of items on the stack. 
+</p>
+<h3>Putting Numbers on the Stack</h3>
+
+<p>If you type a number, it gets pushed onto the stack: 
+</p><pre> 12345 998877
+ :stack
+ &lt;2&gt; 12345 998877
+</pre>
+
+<p>What we see here is that the two numbers did get pushed onto the stack,
+and since <b>:stack</b> was called, the stack contents were displayed.
+</p>
+<h2>First Words</h2>
+
+<pre> 12345 998877 + :stack
+ &lt;1&gt; 1011222
+</pre>
+
+<p>The <b>+</b> word pops two numbers from the stack, adds them, and pushes
+the sum back on the stack. Note that: 
+</p>
+
+<ul>
+<li> + doesn't display the result, it just pushes the result back on the stack. In this case, however, we are assuming that "showstack" mode is on, so the interpreter displayed the stack for us automatically before the next prompt. 
+<li> The numbers are in decimal. Toka can operate in bases 2, 8, 10, and 16,
+  however it can not display binary numbers at present. The default base
+  is decimal. You can change the base at any time by typing <b>hex</b> or
+  <b>decimal</b>. All of the examples in this tutorial series will use
+  decimal as the default base.
+<li> The current number base applies to both number input and number output. 
+
+</ul>
+
+<h2>Displaying Numbers</h2>
+
+<pre> 12345
+</pre>
+
+<p>Now the number is on the stack. It can be displayed:
+</p>
+<pre> :stack
+ &lt;1&gt; 12345
+ :stack
+ &lt;1&gt; 12345
+</pre>
+
+<p><b>:stack displays the entire stack, non-destructively. 
+</b></p>
+<pre> 12345
+ .
+ 12345
+ :stack
+ &lt;0&gt;
+</pre>
+
+<p><b>.</b> pops the top of the stack and displays that number. Afterwards,
+the number is no longer there.
+</p>
+<h2>How the Interpreter Works</h2>
+
+<p>The Toka interpreter is very simple. It just does this over and over: 
+</p>
+
+<ul>
+<li> Read a line of input 
+<li> While there is more data in the line: 
+<li> Parse a whitespace-delimited word 
+<li> Lookup the word in a list of defined words. If found, execute the code
+  for that word. 
+<li> Otherwise, try to interpret the word as a number in the current number
+  base. If so, push it on the stack. 
+<li> Otherwise display an error message 
+
+</ul>
+
+<p><i>Thus endeth the lesson.</i>
+</p>
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="lesson_2.html">Lesson 2</a> | Previous Page: <a href="lesson_0.html">Lesson 0</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Tuesday,  8 May 2007, 20:00:49 PM EDT</i></p>
+
+</body></html>
