@@ -1,0 +1,124 @@
+<html><head><title>toka.nbk: Lesson 5</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="libraries.html">Libraries</a> | Previous Page: <a href="lesson_4.html">Lesson 4</a></p>
+
+<hr>
+
+<h1>&nbsp;Lesson 5</h1>
+
+
+<h2>Data</h2>
+
+<p>There are several ways to store and retrieve data values. 
+</p>
+<h3>Variables</h3>
+
+<pre> variable myvar
+</pre>
+
+<p>"variable" defines a new word (parsing the new word name from the input
+stream, as with ":") and allocates enough data space for a number (e.g.
+32-bits). When you later execute the new word ("myvar" in this case), it
+pushes the address of that data area. The stack diagram for the new word
+is "( -- adr )". The initial contents of the data is undefined.
+</p>
+<p>You can put data into the variable with: 
+</p>
+<pre> 12345 myvar !
+</pre>
+
+<p>"!" is pronunced "store". Its stack diagram is "( n adr -- )".
+</p>
+<p>To get the data back, use 
+</p>
+<pre> myvar @ .
+ 12345
+ 555 mvar !
+ myvar @ .
+ 555
+</pre>
+
+<p>"@" is pronounced "fetch". Its stack diagram is "( adr -- n )". Note
+that, after the example above, the data value is on top of the stack. To
+display it, you would need to say "." afterwards (unless "showstack" mode
+is on).
+</p>
+<h3>Other Memory Access Operators</h3>
+
+<p>The size of the number that "variable", "@", and "!" use is the "natural"
+size for the implementation, similar to "long int" in C.
+</p>
+<p>"@" and "!" are not limited to addresses returned by variables; they can
+be used with arbitrary memory addresses. However, for externally-defined
+data, it is usually a good idea to use memory access operators that
+explicitly specify the data size.
+</p>
+<pre> c@  ( adr -- b )    \ Fetch a 8-bit value
+ c!  ( b adr -- )    \ Store a 8-bit value
+</pre>
+
+<h3>Constants</h3>
+
+<p>Suppose you need a Toka word that returns (i.e. pushes on the stack) a
+single numeric value. You could do that with a quote, as in:
+</p>
+<pre> [ 12345 ] is mynum
+</pre>
+
+<p>However, constants are important enough that Toka allows defining them as
+a data element:
+</p>
+<pre> 12345 is-data mynum
+</pre>
+
+<p>Functionally, the two different definitions of "mynum" are equivalent,
+but the <b>is-data</b> definition will execute faster and occupy less
+space.
+</p>
+<p>When you are writing code in a file for saving, it is a good idea to
+specify the number base explicitly, instead of assuming a particular
+value (e.g. hex or decimal) for the current number base. So in a file I
+would write:
+</p>
+<pre> decimal 12345 is-data mynum
+</pre>
+
+<p>or 
+</p>
+<pre> hex 1a234f is-data mynum
+</pre>
+
+<h3>Efficiency of Constants</h3>
+
+<p>When a constant created with <b>is-data</b> is used in a quote, the
+resulting code is a bit different than when the constant is created as a
+quote. Specifically, comparing:
+</p>
+<pre> 1234 is-data foo
+ [ foo + ] is add-foo
+ ` add-foo :see
+</pre>
+
+<p>to 
+</p>
+<pre> [ 1234 ] is foo
+ [ foo + ] is add-foo
+ ` add-foo :see
+</pre>
+
+<p>When using <b>is-data</b>, the resulting value is inserted directly into
+the quote. This saves the overhead of calling the function at runtime.
+</p>
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="libraries.html">Libraries</a> | Previous Page: <a href="lesson_4.html">Lesson 4</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Wednesday,  9 May 2007, 18:44:29 PM EDT</i></p>
+
+</body></html>
