@@ -1,0 +1,222 @@
+<html><head><title>toka.nbk: Lesson 4</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="libraries.html">Libraries</a> | Previous Page: <a href="lesson_3.html">Lesson 3</a></p>
+
+<hr>
+
+<h1>&nbsp;Lesson 4</h1>
+
+
+<h2>Review</h2>
+
+<p>In the previous lesson we learned that: 
+</p>
+
+<ul>
+<li> Forth has the usual collection of integer arithmetic and logical operators 
+<li> You have to do calculations in postfix (Reverse Polish) form 
+
+</ul>
+
+<h2>Making New Words</h2>
+
+<p>So far we have done everything interactively, using only numbers and
+predefined words - and only a miniscule fraction of the predefined words
+that exist. Now we will learn how to make our own new words.
+</p>
+<p>Suppose that we want to add 12345 to several other numbers and display
+the results. Using just what we have learned so far, we could write:
+</p>
+<pre> 55 12345 + .
+ 12400
+ 2442 12345 + .
+ 14787
+</pre>
+
+<p>and so on. This wouldn't even be particularly tedious if you use a tool
+like <i>rlwrap</i> to provide command line history and editing. But we
+want to learn to make new words, so we will.
+</p>
+<pre> [ 12345 + . ] is foo
+ 55 foo
+ 12400
+ 2442 foo
+ 14787
+</pre>
+
+<p>We made a new word "foo" whose behavior is the same as "12345 + ." . Now
+"foo" can be used just the same as any other word in the system. Here's
+how the process works:
+</p>
+<p>The Toka word <b>[</b> (which must be followed by whitespace, just like
+every other word) creates a new <i>quote</i> and sets the interpreter to
+<i>compile state</i> (normally the interpreter is in <i>interpret
+state</i>). In compile state, instead of executing each word that it
+encounters, the interpreter compiles the behavior of the encountered word
+into the body of the new word. When it sees a number in compile state,
+the interpreter compiles code that will push that number on the stack
+when the new word later executes. When the interpreter encounters
+<b>]</b>, it compiles something akin to "return from subroutine" and
+switches back to interpret state. The word <b>is</b> parses for a
+whitespace delimited token and creates a new name using this token and
+attaches the quote to it.
+</p>
+<p>What about arguments and results? Well, since the stack is used for
+passing arguments, everything just works. The <b>+</b> that is compiled
+inside "foo" can pop two numbers off the stack (e.g. the "55" that was
+pushed outside of foo, and the "12345" that was pushed earlier during the
+execution of foo), in the same way as it would if you executed "+"
+directly from the interpreter.
+</p>
+<p>But wait, you say, what about the return address that is necessary to get
+back when foo executes? Doesn't that go on the stack, and thus interfere
+with the numbers? No, because a separate stack (the "return stack") is
+used for return addresses. 
+</p>
+<h2>Compiled Code</h2>
+
+<p>What does the compiled code (inside the new word "foo") look like? Well,
+the Toka language doesn't specify that. It just says that the result of
+executing "foo" has to be the same as if you executed its constituent
+words. Different Toka implementations can use different code generation
+strategies. Some may generate optimized machine language code. Others
+may generate machine language code that consists of a sequence of subroutine
+calls, one call to each constituent word. Perhaps the most common
+approach is "threaded code", in which the body of "foo" consists of an
+array of addresses, one for each constituent. A tiny "tree walker"
+machine language code sequence grabs each address in turn and jumps to
+it. Each approach has its advantages and disadvantages. Threaded code
+offers a good balance between speed, compactness, simplicity,
+portability, and ease of debugging. 
+</p>
+<h2>Redefinitions</h2>
+
+<p>What happens if you try to make a new word that has the same name as an
+existing one? Perhaps surprisingly, Toka will let you do that. Consider:
+</p>
+<pre>#Pre
+</pre>
+<pre> [ 5678 . ] is word1
+ word1
+ 5678
+ [ word1 123 . ] is word2
+ word2
+ 5678 123
+ [ 999 . ] is word1 
+ word1
+ 999
+ word2
+ 5678 123
+</pre>
+
+<p>Whoa! This is weird! Or is it? 
+</p>
+<p>First we create "word1" that displays "5678". Then we create "word2" that
+calls "word1" then displays "123". So far so obvious.
+</p>
+<p>Now we create "word1" again. Now when we interpret "word1" we see "999"
+instead of "5678". But when we interpret "word2", it still shows "5678".
+</p>
+<p>What has happened is that the both definitions of "word1" exist in the
+system, as separate chunks of code that happen to have the same name.
+"word2" still calls the first one - the only one that existed when
+"word2" was compiled (early binding). But the interactive interpreter
+sees that most recent one, because the search for defined words starts
+with later definitions and stops when it gets a match.
+</p>
+<p>Recursion and Chaining 
+</p>
+<p>This next topic is perhaps a bit too advanced for this stage of the
+lesson series, but I'm including it anyway because I know that some
+readers will wonder about it...
+</p>
+<p>Okay, what happens if you try to use the word "xyz" inside the definition
+of "xyz"? The question is especially interesting in light of the fact
+that you can have multiple definitions with the same name. You might
+reasonably want a new definition to "xyz" to call a previous version of
+"xyz" and then extend its behavior. You might also reasonably want
+recursion. And in fact, you can do either.
+</p>
+<pre> [ dup 1 &gt; [ dup 1- recurse * ] ifTrue ] is factorial
+ 5 factorial .
+ 120
+</pre>
+
+<p>Don't worry about the words you don't yet know. Just notice that
+"factorial" calls "factorial" recursively, which works because we used
+<b>recurse</b> inside the definition.
+</p>
+<p>Now let's look at the other possibility, in which we want a new
+definition to call and extend an existing definition of the same name: 
+</p>
+<pre> [ 111 . ] is init
+ init
+ 111
+
+ [ init 222 . ] is init
+ init
+ 111 222
+ 
+ [ 0 . init ] is init
+ init
+ 0 111 222
+
+Here we have created a word "init" that displays the number 111, then we
+made a new word of the same name that calls the old one and also displays
+"222", and finally we made a third one that first displays "0", then
+calls the second one (which still calls the first one). It works because
+the name of each successive redefinition is hidden until complete, so the
+interpreter/compiler finds the previous one during the compilation of the
+new one.
+
+Clearly, you should use this redefinition thing sparingly, lest confusion
+reign, but there are situations where this sort of thing can be extremely
+useful. It's especially nice for initialization sequences where each
+module can just add its own init code to whatever is already there.
+
+The reason I'm explaining how all this works is because, unlike most
+other languages, Toka gives the programmer explicit access to the same
+machinery that the compiler uses. This, perhaps more than any other
+feature, is what makes Toka so powerful with such a small memory
+footprint. (LISP is similar in that respect.) Since the machinery is an
+integral part of the proposition, you have to understand the basics of
+how it works.
+
+= Stack Comments, Reprised =
+
+So far I have just been tossing out new definitions willy-nilly, without
+any documentation. That is fine when you are just fooling around
+interactively, experimenting. But, of course, when you are writing
+"keepers", source code that you want to save in a file, you need some
+documentation. The minimum documentation is a stack diagram. If I were to
+save the previous recursive definition of factorial in a file, I would
+probably write:
+
+#pre
+ [ ( n -- n! )
+   dup 1 &gt; [ dup 1- recurse * ] ifTrue
+ ] is factorial
+</pre>
+
+<p>The stack diagram "( n -- n! )" indicates that there is one argument and
+one result. For this example, that would probably be enough, since
+factorial is a well-known mathematical function and the name is pretty
+clear. If the intent of the new word were not so obvious, I would have
+added a line or two of commentary (beginning with "#!") before the
+definition. 
+</p>
+<p><i>Thus endeth the lesson</i>
+</p>
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="libraries.html">Libraries</a> | Previous Page: <a href="lesson_3.html">Lesson 3</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Tuesday,  8 May 2007, 21:14:23 PM EDT</i></p>
+
+</body></html>
