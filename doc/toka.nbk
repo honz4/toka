@@ -788,33 +788,17 @@ file.pos
 #--------------------------------------------------
 # First Steps
 
-page {First Steps} {At present, Toka provides a basic <i>listener</i> as the only interface.
-This is a console-based enviroment where you can type commands and get
-instant feedback. Let's get started:
+page {First Steps} {The following is a set of topical guides to various aspects of the Toka
+language. It was written as the initial tutorial material, but as should
+be evident, I am not a great writer of tutorials.
 
-#pre
-  crc@strider: toka
-#unpre
+The material should be fairly easy for a moderately experienced
+programmer to pick up. Easier still if one has experience with Forth,
+Joy, Factor, or other stack-based languages. If you have no experience
+with stack based languages, the [tutorial] may be helpful before you
+start working through these sections.
 
-If you built and installed Toka properly, it should start, displaying a
-message like:
-
-#pre
-  toka (svn build)
-#unpre
-
-At this point, you can begin entering code. Let's start by exploring the
-enviroment a little:
-
-#pre
-  :names
-#unpre
-
-Invoking <b>:names</b> will display all named elements in the currently
-running Toka. Don't panic at the number of items -- you only need to
-learn a handful of them to write code in Toka.
-
-Now let's delve into actually using Toka a bit.
+#---
 
 === Introductory Bits ===
 * [The Stack|UsingTheStack]
@@ -840,7 +824,8 @@ Now let's delve into actually using Toka a bit.
 
 === Practical Matters ===
 * [Commenting Code]
-* [Stack Comments]} 1177900864
+* [Stack Comments]
+} 1178750147
 
 
 #--------------------------------------------------
@@ -1009,26 +994,15 @@ topics can be found in [First Steps].</i>
 
 * [License]
 * [Building] and [Installation]
-* [First Steps]
-* [Words and Their Uses]
-* [Ports]
-
-= Tutorial =
-* [Tutorial] - About the tutorial
-* [Lesson 0] - Motivation and Basic Syntax 
-* [Lesson 1] - Stack and Numbers 
-* [Lesson 2] - Stack diagrams and Comments 
-* [Lesson 3] - Arithmetic Operators and Calculations 
-* [Lesson 4] - Making New Definitions 
-* [Lesson 5] - Introspection 
-* [Lesson 6] - Variables and Data Storage 
-* [Lesson 7] - Control Structures 
-* [Lesson 8] - Strings 
+* A [Tutorial] for new programmers
+* [First Steps], a short guide to the language
+* The [Words and Their Uses]
 
 = Internals =
 
 === Topics ===
 
+* Information about the [Ports]
 * How the [garbage collector] works
 * How the [parser] works
 * Notes on the [threading model]
@@ -1058,7 +1032,8 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1178672839
+* [vm.c]
+} 1178750209
 
 
 #--------------------------------------------------
@@ -1766,579 +1741,118 @@ definition.
 #--------------------------------------------------
 # Lesson 5
 
-page {Lesson 5} {Review 
-
-In the previous lesson, we learned that: 
-New words can be created with ": newname ...  ;" 
-The interpreter has a "compile state" used for making new words 
-New words are not "visible" until they are finished 
-The interpreter finds the most recent definition of a given name 
-Words can call themselves recursively 
-A word can call another word of the same name, creating a "chain" 
-[edit]
-Introspection 
-
-Today's lesson is about introspection - interactive exploration of the Forth system itself. Many Forth systems have some degree of introspection; the facilities in Open Firmware are fairly extensive. 
-[edit]
-Decompiler 
-
-The decompiler "see" displays a pretty-printed representation of the source code for the target word. 
- ok see here
- : here
-    dp @
- ;
-
-In the example above, the target word was a system-defined colon definition. In addition to the colon definitions which we have already learned about, Forth has some other kinds of words which will learn about them later. The decompiler knows about those other kinds of words: 
- ok see dp
- 224 user dp  value = -1210197548 
- ok see bl
- 32 constant bl 
- ok see +
- code + 
- b7db1430     pop     ebx
- b7db1431     pop     eax
- b7db1432     add     eax,ebx
- b7db1434     push    eax
- b7db1435     jmp     edi
-
-The example above shows a word "+" which is implemented in assembly language. A few words at the core of the system are like this, but most of the several thousand words are implemented as colon definitions. 
-
-You can also use the disassembler for assembly language code that is not in the form of Forth code words. For example, if you have loaded a Linux kernel at the address 0x100000, you could inspect it with: 
- ok 100000 dis
-
-You can decompile the entire Forth system, down to the very roots. So in some sense, Open Firmware has always been "open source", since the very first Open Firmware system included the full decompiler. (Some will no doubt quibble about this claim; in practice, for all the "free speech" talk, most people really want "free beer".) 
-[edit]
-Look-ahead Words 
-
-Most Forth words take their arguments from the stack, but there are a few that get one or more string arguments by parsing ahead in the input stream. We have already seen some examples of this, notably comments and ":". "see" is another example. The amount of "look ahead" in such cases is typically fixed, not context-dependent. (You could write a context-dependent look-ahead word, but such usage is exceedingly rare in common Forth usage.) 
-
-For most "look-ahead" words, there is a variant version with a slightly different name that takes its arguments from the stack instead of from the input stream. The look-ahead versions are convenient for interactive use, whereas the stack-based versions are convenient for use within other words. 
-[edit]
-Wordfinder 
-
-How do you find the word you want among the thousands available? 
- ok sifting valid
-         In vocabulary  forth 
- (b7dcfc60) bp-address-valid?    (b7dce2d4) state-valid   
- (b7dce248) %state-valid         (b7dbbd04) ?block-valid   
-
-The "sifting" command parses a whitespace-delimited string from the input stream and searches for words whose name have it as a substring. 
-
-You may see several lines like "In vocabulary forth", with other names in place of "forth". The system contains several "vocabularies" (lists of words). The "forth" vocabulary is by far the largest, containing all of the core Forth words. There are other vocabularies with words that implement special-purpose functions. There is a search order that controls which vocabularies the interpreter searches at any given time. A future lesson will describe vocabularies and search orders in more detail. 
-
-Open Firmware "device tree nodes" are implemented as vocabularies with a special structure. "sifting" looks only in the ordinary vocabularies, but there is a similar word for looking in device tree nodes: 
- ok sift-devs show-b
-         In device  /pci/nandflash@c
- (ff88db78) show-bbt
-[edit]
-Callfinder 
-
-To find where a word is used, 
- ok ' save-image .calls
-                   Called from save-image                at  b7dca444
-                   Called from save-forth                at  b7dca4e8
-
-The first item in the list of usages is often the word itself. That does not necessarily mean that the word is recursive. Rather, it is an artifact of the algorithm that the callfinder uses. So don't believe the list completely. The callfinder will find every compiled-in use of the word, but it will sometimes get spurious "hits" too. The callfinder will *not* find transient usages, i.e. references to the word that are stored in variables. 
-[edit]
-Execution Tokens and "'" 
-
-The stack diagram of ".calls" is "( xt -- )". "xt" is the notation for "execution token", which is a numeric identifier that uniquely specifies a particular instance of a word. Recall that you can reuse the same word name several times, with the older instances remaining present in the system (possibly still called within other words). Each such instance has a distinct execution token. In many implementations, the execution token is the memory address of a data structure representing the word, but portable code must treat execution tokens as opaque identifiers. 
-
-"'" (a single quote) is a standard word that parses a whitespace-delimited name from the input stream and pushes the execution token of the most recent definition of that name. Normally, when the Forth interpreter encounters a word, it executes it, but there are times when you want to refer to the word instead of executing it. That is what "'" is for. You can think of it as "quoting" the word. Note that "'" applies to already-defined Forth words, not to arbitrary text strings. If you try to apply "'" to a string that is not a defined word, you will get an error message. 
-
-Referring back to the "sifting" example above, the number in parentheses before each word is its execution token. You can use this to get a handle on words whose names have been redefined. "(see)" is a variant of "see" whose argument is an execution token from the stack instead of a string from the input stream: 
- ok b7dce2d4 (see)
-
-The number above comes from the "sifting valid" example; it happens to be the execution token of "state-valid" in the system I'm using right now. In general, that number probably won't work on your system. But you could say: 
- ok ' here (see)
-
-"sifting <something>" then "<xt> (see)" (where <xt> is a number you type based on looking at the output of "sifting") is a good way to look at the definitions of superseded versions of words. 
-[edit]
-"'" inside definitions 
-
-Inside a colon definition, "'" won't do what you probably expect. 
- ok : myword   ' save-image .calls  ;
-
-You might expect your new word "myword" to be equivalent to interactively executing: 
- ok ' save-image .calls
-
-but that is not what happens. What happens is that "'" parses the input stream when "myword" is executed, not when "myword" is compiled. 
-
-Here is how to write what you probably meant: 
- ok : myword  ['] save-image .calls  ;
-
-"[']" is a variant of "'" that does the look-ahead parsing during compilation. 
-
-Yes, I realize this is confusing. Just use "'" outside colon definitions and "[']" inside, and the right thing will happen. 
-
-Thus endeth the lesson
-} 1178709393
-
-
-#--------------------------------------------------
-# Lesson 6
-
-page {Lesson 6} {In the previous lesson, we learned how to: 
-Examine words with "see" and "(see)" 
-Disassemble machine code with "dis" 
-Find words with "sifting" and "sift-devs" 
-Find uses of a word with ".calls" 
-Find execution tokens with "'" and "[']" 
-[edit]
-Data 
+page {Lesson 5} {= Data =
 
 There are several ways to store and retrieve data values. 
-[edit]
-Variables 
- ok variable myvar
 
-"variable" defines a new word (parsing the new word name from the input stream, as with ":") and allocates enough data space for a number (e.g. 32-bits). When you later execute the new word ("myvar" in this case), it pushes the address of that data area. The stack diagram for the new word is "( -- adr )". The initial contents of the data is undefined. 
+== Variables ==
+
+#pre
+ variable myvar
+#unpre
+
+"variable" defines a new word (parsing the new word name from the input
+stream, as with ":") and allocates enough data space for a number (e.g.
+32-bits). When you later execute the new word ("myvar" in this case), it
+pushes the address of that data area. The stack diagram for the new word
+is "( -- adr )". The initial contents of the data is undefined.
 
 You can put data into the variable with: 
- ok 12345 myvar !
 
-"!" is pronunced "store". Its stack diagram is "( n adr -- )". 
+#pre
+ 12345 myvar !
+#unpre
+
+"!" is pronunced "store". Its stack diagram is "( n adr -- )".
 
 To get the data back, use 
- ok myvar @ .
+
+#pre
+ myvar @ .
  12345
- ok 555 mvar !
- ok myvar @ .
+ 555 mvar !
+ myvar @ .
  555
+#unpre
 
-"@" is pronounced "fetch". Its stack diagram is "( adr -- n )". Note that, after the example above, the data value is on top of the stack. To display it, you would need to say "." afterwards (unless "showstack" mode is on). 
+"@" is pronounced "fetch". Its stack diagram is "( adr -- n )". Note
+that, after the example above, the data value is on top of the stack. To
+display it, you would need to say "." afterwards (unless "showstack" mode
+is on).
 
-When you decompile a variable (e.g. "see myvar"), the decompiler may identify it as a "user" word. That is an implementation detail that is related to the fact that many Forth systems support multi-threading. A "user" variable is one that is allocated in the per-thread data area. 
-[edit]
-Other Memory Access Operators 
+== Other Memory Access Operators ==
 
-The size of the number that "variable", "@", and "!" use is the "natural" size for the implementation, similar to "int" in C. 
+The size of the number that "variable", "@", and "!" use is the "natural"
+size for the implementation, similar to "long int" in C.
 
-"@" and "!" are not limited to addresses returned by variables; they can be used with arbitrary memory addresses. However, for externally-defined data, it is usually a good idea to use memory access operators that explicitly specify the data size. 
- l@  ( adr -- l )    \ Fetch a 32-bit value
- l!  ( l adr -- )    \ Store a 32-bit value
- w@  ( adr -- w )    \ Fetch a 16-bit value
- <w@ ( adr -- w )    \ Fetch a 16-bit value, sign extending
- w!  ( w adr -- )    \ Store a 16-bit value
+"@" and "!" are not limited to addresses returned by variables; they can
+be used with arbitrary memory addresses. However, for externally-defined
+data, it is usually a good idea to use memory access operators that
+explicitly specify the data size.
+
+#pre
  c@  ( adr -- b )    \ Fetch a 8-bit value
  c!  ( b adr -- )    \ Store a 8-bit value
+#unpre
 
-Don't use bare "@" and "!" for accessing memory-mapped I/O registers, because some implementations may perform "@" and "!" with multiple machine instructions in order to handle unaligned addresses. The explicit-sized operators listed above will usually work, but for ultimate portability when writing FCode device drivers, there are some other I/O access operators that make strong guarantees (byte ordering, atomicity, non-cached, etc). That is a topic for later. 
-[edit]
-Values 
+== Constants ==
 
-"value" is an alternative to "variable" that is more convenient to use in many situations: 
- ok 4567 value myval
- ok myval .
- 4567
- ok 98 to myval
- ok myval .
- 98
+Suppose you need a Toka word that returns (i.e. pushes on the stack) a
+single numeric value. You could do that with a quote, as in:
 
-As usual with "defining words" (words that create other words, like ":" and "variable"), "value" parses the name of the new word from the input stream. 
+#pre
+ [ 12345 ] is mynum
+#unpre
 
-Unlike variables, values 
-Are explicitly initialized when created (the inital value comes from the stack) 
-Are "self fetching", i.e. the new word pushes the value instead of the address that contains the value. 
-Must be preceded by "to" in order to set the value. 
+However, constants are important enough that Toka allows defining them as
+a data element:
 
-"to" is not specific to values; it can also set the data for some other kinds of words we haven't learned yet. "to" is fairly "smart", and thus is a little slower than "!" (whose implementation is trivial). The speed difference is irrelevant in most cases. As compensation for "to myval" being a bit slower than "myvar !", "myval" is a bit faster, and slightly more space-efficient, than "myvar @". So for the common case where you retrieve the data more often than you set it, values are a good choice. Furthermore, code that uses values is a somewhat easier for humans to read. 
-[edit]
-Longer Data Structures 
+#pre
+ 12345 is-data mynum
+#unpre
 
-Here is how to create a table with multiple data values: 
- ok hex
- ok create my-table  000 , 111 , 222 , aaa , bbb , fff ,
- ok my-table @ .
- 0
- ok my-table 4 + @ .
- 111
- ok my-table 2 na+ @ .
- 222
- ok my-table 4 na+ @ .
- bbb
+Functionally, the two different definitions of "mynum" are equivalent,
+but the <b>is-data</b> definition will execute faster and occupy less
+space.
 
-"create" is a defining word that makes a new word ("my-table" in this case) and marks the beginning of a data area that will be allocated by later words like ",". Later execution of the new word (e.g. "my-table") pushes the beginning address of that data area, so you can use memory access operators like "@" and "!' to read or write it. The stack diagram of the new word "my-table" is "( -- adr )", the same as a variable. 
+When you are writing code in a file for saving, it is a good idea to
+specify the number base explicitly, instead of assuming a particular
+value (e.g. hex or decimal) for the current number base. So in a file I
+would write:
 
-Here are some operators that are useful after "create": 
- ,  ( n -- )    \ Allocate data space for a number and put n there
- c, ( b -- )    \ Allocate data space for a byte and put b there
- w, ( w -- )    \ Allocate data space for 16 bits and put w there
- l, ( w -- )    \ Allocate data space for 32 bits and put l there
- allot  ( n -- )  \ Allocate data space for n bytes (uninitialized)
-
-The data space that is allocated by consecutive calls to these words is contiguous, so you can do arithmetic on addresses to get from one item to the next. However, that guarantee only lasts until you define the next word. 
-
-In the "my-table 4 + @" example above, we assumed that numbers are 32-bits, using "4 +" to get from the table base address (as returned by "my-table") to the address of the second number. That's fine for interactive use on a known system, but for code you want to save, it's better to write something more portable, hence the use of "na+" in later lines. There are several such address arithmetic operators: 
- na+  ( adr n -- adr' )   \ Add n times the size of a number to adr
- ca+  ( adr n -- adr' )   \ Add n times the size of a byte to adr
- wa+  ( adr n -- adr' )   \ Add n times the size of a 16-bit word to adr
- la+  ( adr n -- adr' )   \ Add n times the size of a 32-bit longword to adr
-
-On byte-addressed machines (nearly all machines these days), "ca+" is equivalent to just "+", so it is rarely used. "la+" is equivalent to "4 * +" (multiply n by 4 and add the result to adr), but is faster, more space-efficient, and more explicit, so "la+" is highly recommended. 
-
-You can make arbitrary data structures after "create"; they are not limited to arrays of the same basic number size. To access the items, you can either do explicit address arithmetic on the table base address or define some named helper words to add the offsets for specific items. There is a "field" defining word to make that easier, a topic for later. 
-[edit]
-Constants 
-
-Suppose you need a Forth word that returns (i.e. pushes on the stack) a single numeric value. You could do that with a colon definition, as in: 
- ok : mynum  12345  ;
-
-However, constants are important enough that Forth has a special defining word for them: 
- ok 12345 constant mynum
-
-Functionally, the two different definitions of "mynum" are equivalent, but the "constant" definition will execute slightly faster and occupy less space. (If you subsequently call "mynum" within another definition, the space occupied by the call is usually the same for either form; it it just the definition of "mynum" itself that is more compact in the "constant" case.) 
-
-When you are writing code in a file for saving, it is a good idea to specify the number base explicitly, instead of assuming a particular value (e.g. hex or decimal) for the current number base. So in a file I would write: 
- d# 12345 constant mynum
+#pre
+ decimal 12345 is-data mynum
+#unpre
 
 or 
- h# 1a234f constant mynum
 
-The only case where I intentionally break this rule is in a large table of numbers or in a large definition that is completely dominated by numbers (such as a list of register values). In those cases, I sometimes explicitly set the base at the top and list the numbers without prefixes, so the proliferation of prefixes doesn't obscure the code. 
-[edit]
-Efficiency of Constants 
+#pre
+ hex 1a234f is-data mynum
+#unpre
 
-Using a named constant in a colon definition is marginally faster than using a literal number, and the colon definition is smaller. Specifically, comparing 
- ok 1234 constant foo
- ok : add-foo  foo +  ;
+== Efficiency of Constants ==
+
+When a constant created with <b>is-data</b> is used in a quote, the
+resulting code is a bit different than when the constant is created as a
+quote. Specifically, comparing:
+
+#pre
+ 1234 is-data foo
+ [ foo + ] is add-foo
+ ` add-foo :see
+#unpre
 
 to 
- ok : add-foo  1234 +  ;
 
-The former definition of "add-foo" takes a little less space in the system, and executes marginally faster, than the latter definition. However, the space savings inside "add-foo" are more than made up for by the space used by the definition of the constant "foo". The break-even point for the space of a constant definition is about three later uses inside a colon definition. 
-
-At some level this is a trivial detail, but it introduces an interesting point. In Open Firmware, the numbers 0 through 8 are actually defined as constants, thus saving a useful amount of space in the system image compared to the size if they were handled as literals in the ordinary way. 
- ok see 5
- 5 constant 5
- ok see 1234
- 1234 ?
-} 1178709357
-
-
-#--------------------------------------------------
-# Lesson 7
-
-page {Lesson 7} {Review 
-
-In the previous lesson, we learned how to: 
-Uses variables and values to store numbers 
-Use "create" and "," to make named data structure instances 
-Perform simple address arithmetic 
-Use "constant" to make efficient symbolic names for constants 
-[edit]
-Control Structures 
-[edit]
-Conditionals 
- ok hex
- ok : hex-digit  ( n -- ascii )  \ Convert low nibble of n to ASCII hex
-  ]    h# f and         ( low-nibble )
-  ]    dup 9 <=  if     ( low-nibble )
-  ]       h# 30 +       ( ascii )
-  ]    else             ( low-nibble )
-  ]       h# 37 +       ( ascii )
-  ]    then             ( ascii )
-  ] ;
- ok 6 hex-digit .       \ . displays the numerical value
- 36
- ok 6 hex-digit emit    \ Emit displays the number as an ASCII character
- 6
- ok f hex-digit .
- 46
- ok f hex-digit emit
- F
-
-This simple example illustrates quit a few points. First, observe that you can continue definitions across lines. When you are doing so interactively, the prompt changes from "ok" to "]" to remind you that you are in the middle of a definition. 
-
-Also note the commenting style of listing the stack contents at the end of each line. This simple expedient is extremely helpful in making Forth code easy to write, debug, analyze, and maintain. 
-
-Finally, let's focus on the conditional structure "if ... else ... then", the main topic of this lesson. 
-
-These names are unfortunate, causing immediate confusion. The names should have been "if ... else ... endif", but for some reason, the name "then" was chosen as the end of the structure. 
-
-The general usage is 
- <code_to_compute_a_flag>  if  <true_clause>  else  <false_clause>  then
-
-"<code_to_compute_a_flag>" can be anything that leaves a number on the top of the stack. "<true_clause>" can be any sequence of Forth code; it is executed if the flag (the number on top of the stack when you get to "if") is nonzero. "<false_clause>" is executed if the flag is zero. 
-
-You can think of "if" as a conditional branch to just after the "else" and "else" as an unconditional branch to just after the "then". In fact that is essentially how it is implemented. 
-
-The "else <false_clause>" is optional; you can just write "if ... then". 
-[edit]
-Comparison Operators 
-
-The "flag" value that "if" tests can be an ordinary number (0 is considered false, nonzero true) or a well-formed flag. A well-formed flag is either 0 (false) or -1 (true). In either case, it is just a number on the top of the stack. There are quite a few operators that perform comparisons, typically used to create flags for control structures. All of these operators return well-formed (0 or -1) flags. 
- =    ( n1 n2 -- flag )  \ True if n1 = n2
- <>   ( n1 n2 -- flag )  \ True if n1 != n2
- <    ( n1 n2 -- flag )  \ True if n1 < n2  (signed)
- u<   ( u1 u2 -- flag )  \ True if n1 < n2  (unsigned)
- >    ( n1 n2 -- flag )  \ True if n1 > n2  (signed)
- u>   ( u1 u2 -- flag )  \ True if n1 > n2  (unsigned)
- <=   ( n1 n2 -- flag )  \ True if n1 <= n2  (signed)
- u<=  ( u1 u2 -- flag )  \ True if n1 <= n2  (unsigned)
- >=   ( n1 n2 -- flag )  \ True if n1 >= n2  (signed)
- u>=  ( u1 u2 -- flag )  \ True if n1 >= n2  (unsigned)
- 0=   ( n -- flag )      \ True if n = 0   (logical not, like '!' in C)
- 0<>  ( n -- flag )      \ True if n != 0
- 0<   ( n -- flag )      \ True if n < 0
- 0>   ( n -- flag )      \ True if n > 0
- 0<=  ( n -- flag )      \ True if n <= 0
- 0>=  ( n -- flag )      \ True if n >= 0
- true   ( -- -1 )        \ Pushes true (-1)
- false  ( -- 0 )         \ Pushes false (0)
- between  ( n low high -- flag )  \ True if low <= n <= high
- within   ( n low high -- flag )  \ True if low <= n <  high
-
-Let's break down the "if" line in the example above. It reads "dup 9 <= if". Before this line starts executing, the top of the stack is a number that is the low nibble of the argument value, i.e. a number from 0..f, as indicated by the stack comment at the end of the "h# f and" line. 
-         ( low-nibble )
- dup     ( low-nibble low-nibble )
- 9       ( low-nibble low-nibble 9 )
- <=      ( low-nibble flag )
- if      ( low-nibble )
-
-The "dup" makes a copy of the number, because we will still need that number after we do the comparison. "9" pushes the number nine. "<=" pops two numbers from the stack (low-nibble and 9), performs the comparsion, and pushes a flag that represents the result. "if" pops the flag. If the flag was nonzero, the code between "if" and "else" is executed, otherwize the code between "else" and "then" is executed. In either case, low-nibble is on the stack ready for the addition. (The "+" could be moved out of the conditional, after the "then".) 
-[edit]
-Conditional Loops 
-
-Conditional looping works in a similar fashion; a flag on the stack controls whether or not looping continues. There are several forms: 
- begin  <code>  again            \ Executes <code> forever
- begin  <code>  ( flag ) until   \ Executes until the flag is true
- begin  <code1> ( flag ) while  <code2>  repeat   \ See below
-
-"begin <code> again" is a forever loop. Essentially, "again" is an unconditional branch back to just after "begin". "<code>" can be any sequence of Forth words. "begin <code> until" is an "exit at the end" loop. It executes <code>, which should leave a flag on the top of the stack. "until" pops that flag and if it is zero, "until" branches back to just after the "begin". 
-
-"begin <code1> while <code2> repeat" is an "exit at the beginning" loop. "while" pops a flag from the stack (presumably left by <code1>). If the flag is nonzero, loop execution continues with <code2> and "repeat" branches back to just after the "begin". If the flag is zero, "while" branches to just after the "repeat". Normally <code1> does the conditional test and <code2> does the "work", but you can put anything you want in <code1> so long as it leaves a flag value on the stack when it is done. 
-
-Note that the sense of the flag is different for "while" and "until". "while" loops while the flag is true, whereas "until" loops until the flag is true (i.e. while it is false). 
-
-Here are some concrete examples: 
- ok  0  begin  dup .  1+  dup 5 =  until
- 0 1 2 3 4
-
-Note that in Open Firmware control structures can be used either interactively as shown above or inside colon definitions as shown in the "if" example. (By the way, there is a better way to do counting loops, as we will see soon.) 
- ok begin  5 .  key? until
- 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 ...
-
-That will keep displaying 5 until you type a key. "key? ( -- flag )" tests the input device to see if a character is available. "begin ... key? until" is a handy way to beat on hardware registers; just replace ... with code to do whatever you want. It will run until you stop it by typing a key. 
- ok  5  begin  dup  while  dup .  1-  repeat
- 5 4 3 2 1
- ok  0  begin  dup  while  dup .  1-  repeat
- ok
-[edit]
-Do Loops 
- ok 7 2  do  9 .  loop
- 9 9 9 9 9 
- ok 7 2  do  i .  loop
- 2 3 4 5 6
- ok 7 2  do  i .  3 +loop
- 2 5 
-
-"( limit start ) do <code> loop" iterates over integers beginning with start (the top of the stack when "do" is first encountered) and ending when the index reaches limit (second on stack). Note that the loop stops when limit is reached, so the index value is never equal to limit inside the loop. 
- ok 5 0  do  i .  loop
- 0 1 2 3 4
-
-If "start" is 0 and "limit" is n, the body of the loop will execute n times. 
-
-"i" pushes the loop index onto the stack. If you nest do-loops and need to "reach out" and get the index of the enclosing loop, that is "j", and then "k" for triply-nested loops. That is as far as it goes. 
-
-"( n ) +loop" adds n to the loop index instead of 1. 
-
-"do" always executes the body at least once, even if start and limit are the same. "?do" is like "do" except that is won't execute the body if start and limit are the same limit. 
-
-To specify the loop boundaries as "( start length )" instead of "( limit start )", use "bounds" to do the conversion: 
- bounds  ( start length -- limit start )
-
-Here is an example: 
- ok  10000 5  bounds  do  i .  loop
- 10000 10001 10002 10003 10004 
-
-You can run a loop backwards, with a negative increment value to "+loop". The stopping condition is somewhat surprising: 
- ok  1 5  do  i .  -1 +loop
- 5 4 3 2 1
-
-Why did it display 1, since up-counting loops don't execute when the index is equal to the limit value? The rule is this: The loop stops when the index crosses the boundary between limit-1 and limit. So on the way up, the last index value is less than limit, while on the way down, the last index is equal to limit. Takes a bit of getting used to, but the rule is precise, and there is really no way to do it better, considering that "+loop" cannot know in advance which way the loop is going (because the increment value can be computed at run time). 
-
-You can terminate a do loop prematurely, before the limit has been reached, with "leave". 
- ok  1000000 0  do  i .  key?  if  leave  then   loop
- 0 1 2 3 4 ...
-
-That would count up to 1000000, stopping early if you type a key. 
-
-
-[edit]
-How Control Structures Work 
-
-You might find it difficult to reconcile the behavior of control structures with what previous lessons have said about how the compiler works. In compilation state, the interpreter/compiler is supposed to simply add the behavior of each word to the new definition. So how do the various parts of control structures "hook up" with each other? For example, how does "if" find the target of its forward branch? 
-
-The answer is that a few words are specially marked with an "immediate" bit. Those "immediate" words are not compiled directly, but instead are executed when encountered in compilation state. They can be thought of as parts of the compiler mechanism. The compiler mechanism is thus extensible, because you can create your own immediate words. 
-
-Most of the control structure words are immediate. Consider the sequence "if ... then" inside a definition. Since "if" is immediate, the compiler doesn't compile it in the usual way, but instead executes it. When "if" executes, it uses compiler primitives to compile a conditional branch token into the current definition, followed by a dummy branch offset (since the true branch offset is not yet known). Then it pushes the address of that branch offset onto the stack, thus remembering it for later. "if" then returns to the compiler, which proceeds to compile the body of the control structure in the normal way. The compiler eventually gets to "then", which is also immediate, so it gets executed too. "then" gets the address of the dummy branch offset from the stack and fixes up the offset, since the branch distance is now known. 
-
-Other control structure words work in similar fashion, executing during compilation to compile conditional or unconditional branches, resolving the offsets as they become known. All of the stack activity surrounding the branch resolution occurs during compilation. When the new definition is later execution, the only stack activity related to the conditional control structures is the popping of the flag value that controls which path is taken. 
-
-There is an additional wrinkle with do loops. They have to manage the loop index and the limit value, neither of which is, in general, known at compile time. Do loops use the return stack (the auxiliary stack that holds subroutine return addresses) for storing loop control parameters. This is possible because do loops must be properly nested with respect to definitions, i.e. a do loops must finish in a controlled fashion before you can return from the word that contains it. 
-[edit]
-How Interpreted Control Structures Work 
-
-As mentioned previously, in Open Firmware you can use control structures interactively, without compiling them inside a colon definition. How does that work, in light of the preceding description about how they are compiled? 
-
-When a control structure starting word (e.g. "begin") is executed but the interpreter state is "interpretation" instead of "compilation", it calls a word that starts a temporary anonymous colon definition, and then everything works as before. When that control structure is completed, the ending word (e.g. "until") notices that, and calls a word that executes then discards the temporary definition. So "interpreted" control structures execute at full compiled speed. 
-
-Note that in ANS Standard Forth, succh as gforth, control structures are only allowed inside of definitions, not at the interactive command line. 
-
-Thus endeth the lesson
-} 1178709442
-
-
-#--------------------------------------------------
-# Lesson 8
-
-page {Lesson 8} {Review 
-
-In the previous lesson, we learned: 
-The conditional control structure "if ... [ else ... ] then" 
-Various conditional looping structures like "begin ... until" 
-The comparison operators 
-"do ... loop" and its variations and wrinkles 
-That the compiler has an extension mechanism 
-How control structures are implemented using that mechanism 
-[edit]
-Strings 
-
-As in C, strings are not a first-class data type in Forth. Forth has no support for automatic string allocation and garbage collection. This is in keeping with Forth's roots in real-time control on resource-limited systems. But as with C, you can do what you need to do, even if it isn't especially convenient. 
-[edit]
-Displaying Strings 
- ok : hello  ." Hello, world"  cr  ;
- ok hello
- Hello, world
-
-Finally we have stated the Forth version of the canonical first program! ." (dot-quote) displays a string delimited by the next '"' . 
-
-We didn't really have to make a definition: 
- ok ." Hello, world" cr
- Hello, world
-
-Technically, in standard Forth, you are supposed to use .( instead of ." outside of a definition (for tedious reasons), as in: 
- ok .( Hello, world) cr
- Hello, world
-
-but Open Firmware lets you use either form. 
-
-"cr" sends a newline sequence to the output device. Contrast this to the C practice of embedding the newline as an escape sequence inside the string and letting the output device driver transform it into the appropriate sequence. Both approaches have advantages and disadvantages... 
-
-Note that, as with everything else, ." is just a Forth word, and thus must be whitespace delimited. Its behavior is to parse a string delimited by " from the input stream and display it. ." is one of those "immediate" words that we talked about in the last lesson. When ." is encountered in compilation state, it executes immediately, parses out the string at compile time, then stores that string in the new definition as a literal, with some code to display it when the new definition later executes. 
-[edit]
-Literal Strings 
-
-If you just want a literal string for use later, i.e. you don't want to display it, use " (quote) instead of ." (dot-quote). 
- ok : my-string  ( -- adr len )  " this is a test"  ;
- ok my-string type
- this is a test
-
-The stack representation of a string is ( adr len ) - the address of the first character and the number of characters. Characters are just bytes. Only ASCII support is guaranteed, although Open Firmware typically has an ISO-Latin-1 font. The length includes just the characters in the string. There is no explicit notion in Forth of a null-terminated string like in C, so you could put binary data including 0 bytes in a Forth string. 
-
-You can also use literal strings interactively: 
- ok " this is a test" type
- this is a test
-
-In standard Forth, the string literal word is s" . Open Firmware implements s" for compatibility, but the Open Firmware word " is more convenient, and the Open Firmware source uses it exclusively in preference to s" . 
-[edit]
-Embedding Control Characters in Strings 
-
-Open Firmware's " has a special escape syntax (not in standard Forth) that lets you put control characters and other binary data in strings. The syntax is carefully (and trickily) constructed so as not to conflict with standard usage. 
- " hello"(12 3a 88 7f)test"r"n"
-
-That creates a string containing "hello" followed by the characters 0x12, 0x3a, 0x88, 07f, then "test", then carriage return, linefeed. 
-
-Normally the second " would end the string, but in Open Firmware, a second " only ends the string if it is followed by whitespace. If non-whitespace follows the second " , subsititute characters are inserted in the string as follows: 
- After "         Replacement
- 
- n               newline
- r               carriage return
- t               tab
- f               formfeed
- l               linefeed (same as newline)
- b               backspace
- !               bell
- ^x              control x (x is a printable character)
- (hh hh hh ...)  Sequence of bytes specified in hex
-[edit]
-String Storage 
-
-Forth doesn't do automatic string allocation or garbage collection, so it's up to you to manage the storage. 
-
-Literal strings that are compiled inside colon definitions live in the same memory space that contains the definitions, and should be treated as read-only. 
-
-Literal strings entered in interpret state (outside of a definition) are stored in one of two temporary buffers dedicated to that purpose. The system alternates between the two buffers so you can have two interpreted strings active at the same time. 
-
-You can allocate space for additional string storage as needed. 
-[edit]
-Some String Operators 
-
-Inside a stack diagram, "$" is often used as a shorthand notation to refer to an "adr len" string. Thus in the stack diagram "( path$ -- )", the number of arguments is 2, the address and length of a string denoting a path. 
- type   ( adr len -- )                   Display string
- 2dup   ( adr len -- adr len adr len )   Stack copy of string limits
- 2drop  ( adr len -- )                   Discard string limits
- 2over  ( $2 $1 -- $2 $1 $2 )            Stack copy of second string
- comp   ( adr1 adr2 len -- diff )        Compare memory buffers. 0 if equal.
- $=     ( $1 $2 -- flag )                Compare strings.  True if equal.
- evaluate  ( $ -- )                      Interpret string as Forth code
-
-Note that "2dup", "2drop", and "2over", while quite useful for manipulating string limits on the stack, are not really limited to use with strings. They operate on arbitrary pairs of numbers and are used in many other contexts. 
-[edit]
-Counted Strings 
-
-If you need to store a copy of a string in memory and are sure that the string is shorter than 256 bytes, you can use the space-efficient "counted string" format. In memory, a counted string consists of a length byte followed by n data bytes. 
- place  ( $ adr2 -- )           Save string at adr2 in counted form
- pack   ( $ adr2 -- adr2 )      Like place but returns adr2
- count  ( adr1 -- adr2 len2 )   Return adr,len of counted string
- $save  ( $ adr2 -- $2 )        Save $1 at adr2 counted form, returning
-                                the addres and length of the copy
- $cat   ( $ adr2 -- )           Append $ to the counted string at adr2
-
-For "count", adr2 is always adr1+1, and len2 is the value of the byte at adr1, as a direct consequence of the way that the counted string format is defined. 
-[edit]
-Memory Allocation for Strings 
- alloc-mem  ( len -- adr )      Allocate memory (useful for strings)
- free-mem  ( adr len -- )       Free previously-allocated memory
-
-Alloc-mem and free-mem allocate anonymous memory from the heap. To create a named string buffer, use "buffer:". 
- ok d# 100 buffer: my-string
- ok " This is a test" my-string place
- ok my-string count type
- This is a test
-
-The stack argument is the number of bytes to allocate for the buffer. "buffer:" is not limited to counted strings; it can allocate named buffers of arbitrary size. 
-[edit]
-String Parsing 
- sindex  ( $1 $2 -- n )
-    Search for an occurrence of $1 inside $2.  If found, n is the offset
-    within $2 where it was found.  If not found, n is -1.
- 
- split-string       ( $1 delim -- tail$ head$ )
-    Find the first occurrence of "delim" in $1.  If found, head$ is the
-    portion of $1 up to but not including the delimiter and tail$ is the
-    portion of $1 from the delimiter (inclusive) to the end.  If not
-    found, head$ is $1 and tail$ is empty (i.e. its length is 0).
- 
- left-parse-string  ( $1 delim -- head$ tail$ )
-    Find the first occurrence of "delim" in $1.  If found, head$ is the
-    portion of $1 up to but not including the delimiter and tail$ is the
-    portion of $1 after the delimiter (not inclusive) to the end.  If not
-    found, head$ is $1 and tail$ is empty (i.e. its length is 0).
-      
- lex  ( $1 delim$ -- tail$ head$ delim true | $1 false )
-    Find the first occurrence in $1 of any character in delim$ .  If found,
-    head$ is the portion of $1 up to but not including the delimiter,
-    tail$ is the portion of $1 after the delimiter (not inclusive) to the
-    end, delim is the actual character found, and the top of the stack is
-    true.  If not found, $1 is the original value of $1 and the top of
-    the stack is false.
-
-This is a sampling of some common general-purpose string operators. There are quite a few others. 
-
-Thus endeth the lesson
-} 1178709475
+#pre
+ [ 1234 ] is foo
+ [ foo + ] is add-foo
+ ` add-foo :see
+#unpre
+
+When using <b>is-data</b>, the resulting value is inserted directly into
+the quote. This saves the overhead of calling the function at runtime.
+} 1178750058
 
 
 #--------------------------------------------------
@@ -2720,75 +2234,71 @@ end.
 #--------------------------------------------------
 # Ports
 
-page Ports {This page lists the supported platforms and includes notes on building
-for specific targets.
+page Ports {This page lists the officially supported platforms and includes notes on
+building for specific targets.
 
 #---
-Quick Summary:
+= Quick Summary =
 
-* x86
-** Linux
-** Net, Free, Open, and DragonFly BSD
-** OpenSolaris
-** BeOS
-** Cygwin
-* ARM
-** OpenBSD
-** NetBSD
-* MIPS
-** NetBSD
-** Linux
-* Itanium (IA64)
-** Linux
+CPUs: x86, x86-64, ARM, MIPS, Itanium
+
+OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin, OpenSolaris
 
 #---
 = Linux =
 
-* x86
-* x86-64
-* MIPS
-* Itanium (IA64)
+Supported CPUs: x86, x86-64, MIPS, Itanium
 
 Toka has been built and tested on Debian and SuSE, using
-GCC versions 2.95, 3.0, and 4.1
+GCC versions 2.95, 3.0, 3.1, and 4.1
 
 #---
 = BSD =
 
 === OpenBSD ===
-* x86
-* ARM (cats)
+
+Supported CPUs: x86, ARM
 
 === FreeBSD 4.x - 6.x ===
-* x86
+
+Supported CPUs: x86
 
 === NetBSD 3 ===
-* x86
-* MIPS (pmax)
-* ARM (cats)
+
+Supported CPUs: x86, MIPS, ARM
 
 === DragonFly BSD ===
-* x86
+
+Supported CPUs: x86
 
 #---
 = BeOS =
-* x86
-* FFI requires libdl.so (not standard part of BeOS)
-** http://bebits.com/app/2917
-* You <i>may</i> need a newer GCC
-** http://bebits.com/app/4011
-* <i>make CFLAGS=-I/beos/develop/headers</i>
+
+Supported CPUs: x86
+
+Requires libdl.so (from http://bebits.com/app/2917)
+
+You may also need (or want) to use the newer GCC from
+http://bebits.com/app/4011
+
+Build with <b>CFLAGS=-I/beos/develop/headers</b>
 
 #---
 = Cygwin =
-* x86
-* Tested under Windows XP and Vista
-* FFI may be buggy
+
+Supported CPUs: x86
+
+Toka has been built and run under Cygwin on both Windows XP and Windows
+Vista. This port is not officially supported, and may be buggy,
+especially when using the FFI.
 
 #---
 = OpenSolaris =
-* x86
-* Tested under Nexenta} 1178435650
+
+Supported CPUs: x86
+
+Only tested under Nexenta GNU/Solaris distribution
+} 1178750601
 
 
 #--------------------------------------------------
@@ -3408,8 +2918,24 @@ by Mitch Bradley for the OLPC project.
 
 The original lessons can be found at http://wiki.laptop.org/go/Forth_Lessons
 
-I have made as few changes as possible. I truely hope this proves
-beneficial to all those who may wish to learn to use Toka.} 1178673241
+I have made as few changes as possible to the lessons I adapted. I truely
+hope this proves beneficial to all those who may wish to learn to use
+Toka.
+
+#---
+
+=== The Lessons ===
+
+* [Lesson 0] - Motivation and Basic Syntax 
+* [Lesson 1] - Stack and Numbers 
+* [Lesson 2] - Stack diagrams and Comments 
+* [Lesson 3] - Arithmetic Operators and Calculations 
+* [Lesson 4] - Making New Definitions 
+* [Lesson 5] - Variables and Data Storage 
+
+Now that you have seen the basics, proceed to [First Steps] and explore
+the Toka language in more detail.
+} 1178750135
 
 
 #--------------------------------------------------
