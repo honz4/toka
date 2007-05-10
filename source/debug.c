@@ -21,7 +21,7 @@
 #include "toka.h"
 
 extern Inst *heap;
-extern long stack[], sp, last;
+extern long stack[], sp, last, base;
 extern long gc_used, gc_objects, gc_depth, gc_tdepth;
 extern ENTRY dictionary[];
 extern GCITEM gc_list[];
@@ -102,10 +102,18 @@ void names()
 void display_stack()
 {
   long a;
-  printf("<%li> ", sp);
+
+  switch(base)
+  {
+    case  8: printf("<%lo> ", sp); break;
+    case 16: printf("<%lx> ", sp); break;
+    default: printf("<%li> ", sp); break;
+  }
+
   for (a = 1; a <= sp; a++)
   {
-    printf("%li ", stack[a]);
+    push(stack[a]);
+    dot();
   }
   printf("\n");
 }
