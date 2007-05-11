@@ -122,6 +122,20 @@ void invoke()
 
 
 /******************************************************
+ *|G| compile  ( a- )      Compile a call to the quote
+ *
+ *|F| compile()
+ *|F| Compile the code needed to call a quote (passed on TOS)
+ *|F|
+ ******************************************************/
+void compile()
+{
+  *heap++ = &quote_class;
+  *heap++ = (Inst)TOS; DROP;
+}
+
+
+/******************************************************
  *|G| iterate  ( na- )     Execute a quote 'n' times
  *
  *|F| iterate()

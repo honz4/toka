@@ -67,7 +67,7 @@ void build_dictionary()
   add_entry(":see",      &see,           &forth_class);
 
   /* dictionary.c */
-  add_entry("`",         &return_quote,  &forth_class);
+  add_entry("`",         &return_quote,  &macro_class);
   add_entry("is",        &name_quote,    &forth_class);
   add_entry("is-macro",  &name_macro,    &forth_class);
   add_entry("is-data",   &name_data,     &forth_class);
@@ -119,6 +119,7 @@ void build_dictionary()
   add_entry("]",         &end_quote,     &macro_class);
   add_entry("recurse",   &recurse,       &macro_class);
   add_entry("invoke",    &invoke,        &forth_class);
+  add_entry("compile",   &compile,       &forth_class);
   add_entry("iterate",   &iterate,       &forth_class);
   add_entry("+iterate",  &alt_iterate,   &forth_class);
   add_entry("i",         &quote_index,   &forth_class);

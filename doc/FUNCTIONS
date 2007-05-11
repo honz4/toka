@@ -450,6 +450,9 @@ data_class() semantics.
 invoke()
 Call a quote (passed on TOS)
 
+compile()
+Compile the code needed to call a quote (passed on TOS)
+
 iterate()
 Repeat execution of a quote (passed on TOS), NOS
 number of times.
