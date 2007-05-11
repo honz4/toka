@@ -1,6 +1,7 @@
 void begin_quote();
 void end_quote();
 void invoke();
+void compile();
 void iterate();
 void alt_iterate();
 void truefalse();

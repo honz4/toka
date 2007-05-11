@@ -824,8 +824,7 @@ start working through these sections.
 
 === Practical Matters ===
 * [Commenting Code]
-* [Stack Comments]
-} 1178750147
+* [Stack Comments]} 1178750147
 
 
 #--------------------------------------------------
@@ -1032,8 +1031,7 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1178750209
+* [vm.c]} 1178750209
 
 
 #--------------------------------------------------
@@ -1851,8 +1849,7 @@ to
 #unpre
 
 When using <b>is-data</b>, the resulting value is inserted directly into
-the quote. This saves the overhead of calling the function at runtime.
-} 1178750058
+the quote. This saves the overhead of calling the function at runtime.} 1178750058
 
 
 #--------------------------------------------------
@@ -2297,8 +2294,7 @@ especially when using the FFI.
 
 Supported CPUs: x86
 
-Only tested under Nexenta GNU/Solaris distribution
-} 1178750601
+Only tested under Nexenta GNU/Solaris distribution} 1178750601
 
 
 #--------------------------------------------------
@@ -2364,6 +2360,9 @@ data_class() semantics.
 invoke()
 Call a quote (passed on TOS)
 
+compile()
+Compile the code needed to call a quote (passed on TOS)
+
 iterate()
 Repeat execution of a quote (passed on TOS), NOS
 number of times.
@@ -2412,11 +2411,12 @@ recurse
 i
 whileTrue
 whileFalse
+compile
 invoke
 iterate
 +iterate
 ifTrueFalse
-#unpre} 1177812770
+#unpre} 1178881760
 
 
 #--------------------------------------------------
@@ -2934,8 +2934,7 @@ Toka.
 * [Lesson 5] - Variables and Data Storage 
 
 Now that you have seen the basics, proceed to [First Steps] and explore
-the Toka language in more detail.
-} 1178750135
+the Toka language in more detail.} 1178750135
 
 
 #--------------------------------------------------
@@ -3450,6 +3449,7 @@ end.     ( - )       Remove the current file from
 [        ( -a )      Create a new quote
 ]        ( - )       Close an open quote
 invoke   ( a- )      Execute a quote
+compile  ( a- )      Compile the code needed to call 'a'
 iterate  ( na- )     Execute a quote 'n' times
 +iterate ( na- )     Execute a quote 'n' times
 ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
@@ -3501,8 +3501,7 @@ char:    ( "-c )     Parse ahead and return one character
 cr       ( - )       Display a CR character
 space    ( - )       Display a space
 tab      ( - )       Display a tab
-t:       ( "- )      Parse to the end of the line, display
-                     the results.
+."       ( "- )      Parse to the next ", display the string.
 clear    ( - )       Clear the screen
 normal   ( - )       Set the colors back to the default
 bold     ( - )       Set the bold attribute for the foreground color
@@ -3575,7 +3574,8 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre} 1177812647
+#unpre
+} 1178882049
 
 
 # End of Notebook Database File
