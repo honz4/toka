@@ -52,7 +52,6 @@
 [ CR LF emit emit ] is cr
 [ SPACE emit ] is space
 [   TAB emit ] is tab
-[ lnparse type cr ] is t:
 [ ` " invoke
   compiler @ [ ` type compile ] [ type ] ifTrueFalse
 ] is-macro ."
