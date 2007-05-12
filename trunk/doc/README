@@ -1,26 +1,28 @@
-Toka is a small programming language. It is considered experimental, and 
-may change without warning.
+Toka is a programming language that draws on my experiences with a variety
+of languages. It's still experimental, so things sometimes change significantly
+with little to no warning. Overall it does work suprising well though.
 
-The language has been influenced by my experiences with RetroForth, 
-HelFORTH, Factor, and other languages. I find it fun and rewarding to 
-work on, even if it's not as practical as other languages.
+The language has been influenced by my experiences with RetroForth, HelFORTH, 
+Factor, and other languages. In most respects it shows a strong bias towards
+Forth. It does have some extra things (quotes, garbage collection, etc) that
+make programming easier for me.
 
-The core language is described in GLOSSARY. A reference to the bootstrap 
-is provided online. 
+The language is documented using a tool called Notebook. (Get a copy from
+http://notebook.wjduquette.com/). There is an HTML export in the "book" 
+directory. Start with the "home.html" and you'll find a (somewhat) organized 
+set of links to individual pages on most aspects of the language. For those 
+who are familiar with it, the GLOSSARY file will give you a good reminder of 
+what each word does.
 
-Homepage: http://code.google.com/p/toka
+Homepage: http://charleschilders.com:9812
 
 At the homepage is information on how to obtain the latest source via 
-Subversion, wiki pages documenting various parts of the language, and a 
-bug tracker. 
+Subversion, the full documentation, and a way to download the latest "stable"
+source as a shell archive ("shar").
 
-You may also want to get the library. This is provided as a separate 
-project at:  http://code.google.com/p/toka-library
-
-The library adds several loadable modules that improve support for strings, 
-debugging, add basic socket support, and more. The library is tested on 
-Linux and BSD systems. In addition, it has experimental Windows support 
-(via Cygwin).
+Toka has an optional library that adds enhanced support for strings, network
+sockets, and more. It's been tested on Linux and BSD systems, but may also
+work on other systems.
 --------------------------------------------------------------------------
 If you have the rebuild tool (http://code.google.com/p/rebuild) and would
 rather not use make, you can build and install Toka by doing:
@@ -36,8 +38,4 @@ You will probably need to be root, at least initially. Once installed, you
 can change the owner/permissions to allow a normal account to update it.
 --------------------------------------------------------------------------
 Documentation is now being provided in Notebook format. Notebook is a
-small hypertext editor. You can get it at http://notebook.wjduquette.com/
-
-HTML formatted documentation can be found at http://charleschilders.com/toka
-It is synced with the Notebook documentation whenever anything significant
-is added.
+small hypertext editor. You can get it at 
