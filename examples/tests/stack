@@ -9,5 +9,9 @@ t:   >r
    1 2 3 >r 2 try 1 try
 t:   r>
    1 2 r> 3 try 2 try 1 try
+t:   r@
+   1 2 3 >r 
+   r@ 3 try 2 try 1 try
+   r> drop
 t:   depth
    1 2 3 depth 3 try 3 try 2 try 1 try

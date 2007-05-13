@@ -94,7 +94,7 @@
 [ over over ] is 2dup
 [ drop drop ] is 2drop
 [ depth [ drop ] iterate ] is reset
-[ r> dup >r ] is r@
+[ r> r> tuck >r >r ] is r@
 
 
 #! ---------------------------------------
