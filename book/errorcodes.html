@@ -10,6 +10,10 @@
 <h1>&nbsp;ErrorCodes</h1>
 
 
+<p>When using Toka, you may encounter various error messages. These are
+described below. <i>Each error has a unique code; the messages below are
+sorted by this code.</i>
+</p>
 <h2>E0</h2>
 <p>Nonfatal. This error is when a token can not be found in the dictionary
 or converted to a number.
@@ -32,11 +36,11 @@ by the <a href="ffi.html">FFI</a>.
 currently open library.
 </p>
 <h2>E5</h2>
-<p><b>Fatal</b>. When the return stack overflows or underflows, this error
-is thrown and Toka exits.
+<p>This error arises when Toka detects a problem with either the data or
+return stack. It can be either fatal (when the problem is with the return
+stack) or nonfatal (when the problem is with the data stack). When
+nonfatal, Toka resets the data stack to an empty state.
 </p>
-<p>Nonfatal. When the data stack overflows or underflows, this error is
-thrown and Toka resets the stack pointer to the beginning of the stack.</p>
 
 <hr>
 
@@ -44,6 +48,6 @@ thrown and Toka resets the stack pointer to the beginning of the stack.</p>
 
 <hr>
 
-<p><i>Notebook exported on Saturday, 12 May 2007, 17:18:38 PM EDT</i></p>
+<p><i>Notebook exported on Sunday, 13 May 2007, 15:07:25 PM EDT</i></p>
 
 </body></html>

@@ -544,7 +544,11 @@ last
 #--------------------------------------------------
 # ErrorCodes
 
-page ErrorCodes {= E0 =
+page ErrorCodes {When using Toka, you may encounter various error messages. These are
+described below. <i>Each error has a unique code; the messages below are
+sorted by this code.</i>
+
+= E0 =
 Nonfatal. This error is when a token can not be found in the dictionary
 or converted to a number.
 
@@ -566,11 +570,11 @@ Nonfatal. This error arises when a symbol can not be found in the
 currently open library.
 
 = E5 =
-<b>Fatal</b>. When the return stack overflows or underflows, this error
-is thrown and Toka exits.
-
-Nonfatal. When the data stack overflows or underflows, this error is
-thrown and Toka resets the stack pointer to the beginning of the stack.} 1177189326
+This error arises when Toka detects a problem with either the data or
+return stack. It can be either fatal (when the problem is with the return
+stack) or nonfatal (when the problem is with the data stack). When
+nonfatal, Toka resets the data stack to an empty state.
+} 1179083037
 
 
 #--------------------------------------------------
@@ -1602,16 +1606,10 @@ used for return addresses.
 
 = Compiled Code =
 
-What does the compiled code (inside the new word "foo") look like? Well,
-the Toka language doesn't specify that. It just says that the result of
-executing "foo" has to be the same as if you executed its constituent
-words. Different Toka implementations can use different code generation
-strategies. Some may generate optimized machine language code. Others
-may generate machine language code that consists of a sequence of subroutine
-calls, one call to each constituent word. Perhaps the most common
-approach is "threaded code", in which the body of "foo" consists of an
+What does the compiled code (inside the new word "foo") look like? Toka
+makes use of "threaded code", in which the body of "foo" consists of an
 array of addresses, one for each constituent. A tiny "tree walker"
-machine language code sequence grabs each address in turn and jumps to
+machine language code sequence grabs each address in turn and calls to
 it. Each approach has its advantages and disadvantages. Threaded code
 offers a good balance between speed, compactness, simplicity,
 portability, and ease of debugging. 
@@ -1733,7 +1731,8 @@ clear. If the intent of the new word were not so obvious, I would have
 added a line or two of commentary (beginning with "#!") before the
 definition. 
 
-<i>Thus endeth the lesson</i>} 1178672803
+<i>Thus endeth the lesson</i>
+} 1179083170
 
 
 #--------------------------------------------------
@@ -1923,11 +1922,13 @@ IN THE SOFTWARE.} 1175645279
 page Limitations {* Cell size is machine dependent, generally 32 bits (4 bytes) or 64 bits
   (8 bytes) in size. <b>cell-size</b> returns the actual size in bytes.
 * Character size is machine and OS dependent.  Normally 8 bits (1 byte).
-  <b>char-size</b> returns the actual size in bytes.
+  <b>char-size</b> returns the actual size in bytes. This is normally
+  1 byte in size.
 * Quotes can be up to 64 elements (values, primitives, embedded quotes,
-  calls to other quotes, string pointers, etc) in length.
+  calls to other quotes, string pointers, etc) in length in most cases.
 * The data stack can hold up to 100 cells.
-* The return stack can hold up to 1024 cells.} 1178430367
+* The return stack can hold up to 1024 cells.
+} 1179082807
 
 
 #--------------------------------------------------
@@ -3574,8 +3575,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre
-} 1178882049
+#unpre} 1178882049
 
 
 # End of Notebook Database File

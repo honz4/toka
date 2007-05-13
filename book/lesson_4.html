@@ -78,16 +78,10 @@ used for return addresses.
 </p>
 <h2>Compiled Code</h2>
 
-<p>What does the compiled code (inside the new word "foo") look like? Well,
-the Toka language doesn't specify that. It just says that the result of
-executing "foo" has to be the same as if you executed its constituent
-words. Different Toka implementations can use different code generation
-strategies. Some may generate optimized machine language code. Others
-may generate machine language code that consists of a sequence of subroutine
-calls, one call to each constituent word. Perhaps the most common
-approach is "threaded code", in which the body of "foo" consists of an
+<p>What does the compiled code (inside the new word "foo") look like? Toka
+makes use of "threaded code", in which the body of "foo" consists of an
 array of addresses, one for each constituent. A tiny "tree walker"
-machine language code sequence grabs each address in turn and jumps to
+machine language code sequence grabs each address in turn and calls to
 it. Each approach has its advantages and disadvantages. Threaded code
 offers a good balance between speed, compactness, simplicity,
 portability, and ease of debugging. 
@@ -208,7 +202,8 @@ clear. If the intent of the new word were not so obvious, I would have
 added a line or two of commentary (beginning with "#!") before the
 definition. 
 </p>
-<p><i>Thus endeth the lesson</i></p>
+<p><i>Thus endeth the lesson</i>
+</p>
 
 <hr>
 
@@ -216,6 +211,6 @@ definition.
 
 <hr>
 
-<p><i>Notebook exported on Saturday, 12 May 2007, 17:18:38 PM EDT</i></p>
+<p><i>Notebook exported on Sunday, 13 May 2007, 15:07:25 PM EDT</i></p>
 
 </body></html>
