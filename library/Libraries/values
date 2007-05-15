@@ -1,0 +1,8 @@
+{
+  variable update
+  [ update @ [ ! ] [ @ ] ifTrueFalse update off ] is action
+  [ update on ]
+  [ ` [ invoke cell-size malloc # ` action compile ` ] invoke is ]
+} is value
+  is to
+

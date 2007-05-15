@@ -1,0 +1,49 @@
+#! ---------------------------------------------------------------------
+#! MODULE: ANS
+#! ---------------------------------------------------------------------
+#! A collection of words from ANS. There may be some slight differences,
+#! but it may be helpful if you desire to port an ANS FORTH application
+#! to Toka.
+#!
+#! Useful pieces from this will be moved out to other libraries over
+#! time.
+#! ---------------------------------------------------------------------
+#! Provides:
+#!    Data:
+#!              hld
+#!              holdaddr
+#!    Words:
+#!              within
+#!              spaces
+#!              num>char
+#!              >lower
+#!              char>num
+#!              digit?
+#!              <#
+#!              hold
+#!              #>
+#!              sign
+#!              #
+#!              #s
+#!              (ud.)
+#!
+#! ---------------------------------------------------------------------
+
+[ over - >r - r> < ] is within
+[ [ space ] iterate ] is spaces
+[ dup 9 > 7 and + char: 0 + ] is num>char
+[ dup 91 < [ dup 64 > [ 32 + ] ifTrue ] ifTrue ] is >lower
+[ >lower dup char: 9 > 39 and - char: 0 - ] is char>num
+[ char>num dup 0 base @ within ] is digit?
+
+66 chars is-array holdaddr
+variable hld
+
+[ 0 swap 0 hld ! ] is <#
+[ 1 hld +! holdaddr hld @ - c! ] is hold
+[ 2drop holdaddr ] is #>
+[ 0 < [ char: - hold ] ifTrue ] is sign
+[ base @ /mod rot num>char hold ] is #
+[ [ # 2dup or 0 <> ] whileTrue ] is #s
+[ <# #s #> ] is (ud.)
+

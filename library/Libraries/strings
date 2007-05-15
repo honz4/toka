@@ -1,0 +1,33 @@
+2 import strcpy    #! char *strcpy(char *dest, const char *src)
+3 import strncpy   #! char *strncpy(char *dest, const char *src, size_t n)
+2 import strcat    #! char *strcat(char *dest, const char *src)
+3 import strncat   #! char *strncat(char *dest, const char *src, size_t n)
+2 import strcmp    #! int strcmp(const char *s1, const char *s2)
+3 import strncmp   #! int strncmp(const char *s1, const char *s2, size_t n)
+2 import strchr    #! char *strchr(const char *s, int c)
+2 import strrchr   #! char *strrchr(const char *s, int c)
+2 import strstr    #! char *strstr(const char *haystack, const char *needle)
+1 import strlen    #! size_t strlen(const char *s)
+2 import strtok    #! char *strtok(char *str, const char *delim)
+
+2 chars is-array $[cr]
+13 0 $[cr] put-char-element
+2 chars is-array $[lf]
+10 0 $[lf] put-char-element
+
+[ >r count r> + malloc swap strcpy ] is grow-string
+[ swap count 1 + grow-string swap strcat ] is append-string 
+[ $[cr] append-string ] is +cr
+[ $[lf] append-string ] is +lf
+
+[ 1 grow-string ] is clone-string
+
+[ swap clone-string swap strtok ] is string-find-token
+[ swap clone-string swap strstr ] is string-find-substring
+[ swap clone-string swap strchr ] is string-find-char
+
+[ char: " parse swap append-string
+  compiler @
+  [ count dup malloc dup # swap copy ]
+  ifTrue
+] is after-"
