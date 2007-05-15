@@ -1,0 +1,25 @@
+#! /usr/bin/toka
+
+needs sockets
+needs strings
+
+{
+  variable| socket maxlength |
+
+  [ socket @ swap +lf count pWrite ] is send
+
+  1024 1024 * chars is-array buffer
+
+  " charleschilders.com" is-data URL
+  " GET / HTTP/0.9" is-data REQUEST
+
+  1024 1024 * chars maxlength !
+
+  URL 9812 pConnect socket !
+  REQUEST send
+
+  [ socket @ buffer maxlength @ pRead . cr cr cr 
+    buffer type reset
+  ] invoke 
+}
+cr bye

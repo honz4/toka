@@ -1,0 +1,34 @@
+#! /usr/bin/toka
+needs time
+needs scope
+
+[ lnparse type cr ] is t:
+
+{
+  time_t start
+  time_t end
+
+  [ start time drop
+    invoke
+    end time drop
+    end @ start @ - . ." seconds elapsed\n"
+  ]
+} is :time
+
+t: Stage 1: Empty Quotes
+t: ----------------------------------
+t: 100,000,000 iterations
+[ 100000000 [ ] iterate ] :time
+cr
+t: Stage 2: "1 dup swap drop drop"
+t: ----------------------------------
+t: 100,000,000 iterations
+[ 100000000 [ 1 dup swap drop drop ] iterate ] :time
+cr
+t: Stage 3: foo @ foo !
+t: ----------------------------------
+variable foo
+t: 100,000,000 iterations
+[ 100000000 [ foo @ foo ! ] iterate ] :time
+cr
+bye

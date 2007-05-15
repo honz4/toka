@@ -1,0 +1,7 @@
+1 import printf
+2 import printf as printf.1
+3 import printf as printf.2
+4 import printf as printf.3
+#! -------------------------------------
+[ " \^[%li;%liH" -rot 27 emit printf.2 ] is xy
+[ 1 1 xy ] is home
