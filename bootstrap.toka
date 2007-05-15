@@ -41,7 +41,7 @@
 #! ---------------------------------------
 [ char: " parse
   compiler @
-  [ count dup malloc dup # swap copy ]
+  [ # ] 
   ifTrue
 ] is-macro "
 
