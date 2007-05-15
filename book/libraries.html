@@ -10,13 +10,17 @@
 <h1>&nbsp;Libraries</h1>
 
 
-<p>Toka has an optional set of external libraries that allow significantly
-more functionality. These are not included with a standard Toka
-distribution and can be obtained at:
+<p>Toka has a set of external libraries that allow significantly
+more functionality. These are included with a standard Toka
+distribution, but must be built and installed:
 </p>
-<pre>  http://code.google.com/p/toka-library
+<pre>  cd library 
+  make install
+  make clean
 </pre>
 
+<p>You may need to be root for this to work.
+</p>
 <p>Libraries can be loaded with <b>needs</b>. For example, to load the
 <i>strings</i> library (if installed), do:
 </p>
@@ -32,18 +36,24 @@ project. To make use of this, use this at the start of a program:
 
 <h4>Library Documentation</h4>
 
-<p>Each library module contains some documentation at the start of its code.
-A few of the more significant library modules are documented here for
-your use.
-</p>
 
 <ul>
-<li> <a href="stringslibrary.html">StringsLibrary</a> 
-<li> <a href="timelibrary.html">TimeLibrary</a>
-<li> <a href="mathlibrary.html">MathLibrary</a> 
-<li> <a href="socketlibrary.html">SocketLibrary</a>
+<li> <span style="color: red;">[ANSLibrary]</span>
+<li> <span style="color: red;">[CaseLibrary]</span>
+<li> <span style="color: red;">[ConditionalsLibrary]</span>
+<li> <span style="color: red;">[ConsoleLibrary]</span>
+<li> <a href="ctypelibrary.html">CtypeLibrary</a>
+<li> <span style="color: red;">[DebugLibrary]</span>
+<li> <a href="floatslibrary.html">FloatsLibrary</a>
+<li> <a href="mathlibrary.html">MathLibrary</a>
+<li> <a href="quoteslibrary.html">QuotesLibrary</a>
+<li> <span style="color: red;">[ReadlineLibrary]</span>
 <li> <a href="shelllibrary.html">ShellLibrary</a>
-<li> <a href="floatslibrary.html">FloatsLibrary</a></ul>
+<li> <span style="color: red;">[SocketsLibrary]</span>
+<li> <a href="stringslibrary.html">StringsLibrary</a>
+<li> <a href="timelibrary.html">TimeLibrary</a>
+<li> <span style="color: red;">[ValuesLibrary]</span>
+</ul>
 
 
 
@@ -53,6 +63,6 @@ your use.
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 15 May 2007, 00:09:04 AM EDT</i></p>
+<p><i>Notebook exported on Tuesday, 15 May 2007, 19:43:25 PM EDT</i></p>
 
 </body></html>

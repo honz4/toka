@@ -361,6 +361,14 @@ faster to use than variables.} 1177888754
 
 
 #--------------------------------------------------
+# CtypeLibrary
+
+page CtypeLibrary {This library provides various imports from ctype.h for working with
+single character values.
+} 1179272565
+
+
+#--------------------------------------------------
 # data.c
 
 page data.c {= Use =
@@ -681,8 +689,7 @@ constant:
 
 #pre
   [ >r ` [ invoke r> # ` ] invoke is ] is const
-#unpre
-} 1179201979
+#unpre} 1179201979
 
 
 #--------------------------------------------------
@@ -915,8 +922,7 @@ start working through these sections.
 * [Stack Comments]
 
 === Advanced Topics ===
-* [Extending the Language]
-} 1179200416
+* [Extending the Language]} 1179200416
 
 
 #--------------------------------------------------
@@ -950,6 +956,10 @@ point numbers, and alternative versions of the main stack and math words.
   f/        ( ab-c )    Divide and get remainder
   :fstack   ( - )       Display all items on the float stack
   f.        ( n- )      Display the top item on the float stack
+  f=        ( ab-f )    Compare two floats
+  f<        ( ab-f )    Compare two floats
+  f>        ( ab-f )    Compare two floats
+  f<>       ( ab-f )    Compare two floats
 #unpre
 
 === Example ===
@@ -960,7 +970,8 @@ point numbers, and alternative versions of the main stack and math words.
   float: 200.12
   f+
   f.
-#unpre} 1178151284
+#unpre
+} 1179271861
 
 
 #--------------------------------------------------
@@ -1941,13 +1952,17 @@ the quote. This saves the overhead of calling the function at runtime.} 11787500
 #--------------------------------------------------
 # Libraries
 
-page Libraries {Toka has an optional set of external libraries that allow significantly
-more functionality. These are not included with a standard Toka
-distribution and can be obtained at:
+page Libraries {Toka has a set of external libraries that allow significantly
+more functionality. These are included with a standard Toka
+distribution, but must be built and installed:
 
 #pre
-  http://code.google.com/p/toka-library
+  cd library 
+  make install
+  make clean
 #unpre
+
+You may need to be root for this to work.
 
 Libraries can be loaded with <b>needs</b>. For example, to load the
 <i>strings</i> library (if installed), do:
@@ -1966,16 +1981,22 @@ project. To make use of this, use this at the start of a program:
 
 === Library Documentation ===
 
-Each library module contains some documentation at the start of its code.
-A few of the more significant library modules are documented here for
-your use.
-
-* [StringsLibrary] 
-* [TimeLibrary]
-* [MathLibrary] 
-* [SocketLibrary]
+* [ANSLibrary]
+* [CaseLibrary]
+* [ConditionalsLibrary]
+* [ConsoleLibrary]
+* [CtypeLibrary]
+* [DebugLibrary]
+* [FloatsLibrary]
+* [MathLibrary]
+* [QuotesLibrary]
+* [ReadlineLibrary]
 * [ShellLibrary]
-* [FloatsLibrary]} 1178150659
+* [SocketsLibrary]
+* [StringsLibrary]
+* [TimeLibrary]
+* [ValuesLibrary]
+} 1179271971
 
 
 #--------------------------------------------------
@@ -2507,6 +2528,51 @@ ifTrueFalse
 
 
 #--------------------------------------------------
+# QuotesLibrary
+
+page QuotesLibrary {This library provides a set of words for using quotes in new ways.
+
+#pre
+          apply
+          ( ab-... )
+          Evaluate quote 'a' and apply quote 'b' to each item
+          left on the stack by 'a'. '...' is the result.
+
+          fix?
+          ( ...-... )
+          Use this with apply to keep the stack balanced as
+          necessary.
+
+          [[
+          ( - )
+          Turn the compiler off, but does not close the
+          current quote.
+
+
+          ]]
+          ( - )
+          Turn the compiler back on; does not start a new
+          quote.
+
+          within
+          ( abc-f )
+          Check to see if 'c' is between 'a' and 'b' in size
+
+          range
+          ( ab-... )
+          Generate a sequence of numbers starting with 'a' and
+          ending with 'b'
+#unpre
+
+Examples:
+
+#pre
+  1 7 range [ fix? + ] apply .
+#unpre
+} 1179271809
+
+
+#--------------------------------------------------
 # Recent Changes
 
 page {Recent Changes} {[@recentChanges@]} 1026585675
@@ -2617,7 +2683,30 @@ The provided API follows:
   system
   ( $-n )
   Run string '$' as a shell command
-#unpre} 1177901415
+
+  getpid
+  ( -n )
+  Return the current process ID
+
+  fork
+  ( -f )
+  Fork the current process.
+ 
+  basename
+  ( $-$ )
+  Return the base name (name+extension), of a file.
+  Strips any directories from the filename.
+
+  mkdir
+  ( $m-n )
+  Create a directory named "$" with a mode of "m".
+
+  fnmatch
+  ( ab-f )
+  Returns TRUE if filename "a" matches the pattern in "b". 
+  Returns FALSE otherwise.
+#unpre
+} 1179271672
 
 
 #--------------------------------------------------

@@ -22,6 +22,28 @@ and doing actions normally done at the shell.
   system
   ( $-n )
   Run string '$' as a shell command
+
+  getpid
+  ( -n )
+  Return the current process ID
+
+  fork
+  ( -f )
+  Fork the current process.
+ 
+  basename
+  ( $-$ )
+  Return the base name (name+extension), of a file.
+  Strips any directories from the filename.
+
+  mkdir
+  ( $m-n )
+  Create a directory named "$" with a mode of "m".
+
+  fnmatch
+  ( ab-f )
+  Returns TRUE if filename "a" matches the pattern in "b". 
+  Returns FALSE otherwise.
 </pre>
 
 
@@ -31,6 +53,6 @@ and doing actions normally done at the shell.
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 15 May 2007, 00:09:04 AM EDT</i></p>
+<p><i>Notebook exported on Tuesday, 15 May 2007, 19:43:25 PM EDT</i></p>
 
 </body></html>
