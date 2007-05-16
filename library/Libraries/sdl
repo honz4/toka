@@ -1,0 +1,12 @@
+from libSDL.so
+1 import SDL_Init
+4 import SDL_SetVideoMode
+
+1 import SDL_LockSurface
+1 import SDL_UnlockSurface
+1 import SDL_Flip
+
+4 import SDL_MapRGB
+
+1 import SDL_Delay
+0 import SDL_Quit
