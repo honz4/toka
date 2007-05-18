@@ -7,6 +7,7 @@ CFLAGS  =  -O2 -shared -fPIC
 CC      =  gcc
 
 default:
+	@echo ==============================================
 	@echo Valid targets are:
 	@echo
 	@echo - install

@@ -5,3 +5,4 @@
 2 import mkdir
 0 import fork
 0 import getpid
+2 import rename
