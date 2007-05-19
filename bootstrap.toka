@@ -31,7 +31,7 @@
 #! Obtaining Character
 #! ---------------------------------------
 [ 255 and ] is >char
-[ SPACE parse @ >char
+[ wsparse @ >char
   compiler @ [ # ] ifTrue
 ] is-macro char:
 
