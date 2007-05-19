@@ -5,4 +5,3 @@
   [ ` [ invoke cell-size malloc # ` action compile ` ] invoke is ]
 } is value
   is to
-
