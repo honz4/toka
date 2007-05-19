@@ -1,8 +1,25 @@
 #! /usr/bin/toka
-needs time
-needs scope
+#! --------------------------------------------------------
+#! This is a set of benchmarks for Toka. It requires the
+#! following libraries to be installed:
+#!
+#!  - time
+#!  - shell
+#!
+#! The basic idea is to take common operations and run them
+#! insane numbers of times. In many cases, this will mean
+#! cycling them in a loop 100 million times or more.
+#!
+#! File operations get off a bit easier; we only create and
+#! read in files about 10 thousand times, mostly since I/O
+#! is known to be slower than other operations.
+#!
+#! --------------------------------------------------------
 
-[ lnparse type cr ] is t:
+needs time
+needs shell
+
+[ lnparse type cr reset ] is t:
 
 {
   time_t start
@@ -20,15 +37,42 @@ t: ----------------------------------
 t: 100,000,000 iterations
 [ 100000000 [ ] iterate ] :time
 cr
+
+
 t: Stage 2: "1 dup swap drop drop"
 t: ----------------------------------
 t: 100,000,000 iterations
 [ 100000000 [ 1 dup swap drop drop ] iterate ] :time
 cr
+
+
 t: Stage 3: foo @ foo !
 t: ----------------------------------
 variable foo
 t: 100,000,000 iterations
 [ 100000000 [ foo @ foo ! ] iterate ] :time
 cr
+
+
+t: Stage 4: File Operations
+t: ----------------------------------
+t: a) Creating a 25MiB file (1,000 iterations)
+variable| fid buffer |
+1024 1024 * 25 * malloc buffer !
+[ 100
+  [ " /tmp/big.toka" "W" file.open fid !
+    fid @ buffer @ 1024 1024 * 25 * file.write drop 
+    fid @ file.close 
+  ] iterate
+] :time
+t: b) Slurping into a buffer (10,000 iterations)
+[ 10000 [ " /tmp/big.toka" file.slurp drop ] iterate ] :time
+t: c) Cleaning up...
+#! [ " /tim/big.toka" remove gc ] :time
+cr
+
+
+t: ----------------------------------
+t: All done!
+t: ----------------------------------
 bye

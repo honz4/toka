@@ -1,0 +1,39 @@
+#! /usr/bin/toka
+
+needs values
+
+10 cells is-array foo
+
+20 1 foo put-element
+50 2 foo put-element
+650 3 foo put-element
+120 4 foo put-element
+110 5 foo put-element
+101 6 foo put-element
+1321 7 foo put-element
+1310 8 foo put-element
+987 9 foo put-element
+10 10 foo put-element
+
+value array  value count
+value changed
+
+[ ( address count -- )
+  to count to array
+  count
+  [
+    count
+    [ i array get-element i 1+ array get-element 2dup >
+      [ i array put-element  i 1+ array put-element ]
+      [ 2drop ] ifTrueFalse
+    ] +iterate
+    count 1- to count
+  ] +iterate
+] is bsort
+
+[ [ dup i swap get-element . ] +iterate drop cr ] is .array
+
+foo 10 .array
+foo 10 bsort
+foo 10 .array
+bye
