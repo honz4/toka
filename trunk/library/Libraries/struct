@@ -1,0 +1,35 @@
+{
+  variable source
+
+  [ ( string - string )
+    " ." swap append-string append-string 
+  ] is (member)
+
+  [ ( string string size -- )   
+    >r (member) r> malloc swap is-data 
+  ] is member
+
+  [ source @ swap char-size member ] is .char
+  [ source @ swap cell-size member ] is .cell
+
+  {
+    [ parser off
+      wsparse source !
+    ] is entry
+
+    [ parser on ] is exit
+
+    [ ` exit compile ` ] invoke is ]
+    [ ` [ invoke ` entry compile ]
+  } is-macro struct{
+    is-macro }struct
+
+  ` .cell
+  ` .char
+  ` }struct
+  ` struct{
+
+} is-macro struct{
+  is-macro }struct
+  is .char
+  is .cell
