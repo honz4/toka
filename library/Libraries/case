@@ -14,10 +14,6 @@
 #!              Compare 'n' to value in '<cond>' and invoke
 #!              quote 'q' if TRUE.
 #!
-#!              string-switch
-#!              ( n- )
-#!              Store pointer 'n' into '<cond>' variable
-#!
 #!              string-case
 #!              ( nq- )
 #!              Compare string 'n' to string pointed to by '<cond>' and 

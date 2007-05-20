@@ -1,0 +1,62 @@
+<html><head><title>toka.nbk: BsortLibrary</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="building.html">Building</a> | Previous Page: <a href="bitsc.html">bits.c</a></p>
+
+<hr>
+
+<h1>&nbsp;BsortLibrary</h1>
+
+
+<p>This library provides an implementation of <i>bubble sort</i> for
+sorting arrays. It requires that the <a href="valueslibrary.html">ValuesLibrary</a> be loaded first.
+</p>
+<p>Provides:
+</p>
+<ul>
+<li> bsort
+
+<ul>
+<li> <i>array number_elements -- </i>
+
+</ul>
+
+</ul>
+
+<p>Example:
+</p>
+<pre> needs values
+ needs bsort
+
+  10 cells is-array foo
+
+   20   1 foo put-element
+   50   2 foo put-element
+  650   3 foo put-element
+  120   4 foo put-element
+  110   5 foo put-element
+  101   6 foo put-element
+ 1321   7 foo put-element
+ 1310   8 foo put-element
+  987   9 foo put-element
+   10  10 foo put-element
+
+ [ [ dup i swap get-element . ] +iterate drop cr ] is .array
+
+ foo 10 .array
+ foo 10 bsort
+ foo 10 .array
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="building.html">Building</a> | Previous Page: <a href="bitsc.html">bits.c</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Sunday, 20 May 2007, 12:14:18 PM EDT</i></p>
+
+</body></html>

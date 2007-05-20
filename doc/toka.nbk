@@ -1,6 +1,33 @@
 # Notebook Database File
 
 #--------------------------------------------------
+# ANSLibrary
+
+page ANSLibrary {This is a library that provides a partial subset of ANS FORTH
+functionality to Toka. It is not complete, and may have bugs.
+
+Words provided:
+* within
+* spaces
+* num>char
+* >lower
+* char>num
+* digit?
+* holdaddr
+** Variable
+* hld
+** Variable
+* &lt;#
+* hold
+* #&gt;
+* sign
+* #
+* #s
+* (ud.)
+} 1179676690
+
+
+#--------------------------------------------------
 # Arrays
 
 page Arrays {The standard bootstrap adds support for arrays. These are a superset of
@@ -74,6 +101,44 @@ xor      ( ab-c )    Perform a bitwise XOR
 
 
 #--------------------------------------------------
+# BsortLibrary
+
+page BsortLibrary {This library provides an implementation of <i>bubble sort</i> for
+sorting arrays. It requires that the [ValuesLibrary] be loaded first.
+
+Provides:
+* bsort
+** <i>array number_elements -- </i>
+
+Example:
+
+#pre
+ needs values
+ needs bsort
+
+  10 cells is-array foo
+
+   20   1 foo put-element
+   50   2 foo put-element
+  650   3 foo put-element
+  120   4 foo put-element
+  110   5 foo put-element
+  101   6 foo put-element
+ 1321   7 foo put-element
+ 1310   8 foo put-element
+  987   9 foo put-element
+   10  10 foo put-element
+
+ [ [ dup i swap get-element . ] +iterate drop cr ] is .array
+
+ foo 10 .array
+ foo 10 bsort
+ foo 10 .array
+#unpre
+} 1179675922
+
+
+#--------------------------------------------------
 # Building
 
 page Building {To build Toka, you will need the following:
@@ -105,6 +170,53 @@ as well:
 #pre
   make docs
 #unpre} 1177366685
+
+
+#--------------------------------------------------
+# CaseLibrary
+
+page CaseLibrary {This library provides basic functionality for a switch/case style
+construct for both numbers and strings.
+
+
+Provides:
+
+* &lt;cond&gt;
+** Data element, stores the value to check against
+* switch
+** Stores the value to check against into the <b>&lt;cond&gt;</b> variable
+** <i>number -- </i>
+* case
+** Compare NOS to value in <b>&lt;cond&gt;</b> and invoke the quote (TOS)
+   if they match
+** <i>number quote --</i>
+* string-case
+** Compare string in NOS to value in <b>&lt;cond&gt;</b> and invoke the
+   quote (TOS) if they match
+** <i>string_pointer quote --</i>
+
+Example:
+
+#pre
+ needs case
+ 
+ [ switch
+   1 [ ." One!\n"   ] case
+   2 [ ." Two!\n"   ] case
+   3 [ ." Three!\n" ] case
+   4 [ ." Four!\n"  ] case
+   5 [ ." Five!\n"  ] case
+ ] is try
+ 
+ ." Inputs are: 1 3 5 2 5 4\n"
+ 1 try
+ 3 try
+ 5 try
+ 2 try
+ 5 try
+ 4 try
+#unpre
+} 1179676345
 
 
 #--------------------------------------------------
@@ -304,6 +416,28 @@ Compare TOS and NOS, return a flag.
 
 
 #--------------------------------------------------
+# ConditionalsLibrary
+
+page ConditionalsLibrary {This library provides additional conditionals to help with comparisions.
+
+Provides:
+
+* &gt;=
+** Return TRUE if x greater than or equal to y. FALSE otherwise.
+** <i>x y -- flag</i>
+* &lt;=
+** Return TRUE if x less than or equal to y. FALSE otherwise.
+** <i>x y -- flag</i>
+* &gt;!=
+** Return TRUE if x greater than or not equal to y. FALSE otherwise.
+** <i>x y -- flag</i>
+* &lt;!=
+** Return TRUE if x less than or not equal to y. FALSE otherwise.
+** <i>x y -- flag</i>
+} 1179677225
+
+
+#--------------------------------------------------
 # console.c
 
 page console.c {= Use =
@@ -340,6 +474,23 @@ bye
 
 
 #--------------------------------------------------
+# ConsoleLibrary
+
+page ConsoleLibrary {This is the start of a library to make developing console-based
+applications easier.
+
+Provides:
+
+* xy
+** Position the cursor to any position on the screen
+** <i>x y --</i>
+* home
+** Position the cursor to the top left corner of the screen
+** <i>--</i>
+} 1179677319
+
+
+#--------------------------------------------------
 # Constants
 
 page Constants {For data that does not change, a <i>constant</i> can be created as
@@ -364,8 +515,7 @@ faster to use than variables.} 1177888754
 # CtypeLibrary
 
 page CtypeLibrary {This library provides various imports from ctype.h for working with
-single character values.
-} 1179272565
+single character values.} 1179272565
 
 
 #--------------------------------------------------
@@ -970,8 +1120,7 @@ point numbers, and alternative versions of the main stack and math words.
   float: 200.12
   f+
   f.
-#unpre
-} 1179271861
+#unpre} 1179271861
 
 
 #--------------------------------------------------
@@ -1982,21 +2131,24 @@ project. To make use of this, use this at the start of a program:
 === Library Documentation ===
 
 * [ANSLibrary]
+* [BsortLibrary]
 * [CaseLibrary]
 * [ConditionalsLibrary]
 * [ConsoleLibrary]
 * [CtypeLibrary]
-* [DebugLibrary]
 * [FloatsLibrary]
 * [MathLibrary]
 * [QuotesLibrary]
 * [ReadlineLibrary]
+* [RegexLibrary]
+* [SDLLibrary]
 * [ShellLibrary]
 * [SocketsLibrary]
 * [StringsLibrary]
+* [StructLibrary]
 * [TimeLibrary]
 * [ValuesLibrary]
-} 1179271971
+} 1179677393
 
 
 #--------------------------------------------------
@@ -2568,14 +2720,70 @@ Examples:
 
 #pre
   1 7 range [ fix? + ] apply .
-#unpre
-} 1179271809
+#unpre} 1179271809
+
+
+#--------------------------------------------------
+# ReadlineLibrary
+
+page ReadlineLibrary {This library provides access to the GNU readline library.
+
+Imports from readline library:
+* readline
+** Read a line of text into a dynamically allocated buffer
+** <i>-- string_pointer</i>
+} 1179676548
 
 
 #--------------------------------------------------
 # Recent Changes
 
 page {Recent Changes} {[@recentChanges@]} 1026585675
+
+
+#--------------------------------------------------
+# RegexLibrary
+
+page RegexLibrary {This library provides support for traditional POSIX-style regular
+expression matching.
+
+
+Imports from the standard C library:
+
+* regcomp
+* regexec
+* regerror
+* regfree
+
+Wrapper functions:
+
+* regex:
+** Create a regular expression
+** <i>string "name" -- </i>
+* try-regex
+** Run a regular expression against a string
+** <i>expression string max_number_of_matches array -- flag</i>
+
+Example:
+
+#pre
+  needs regex
+  
+  2 cells is-array pmatch
+  " This is a test: Hello, World!" is-data test1
+  " This is a test: Goodbye, World!" is-data test2
+  
+  " [Hh]ello" regex: preg
+  
+  ." Test 1: Search for [Hh]ello in: " test1 type cr
+  preg test1 2 pmatch try-regex
+  [ 0 pmatch get-element test1 + type cr ] [ ." No match found\n" ] ifTrueFalse
+  
+  ." Test 2: Search for [Hh]ello in: " test2 type cr
+  preg test2 2 pmatch try-regex
+  [ 0 pmatch get-element test2 + type cr ] [ ." No match found\n" ] ifTrueFalse
+#unpre
+} 1179675743
 
 
 #--------------------------------------------------
@@ -2662,6 +2870,30 @@ wanted to display each of the script arguments, we could do:
 
 
 #--------------------------------------------------
+# SDLLibrary
+
+page SDLLibrary {This library is the start of support for using the <i>Simple Directmedia
+Layer</i> in Toka. It is not complete and has no wrapper functionality at
+this time.
+
+Imports from libsdl:
+
+* SDL_Init
+* SDL_Quit
+* SDL_SetVideoMode
+* SDL_GetVideoMode
+* SDL_FreeSurface
+* SDL_LockSurface
+* SDL_UnlockSurface
+* SDL_Flip
+* SDL_MapRGB
+* SDL_Delay
+* SDL_GetTicks
+* SDL_WM_SetCaption
+} 1179676477
+
+
+#--------------------------------------------------
 # Search
 
 page Search {[@searchIndex@]} 1175217539
@@ -2705,8 +2937,7 @@ The provided API follows:
   ( ab-f )
   Returns TRUE if filename "a" matches the pattern in "b". 
   Returns FALSE otherwise.
-#unpre
-} 1179271672
+#unpre} 1179271672
 
 
 #--------------------------------------------------
@@ -2750,6 +2981,41 @@ This API, while minimalistic, is sufficient to allow development of both
 client and server applications. It has been used in conjunction with the
 [StringsLibrary] and the [ShellLibrary] to implement a working HTTP
 server.} 1177901287
+
+
+#--------------------------------------------------
+# SocketsLibrary
+
+page SocketsLibrary {This library was provided by erider to allow working with sockets. It is
+sufficient to handle the needs of a basic IRC client, HTTP server, and
+other tasks.
+
+Requires:
+
+* sockets.so (built during installation)
+
+Provides:
+
+* pBind
+** <i>n -- x</i>
+** Bind to a specific port
+* pConnect
+** <i>$ n -- s</i>
+** Connect to host (string '$') at port 'n'. Returns a socket.
+* pAccept
+** <i>n -- x</i>
+* pRead
+** <i>s b l -- n</i>
+** Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
+   the number of bytes read.
+* pWrite
+** <i>s b l -- n</i>
+** Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
+   the number of bytes written.
+* pClose
+** <i>s -- x</i>
+** Attempt to close socket 's'.
+} 1179677630
 
 
 #--------------------------------------------------
@@ -2942,6 +3208,45 @@ allow for many common actions to be done quickly and easily.
             Append a carriage return (ascii 10) to a string. Returns
             a new string.
 #unpre} 1177901521
+
+
+#--------------------------------------------------
+# StructLibrary
+
+page StructLibrary {This library allows for creation of variable sets with a specific form.
+
+
+Provides:
+
+* struct{
+** Begin a structure
+** <i>--</i>
+* }struct
+** End a structure
+** <i>"name" --</i>
+* .char
+** Create a char-size variable
+** <i>string --</i>
+* .cell
+** Create a cell-size variable
+** <i>string --</i>
+
+Example:
+
+#pre
+  needs struct
+
+  struct{
+   " x" .cell
+   " y" .cell
+  }struct POINT
+
+  POINT foo
+
+  foo.x @ .
+  foo.y @ .
+#unpre
+} 1179676993
 
 
 #--------------------------------------------------
@@ -3372,6 +3677,32 @@ parentheses is just a comment and need not be entered.
   nip ( xyz-xz )
   tuck ( xy-yxy )
 #unpre} 1177452284
+
+
+#--------------------------------------------------
+# ValuesLibrary
+
+page ValuesLibrary {This library provides support for <i>values</i> a special form of
+variable.
+
+Provided:
+
+* value
+** Create a new value
+** <i>"name" -- </i>
+* to
+** Set a value's value
+
+Example:
+
+#pre
+  needs values
+  value foo
+  foo .
+  100 to foo
+  foo .
+#unpre
+} 1179676794
 
 
 #--------------------------------------------------

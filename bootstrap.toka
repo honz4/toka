@@ -128,7 +128,7 @@
 ] is variable
 [ parser @ >r
   parser off
-  [ SPACE parse
+  [ wsparse
     dup c@ char: | <>
     [ variable TRUE ] [ drop FALSE ] ifTrueFalse
   ] whileTrue

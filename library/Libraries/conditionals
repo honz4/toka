@@ -2,8 +2,6 @@
 #! MODULE: conditionals
 #!
 #! Provides:
-#!    Data:
-#!              <cond>
 #!    Words:
 #!              >=
 #!              ( xy-f )
