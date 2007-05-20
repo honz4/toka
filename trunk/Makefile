@@ -4,7 +4,8 @@
 # ==============================================
 
 CC = gcc
-CFLAGS = -O2 -s -Wall
+CFLAGS = -g -O2 -Wall
+#CFLAGS = -s -O3 -Wall -ffast-math -funsafe-loop-optimizations
 LDFLAGS = `$(CC) other/needdl.c -ldl 2>/dev/null && echo "-ldl" && rm a.out`
 #HEADERS = -I/boot/develop/headers
 

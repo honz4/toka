@@ -11,7 +11,7 @@
 #! cycling them in a loop 100 million times or more.
 #!
 #! File operations get off a bit easier; we only create and
-#! read in files about 100 times, mostly since I/O is known
+#! read in files about 2,000 times, mostly since I/O is known
 #! to be slower than other operations.
 #!
 #! --------------------------------------------------------
@@ -74,29 +74,32 @@ t: f) 5 2 mod (100,000,000 iterations)
 cr
 
 
-t: Stage 5: bsort (6000 element array)
+t: Stage 5: File Operations
 t: ----------------------------------
-6000 cells is-array foo
-6000 [ random i foo put-element ] iterate
-[ foo 6000 bsort ] :time
-cr
-
-
-t: Stage 6: File Operations
-t: ----------------------------------
-t: a) Creating a 25MiB file (100 iterations)
+t: a) Creating a 1MiB file (2,000 iterations)
 variable| fid buffer |
-1024 1024 * 25 * malloc buffer !
-[ 100
+1024 1024 * malloc buffer !
+[ 2000
   [ " /tmp/big.toka" "W" file.open fid !
-    fid @ buffer @ 1024 1024 * 25 * file.write drop 
+    fid @ buffer @ 1024 1024 * file.write drop 
     fid @ file.close 
   ] iterate
 ] :time
-t: b) Slurping into a buffer (100 iterations)
-[ 100 [ " /tmp/big.toka" file.slurp drop ] iterate ] :time
+t: b) Slurping into a buffer (2,000 iterations)
+[ 2000 [ " /tmp/big.toka" file.slurp drop ] iterate ] :time
 t: c) Cleaning up...
 #! [ " /tim/big.toka" remove gc ] :time
+cr
+
+
+t: Stage 6: Bubble Sort (6,000 numbers)
+t: ----------------------------------
+6001 cells is-array foo
+t: a) Filling with random numbers
+[ 6000 [ random i foo put-element ] iterate ] :time
+t: b) Perform bubble sort
+[ foo 6000 bsort ] :time
+gc
 cr
 
 
