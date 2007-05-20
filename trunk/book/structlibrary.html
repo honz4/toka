@@ -1,0 +1,74 @@
+<html><head><title>toka.nbk: StructLibrary</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="threading_model.html">threading model</a> | Previous Page: <a href="stringslibrary.html">StringsLibrary</a></p>
+
+<hr>
+
+<h1>&nbsp;StructLibrary</h1>
+
+
+<p>This library allows for creation of variable sets with a specific form.
+</p>
+<p>Provides:
+</p>
+
+<ul>
+<li> struct{
+
+<ul>
+<li> Begin a structure
+<li> <i>--</i>
+</ul>
+
+<li> }struct
+
+<ul>
+<li> End a structure
+<li> <i>"name" --</i>
+</ul>
+
+<li> .char
+
+<ul>
+<li> Create a char-size variable
+<li> <i>string --</i>
+</ul>
+
+<li> .cell
+
+<ul>
+<li> Create a cell-size variable
+<li> <i>string --</i>
+
+</ul>
+
+</ul>
+
+<p>Example:
+</p>
+<pre>  needs struct
+
+  struct{
+   " x" .cell
+   " y" .cell
+  }struct POINT
+
+  POINT foo
+
+  foo.x @ .
+  foo.y @ .
+</pre>
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="threading_model.html">threading model</a> | Previous Page: <a href="stringslibrary.html">StringsLibrary</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Sunday, 20 May 2007, 12:14:18 PM EDT</i></p>
+
+</body></html>

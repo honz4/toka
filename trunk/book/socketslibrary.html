@@ -1,0 +1,84 @@
+<html><head><title>toka.nbk: SocketsLibrary</title>
+</head>
+<body>
+
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="stack_comments.html">Stack Comments</a> | Previous Page: <a href="socketlibrary.html">SocketLibrary</a></p>
+
+<hr>
+
+<h1>&nbsp;SocketsLibrary</h1>
+
+
+<p>This library was provided by erider to allow working with sockets. It is
+sufficient to handle the needs of a basic IRC client, HTTP server, and
+other tasks.
+</p>
+<p>Requires:
+</p>
+
+<ul>
+<li> sockets.so (built during installation)
+
+</ul>
+
+<p>Provides:
+</p>
+
+<ul>
+<li> pBind
+
+<ul>
+<li> <i>n -- x</i>
+<li> Bind to a specific port
+</ul>
+
+<li> pConnect
+
+<ul>
+<li> <i>$ n -- s</i>
+<li> Connect to host (string '$') at port 'n'. Returns a socket.
+</ul>
+
+<li> pAccept
+
+<ul>
+<li> <i>n -- x</i>
+</ul>
+
+<li> pRead
+
+<ul>
+<li> <i>s b l -- n</i>
+<li> Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
+   the number of bytes read.
+</ul>
+
+<li> pWrite
+
+<ul>
+<li> <i>s b l -- n</i>
+<li> Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
+   the number of bytes written.
+</ul>
+
+<li> pClose
+
+<ul>
+<li> <i>s -- x</i>
+<li> Attempt to close socket 's'.
+</ul>
+
+</ul>
+
+
+
+<hr>
+
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="stack_comments.html">Stack Comments</a> | Previous Page: <a href="socketlibrary.html">SocketLibrary</a></p>
+
+<hr>
+
+<p><i>Notebook exported on Sunday, 20 May 2007, 12:14:18 PM EDT</i></p>
+
+</body></html>
