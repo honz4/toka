@@ -1,6 +1,7 @@
 #! /usr/bin/toka
 
 needs values
+needs bsort
 
 10 cells is-array foo
 
@@ -14,22 +15,6 @@ needs values
 1310 8 foo put-element
 987 9 foo put-element
 10 10 foo put-element
-
-value array  value count
-value changed
-
-[ ( address count -- )
-  to count to array
-  count
-  [
-    count
-    [ i array get-element i 1+ array get-element 2dup >
-      [ i array put-element  i 1+ array put-element ]
-      [ 2drop ] ifTrueFalse
-    ] +iterate
-    count 1- to count
-  ] +iterate
-] is bsort
 
 [ [ dup i swap get-element . ] +iterate drop cr ] is .array
 
