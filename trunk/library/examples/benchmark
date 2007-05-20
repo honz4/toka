@@ -18,6 +18,9 @@
 
 needs time
 needs shell
+needs values
+needs bsort
+needs math
 
 [ lnparse type cr reset ] is t:
 
@@ -71,7 +74,15 @@ t: f) 5 2 mod (100,000,000 iterations)
 cr
 
 
-t: Stage 5: File Operations
+t: Stage 5: bsort (6000 element array)
+t: ----------------------------------
+6000 cells is-array foo
+6000 [ random i foo put-element ] iterate
+[ foo 6000 bsort ] :time
+cr
+
+
+t: Stage 6: File Operations
 t: ----------------------------------
 t: a) Creating a 25MiB file (100 iterations)
 variable| fid buffer |
