@@ -11,8 +11,8 @@
 #! cycling them in a loop 100 million times or more.
 #!
 #! File operations get off a bit easier; we only create and
-#! read in files about 10 thousand times, mostly since I/O
-#! is known to be slower than other operations.
+#! read in files about 100 times, mostly since I/O is known
+#! to be slower than other operations.
 #!
 #! --------------------------------------------------------
 
@@ -54,25 +54,7 @@ t: 100,000,000 iterations
 cr
 
 
-t: Stage 4: File Operations
-t: ----------------------------------
-t: a) Creating a 25MiB file (1,000 iterations)
-variable| fid buffer |
-1024 1024 * 25 * malloc buffer !
-[ 100
-  [ " /tmp/big.toka" "W" file.open fid !
-    fid @ buffer @ 1024 1024 * 25 * file.write drop 
-    fid @ file.close 
-  ] iterate
-] :time
-t: b) Slurping into a buffer (10,000 iterations)
-[ 10000 [ " /tmp/big.toka" file.slurp drop ] iterate ] :time
-t: c) Cleaning up...
-#! [ " /tim/big.toka" remove gc ] :time
-cr
-
-
-t: Stage 5: Math Operations
+t: Stage 4: Math Operations
 t: ----------------------------------
 t: a) 1 2 + (100,000,000 iterations)
 [ 100000000 [ 1 2 + drop ] iterate ] :time
@@ -86,6 +68,24 @@ t: e) 4 2 / (100,000,000 iterations)
 [ 100000000 [ 4 2 / drop ] iterate ] :time
 t: f) 5 2 mod (100,000,000 iterations)
 [ 100000000 [ 5 2 mod drop ] iterate ] :time
+cr
+
+
+t: Stage 5: File Operations
+t: ----------------------------------
+t: a) Creating a 25MiB file (100 iterations)
+variable| fid buffer |
+1024 1024 * 25 * malloc buffer !
+[ 100
+  [ " /tmp/big.toka" "W" file.open fid !
+    fid @ buffer @ 1024 1024 * 25 * file.write drop 
+    fid @ file.close 
+  ] iterate
+] :time
+t: b) Slurping into a buffer (100 iterations)
+[ 100 [ " /tmp/big.toka" file.slurp drop ] iterate ] :time
+t: c) Cleaning up...
+#! [ " /tim/big.toka" remove gc ] :time
 cr
 
 
