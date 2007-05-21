@@ -5,7 +5,7 @@
 # Author:  Charles R. Childers, crc(at)retroforth.org
 # License: Public Domain
 #
-# Version: 2006-03-23
+# Version: 2006-05-20
 #
 ##############################################################################
 
@@ -13,8 +13,10 @@ syntax "toka" "\.toka$"
 color brightyellow  "[0-9]"
 color brightred     "\[|\]"
 color brightgreen   "\{|\}"
-color green         "invoke|iterate|\+iterate|recurse|whileTrue|whileFalse"
+color green         "invoke|iterate|recurse|\+iterate|whileTrue|whileFalse"
 color brightblue    "\#\!.*"
+color brightyellow  start=" "" end=""|$"
+color brightyellow  start=" \."" end=""|$"
 color cyan          start=" is "        end="$"
 color cyan          start=" is-data "   end="$"
 color cyan          start=" is-macro "  end="$"
