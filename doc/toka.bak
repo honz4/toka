@@ -23,8 +23,7 @@ Words provided:
 * sign
 * #
 * #s
-* (ud.)
-} 1179676690
+* (ud.)} 1179676690
 
 
 #--------------------------------------------------
@@ -134,8 +133,7 @@ Example:
  foo 10 .array
  foo 10 bsort
  foo 10 .array
-#unpre
-} 1179675922
+#unpre} 1179675922
 
 
 #--------------------------------------------------
@@ -215,8 +213,7 @@ Example:
  2 try
  5 try
  4 try
-#unpre
-} 1179676345
+#unpre} 1179676345
 
 
 #--------------------------------------------------
@@ -433,8 +430,7 @@ Provides:
 ** <i>x y -- flag</i>
 * &lt;!=
 ** Return TRUE if x less than or not equal to y. FALSE otherwise.
-** <i>x y -- flag</i>
-} 1179677225
+** <i>x y -- flag</i>} 1179677225
 
 
 #--------------------------------------------------
@@ -486,8 +482,7 @@ Provides:
 ** <i>x y --</i>
 * home
 ** Position the cursor to the top left corner of the screen
-** <i>--</i>
-} 1179677319
+** <i>--</i>} 1179677319
 
 
 #--------------------------------------------------
@@ -2137,6 +2132,7 @@ project. To make use of this, use this at the start of a program:
 * [ConsoleLibrary]
 * [CtypeLibrary]
 * [FloatsLibrary]
+* [LocalsLibrary]
 * [MathLibrary]
 * [QuotesLibrary]
 * [ReadlineLibrary]
@@ -2148,7 +2144,7 @@ project. To make use of this, use this at the start of a program:
 * [StructLibrary]
 * [TimeLibrary]
 * [ValuesLibrary]
-} 1179677393
+} 1179712007
 
 
 #--------------------------------------------------
@@ -2731,8 +2727,7 @@ page ReadlineLibrary {This library provides access to the GNU readline library.
 Imports from readline library:
 * readline
 ** Read a line of text into a dynamically allocated buffer
-** <i>-- string_pointer</i>
-} 1179676548
+** <i>-- string_pointer</i>} 1179676548
 
 
 #--------------------------------------------------
@@ -2782,8 +2777,7 @@ Example:
   ." Test 2: Search for [Hh]ello in: " test2 type cr
   preg test2 2 pmatch try-regex
   [ 0 pmatch get-element test2 + type cr ] [ ." No match found\n" ] ifTrueFalse
-#unpre
-} 1179675743
+#unpre} 1179675743
 
 
 #--------------------------------------------------
@@ -2889,8 +2883,7 @@ Imports from libsdl:
 * SDL_MapRGB
 * SDL_Delay
 * SDL_GetTicks
-* SDL_WM_SetCaption
-} 1179676477
+* SDL_WM_SetCaption} 1179676477
 
 
 #--------------------------------------------------
@@ -2997,25 +2990,24 @@ Requires:
 Provides:
 
 * pBind
-** ( n-x )
+** <i>n -- x</i>
 ** Bind to a specific port
 * pConnect
-** ( $n-s )
+** <i>$ n -- s</i>
 ** Connect to host (string '$') at port 'n'. Returns a socket.
 * pAccept
-** ( n-x )
+** <i>n -- x</i>
 * pRead
-** ( sbl-n )
+** <i>s b l -- n</i>
 ** Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
    the number of bytes read.
 * pWrite
-** ( sbl-n )
+** <i>s b l -- n</i>
 ** Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
    the number of bytes written.
 * pClose
-** ( s-x )
-** Attempt to close socket 's'.
-} 1179677559
+** <i>s -- x</i>
+** Attempt to close socket 's'.} 1179677630
 
 
 #--------------------------------------------------
@@ -3245,8 +3237,7 @@ Example:
 
   foo.x @ .
   foo.y @ .
-#unpre
-} 1179676993
+#unpre} 1179676993
 
 
 #--------------------------------------------------
@@ -3701,8 +3692,7 @@ Example:
   foo .
   100 to foo
   foo .
-#unpre
-} 1179676794
+#unpre} 1179676794
 
 
 #--------------------------------------------------
