@@ -2143,8 +2143,7 @@ project. To make use of this, use this at the start of a program:
 * [StringsLibrary]
 * [StructLibrary]
 * [TimeLibrary]
-* [ValuesLibrary]
-} 1179712007
+* [ValuesLibrary]} 1179712007
 
 
 #--------------------------------------------------
@@ -2184,6 +2183,31 @@ page Limitations {* Cell size is machine dependent, generally 32 bits (4 bytes) 
   calls to other quotes, string pointers, etc) in length in most cases.
 * The data stack can hold up to 100 cells.
 * The return stack can hold up to 1024 cells.} 1179082807
+
+
+#--------------------------------------------------
+# LocalsLibrary
+
+page LocalsLibrary {This library adds a form of local variable to Toka. Words using this are
+not reentrant, but it may help make some pieces of code cleaner.
+
+Provided:
+* local[
+** Start a new localized quote
+** <i>"names.... |" -- pointer</i>
+* ]local
+** Close a localized quote
+** <i> -- </i>
+
+Example:
+
+#pre
+ local[ a b c | 
+        a ! b ! c !
+        a @ c @ * b @ + .
+ ]local is foo
+ foo
+#unpre} 1179712142
 
 
 #--------------------------------------------------
@@ -3834,8 +3858,8 @@ These are words that are built into the Toka executable. If the
 that will be provided.
 
 #pre
-<<       ( ab-c )    Shift 'b' left by 'a' bits
->>       ( ab-c )    Shift 'b' right by 'a' bits
+<<       ( ab-c )    Shift 'a' left by 'b' bits
+>>       ( ab-c )    Shift 'a' right by 'b' bits
 and      ( ab-c )    Perform a bitwise AND
 or       ( ab-c )    Perform a bitwise OR
 xor      ( ab-c )    Perform a bitwise XOR
@@ -4071,7 +4095,8 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre} 1178882049
+#unpre
+} 1179798218
 
 
 # End of Notebook Database File

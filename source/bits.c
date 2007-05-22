@@ -21,30 +21,30 @@ extern long stack[], rstack[], sp, rsp;
 
 
 /******************************************************
- *|G| <<       ( ab-c )    Shift 'b' left by 'a' bits
+ *|G| <<       ( ab-c )    Shift 'a' left by 'b' bits
  *
  *|F| lshift()
- *|F| Shift TOS left by NOS bits
+ *|F| Shift NOS left by TOS bits
  *|F|
  ******************************************************/
 void lshift()
 {
-  long a = TOS, b = NOS;
+  long b = TOS, a = NOS;
   DROP;
   TOS = a << b;
 }
 
 
 /******************************************************
- *|G| >>       ( ab-c )    Shift 'b' right by 'a' bits
+ *|G| >>       ( ab-c )    Shift 'a' right by 'b' bits
  *
  *|F| rshift()
- *|F| Shift TOS right by NOS bits
+ *|F| Shift NOS right by TOS bits
  *|F|
  ******************************************************/
 void rshift()
 {
-  long a = TOS, b = NOS;
+  long a = NOS, b = TOS;
   DROP;
   TOS = a >> b;
 }
