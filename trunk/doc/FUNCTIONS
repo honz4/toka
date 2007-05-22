@@ -2,10 +2,10 @@
 FILE: bits.c
 
 lshift()
-Shift TOS left by NOS bits
+Shift NOS left by TOS bits
 
 rshift()
-Shift TOS right by NOS bits
+Shift NOS right by TOS bits
 
 and()
 Perform a bitwise AND

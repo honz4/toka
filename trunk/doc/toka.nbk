@@ -73,10 +73,10 @@ This file provides a handful of primitives for manipulating bits.
 
 #pre
 lshift()
-Shift TOS left by NOS bits
+Shift NOS left by TOS bits
 
 rshift()
-Shift TOS right by NOS bits
+Shift NOS right by TOS bits
 
 and()
 Perform a bitwise AND
@@ -91,12 +91,13 @@ Perform a bitwise XOR
 = Primitives Provided =
 
 #pre
-<<       ( ab-c )    Shift 'b' left by 'a' bits
->>       ( ab-c )    Shift 'b' right by 'a' bits
+<<       ( ab-c )    Shift 'a' left by 'b' bits
+>>       ( ab-c )    Shift 'a' right by 'b' bits
 and      ( ab-c )    Perform a bitwise AND
 or       ( ab-c )    Perform a bitwise OR
 xor      ( ab-c )    Perform a bitwise XOR
-#unpre} 1175295170
+#unpre
+} 1179798243
 
 
 #--------------------------------------------------
@@ -2143,8 +2144,7 @@ project. To make use of this, use this at the start of a program:
 * [StringsLibrary]
 * [StructLibrary]
 * [TimeLibrary]
-* [ValuesLibrary]
-} 1179712007
+* [ValuesLibrary]} 1179712007
 
 
 #--------------------------------------------------
@@ -2208,8 +2208,7 @@ Example:
         a @ c @ * b @ + .
  ]local is foo
  foo
-#unpre
-} 1179712142
+#unpre} 1179712142
 
 
 #--------------------------------------------------
@@ -3860,8 +3859,8 @@ These are words that are built into the Toka executable. If the
 that will be provided.
 
 #pre
-<<       ( ab-c )    Shift 'b' left by 'a' bits
->>       ( ab-c )    Shift 'b' right by 'a' bits
+<<       ( ab-c )    Shift 'a' left by 'b' bits
+>>       ( ab-c )    Shift 'a' right by 'b' bits
 and      ( ab-c )    Perform a bitwise AND
 or       ( ab-c )    Perform a bitwise OR
 xor      ( ab-c )    Perform a bitwise XOR
@@ -4097,7 +4096,8 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre} 1178882049
+#unpre
+} 1179798218
 
 
 # End of Notebook Database File

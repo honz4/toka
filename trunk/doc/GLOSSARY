@@ -1,5 +1,5 @@
-<<       ( ab-c )    Shift 'b' left by 'a' bits
->>       ( ab-c )    Shift 'b' right by 'a' bits
+<<       ( ab-c )    Shift 'a' left by 'b' bits
+>>       ( ab-c )    Shift 'a' right by 'b' bits
 and      ( ab-c )    Perform a bitwise AND
 or       ( ab-c )    Perform a bitwise OR
 xor      ( ab-c )    Perform a bitwise XOR
