@@ -12,9 +12,11 @@
 
 (defconst toka-font-lock-keywords-1
   (list
-     (regexp-opt '("iterate" "+iterate" "ifTrueFalse" "ifTrue" "ifFalse"
-                   "whileTrue" "whileFalse" "[" "]" 
-                   "is" "is-macro" "is-data" "variable") t)
+    '("\\<\\(\\iterate\\|\\+iterate\\|\\ifTrueFalse\\|\\ifTrue\\|\\ifFalse\\|\\whileTrue\\|\\whileFalse\\|\\[\\|\\]\\|\\is\\|\\is-macro\\|\\is-data\\|\\is-array\\|\\variable\\)\\>" . font-lock-builtin-face)
+    '("\\<\\(\\heap\\|\\escape-sequences\\|\\last\\|\\base\\|\\compiler\\|\\parser\\)\\>" . font-lock-variable-name-face)
+    '("\\<\\(\\TRUE\\|\\FALSE\\|\\\"R\"\\|\\\"W\"\\|\\\"A\"\\|\\\"R+\"\\|\\\"W+\"\\|\\\"A+\"\\|\\START\\|\\END\\|\\CURRENT\\|\\cell-size\\|\\char-size\\)\\>" . font-lock-constant-face)
+    '("\\<\\(\\file.open\\|\\file.close\\|\\file.read\\|\\file.write\\|\\file.size\\|\\file.slurp\\)\\>" . font-lock-keyword-face)
+    '("\\<\\(\\dup\\|\\drop\\|\\swap\\|\\over\\|\\nip\\|\\tuck\\|\\rot\\|\\-rot\\|\\depth\\|\\reset\\)\\>" . font-lock-function-name-face)
   )
 )
 
@@ -24,7 +26,16 @@
 
 (defvar toka-mode-syntax-table
   (let ((toka-mode-syntax-table (make-syntax-table)))
+	(modify-syntax-entry ?! "w" toka-mode-syntax-table)
+	(modify-syntax-entry ?@ "w" toka-mode-syntax-table)
+	(modify-syntax-entry ?# "w" toka-mode-syntax-table)
+	(modify-syntax-entry ?/ "w" toka-mode-syntax-table)
+	(modify-syntax-entry ?* "w" toka-mode-syntax-table)
+	(modify-syntax-entry ?[ "w" toka-mode-syntax-table)
+	(modify-syntax-entry ?] "w" toka-mode-syntax-table)
 	(modify-syntax-entry ?_ "w" toka-mode-syntax-table)
+	(modify-syntax-entry ?+ "w" toka-mode-syntax-table)
+	(modify-syntax-entry ?- "w" toka-mode-syntax-table)
 	(modify-syntax-entry ?/ ". 124b" toka-mode-syntax-table)
 	(modify-syntax-entry ?* ". 23" toka-mode-syntax-table)
 	(modify-syntax-entry ?\n "> b" toka-mode-syntax-table)
