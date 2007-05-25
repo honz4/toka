@@ -6,7 +6,7 @@
 CC = gcc
 CFLAGS = -g -O2 -Wall
 #CFLAGS = -s -O3 -Wall -ffast-math -funsafe-loop-optimizations
-LDFLAGS = `$(CC) other/needdl.c -ldl 2>/dev/null && echo "-ldl" && rm a.out`
+LDFLAGS = `$(CC) other/needdl.c -o a.out -ldl 2>/dev/null && echo "-ldl" && rm a.out*`
 #HEADERS = -I/boot/develop/headers
 
 
