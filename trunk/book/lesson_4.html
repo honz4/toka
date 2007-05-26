@@ -91,8 +91,6 @@ portability, and ease of debugging.
 <p>What happens if you try to make a new word that has the same name as an
 existing one? Perhaps surprisingly, Toka will let you do that. Consider:
 </p>
-<pre>#Pre
-</pre>
 <pre> [ 5678 . ] is word1
  word1
  5678
@@ -157,40 +155,40 @@ definition to call and extend an existing definition of the same name:
  [ 0 . init ] is init
  init
  0 111 222
+</pre>
 
-Here we have created a word "init" that displays the number 111, then we
+<p>Here we have created a word "init" that displays the number 111, then we
 made a new word of the same name that calls the old one and also displays
 "222", and finally we made a third one that first displays "0", then
 calls the second one (which still calls the first one). It works because
 the name of each successive redefinition is hidden until complete, so the
 interpreter/compiler finds the previous one during the compilation of the
 new one.
-
-Clearly, you should use this redefinition thing sparingly, lest confusion
+</p>
+<p>Clearly, you should use this redefinition thing sparingly, lest confusion
 reign, but there are situations where this sort of thing can be extremely
 useful. It's especially nice for initialization sequences where each
 module can just add its own init code to whatever is already there.
-
-The reason I'm explaining how all this works is because, unlike most
+</p>
+<p>The reason I'm explaining how all this works is because, unlike most
 other languages, Toka gives the programmer explicit access to the same
 machinery that the compiler uses. This, perhaps more than any other
 feature, is what makes Toka so powerful with such a small memory
 footprint. (LISP is similar in that respect.) Since the machinery is an
 integral part of the proposition, you have to understand the basics of
 how it works.
+</p>
+<h2>Stack Comments, Reprised</h2>
 
-= Stack Comments, Reprised =
-
-So far I have just been tossing out new definitions willy-nilly, without
+<p>So far I have just been tossing out new definitions willy-nilly, without
 any documentation. That is fine when you are just fooling around
 interactively, experimenting. But, of course, when you are writing
 "keepers", source code that you want to save in a file, you need some
 documentation. The minimum documentation is a stack diagram. If I were to
 save the previous recursive definition of factorial in a file, I would
 probably write:
-
-#pre
- [ ( n -- n! )
+</p>
+<pre> [ ( n -- n! )
    dup 1 &gt; [ dup 1- recurse * ] ifTrue
  ] is factorial
 </pre>
@@ -202,7 +200,8 @@ clear. If the intent of the new word were not so obvious, I would have
 added a line or two of commentary (beginning with "#!") before the
 definition. 
 </p>
-<p><i>Thus endeth the lesson</i></p>
+<p><i>Thus endeth the lesson</i>
+</p>
 
 <hr>
 
@@ -210,6 +209,6 @@ definition.
 
 <hr>
 
-<p><i>Notebook exported on Monday, 21 May 2007, 21:44:16 PM EDT</i></p>
+<p><i>Notebook exported on Saturday, 26 May 2007, 17:20:12 PM EDT</i></p>
 
 </body></html>

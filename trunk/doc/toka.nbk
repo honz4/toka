@@ -96,8 +96,7 @@ Perform a bitwise XOR
 and      ( ab-c )    Perform a bitwise AND
 or       ( ab-c )    Perform a bitwise OR
 xor      ( ab-c )    Perform a bitwise XOR
-#unpre
-} 1179798243
+#unpre} 1179798243
 
 
 #--------------------------------------------------
@@ -1106,6 +1105,10 @@ point numbers, and alternative versions of the main stack and math words.
   f<        ( ab-f )    Compare two floats
   f>        ( ab-f )    Compare two floats
   f<>       ( ab-f )    Compare two floats
+  >float    ( data:n -- float:n )   Convert number 'n' to a float
+  float>    ( float:n -- data:n )   Convert float 'n' to a normal integer
+  fvalue    ( "- )      Create a new "value"
+  fto       ( - )       Toggle values to set their value 
 #unpre
 
 === Example ===
@@ -1116,7 +1119,11 @@ point numbers, and alternative versions of the main stack and math words.
   float: 200.12
   f+
   f.
-#unpre} 1179271861
+
+  fvalue kilometer
+  1.609344 fto kilometer
+  kilometer f.
+#unpre} 1180142865
 
 
 #--------------------------------------------------
@@ -1863,7 +1870,7 @@ portability, and ease of debugging.
 What happens if you try to make a new word that has the same name as an
 existing one? Perhaps surprisingly, Toka will let you do that. Consider:
 
-#Pre
+#pre
  [ 5678 . ] is word1
  word1
  5678
@@ -1930,6 +1937,7 @@ definition to call and extend an existing definition of the same name:
  [ 0 . init ] is init
  init
  0 111 222
+#unpre
 
 Here we have created a word "init" that displays the number 111, then we
 made a new word of the same name that calls the old one and also displays
@@ -1975,7 +1983,8 @@ clear. If the intent of the new word were not so obvious, I would have
 added a line or two of commentary (beginning with "#!") before the
 definition. 
 
-<i>Thus endeth the lesson</i>} 1179083170
+<i>Thus endeth the lesson</i>
+} 1180214403
 
 
 #--------------------------------------------------
@@ -4096,8 +4105,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre
-} 1179798218
+#unpre} 1179798218
 
 
 # End of Notebook Database File
