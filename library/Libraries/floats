@@ -95,3 +95,18 @@ from /usr/share/toka/library/C/floats.so
 0 import toka_float_compare_less_than as f<
 0 import toka_float_compare_greater_than as f>
 
+{
+  1 import toka_float_push
+  [ toka_float_push drop ]
+} is >float
+
+0 import toka_float_pop as float>
+
+{
+  variable update
+  [ update @ [ f! ] [ f@ ] ifTrueFalse update off ] is action
+  [ update on ]
+  [ ` [ invoke float-size malloc # ` action compile ` ] invoke is ]
+} is fvalue
+  is fto
+
