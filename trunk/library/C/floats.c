@@ -256,3 +256,29 @@ long toka_float_compare_less_than()
   flag = (TOS <= NOS) ? 0 : -1; DROP; DROP;
   return flag;
 }
+
+
+/******************************************************
+ *|F| toka_float_push(long x)
+ *|F| Push 'x' to the float stack
+ *|F|
+ ******************************************************/
+void toka_float_push(long x)
+{
+  fsp++;
+  TOS = (double)x;
+}
+
+
+/******************************************************
+ *|F| long toka_float_pop()
+ *|F| Pop a value from the float stack
+ *|F|
+ ******************************************************/
+long toka_float_pop()
+{
+  long x = (long)TOS;
+  DROP;
+  return x;
+}
+
