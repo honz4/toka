@@ -24,14 +24,18 @@ needs math
 
 [ lnparse type cr reset ] is t:
 
+variable total
 {
   time_t start
   time_t end
 
+  [ end @ start @ - ] is seconds?
+
   [ start time drop
     invoke
     end time drop
-    end @ start @ - . ." seconds elapsed\n"
+    seconds? . ." seconds elapsed\n"
+    seconds? total +!
   ]
 } is :time
 
@@ -105,5 +109,6 @@ cr
 
 t: ----------------------------------
 t: All done!
+." Total Time: " total @ . ." seconds\n" 
 t: ----------------------------------
 bye
