@@ -39,10 +39,8 @@
 #! ---------------------------------------
 #! Strings
 #! ---------------------------------------
-[ char: " parse
-  compiler @
-  [ # ] 
-  ifTrue
+[ char: " 
+  parse compiler @ [ # ] ifTrue 
 ] is-macro "
 
 
@@ -52,7 +50,7 @@
 [ CR LF emit emit ] is cr
 [ SPACE emit ] is space
 [   TAB emit ] is tab
-[ ` " invoke
+[ ` " invoke 
   compiler @ [ ` type compile ] [ type ] ifTrueFalse
 ] is-macro ."
 [ ." \^[2J"
@@ -159,7 +157,8 @@
 [ 3 ] is END
 
 [ "R" file.open 
-  dup 0 <> [
+  dup 0 <>
+  [
     dup dup
     file.size 1 + dup malloc dup >r swap
     file.read drop
