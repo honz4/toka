@@ -1,4 +1,5 @@
 needs ANS
+needs bsort
 needs case
 needs conditionals
 needs console
@@ -13,8 +14,8 @@ needs sockets
 needs console
 needs ctype
 needs math
+needs regex
 needs shell
 needs sockets
 needs strings
 needs time
-needs values

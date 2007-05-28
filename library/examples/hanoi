@@ -1,7 +1,5 @@
 #! /usr/bin/toka
 
-needs values
-
 value sa  value sb  value sc  value n
 [ to sc to sb to sa to n ] is vars!
 [ ( num from to via -- )

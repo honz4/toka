@@ -1,6 +1,5 @@
 #! /usr/bin/toka
 
-needs values
 needs bsort
 
 10 cells is-array foo

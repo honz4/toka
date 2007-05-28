@@ -4,7 +4,6 @@
 (defvar toka-mode-hook nil)
 (defvar toka-mode-map
   (let ((toka-mode-map (make-keymap)))
-    (define-key toka-mode-map "\C-j" 'newline-and-indent)
     toka-mode-map)
   "Keymap for toka major mode")
 
@@ -49,8 +48,6 @@
   (set-syntax-table toka-mode-syntax-table)
   ;; Set up font-lock
   (set (make-local-variable 'font-lock-defaults) '(toka-font-lock-keywords))
-  ;; Register our indentation function
-  (set (make-local-variable 'indent-line-function) 'toka-indent-line)  
   (setq major-mode 'toka-mode)
   (setq mode-name "toka")
   (run-hooks 'toka-mode-hook))

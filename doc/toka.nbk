@@ -103,7 +103,7 @@ xor      ( ab-c )    Perform a bitwise XOR
 # BsortLibrary
 
 page BsortLibrary {This library provides an implementation of <i>bubble sort</i> for
-sorting arrays. It requires that the [ValuesLibrary] be loaded first.
+sorting arrays.
 
 Provides:
 * bsort
@@ -112,7 +112,6 @@ Provides:
 Example:
 
 #pre
- needs values
  needs bsort
 
   10 cells is-array foo
@@ -133,7 +132,7 @@ Example:
  foo 10 .array
  foo 10 bsort
  foo 10 .array
-#unpre} 1179675922
+#unpre} 1180379836
 
 
 #--------------------------------------------------
@@ -1054,6 +1053,7 @@ start working through these sections.
 * [Types]
 * [Constants]
 * [Variables]
+* [Values]
 * [Arrays]
 
 === Interfacing with the World ===
@@ -1067,7 +1067,7 @@ start working through these sections.
 * [Stack Comments]
 
 === Advanced Topics ===
-* [Extending the Language]} 1179200416
+* [Extending the Language]} 1180379851
 
 
 #--------------------------------------------------
@@ -1983,8 +1983,7 @@ clear. If the intent of the new word were not so obvious, I would have
 added a line or two of commentary (beginning with "#!") before the
 definition. 
 
-<i>Thus endeth the lesson</i>
-} 1180214403
+<i>Thus endeth the lesson</i>} 1180214403
 
 
 #--------------------------------------------------
@@ -2152,8 +2151,7 @@ project. To make use of this, use this at the start of a program:
 * [SocketsLibrary]
 * [StringsLibrary]
 * [StructLibrary]
-* [TimeLibrary]
-* [ValuesLibrary]} 1179712007
+* [TimeLibrary]} 1180379808
 
 
 #--------------------------------------------------
@@ -3705,28 +3703,20 @@ parentheses is just a comment and need not be entered.
 
 
 #--------------------------------------------------
-# ValuesLibrary
+# Values
 
-page ValuesLibrary {This library provides support for <i>values</i> a special form of
-variable.
+page Values {Values are a special form of variable that may be more readable in
+many situations.
 
-Provided:
-
-* value
-** Create a new value
-** <i>"name" -- </i>
-* to
-** Set a value's value
-
-Example:
+Example: 
 
 #pre
-  needs values
   value foo
   foo .
   100 to foo
   foo .
-#unpre} 1179676794
+#unpre
+} 1180380013
 
 
 #--------------------------------------------------
@@ -4105,7 +4095,9 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
 }        ( - )       End a scoped area
-#unpre} 1179798218
+value    ( "- )      Create a new value
+to       ( - )       Set the value of a value
+#unpre} 1180379779
 
 
 # End of Notebook Database File

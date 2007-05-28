@@ -3,7 +3,6 @@
 #! Demonstrates building a double-linked list, and walking through it
 #! (Initial attempt, this should get cleaned up a *lot* in the future)
 
- needs values
  needs case
 
  value message
