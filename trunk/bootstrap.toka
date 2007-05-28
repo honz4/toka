@@ -191,3 +191,16 @@
 [ 1 <list> -!
   <list> @ 1+ <list> get-element last !
 ] is }
+
+
+#! ---------------------------------------
+#! Values
+#! ---------------------------------------
+{
+  variable update
+  [ update @ [ ! ] [ @ ] ifTrueFalse update off ] is action
+  [ update on ]
+  [ ` [ invoke cell-size malloc # ` action compile ` ] invoke is ]
+} is value
+  is to
+
