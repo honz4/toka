@@ -29,13 +29,15 @@ extern long last;
  ******************************************************/
 long resolve_name(Inst xt)
 {
-  long flag = 0, a;
+  long flag, a;
+
+  flag = FALSE;
   for (a = last-1; a >= 0; a--)
   {
      if (dictionary[a].xt == xt && flag == 0)
      {
        printf("%s ", dictionary[a].name);
-       flag = -1;
+       flag = TRUE;
      }
   }
   return flag;
@@ -79,8 +81,10 @@ void decompile(Inst *xt)
       this = (Inst)*xt++;
       flag = resolve_name(this);
       if (flag == FALSE)
+      {
         decompile((Inst *)this);
         printf("invoke ");
+      }
     }
 #ifndef NOFFI
     if (this == &ffi_invoke)
