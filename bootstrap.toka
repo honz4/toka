@@ -163,8 +163,7 @@
     file.size 1 + dup malloc dup >r swap
     file.read drop
     file.close r>
-  ]
-  [ ] ifTrueFalse
+  ] ifTrue
 ] is file.slurp
 
 
@@ -194,13 +193,17 @@
 
 
 #! ---------------------------------------
+#! Make extending the language a little easier
+#! ---------------------------------------
+[ ` [ invoke >r swap # compile ` ] invoke r> is ] is +action
+
+
+#! ---------------------------------------
 #! Values
 #! ---------------------------------------
 {
   variable update
-  [ update @ [ ! ] [ @ ] ifTrueFalse update off ] is action
   [ update on ]
-  [ ` [ invoke cell-size malloc # ` action compile ` ] invoke is ]
+  [ cell-size malloc [ update @ [ ! ] [ @ ] ifTrueFalse update off ] +action ] 
 } is value
   is to
-

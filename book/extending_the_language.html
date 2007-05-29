@@ -87,6 +87,21 @@ constant:
 <pre>  [ &gt;r ` [ invoke r&gt; # ` ] invoke is ] is const
 </pre>
 
+<p>One final note. Considering the example above, many items have a form
+similar to this. Toka has an additional word <b>+action</b> that creates
+a new quote combining a specific action and data element. The word
+"const" above could be rewritten using it:
+</p>
+<pre>  [ [ ] +action ] is const
+</pre>
+
+<p>Or, with a more complex example, try this:
+</p>
+<pre>  [ [ . ] +action ] is foo
+  100 foo bar
+  bar
+</pre>
+
 
 <hr>
 
@@ -94,6 +109,6 @@ constant:
 
 <hr>
 
-<p><i>Notebook exported on Monday, 28 May 2007, 15:20:28 PM EDT</i></p>
+<p><i>Notebook exported on Tuesday, 29 May 2007, 20:06:57 PM EDT</i></p>
 
 </body></html>
