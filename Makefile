@@ -32,6 +32,10 @@ install: toka
 	cp bootstrap.toka /usr/share/toka
 	chmod +x examples/*
 # ==============================================
+remove:
+	rm -rf /usr/bin/toka
+	rm -rf /usr/share/toka
+# ==============================================
 tests:
 	cd examples && toka tests.toka >../test.log
 # ==============================================
