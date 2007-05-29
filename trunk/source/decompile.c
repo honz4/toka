@@ -51,6 +51,7 @@ long resolve_name(Inst xt)
 void decompile(Inst *xt)
 {
   Inst this;
+  long flag;
 
   printf("[ ");
 
@@ -74,7 +75,13 @@ void decompile(Inst *xt)
       decompile((Inst *)this);
     }
     if (this == &quote_class)
-      resolve_name((Inst)*xt++);
+    {
+      this = (Inst)*xt++;
+      flag = resolve_name(this);
+      if (flag == FALSE)
+        decompile((Inst *)this);
+        printf("invoke ");
+    }
 #ifndef NOFFI
     if (this == &ffi_invoke)
       printf("<ffi> ");
