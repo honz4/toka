@@ -206,3 +206,11 @@
   [ cell-size malloc [ update @ [ ! ] [ @ ] ifTrueFalse update off ] +action ] 
 } is value
   is to
+[ parser off
+  [ wsparse
+    dup c@ char: | <>
+    [ value TRUE ] [ drop FALSE ] ifTrueFalse
+  ] whileTrue
+  parser on
+] is value|
+
