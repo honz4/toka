@@ -188,23 +188,22 @@ void return_quote()
       class = &quote_forth_class;
     if (class == &macro_class)
       class = &forth_class;
+    if (class != &quote_forth_class && class != &quote_macro_class)
+    {
+       begin_quote();
+         push((long)xt);
+         ((class)());
+       end_quote();
+    }
+    else
+    {
+       push((long)xt);
+       data_class();
+    }
   }
   else
   {
-    class = &data_class;
-    xt = 0;
+    push(FALSE);
   }
 
-  if (class != &quote_forth_class && class != &quote_macro_class)
-  {
-     begin_quote();
-       push((long)xt);
-       ((class)());
-     end_quote();
-  }
-  else
-  {
-     push((long)xt);
-     data_class();
-  }
 }

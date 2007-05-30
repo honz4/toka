@@ -850,8 +850,7 @@ Or, with a more complex example, try this:
   [ [ . ] +action ] is foo
   100 foo bar
   bar
-#unpre
-} 1180483556
+#unpre} 1180483556
 
 
 #--------------------------------------------------
@@ -4116,8 +4115,9 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
                      specified quote (q) and data element (a)
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
+value|   ( "- )      Create multiple values
 #unpre
-} 1180483352
+} 1180495778
 
 
 # End of Notebook Database File
