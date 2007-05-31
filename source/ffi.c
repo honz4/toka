@@ -45,8 +45,8 @@ void ffi_invoke()
 {
   long a, args, arg[32];
   Func xt;
-  args = TOS; DROP;
   xt = (Func)TOS; DROP;
+  args = TOS; DROP;
 
   if (args != 0)
   {
@@ -137,9 +137,12 @@ void ffi_import()
   if (xt != (long)NULL)
   {
     begin_quote();
+      if (args != -1)
+      {
+        push(args);
+        make_literal();
+      }
       push(xt);
-      make_literal();
-      push(args);
       make_literal();
       *heap++ = &ffi_invoke;
     end_quote();
