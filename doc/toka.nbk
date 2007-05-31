@@ -178,11 +178,14 @@ construct for both numbers and strings.
 
 Provides:
 
+* &lt;default&gt;
 * &lt;cond&gt;
 ** Data element, stores the value to check against
 * switch
 ** Stores the value to check against into the <b>&lt;cond&gt;</b> variable
 ** <i>number -- </i>
+* break
+* default
 * case
 ** Compare NOS to value in <b>&lt;cond&gt;</b> and invoke the quote (TOS)
    if they match
@@ -212,7 +215,8 @@ Example:
  2 try
  5 try
  4 try
-#unpre} 1179676345
+#unpre
+} 1180570469
 
 
 #--------------------------------------------------
@@ -3292,32 +3296,31 @@ Example:
 #--------------------------------------------------
 # threading model
 
-page {threading model} {Toka relies on <i>call threading</i>. This is an implementation technique
-in which a list of addresses is compiled. Each of these is then called in
-sequence. The model is similar to <i>direct threading</i> in the Forth
-world.
+page {threading model} {Toka compiles to <i>threaded code</i>. This is a technique involving
+laying down a list of addresses. The specific form is <i>call
+threading</i>, with the possibility for specialized opcodes intermixed.
+(At present there is one special opcode, 0, which marks the end of a quote)
 
-There is one special address which marks the end of a threaded sequence.
-This address is <b>0</b>.
-
-As an example of this, consider the following quote:
+As an example of the threading model, consider the following quote:
 
 #pre
  [ a b c 1 2 + . ]
 #unpre
 
-This is compiled into a list of addresses:
+This is compiled into a list of addresses similar to the following:
 
 #pre
- a, b, c, lit, 1, lit 2, +, ., 0
+ call_quote, a, call_quote, b, call_quote, c, lit, 1, lit 2, +, ., 0
 #unpre
 
-Note the special form for numbers. The [lit()|vm.c] function pushes the value in
-the following cell to the stack.
-
+When quotes or numbers are compiled, a hidden primitive is compiled in
+first. These <i>helpers</i> take care of actually invoking the following
+quote pointer or pushing the number to the stack.
+ 
 When this quote is invoked, <i>a</i> will be called. After it finishes
 executing, <i>b</i> will be called, and so on until <i>0</i> is
-encountered. At that point, the [vm_run()|vm.c] function exits.} 1176257425
+encountered. At that point, the [vm_run()|vm.c] function exits.
+} 1180581959
 
 
 #--------------------------------------------------
@@ -4116,8 +4119,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
-#unpre
-} 1180495778
+#unpre} 1180495778
 
 
 # End of Notebook Database File
