@@ -1,0 +1,53 @@
+#! /usr/bin/toka
+#! ----------------------------------------------------
+#! This code was originally written by Tim Larson as a
+#! prototype for a console-based turtle drawing system.
+#!
+#! It allows for drawing on the screen using the arrow
+#! keys.
+#! ----------------------------------------------------
+
+needs case
+needs console
+
+value| pen x y loop? |
+40 to x
+ 0 to y
+TRUE to loop?
+
+
+[ char: X to pen ] is pen-draw
+[ SPACE to pen ] is pen-erase
+[ x y xy pen emit x y xy ] is draw
+
+clear home
+." 000000000000000000000000000000000\n"
+." 0                               0\n"
+." 0 Use arrow keys to move around 0\n"
+." 0                               0\n"
+." 0 'd' to draw                   0\n"
+." 0 'e' to erase                  0\n"
+." 0 'q' to exit                   0\n"
+." 0                               0\n"
+." 000000000000000000000000000000000\n"
+
+pen-draw
+draw
+[ console_init
+  [ getkey
+    switch
+    char: d [ pen-draw  ] case
+    char: e [ pen-erase ] case
+    K_UP    [ y 1 - to y ] case
+    K_DOWN  [ y 1 + to y ] case
+    K_LEFT  [ x 1 - to x ] case
+    K_RIGHT [ x 1 + to x ] case
+    K_ESC   [ FALSE to loop? ] case
+    char: q [ FALSE to loop? ] case
+    draw
+    loop?
+  ] whileTrue
+  console_cleanup
+] is foo
+
+foo home bye

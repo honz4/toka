@@ -12,6 +12,7 @@ from /usr/share/toka/library/C/console.so
 [ 256 + ] is ALT+
 [ 31 and ] is CTL+
 
+ 27 is-data K_ESC
 127 is-data K_BS
 140 is-data K_UP
 141 is-data K_DOWN
