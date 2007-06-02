@@ -465,8 +465,9 @@ truefalse()
 Takes three items (true-xt, false-xt, and a flag)
 from the stack. Stack should be passed in as:
   flag true false 
-It will execute true if the flag is true, false
-otherwise.
+It will execute true if the flag is true, or false
+if the flag is false. If the flag is not true
+or false, neither quote will be executed.
 
 recurse()
 Compiles a call to the top-level quote. As a
