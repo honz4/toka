@@ -208,8 +208,9 @@ void alt_iterate()
  *|F| Takes three items (true-xt, false-xt, and a flag)
  *|F| from the stack. Stack should be passed in as:
  *|F|   flag true false 
- *|F| It will execute true if the flag is true, false
- *|F| otherwise.
+ *|F| It will execute true if the flag is true, or false
+ *|F| if the flag is false. If the flag is not true
+ *|F| or false, neither quote will be executed.
  *|F|
  ******************************************************/
 void truefalse()
@@ -223,7 +224,8 @@ void truefalse()
 
   if (flag == TRUE)
     push((long)true);
-  else
+
+  if (flag == FALSE)
     push((long)false);
 
   invoke();
