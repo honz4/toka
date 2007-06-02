@@ -10,32 +10,44 @@
 needs case
 needs console
 
-value| pen x y loop? |
-40 to x
+value| max-x max-y pen x y loop? |
+50 to x
  0 to y
 TRUE to loop?
 
+console_dimensions to max-x to max-y
+
+[ x 0 < [ 0 to x ] ifTrue
+  x max-x > [ max-x to x ] ifTrue
+  y 0 < [ 0 to y ] ifTrue
+  y max-y > [ max-y to y ] ifTrue
+] is check-bounds
 
 [ char: X to pen ] is pen-draw
 [ SPACE to pen ] is pen-erase
-[ x y xy pen emit x y xy ] is draw
+[ FALSE to pen ] is pen-move
+[ check-bounds pen FALSE <> [ x y xy pen emit ] ifTrue x y xy ] is draw
 
 clear home
 ." 000000000000000000000000000000000\n"
 ." 0                               0\n"
 ." 0 Use arrow keys to move around 0\n"
 ." 0                               0\n"
+." 0 'c' to clear the drawing      0\n"
+." 0 'm' to move around (default)  0\n"
 ." 0 'd' to draw                   0\n"
 ." 0 'e' to erase                  0\n"
 ." 0 'q' to exit                   0\n"
 ." 0                               0\n"
 ." 000000000000000000000000000000000\n"
 
-pen-draw
+pen-move
 draw
 [ console_init
   [ getkey
     switch
+    char: c [ clear ] case
+    char: m [ pen-move  ] case
     char: d [ pen-draw  ] case
     char: e [ pen-erase ] case
     K_UP    [ y 1 - to y ] case
