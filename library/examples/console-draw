@@ -15,7 +15,7 @@ value| max-x max-y pen x y loop? |
  0 to y
 TRUE to loop?
 
-console_dimensions to max-x to max-y
+console_dimensions to max-y to max-x
 
 [ x 0 < [ 0 to x ] ifTrue
   x max-x > [ max-x to x ] ifTrue
@@ -50,7 +50,7 @@ draw
     char: m [ pen-move  ] case
     char: d [ pen-draw  ] case
     char: e [ pen-erase ] case
-    char: u [ console_dimensions to max-x to max-y ] case
+    char: u [ console_dimensions to max-y to max-x ] case
     K_UP    [ y 1 - to y ] case
     K_DOWN  [ y 1 + to y ] case
     K_LEFT  [ x 1 - to x ] case
