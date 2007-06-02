@@ -50,11 +50,11 @@ draw
     char: m [ pen-move  ] case
     char: d [ pen-draw  ] case
     char: e [ pen-erase ] case
+    char: u [ console_dimensions to max-x to max-y ] case
     K_UP    [ y 1 - to y ] case
     K_DOWN  [ y 1 + to y ] case
     K_LEFT  [ x 1 - to x ] case
     K_RIGHT [ x 1 + to x ] case
-    K_ESC   [ FALSE to loop? ] case
     char: q [ FALSE to loop? ] case
     draw
     loop?
