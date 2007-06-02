@@ -2,6 +2,7 @@ from /usr/share/toka/library/C/console.so
 0 import console_init
 0 import console_cleanup
 0 import getkey
+0 import getchar
 
 {
   0 import console_size_x
