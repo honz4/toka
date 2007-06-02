@@ -215,8 +215,7 @@ Example:
  2 try
  5 try
  4 try
-#unpre
-} 1180570469
+#unpre} 1180570469
 
 
 #--------------------------------------------------
@@ -880,6 +879,10 @@ FUNCTION will be created, and will take <i>N</i> arguments off the stack.
 This function will always have a return value, even for <i>void</i>
 functions.
 
+If the number of arguments is -1, the FUNCTION quote will take the number
+of arguments to use from the stack each time it is called. This allows
+for importing functions that use a variable number of arguments.
+
 You can also make use of <b>as</b> to rename the imported function.
 
 #---
@@ -890,6 +893,10 @@ Example:
   from libc.so.6
   2 import printf as printf.2
   " %i\n" 100 printf.2
+
+  -1 import printf
+  " Hello, %s\n" " World!" 2 printf
+  " %i + %i = %i\n" 1 2 3 4 printf
 #unpre
 
 #---
@@ -905,7 +912,8 @@ Toka without the FFI, do:
 #unpre
 
 Again, <i>this is only recommended if your system does not support
-dlopen()/dlsym()</i>.} 1177901033
+dlopen()/dlsym()</i>.
+} 1180821630
 
 
 #--------------------------------------------------
@@ -2684,8 +2692,9 @@ truefalse()
 Takes three items (true-xt, false-xt, and a flag)
 from the stack. Stack should be passed in as:
   flag true false 
-It will execute true if the flag is true, false
-otherwise.
+It will execute true-xt if the flag is true, or 
+false-xt if the flag is false. If flag is neither
+true nor false, neither quote will be executed.
 
 recurse()
 Compiles a call to the top-level quote. As a
@@ -2725,7 +2734,8 @@ invoke
 iterate
 +iterate
 ifTrueFalse
-#unpre} 1178881760
+#unpre
+} 1180821423
 
 
 #--------------------------------------------------
@@ -3319,8 +3329,7 @@ quote pointer or pushing the number to the stack.
  
 When this quote is invoked, <i>a</i> will be called. After it finishes
 executing, <i>b</i> will be called, and so on until <i>0</i> is
-encountered. At that point, the [vm_run()|vm.c] function exits.
-} 1180581959
+encountered. At that point, the [vm_run()|vm.c] function exits.} 1180581959
 
 
 #--------------------------------------------------

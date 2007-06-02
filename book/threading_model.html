@@ -10,26 +10,24 @@
 <h1>&nbsp;threading model</h1>
 
 
-<p>Toka relies on <i>call threading</i>. This is an implementation technique
-in which a list of addresses is compiled. Each of these is then called in
-sequence. The model is similar to <i>direct threading</i> in the Forth
-world.
+<p>Toka compiles to <i>threaded code</i>. This is a technique involving
+laying down a list of addresses. The specific form is <i>call
+threading</i>, with the possibility for specialized opcodes intermixed.
+(At present there is one special opcode, 0, which marks the end of a quote)
 </p>
-<p>There is one special address which marks the end of a threaded sequence.
-This address is <b>0</b>.
-</p>
-<p>As an example of this, consider the following quote:
+<p>As an example of the threading model, consider the following quote:
 </p>
 <pre> [ a b c 1 2 + . ]
 </pre>
 
-<p>This is compiled into a list of addresses:
+<p>This is compiled into a list of addresses similar to the following:
 </p>
-<pre> a, b, c, lit, 1, lit 2, +, ., 0
+<pre> call_quote, a, call_quote, b, call_quote, c, lit, 1, lit 2, +, ., 0
 </pre>
 
-<p>Note the special form for numbers. The <a href="vmc.html">lit()</a> function pushes the value in
-the following cell to the stack.
+<p>When quotes or numbers are compiled, a hidden primitive is compiled in
+first. These <i>helpers</i> take care of actually invoking the following
+quote pointer or pushing the number to the stack.
 </p>
 <p>When this quote is invoked, <i>a</i> will be called. After it finishes
 executing, <i>b</i> will be called, and so on until <i>0</i> is
@@ -41,6 +39,6 @@ encountered. At that point, the <a href="vmc.html">vm_run()</a> function exits.<
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 29 May 2007, 20:06:57 PM EDT</i></p>
+<p><i>Notebook exported on Saturday,  2 June 2007, 18:00:51 PM EDT</i></p>
 
 </body></html>
