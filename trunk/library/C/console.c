@@ -1,8 +1,51 @@
+#include <stdio.h>
+#include <asm/ioctls.h>
+#include <pty.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <errno.h>
 #include <termios.h>
 
 struct termios new_termios, old_termios;
 
-console_init() {
+int console_size_x() 
+{
+  struct winsize win;
+  int fd;
+
+  fd = open(ttyname(0), O_RDWR);
+  if (fd == -1 || ioctl(fd, TIOCGWINSZ, &win) == -1)
+  {
+    close(fd);
+    return;
+  }
+  close(fd);
+  return win.ws_col;
+}
+
+
+int console_size_y()
+{
+  struct winsize win;
+  int fd;
+
+  fd = open(ttyname(0), O_RDWR);
+  if (fd == -1 || ioctl(fd, TIOCGWINSZ, &win) == -1)
+  {
+    close(fd);
+    return;
+  }
+  close(fd);
+  return win.ws_row;
+}
+
+
+void console_init() 
+{
   tcgetattr(0, &old_termios);
   new_termios = old_termios;
   new_termios.c_iflag &= ~(BRKINT+ISTRIP+IXON+IXOFF +ICRNL+INLCR);
@@ -13,7 +56,8 @@ console_init() {
   tcsetattr(0, TCSANOW, &new_termios);
 }
 
-console_cleanup() {
+
+void console_cleanup() {
   tcsetattr(0, TCSANOW, &old_termios);
 }
 
@@ -34,7 +78,8 @@ console_cleanup() {
 #define K_PGUP  148
 #define K_PGDN  149
 
-getkey() {
+int getkey() 
+{
 //
 // Get a keystroke & translate to 1-byte keycodes:
 //  0-31     Control keys (no translation) .................. CTL('a') macro
@@ -48,15 +93,17 @@ getkey() {
   if (c!=27)               // Regular key
     return c;
   c = getchar();
-if (c!='[')              // Alt+key
+  if (c!='[')              // Alt+key
     return ALT(c);
-  else {                   // Function keys & Keypad
+  else 
+  {                   // Function keys & Keypad
     c = getchar();
     if (c>='A' && c<='D')                // Arrows
       return K_UP + c - 'A';
     if (c=='[')                          // F1-F5
       return K_F(1) + getchar() - 'A';
-    while (c!='~' && i<3) {
+    while (c!='~' && i<3) 
+    {
       s[i++]= c;
       c = getchar();
     }

@@ -4,6 +4,12 @@ from /usr/share/toka/library/C/console.so
 0 import getkey
 
 {
+  0 import console_size_x
+  0 import console_size_y
+  [ console_size_x console_size_y ]
+} is console_dimensions
+
+{
   3 import printf
   [ " \^[%li;%liH" -rot swap printf drop ]
 } is xy
