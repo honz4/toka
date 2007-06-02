@@ -228,7 +228,8 @@ void truefalse()
   if (flag == FALSE)
     push((long)false);
 
-  invoke();
+  if (flag == TRUE || flag == FALSE)
+    invoke();
 }
 
 
