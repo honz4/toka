@@ -10,3 +10,4 @@ t:   is-data
    foo try
 t:   `
    [ ] dup is foo ` foo try
+   ` badaq 0 try
