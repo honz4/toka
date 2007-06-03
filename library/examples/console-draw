@@ -10,23 +10,29 @@
 needs case
 needs console
 
-value| max-x max-y pen x y loop? |
+value| max-x max-y pen x y loop? char |
 50 to x
  0 to y
 TRUE to loop?
+char: @ to char
 
 console_dimensions to max-y to max-x
 
 [ x 1 < [ 1 to x ] ifTrue
   y 1 < [ 1 to y ] ifTrue
   x max-x > [ max-x to x ] ifTrue
-  y max-y > [ max-y to y ] ifTrue
+  y max-y 1- > [ max-y 1- to y ] ifTrue
 ] is check-bounds
 
-[ char: X to pen ] is pen-draw
+[ char to pen ] is pen-draw
 [ SPACE to pen ] is pen-erase
 [ FALSE to pen ] is pen-move
 [ check-bounds pen FALSE <> [ x y xy pen emit ] ifTrue x y xy ] is draw
+
+[ 0 max-y xy ." New pen character: " 
+  getkey dup emit to char char to pen 
+  0 max-y xy max-x 1- [ space ] iterate 
+] is change-pen
 
 [ home
 ."
@@ -39,6 +45,8 @@ console_dimensions to max-y to max-x
 0 'd' to draw                   0
 0 'e' to erase                  0
 0 'q' to exit                   0
+0 'h' to show this help         0
+0 '/' to change the pen symbol  0
 0                               0
 0 '1' red      '5' cyan         0
 0 '2' green    '6' magenta      0
@@ -60,12 +68,15 @@ console_dimensions to max-y to max-x
     char: 9 [ normal ] case
 ] is check-colors
 
+
 [   char: c [ clear ] case
     char: m [ pen-move  ] case
     char: d [ pen-draw  ] case
     char: e [ pen-erase ] case
     char: u [ console_dimensions to max-y to max-x ] case
     char: q [ FALSE to loop? ] case
+    char: h [ show-help ] case
+    char: / [ change-pen ] case
 ] is check-commands
 
 [   K_UP    [ y 1 - to y ] case
@@ -87,4 +98,4 @@ console_dimensions to max-y to max-x
 ] is foo
 
 clear show-help pen-move draw
-foo home normal bye
+foo 0 max-y xy normal bye
