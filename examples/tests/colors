@@ -1,46 +1,46 @@
-i: console colors
+i: Console Colors
 t: Foreground:
 red
-t:  red
+t: red
 green
-t:  green 
+t: green 
 yellow
-t:  yellow
+t: yellow
 blue
-t:  blue
+t: blue
 magenta
-t:  magenta
+t: magenta
 cyan
-t:  cyan
+t: cyan
 white
-t:  white
+t: white
 
 normal cr
 t: Bold:
 bold
 red
-t:  red
+t: red
 green
-t:  green 
+t: green 
 yellow
-t:  yellow
+t: yellow
 blue
-t:  blue
+t: blue
 magenta
-t:  magenta
+t: magenta
 cyan
-t:  cyan
+t: cyan
 white
-t:  white
+t: white
 
 normal cr
-t: Background: 
+t: Background:
 white onBlack
-t:  onBlack
+t: onBlack
 white onRed
-t:  onRed
+t: onRed
 onGreen
-t:  onGreen
+t: onGreen
 onYellow
 t: onYellow
 onBlue
