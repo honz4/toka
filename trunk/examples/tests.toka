@@ -28,6 +28,7 @@ include tests/parser
 include tests/dictionary
 include tests/array
 include tests/scope
+include tests/colors
 
 cr
 i: ----------------------------------------------

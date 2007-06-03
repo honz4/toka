@@ -86,7 +86,7 @@
 #! ---------------------------------------
 [ swap drop ] is nip
 [ >r swap r> swap ] is rot
-[ swap >r swap r> ] is -rot
+[ rot rot ] is -rot
 [ >r dup r> swap ] is over
 [ dup -rot ] is tuck
 [ over over ] is 2dup

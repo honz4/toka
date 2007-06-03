@@ -15,5 +15,9 @@ t:   <
    1 0 > -1 try
 t:   ifTrueFalse
    [ = [ 1 ] [ 0 ] ifTrueFalse ] is =?
+   [ [ 1 ] [ 0 ] ifTrueFalse ] is flag?
    1 1 =? 1 try
    1 0 =? 0 try
+   TRUE flag?  1 try
+   FALSE flag? 0 try
+   3 31 flag? 3 try
