@@ -1,5 +1,4 @@
 void forth_class();
-//void macro_class();
 void macro_class();
 void data_class();
 void class_class();
