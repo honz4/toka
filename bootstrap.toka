@@ -194,7 +194,7 @@
 #! ---------------------------------------
 #! Make extending the language a little easier
 #! ---------------------------------------
-[ ` [ invoke >r swap # compile ` ] invoke r> parser @ [ swap ] ifFalse is ] is +action
+[ ` [ invoke >r swap keep # keep compile ` ] invoke r> parser @ [ swap ] ifFalse is ] is +action
 
 
 #! ---------------------------------------
