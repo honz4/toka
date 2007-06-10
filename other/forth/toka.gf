@@ -38,17 +38,9 @@ variable ROOT
 |
 | Quotes
 |
-: ] 
-  postpone exit
-  postpone [ 
-  state off swap dp !
-; immediate
-: [ 
-  here 
-  QUOTE-SIZE malloc dup dp ! 
-  state on 
-; immediate
-quit
+: ] postpone ; ; immediate
+: [ here :noname ; immediate
+
 |
 | Naming of quotes and data
 |
@@ -72,8 +64,8 @@ quit
 [ ! ] is !
 [ c@ ] is c@
 [ c! ] is c!
-[ << ] is <<
-[ >> ] is >>
+[ lshift ] is <<
+[ rshift ] is >>
 [ and ] is and
 [ or ] is or
 [ xor ] is xor
@@ -86,37 +78,19 @@ quit
 [ swap ] is swap
 [ drop ] is drop
 [ dup ] is dup
-[ :words ] is :names
+[ words ] is :names
 [ .s ] is :stack
 [ bye ] is bye
 [ include ] is include
 [ ' state @ if postpone literal then ] is-macro `
 [ postpone literal ] is #
-[ compile ] is compile
+[ postpone postpone ] is compile
 [ depth ] is depth
-[ file.open ] is file.open
-[ file.close ] is file.close
-[ file.read ] is file.read
-[ file.write ] is file.wrie
-[ file.size ] is file.size
-[ file.seek ] is file.seek
 
 ` state is-data compiler
 ` base is-data base
 ` dp is-data heap
 ` last is-data last
-
-macro
-` >r alias >r
-` r> alias r>
-forth
-
-
-|
-| Allow use of FFI (retro and toka share the same FFI model)
-|
-[ from ] is from
-[ import ] is import
 
 
 |
@@ -132,28 +106,28 @@ forth
 | to operate properly. This wraps the Forth versions with
 | the necessary code to emulate Toka behaviour.
 |
-[ parse        ( char -- addr len )
-  dup >r       ( addr len -- addr len | rs: len )
-  over +       ( addr len -- addr addr+len | rs: len )
-  0 swap c!    ( addr addr+len -- addr | rs: len )
-  r> 1+ malloc ( addr -- addr new-addr )
-  dup >r swap  ( addr new-addr -- new-addr addr | rs: new-addr )
-  strcpy       ( new-addr addr -- count )
-  drop r>      ( count -- new-addr )
-] is parse
-[ dup strlen 1+ ] is count
-[ count 1- type ] is type
-[ count 1- >number ] is >number
+| [ parse        ( char -- addr len )
+|  dup >r       ( addr len -- addr len | rs: len )
+|  over +       ( addr len -- addr addr+len | rs: len )
+|  0 swap c!    ( addr addr+len -- addr | rs: len )
+|  r> 1+ malloc ( addr -- addr new-addr )
+|  dup >r swap  ( addr new-addr -- new-addr addr | rs: new-addr )
+|  strcpy       ( new-addr addr -- count )
+|  drop r>      ( count -- new-addr )
+| ] is parse
+| [ dup strlen 1+ ] is count
+| [ count 1- type ] is type
+| [ count 1- >number ] is >number
 
 
 |
 | Recently completed
 |
 variable i
-[ rot TRUE = if drop invoke ;then nip invoke ] is ifTrueFalse
-[ swap for r i ! >r r invoke r> next drop ] is iterate
-[ repeat >r r invoke TRUE <> if r> drop ;then r> again ] is whileTrue
-[ repeat >r r invoke FALSE <> if r> drop ;then r> again ] is whileFalse
+[ rot TRUE = if drop invoke else nip invoke then ] is ifTrueFalse
+[ swap for r@ i ! >r r@ invoke r> next drop ] is iterate
+[ begin >r r@ invoke TRUE <> if r> drop exit then r> again ] is whileTrue
+[ begin >r r@ invoke FALSE <> if r> drop exit then r> again ] is whileFalse
 [ ROOT @ compile ] is-macro recurse
 [ i @ ] is i
 
@@ -161,7 +135,7 @@ variable i
 |
 | Stubs and Incomplete or Buggy
 |
-[ swap for r i ! >r r invoke r> next drop ] is +iterate
+[ swap for r@ i ! >r r@ invoke r> next drop ] is +iterate
 [ ] is #args
 [ ] is arglist
 [ ] is end.
@@ -173,7 +147,4 @@ variable i
 variable escape-sequences  escape-sequences off
 variable parser  parser on
 
-` malloc >entry :link 0 swap !
-
-include bootstrap.toka
-" Toka (for RetroForth)" type 10 emit
+cr cr
