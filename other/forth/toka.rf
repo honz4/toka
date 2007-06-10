@@ -1,0 +1,96 @@
+|
+| Toka in RetroForth
+|
+| This is a long-term project, to aid in implementing
+| Toka on PalmOS based devices (via Quartus) and perhaps
+| other systems without GCC.
+|
+|
+| Known bugs:
+|  - Nesting quotes does not work
+|
+| ------------------------------------------------------------
+
+| For compatibility with 9.2.x
+1 import strlen
+2 import strcpy
+
+1 import malloc
+last @ :link
+1 import free
+
+
+| Comments
+: #! lnparse 2drop ;
+self: ( ') parse 2drop ;
+
+
+| Quotes
+128 cells constant QUOTE-SIZE
+self: [ here QUOTE-SIZE malloc dup h0 ! state on ;
+self: ] state off $c3 1, swap h0 ! ;
+
+| Naming of quotes and data
+: is alias ;
+: is-macro self alias forth ;
+: is-data create last @ :xt ! ;
+
+
+[ execute ] is invoke
+
+
+| Math
+[ + ] is +
+[ - ] is -
+[ * ] is *
+[ /mod ] is /mod
+
+| Data
+[ @ ] is @
+[ ! ] is !
+[ c@ ] is c@
+[ c! ] is c!
+[ << ] is <<
+[ >> ] is >>
+[ and ] is and
+[ or ] is or
+[ xor ] is xor
+
+| FFI
+[ from ] is from
+[ import ] is import
+
+[ emit ] is emit
+[ . ] is .
+
+[ -1 ] is TRUE
+[  0 ] is FALSE
+[ <> ] is <>
+[ = ] is =
+[ < ] is <
+[ > ] is >
+
+
+[ parse        ( char -- addr len )
+  dup >r       ( addr len -- addr len | rs: len )
+  over +       ( addr len -- addr addr+len | rs: len )
+  0 swap c!    ( addr addr+len -- addr | rs: len )
+  r> 1+ malloc ( addr -- addr new-addr )
+  dup >r swap  ( addr new-addr -- new-addr addr | rs: new-addr )
+  strcpy       ( new-addr addr -- count )
+  drop r>      ( count -- new-addr )
+] is parse
+[ dup strlen 1+ ] is count
+[ count 1- type ] is type
+[ count 1- >number ] is >number
+[ 34 parse state @ if literal, then ] is-macro "
+
+[ swap ] is swap
+[ drop ] is drop
+[ dup ] is dup
+
+[ words ] is :names
+[ .s ] is :stack
+[ bye ] is bye
+
+0 swap !
