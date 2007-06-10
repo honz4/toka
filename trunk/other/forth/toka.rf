@@ -9,25 +9,22 @@
 | leaving only Toka visible.
 |
 | Todo:
-|  - Nestable quotes
-|    - Conditionals
-|    - Loop operators
+|  - Conditionals
+|  - Loop operators
 |  - Finish core primitives
 |  - Garbage Collector (fill in empty stubs)
 |  - Actual support for 'parser' state variable
 |  - Command line arguments (as a Toka style array)
 | ------------------------------------------------------------
 
+
+128 cells constant QUOTE-SIZE
+
 1 import strlen
 2 import strcpy
-1 import malloc
 1 import free
+1 import malloc
 
-|
-| Comments
-|
-: #! lnparse 2drop ;
-self: ( ') parse 2drop ;
 
 |
 | Cell and Character Sizing
@@ -41,9 +38,8 @@ self: ( ') parse 2drop ;
 |
 | Quotes
 |
-128 cells constant QUOTE-SIZE
-self: [ here QUOTE-SIZE malloc dup h0 ! state on ;
-self: ] state off $c3 1, swap h0 ! ;
+self: [ here QUOTE-SIZE malloc dup h0 ! state @ state on ;
+self: ] $c3 1, state ! swap h0 ! state @ if literal, then ;
 
 |
 | Naming of quotes and data
@@ -91,6 +87,7 @@ self: ] state off $c3 1, swap h0 ! ;
 ` state is-data compiler
 ` base is-data base
 ` last is-data last
+` h0 is-data heap
 
 macro
 ` >r alias >r
@@ -139,8 +136,27 @@ forth
 [ ] is gc
 [ ] is :gc
 [ ] is keep
+[ ] is ifTrueFalse
+[ ] is iterate
+[ ] is +iterate
+[ ] is whileTrue
+[ ] is whileFalse
+[ ] is file.open
+[ ] is file.close
+[ ] is file.read
+[ ] is file.wrie
+[ ] is file.size
+[ ] is file.seek
+[ ] is i
+[ ] is #args
+[ ] is arglist
+[ ] is :see
+[ ] is depth
+[ ] is recurse
+[ ] is end.
+[ ] is needs
+variable escape-sequences  escape-sequences off
 variable parser  parser on
-
 
 ` malloc >entry :link 0 swap !
 
