@@ -155,18 +155,19 @@ forth
 |
 | Recently completed
 |
+variable i
 [ rot TRUE = if drop invoke ;then nip invoke ] is ifTrueFalse
-[ swap for >r r invoke r> next drop ] is iterate
+[ swap for r i ! >r r invoke r> next drop ] is iterate
 [ repeat >r r invoke TRUE <> if r> drop ;then r> again ] is whileTrue
 [ repeat >r r invoke FALSE <> if r> drop ;then r> again ] is whileFalse
 [ ROOT @ compile ] is-macro recurse
+[ i @ ] is i
 
 
 |
 | Stubs and Incomplete or Buggy
 |
-[ swap for >r r invoke r> next drop ] is +iterate
-[ ] is i
+[ swap for r i ! >r r invoke r> next drop ] is +iterate
 [ ] is #args
 [ ] is arglist
 [ ] is end.
