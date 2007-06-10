@@ -1,3 +1,5 @@
+#! /usr/bin/retro -f 
+: | lnparse 2drop ;
 |
 | Toka in RetroForth
 |
@@ -19,6 +21,12 @@
 | ------------------------------------------------------------
 
 
+: sp@  dup [ $f089 2, ] ;
+: depth [ reset sp@ ] literal sp@ - 1 cells / 1- ;
+: (.s) depth 0 > if >r (.s) r> dup . then ;
+: .s depth '< emit space . '> emit space (.s) cr ;
+
+variable ROOT
 128 cells constant QUOTE-SIZE
 
 1 import strlen
@@ -39,7 +47,13 @@
 |
 | Quotes
 |
-self: [ here QUOTE-SIZE malloc dup h0 ! state @ state on ;
+self: [ 
+  here 
+  QUOTE-SIZE malloc dup h0 ! 
+  state @
+  dup 0 = if here ROOT ! then
+  state on 
+;
 self: ] $c3 1, state ! swap h0 ! state @ if literal, then ;
 
 |
@@ -55,7 +69,7 @@ self: ] $c3 1, state ! swap h0 ! state @ if literal, then ;
 | Forth words. These are words that work
 | the same in Forth and Toka.
 | 
-[ execute ] is invoke
+[ invoke ] is invoke
 [ + ] is +
 [ - ] is -
 [ * ] is *
@@ -78,17 +92,25 @@ self: ] $c3 1, state ! swap h0 ! state @ if literal, then ;
 [ swap ] is swap
 [ drop ] is drop
 [ dup ] is dup
-[ words ] is :names
+[ :words ] is :names
 [ .s ] is :stack
 [ bye ] is bye
 [ include ] is include
 [ ' state @ if literal, then ] is-macro `
 [ literal, ] is #
 [ compile ] is compile
+[ depth ] is depth
+[ file.open ] is file.open
+[ file.close ] is file.close
+[ file.read ] is file.read
+[ file.write ] is file.wrie
+[ file.size ] is file.size
+[ file.seek ] is file.seek
+
 ` state is-data compiler
 ` base is-data base
-` last is-data last
 ` h0 is-data heap
+` last is-data last
 
 macro
 ` >r alias >r
@@ -137,23 +159,16 @@ forth
 [ swap for >r r invoke r> next drop ] is iterate
 [ repeat >r r invoke TRUE <> if r> drop ;then r> again ] is whileTrue
 [ repeat >r r invoke FALSE <> if r> drop ;then r> again ] is whileFalse
+[ ROOT @ compile ] is-macro recurse
 
 
 |
 | Stubs and Incomplete or Buggy
 |
 [ swap for >r r invoke r> next drop ] is +iterate
-[ ] is file.open
-[ ] is file.close
-[ ] is file.read
-[ ] is file.wrie
-[ ] is file.size
-[ ] is file.seek
 [ ] is i
 [ ] is #args
 [ ] is arglist
-[ ] is depth
-[ ] is recurse
 [ ] is end.
 [ ] is needs
 [ ] is gc
