@@ -1,0 +1,5 @@
+#! /usr/bin/toka
+needs tcc
+tcc_new is-data A
+A " main(){puts(\"Hello world!\n\"); return 1;}" tcc_compile_string
+A 0 0 tcc_run
