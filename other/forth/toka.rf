@@ -9,8 +9,9 @@
 | leaving only Toka visible.
 |
 | Todo:
-|  - Conditionals
-|  - Loop operators
+|  - Loops:
+|    -  +iterate
+|    -  i
 |  - Finish core primitives
 |  - Garbage Collector (fill in empty stubs)
 |  - Actual support for 'parser' state variable
@@ -81,7 +82,7 @@ self: ] $c3 1, state ! swap h0 ! state @ if literal, then ;
 [ .s ] is :stack
 [ bye ] is bye
 [ include ] is include
-[ ' ] is-macro `
+[ ' state @ if literal, then ] is-macro `
 [ literal, ] is #
 [ compile ] is compile
 ` state is-data compiler
@@ -131,16 +132,18 @@ forth
 
 
 |
-| Stubs and Incomplete
+| Recently completed
 |
-[ ] is gc
-[ ] is :gc
-[ ] is keep
-[ ] is ifTrueFalse
-[ ] is iterate
-[ ] is +iterate
-[ ] is whileTrue
-[ ] is whileFalse
+[ rot TRUE = if drop invoke ;then nip invoke ] is ifTrueFalse
+[ swap for >r r invoke r> next drop ] is iterate
+[ repeat >r r invoke TRUE <> if r> drop ;then r> again ] is whileTrue
+[ repeat >r r invoke FALSE <> if r> drop ;then r> again ] is whileFalse
+
+
+|
+| Stubs and Incomplete or Buggy
+|
+[ swap for >r r invoke r> next drop ] is +iterate
 [ ] is file.open
 [ ] is file.close
 [ ] is file.read
@@ -150,11 +153,14 @@ forth
 [ ] is i
 [ ] is #args
 [ ] is arglist
-[ ] is :see
 [ ] is depth
 [ ] is recurse
 [ ] is end.
 [ ] is needs
+[ ] is gc
+[ ] is :gc
+[ ] is keep
+[ ] is :see
 variable escape-sequences  escape-sequences off
 variable parser  parser on
 
