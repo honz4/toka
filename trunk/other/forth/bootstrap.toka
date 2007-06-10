@@ -1,0 +1,216 @@
+[ 10 parse drop ] is #!
+[ 41 parse drop ] is-macro (
+
+#! ---------------------------------------
+#! Constants for various ASCII values
+#! ---------------------------------------
+[ 32 ] is SPACE
+[ 10 ] is CR
+[ 13 ] is LF
+[ 27 ] is ESC
+[  9 ] is TAB
+
+
+#! ---------------------------------------
+#! Parsing extensions
+#! ---------------------------------------
+[ SPACE parse ] is wsparse
+[ CR parse ] is lnparse
+
+
+#! ---------------------------------------
+#! Conditionals
+#! ---------------------------------------
+[  0 ] is FALSE
+[ -1 ] is TRUE
+[ [ ] ifTrueFalse ] is ifTrue
+[ [ ] swap ifTrueFalse ] is ifFalse
+
+
+#! ---------------------------------------
+#! Obtaining Character
+#! ---------------------------------------
+[ 255 and ] is >char
+[ wsparse @ >char
+  compiler @ [ # ] ifTrue
+] is-macro char:
+
+
+#! ---------------------------------------
+#! Strings
+#! ---------------------------------------
+[ char: " 
+  parse compiler @ [ # ] ifTrue 
+] is-macro "
+
+
+#! ---------------------------------------
+#! Output
+#! ---------------------------------------
+[ CR LF emit emit ] is cr
+[ SPACE emit ] is space
+[   TAB emit ] is tab
+[ ` " invoke 
+  compiler @ [ ` type compile ] [ type ] ifTrueFalse
+] is-macro ."
+[ 27 emit ." [2J"
+  27 emit ." [1;1H"
+] is clear
+
+
+#! ---------------------------------------
+#! Colors
+#! ---------------------------------------
+[ 27 emit ." [0m"  ] is normal
+[ 27 emit ." [1m"  ] is bold
+[ 27 emit ." [30m" ] is black
+[ 27 emit ." [31m" ] is red
+[ 27 emit ." [32m" ] is green
+[ 27 emit ." [33m" ] is yellow
+[ 27 emit ." [34m" ] is blue
+[ 27 emit ." [35m" ] is magenta
+[ 27 emit ." [36m" ] is cyan
+[ 27 emit ." [37m" ] is white
+[ 27 emit ." [40m" ] is onBlack
+[ 27 emit ." [41m" ] is onRed
+[ 27 emit ." [42m" ] is onGreen
+[ 27 emit ." [43m" ] is onYellow
+[ 27 emit ." [44m" ] is onBlue
+[ 27 emit ." [45m" ] is onMagenta
+[ 27 emit ." [46m" ] is onCyan
+[ 27 emit ." [47m" ] is onWhite
+
+
+#! ---------------------------------------
+#! Stack manipulation
+#! ---------------------------------------
+[ swap drop ] is nip
+[ >r swap r> swap ] is rot
+[ rot rot ] is -rot
+[ >r dup r> swap ] is over
+[ dup -rot ] is tuck
+[ over over ] is 2dup
+[ drop drop ] is 2drop
+[ depth [ drop ] iterate ] is reset
+[ r> r> tuck >r >r ] is r@
+
+
+#! ---------------------------------------
+#! Math
+#! ---------------------------------------
+[ 1 + ] is 1+
+[ 1 - ] is 1-
+[ -1 * ] is negate
+[ /mod nip ] is /
+[ /mod drop ] is mod
+[ -1 xor ] is not
+[ swap >r / r> * ] is */
+
+
+#! ---------------------------------------
+#! Memory and Variables
+#! ---------------------------------------
+[ char-size * ] is chars
+[ char-size + ] is char+
+[ char-size - ] is char-
+[ cell-size * ] is cells
+[ cell-size + ] is cell+
+[ cell-size - ] is cell-
+[ dup @ rot + swap ! ] is +!
+[ dup @ rot - swap ! ] is -!
+[ TRUE  swap ! ] is on
+[ FALSE swap ! ] is off
+[ dup @ not swap ! ] is toggle
+[ cell-size malloc 
+  parser @ [ swap ] ifFalse is-data 
+] is variable
+[ parser off
+  [ wsparse
+    dup c@ char: | <>
+    [ variable TRUE ] [ drop FALSE ] ifTrueFalse
+  ] whileTrue
+  parser on
+] is variable|
+
+
+#! ---------------------------------------
+#! Numeric bases
+#! ---------------------------------------
+[ 16 base ! ] is hex
+[ 10 base ! ] is decimal
+[  2 base ! ] is binary
+[  8 base ! ] is octal
+
+
+#! ---------------------------------------
+#! File I/O
+#! ---------------------------------------
+[ 1 ] is "R"
+[ 2 ] is "R+"
+[ 3 ] is "W"
+[ 4 ] is "W+"
+[ 5 ] is "A"
+[ 6 ] is "A+"
+[ 1 ] is START
+[ 2 ] is CURRENT
+[ 3 ] is END
+
+[ "R" file.open 
+  dup 0 <>
+  [
+    dup dup
+    file.size 1 + dup malloc dup >r swap
+    file.read drop
+    file.close r>
+  ] ifTrue
+] is file.slurp
+
+
+#! ---------------------------------------
+#! Arrays
+#! ---------------------------------------
+[ parser @
+  [ malloc ] [ >r malloc r> ] ifTrueFalse is-data 
+] is is-array
+[ swap cell-size * + @ ] is get-element
+[ swap cell-size * + ! ] is put-element
+[ swap char-size * + c@ ] is get-char-element
+[ swap char-size * + c! ] is put-char-element
+
+
+#! ---------------------------------------
+#! Scope
+#! ---------------------------------------
+4 cells is-array <list>
+
+[ last @ <list> @ 1+ <list> put-element
+  1 <list> +!
+] is {
+[ 1 <list> -!
+  <list> @ 1+ <list> get-element last !
+] is }
+
+
+#! ---------------------------------------
+#! Make extending the language a little easier
+#! ---------------------------------------
+[ ` [ invoke >r swap keep # keep compile ` ] invoke r> parser @ [ swap ] ifFalse is ] is +action
+
+
+#! ---------------------------------------
+#! Values
+#! ---------------------------------------
+{
+  variable update
+  [ update on ]
+  [ cell-size malloc [ update @ [ ! ] [ @ ] ifTrueFalse update off ] +action ] 
+} is value
+  is to
+[ parser off
+  [ wsparse
+    dup c@ char: | <>
+    [ value TRUE ] [ drop FALSE ] ifTrueFalse
+  ] whileTrue
+  parser on
+] is value|
+

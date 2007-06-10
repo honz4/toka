@@ -128,7 +128,6 @@ forth
 [ dup strlen 1+ ] is count
 [ count 1- type ] is type
 [ count 1- >number ] is >number
-[ 34 parse state @ if literal, then ] is-macro "
 
 
 |
@@ -166,4 +165,5 @@ variable parser  parser on
 
 ` malloc >entry :link 0 swap !
 
+include bootstrap.toka
 " Toka (for RetroForth)" type 10 emit
