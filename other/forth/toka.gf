@@ -1,16 +1,5 @@
-#! gforth 
-
-: c-string ( addr u -- addr' )
-    tuck pad swap move pad + 0 swap c! pad ;
-
-require lib.fs
-[IFUNDEF] libc  library libc libc.so.6  [THEN]
-
-1 (int) libc malloc malloc
-2 (addr) libc strcpy strcpy
-1 (int) libc strlen strlen
-
 : | 10 parse 2drop ;
+
 |
 | Toka in gForth
 |
@@ -22,34 +11,45 @@ require lib.fs
 | leaving only Toka visible.
 |
 | Todo:
-|  - Loops:
-|    -  +iterate
-|    -  i
 |  - Finish core primitives
 |  - Garbage Collector (fill in empty stubs)
 |  - Actual support for 'parser' state variable
 |  - Command line arguments (as a Toka style array)
 | ------------------------------------------------------------
 
+require lib.fs
+[IFUNDEF] libc  library libc libc.so.6  [THEN]
+
+1 (int) libc malloc malloc
+2 (addr) libc strcpy strcpy
+1 (int) libc strlen strlen
+
+
+: c-string ( addr u -- addr' )
+    tuck pad swap move pad + 0 swap c! pad ;
 
 variable USED
 1024 USED !
 variable ROOT
-64 cells constant QUOTE-SIZE
+128 cells constant QUOTE-SIZE
 
 : remaining dictionary-end here - USED @ - ;
 : malloc allocate drop ;
 
+
 |
 | Cell and Character Sizing
-| This is easy, since RetroForth is tied to 32-bit
-| x86 architecture :)
+| Just to be safe, using 64-bit sizing for cells.
 |
-4 constant cell-size
+8 constant cell-size
 1 constant char-size
+
 
 |
 | Quotes
+| gForth is kind of hairy in this. This bit of
+| code will need a fair amount of tweaking to
+| adapt to other Forths.
 |
 : [ here state @
     remaining here + dp !
@@ -68,7 +68,6 @@ variable ROOT
 : is-macro create , immediate does> @ execute ;
 : is-data create , does> @ ;
 
-:noname 0 ; is ;-hook
 
 |
 | Map in (and rename where necessary) 
@@ -104,9 +103,8 @@ variable ROOT
 [ include ] is include
 [ ' state @ if postpone literal then ] is-macro `
 [ postpone literal ] is #
-[ postpone postpone ] is compile
+[ compile, ] is compile
 [ depth ] is depth
-
 [ state ] is compiler
 [ base  ] is base
 [ dp    ] is heap
@@ -126,7 +124,6 @@ variable ROOT
 | to operate properly. This wraps the Forth versions with
 | the necessary code to emulate Toka behaviour.
 |
-
 [ parse
   dup 1+ malloc >r
   c-string
@@ -162,7 +159,15 @@ variable i
 [ ] is :gc
 [ ] is keep
 [ ] is :see
+[ ] is file.open
+[ ] is file.close
+[ ] is file.write
+[ ] is file.read
+[ ] is file.size
+[ ] is file.seek
+
 variable escape-sequences  escape-sequences off
 variable parser  parser on
 
 cr cr
+include bootstrap.toka
