@@ -1,4 +1,15 @@
 #! gforth 
+
+: c-string ( addr u -- addr' )
+    tuck pad swap move pad + 0 swap c! pad ;
+
+require lib.fs
+[IFUNDEF] libc  library libc libc.so.6  [THEN]
+
+1 (int) libc malloc malloc
+2 (addr) libc strcpy strcpy
+1 (int) libc strlen strlen
+
 : | 10 parse 2drop ;
 |
 | Toka in gForth
@@ -40,14 +51,14 @@ variable ROOT
 |
 | Quotes
 |
-: ] postpone ;
-    >r state ! dp ! r>
-    state @ if postpone literal then
-; immediate
 : [ here state @
     remaining here + dp !
     QUOTE-SIZE USED +!
-    :noname
+    noname :
+; immediate
+: ] postpone ;
+    state ! dp !
+    lastxt state @ if postpone literal ] then
 ; immediate
 
 |
@@ -115,18 +126,16 @@ variable ROOT
 | to operate properly. This wraps the Forth versions with
 | the necessary code to emulate Toka behaviour.
 |
-| [ parse        ( char -- addr len )
-|  dup >r       ( addr len -- addr len | rs: len )
-|  over +       ( addr len -- addr addr+len | rs: len )
-|  0 swap c!    ( addr addr+len -- addr | rs: len )
-|  r> 1+ malloc ( addr -- addr new-addr )
-|  dup >r swap  ( addr new-addr -- new-addr addr | rs: new-addr )
-|  strcpy       ( new-addr addr -- count )
-|  drop r>      ( count -- new-addr )
-| ] is parse
-| [ dup strlen 1+ ] is count
-| [ count 1- type ] is type
-| [ count 1- >number ] is >number
+
+[ parse
+  dup 1+ malloc >r
+  c-string
+  r@ swap strcpy drop
+  r>
+] is parse
+[ dup strlen 1+ ] is count
+[ count 1- type ] is type
+[ count 1- >number ] is >number
 
 
 |
