@@ -21,9 +21,12 @@
 | ------------------------------------------------------------
 
 
+variable USED
+1024 USED !
 variable ROOT
 64 cells constant QUOTE-SIZE
 
+: remaining dictionary-end here - USED @ - ;
 : malloc allocate drop ;
 
 |
@@ -38,10 +41,13 @@ variable ROOT
 | Quotes
 |
 : ] postpone ;
-    >r state ! r>
+    >r state ! dp ! r>
+    state @ if postpone literal then
 ; immediate
-: [ state @
-    :noname 
+: [ here state @
+    remaining here + dp !
+    QUOTE-SIZE USED +!
+    :noname
 ; immediate
 
 |
@@ -50,6 +56,8 @@ variable ROOT
 : is create , does> @ execute ;
 : is-macro create , immediate does> @ execute ;
 : is-data create , does> @ ;
+
+:noname 0 ; is ;-hook
 
 |
 | Map in (and rename where necessary) 
