@@ -1,7 +1,7 @@
 #! gforth 
 : | 10 parse 2drop ;
 |
-| Toka in RetroForth
+| Toka in gForth
 |
 | This is a long-term project, to aid in implementing
 | Toka on PalmOS based devices (via Quartus) and perhaps
@@ -22,7 +22,7 @@
 
 
 variable ROOT
-128 cells constant QUOTE-SIZE
+64 cells constant QUOTE-SIZE
 
 : malloc allocate drop ;
 
@@ -34,21 +34,22 @@ variable ROOT
 4 constant cell-size
 1 constant char-size
 
-
 |
 | Quotes
 |
-: ] postpone ; ; immediate
-: [ here :noname ; immediate
+: ] postpone ;
+    >r state ! r>
+; immediate
+: [ state @
+    :noname 
+; immediate
 
 |
 | Naming of quotes and data
 |
 : is create , does> @ execute ;
-: is-macro create , postpone immediate does> @ execute ;
+: is-macro create , immediate does> @ execute ;
 : is-data create , does> @ ;
-
- [ .s ] .s
 
 |
 | Map in (and rename where necessary) 
@@ -87,10 +88,10 @@ variable ROOT
 [ postpone postpone ] is compile
 [ depth ] is depth
 
-` state is-data compiler
-` base is-data base
-` dp is-data heap
-` last is-data last
+[ state ] is compiler
+[ base  ] is base
+[ dp    ] is heap
+[ last  ] is last
 
 
 |
@@ -125,7 +126,8 @@ variable ROOT
 |
 variable i
 [ rot TRUE = if drop invoke else nip invoke then ] is ifTrueFalse
-[ swap for r@ i ! >r r@ invoke r> next drop ] is iterate
+[ swap 1- for r@ 1+ i ! >r r@ invoke r> next drop ] is iterate
+[ swap 1 do r@ i ! >r r@ invoke r> loop drop ] is +iterate
 [ begin >r r@ invoke TRUE <> if r> drop exit then r> again ] is whileTrue
 [ begin >r r@ invoke FALSE <> if r> drop exit then r> again ] is whileFalse
 [ ROOT @ compile ] is-macro recurse
@@ -135,7 +137,6 @@ variable i
 |
 | Stubs and Incomplete or Buggy
 |
-[ swap for r@ i ! >r r@ invoke r> next drop ] is +iterate
 [ ] is #args
 [ ] is arglist
 [ ] is end.
