@@ -157,6 +157,10 @@ void get_token(char *s, long delim)
       isp--;
       break;
     }
+    if (c == EOF && input[isp] == stdin)
+    {
+      exit(0);
+    }
 
     if (c == '\\' && escapes == TRUE)
     {
@@ -302,6 +306,13 @@ void needs()
  ******************************************************/
 void force_eof()
 {
-  fclose(input[isp]);
-  isp--;
+  if (isp > 0)
+  {
+    fclose(input[isp]);
+    isp--;
+  }
+  else
+  {
+    error(ERROR_CLOSE_STDIN);
+  }
 }
