@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     include_file(BOOTSTRAP);
 
   if (argc == 1)
-    printf("toka (svn build)\n");
+    printf("Toka Language\nCopyright (c) 2006-2007 Charles R. Childers\n\n");
 
   interpret();
 

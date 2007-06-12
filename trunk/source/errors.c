@@ -78,6 +78,10 @@ void error(long code)
            fatal = TRUE;
          }
          break;
+    case ERROR_CLOSE_STDIN:
+         printf("Attempt to close stdin!\n");
+         fatal = TRUE;
+         break;
   }
   if (fatal == TRUE)
   {
