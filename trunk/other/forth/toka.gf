@@ -132,7 +132,7 @@ variable ROOT
 ] is parse
 [ dup strlen 1+ ] is count
 [ count 1- type ] is type
-[ count 1- >number ] is >number
+[ count 1- >number 0 = ] is >number
 
 
 |
