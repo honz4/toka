@@ -15,10 +15,11 @@ who are familiar with it, the GLOSSARY file will give you a good reminder of
 what each word does.
 
 Homepage: http://charleschilders.com:9812
+Mirror:   http://charleschilders.com/toka
 
 At the homepage is information on how to obtain the latest source via 
 Subversion, the full documentation, and a way to download the latest "stable"
-source as a shell archive ("shar").
+source as a tarball ("tar.gz").
 
 Toka has an optional library that adds enhanced support for strings, network
 sockets, and more. It's been tested on Linux and BSD systems, but may also

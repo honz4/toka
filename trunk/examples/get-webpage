@@ -10,16 +10,16 @@ needs strings
 
   1024 1024 * chars is-array buffer
 
-  " charleschilders.com" is-data URL
-  " GET / HTTP/0.9" is-data REQUEST
+  " www.google.com" is-data URL
+  " GET / HTTP/1.0\nHOST: www.google.com\n\n" is-data REQUEST
 
   1024 1024 * chars maxlength !
 
-  URL 9812 pConnect socket !
+  URL 80 pConnect socket !
   REQUEST send
 
-  [ socket @ buffer maxlength @ pRead . cr cr cr 
-    buffer type reset
-  ] invoke 
+  20 [ socket @ buffer maxlength @ pRead
+       buffer type reset
+     ] iterate 
 }
 cr bye
