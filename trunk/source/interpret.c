@@ -85,6 +85,7 @@ void interpret()
 
   while (1)
   {
+    display_prompt();
     flag = FALSE; class = 0;
     fflush(stdout);
     vm_stack_check();

@@ -30,6 +30,7 @@ typedef void (*Inst)();
 #include "headers/interpret.h"
 #include "headers/math.h"
 #include "headers/parser.h"
+#include "headers/prompt.h"
 #include "headers/quotes.h"
 #include "headers/stack.h"
 #include "headers/toka.h"
