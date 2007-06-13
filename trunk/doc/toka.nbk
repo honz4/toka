@@ -157,7 +157,6 @@ can also build a version without the [FFI], but this is not recommended
 as it reduces the usefulness of Toka significantly. This can be done via:
 
 #pre
-  rm source/ffi
   make CFLAGS=-DNOFFI
 #unpre
 
@@ -166,7 +165,8 @@ as well:
 
 #pre
   make docs
-#unpre} 1177366685
+#unpre
+} 1181695202
 
 
 #--------------------------------------------------
@@ -912,8 +912,7 @@ Toka without the FFI, do:
 #unpre
 
 Again, <i>this is only recommended if your system does not support
-dlopen()/dlsym()</i>.
-} 1180821630
+dlopen()/dlsym()</i>.} 1180821630
 
 
 #--------------------------------------------------
@@ -1312,10 +1311,12 @@ topics can be found in [First Steps].</i>
 * [interpret.c]
 * [math.c]
 * [parser.c]
+* [prompt.c]
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1178750209
+* [vm.c]
+} 1181695754
 
 
 #--------------------------------------------------
@@ -2496,6 +2497,10 @@ Variables:
   When ON (TRUE), system parsing words will parse. When
   OFF (FALSE), they will take a string from the stack.
 
+  long parse_ended
+  Holds a TRUE/FALSE flag indicating current parser state
+  for the interpreter prompt.
+
 to_number()
 Attempt to convert a string (on TOS) to a number.
 This accepts a format of:
@@ -2542,7 +2547,8 @@ parse
 include
 needs
 end.
-#unpre} 1178016664
+#unpre
+} 1181695805
 
 
 #--------------------------------------------------
@@ -2556,7 +2562,8 @@ building for specific targets.
 
 CPUs: x86, x86-64, ARM, MIPS, Itanium
 
-OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin, OpenSolaris
+OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin,
+OpenSolaris, Windows
 
 #---
 = Linux =
@@ -2611,7 +2618,50 @@ especially when using the FFI.
 
 Supported CPUs: x86
 
-Only tested under Nexenta GNU/Solaris distribution} 1178750601
+Only tested under Nexenta GNU/Solaris distribution
+
+#---
+= Windows =
+
+Supported CPUs: x86
+
+Toka can be built as a native Win32 application. You will lose the FFI,
+and some of the library components, but it does work fairly well.
+
+The process:
+
+* Create these directories:
+** C:\toka
+** C:\toka\libraries
+* Install + Build using Cygwin's GCC + BINUTILS
+* Edit the Makefile and select the <b>PLATFORMS = -DWIN32</b> line
+* Run this command line: <b>make LDFLAGS=-mno-cygwin</b> 
+* Copy <b>bootstrap.toka</b> and <b>toka.exe</b> to <b>C:\toka</b>
+* Copy any libraries you want to use to <b>C:\toka\libaries</b>
+** Hybrid libraries <i>will not work</i> due to the lack of FFI.
+} 1181695700
+
+
+#--------------------------------------------------
+# prompt.c
+
+page prompt.c {= USE =
+
+Implement the interpreter prompt.
+
+= FUNCTIONS PROVIDED =
+
+#pre
+Variables:
+  long prompt
+  A state variable indicating whether or not to display
+  or hide the prompt. OFF by default.
+
+display_prompt()
+Displays the prompt if <strong>prompt</strong> is true and
+all other state conditions are met.
+#unpre
+} 1181695906
 
 
 #--------------------------------------------------
@@ -2734,8 +2784,7 @@ invoke
 iterate
 +iterate
 ifTrueFalse
-#unpre
-} 1180821423
+#unpre} 1180821423
 
 
 #--------------------------------------------------
@@ -3981,6 +4030,7 @@ parser   ( -a )      Variable holding current parser
                      mode.
 escape-sequences ( -a)  Variable determining if
                         escape sequences are used.
+prompt   ( -a)       Enable/disable the interpreter prompt
 >number  ( a-nf )    Attempt to convert a string
                      to a number
 parse    ( d-a )     Parse until the character 
@@ -4128,7 +4178,8 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
-#unpre} 1180495778
+#unpre
+} 1181695735
 
 
 # End of Notebook Database File

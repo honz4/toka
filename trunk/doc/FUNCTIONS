@@ -385,6 +385,10 @@ Variables:
   When ON (TRUE), escape sequences will be handled
   by the parser. When OFF (FALSE), they will be ignored.
 
+  long parse_ended
+  A helper for the display_prompt, to suppress it while
+  interpreting each word.
+
 to_number()
 Attempt to convert a string (on TOS) to a number.
 This accepts a format of:
@@ -420,6 +424,17 @@ if successful.
 force_eof()
 Remove the current file from the input stack. This
 can be used to abort an include.
+
+
+FILE: prompt.c
+
+Variables:
+  long prompt
+  Variable that determines whether or not to
+  display the prompt.
+
+display_prompt()
+Display the prompt if 'prompt' variable is TRUE
 
 
 FILE: quotes.c

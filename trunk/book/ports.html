@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="quotes.html">Quotes</a> | Previous Page: <a href="parserc.html">parser.c</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="promptc.html">prompt.c</a> | Previous Page: <a href="parserc.html">parser.c</a></p>
 
 <hr>
 
@@ -18,7 +18,8 @@ building for specific targets.
 
 <p>CPUs: x86, x86-64, ARM, MIPS, Itanium
 </p>
-<p>OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin, OpenSolaris
+<p>OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin,
+OpenSolaris, Windows
 </p>
 <hr>
 <h2>Linux</h2>
@@ -73,14 +74,47 @@ especially when using the FFI.
 
 <p>Supported CPUs: x86
 </p>
-<p>Only tested under Nexenta GNU/Solaris distribution</p>
+<p>Only tested under Nexenta GNU/Solaris distribution
+</p>
+<hr>
+<h2>Windows</h2>
+
+<p>Supported CPUs: x86
+</p>
+<p>Toka can be built as a native Win32 application. You will lose the FFI,
+and some of the library components, but it does work fairly well.
+</p>
+<p>The process:
+</p>
+
+<ul>
+<li> Create these directories:
+
+<ul>
+<li> C:\toka
+<li> C:\toka\libraries
+</ul>
+
+<li> Install + Build using Cygwin's GCC + BINUTILS
+<li> Edit the Makefile and select the <b>PLATFORMS = -DWIN32</b> line
+<li> Run this command line: <b>make LDFLAGS=-mno-cygwin</b> 
+<li> Copy <b>bootstrap.toka</b> and <b>toka.exe</b> to <b>C:\toka</b>
+<li> Copy any libraries you want to use to <b>C:\toka\libaries</b>
+
+<ul>
+<li> Hybrid libraries <i>will not work</i> due to the lack of FFI.
+</ul>
+
+</ul>
+
+
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="quotes.html">Quotes</a> | Previous Page: <a href="parserc.html">parser.c</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="promptc.html">prompt.c</a> | Previous Page: <a href="parserc.html">parser.c</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Saturday,  2 June 2007, 18:00:51 PM EDT</i></p>
+<p><i>Notebook exported on Tuesday, 12 June 2007, 20:51:59 PM EDT</i></p>
 
 </body></html>
