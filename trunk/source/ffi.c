@@ -17,6 +17,8 @@
 #include <dlfcn.h>
 
 #include "toka.h"
+
+#ifndef NOFFI
 extern Inst *heap;
 extern long stack[], sp;
 extern ENTRY dictionary[];
@@ -181,3 +183,4 @@ void ffi_rename()
   }
   strcpy(dictionary[last-1].name, name);
 }
+#endif
