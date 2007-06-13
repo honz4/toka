@@ -43,6 +43,10 @@ extern long stack[], sp;
  *|F|   When ON (TRUE), escape sequences will be handled
  *|F|   by the parser. When OFF (FALSE), they will be ignored.
  *|F|
+ *|F|   long parse_ended
+ *|F|   A helper for the display_prompt, to suppress it while
+ *|F|   interpreting each word.
+ *|F|
  *
  *|G| base     ( -a )      Variable containg the current
  *|G|                      numeric base
@@ -56,6 +60,8 @@ long base=10;
 long isp=0;
 long parser=TRUE;
 long escapes=TRUE;
+long parse_ended=TRUE;
+
 
 /******************************************************
  *|G| >number  ( a-nf )    Attempt to convert a string
@@ -149,6 +155,9 @@ void get_token(char *s, long delim)
 
   t = s;
 
+  if (parse_ended == TRUE)
+    parse_ended = FALSE;
+
   while (1)
   {
     if ((c = getc(input[isp])) == EOF && input[isp] != stdin)
@@ -190,7 +199,10 @@ void get_token(char *s, long delim)
     if (delim == 10 || delim == 32)
     {
       if (c == 10 || c == 13)
+      {
+        parse_ended = TRUE;
         break;
+      }
     }
 
     if (c == delim)

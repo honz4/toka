@@ -13,7 +13,7 @@
 
 #include "toka.h"
 
-extern long base, compiler, last, isp, parser, escapes;
+extern long base, compiler, last, isp, parser, escapes, prompt;
 extern Inst *heap;
 
 
@@ -113,6 +113,9 @@ void build_dictionary()
   add_entry("base",      &base,          &data_class);
   add_entry("parser",    &parser,        &data_class);
   add_entry("escape-sequences",&escapes, &data_class);
+
+  /* prompt.c */
+  add_entry("prompt",    &prompt,        &data_class);
 
   /* quotes.c */
   add_entry("[",         &begin_quote,   &macro_class);
