@@ -1,17 +1,52 @@
 #! /usr/bin/toka
-needs time
-time_t today
+#! ---------------------------------------------------------------
+#! RFC862 Compliant Echo Server
+#!
+#! Copyright (c)2007 by Charles Childers
+#! This code may be used under the terms of the MIT/X11 License.
+#! ---------------------------------------------------------------
 
-1 import gets
-1 import fflush
-1024 1024 * malloc is-data buffer
-[ buffer gets buffer type cr 0 fflush recurse ] is echo
+needs sockets
+3 import memset     #! void *memset(void *s, int c, size_t n);
 
 
-today time drop
-today ctime cr type cr
+4096 chars is-array buffer
+[ buffer 0 4096 chars memset reset ] is reset
 
-." Welcome to echo.toka, a simple echo server running under socket(1)\n
-   Whatever you type will be echoed back to you.\n\n"
-echo
+
+#! ---------------------------------------------------------------
+#! new-connection
+#! Setup a new connection. This involves bindings port 7 to 
+#! localhost, and waiting for a client to connect to it. The 
+#! connection and socket variables are set by this code.
+#!
+#! end-connection
+#! Closes the current connection. This allows for new connections
+#! to be made.
+#! ---------------------------------------------------------------
+variable| socket connection |
+
+7 pBind socket !
+[ socket @ pAccept connection ! ] is new-connection
+[ connection @ pClose ] is end-connection
+
+
+#! ---------------------------------------------------------------
+#! send
+#! Send a string to the currently connected client
+#! ---------------------------------------------------------------
+[ >r connection @ r> count char- pWrite ] is send
+
+
+#! =============================================================== MAIN LOOP
+[
+  new-connection
+  [
+    connection @ buffer 4096 chars pRead
+    buffer send >r
+    reset
+    r> -1 <>
+  ] whileTrue
+  TRUE
+] keep whileTrue
 bye
