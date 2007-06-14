@@ -78,7 +78,7 @@ from libc.so.6
 
 #! ---------------------------------------------------------------
 #! new-connection
-#! Setup a new connection. This involves bindings port 4444 to 
+#! Setup a new connection. This involves bindings port 80 to 
 #! localhost, and waiting for a client to connect to it. The 
 #! connection and socket variables are set by this code.
 #!
@@ -88,7 +88,7 @@ from libc.so.6
 #! ---------------------------------------------------------------
 variable| socket connection |
 
-9812 pBind socket !
+80 pBind socket !
 [ socket @ pAccept connection ! ] is new-connection
 [ connection @ pClose ] is end-connection
 
