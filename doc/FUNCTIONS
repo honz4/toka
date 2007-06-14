@@ -168,8 +168,9 @@ Decompile the quote on the stack.
 FILE: dictionary.c
 
 Variables:
-  ENTRY dictionary[4096];
-  Holds the dictionary entries, up to 4096
+  ENTRY dictionary[MAX_DICTIONARY_ENTRIES];
+  Holds the dictionary entries, up to 
+  MAX_DICTIONARY_ENTRIES
 
   long last
   A pointer to the most recent dictionary entry
@@ -545,7 +546,7 @@ Variables:
   Inst *ip
   The instruction pointer
 
-  long stack[100], rstack[100]
+  long stack[MAX_DATA_STACK], rstack[MAX_RETURN_STACK]
   The data and return stacks
 
   long sp, rsp

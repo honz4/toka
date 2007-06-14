@@ -16,7 +16,6 @@
 #include <string.h>
 
 #include "toka.h"
-extern Inst *heap, *ip;
 extern long stack[], rstack[], sp, rsp;
 
 
