@@ -31,10 +31,8 @@
 
 #include "toka.h"
 
-extern long base, compiler, last, isp;
-extern Inst *heap;
+extern long isp;
 extern FILE *input[];
-extern long stack[], sp;
 
 
 

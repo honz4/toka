@@ -70,7 +70,7 @@ void begin_quote()
   quotes[qdepth].compiler = compiler;
   qdepth++;
 
-  heap = gc_alloc(128, sizeof(Inst), GC_MEM);
+  heap = gc_alloc(MAX_QUOTE_SIZE, sizeof(Inst), GC_MEM);
   push((long)heap);
 
   if (qdepth == 1)

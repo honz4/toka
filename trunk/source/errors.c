@@ -61,7 +61,7 @@ void error(long code)
            sp = 0;
            TOS = 0;
          }
-         if (sp > 99)
+         if (sp > MAX_DATA_STACK)
          {
            printf("data stack overflow\n");
            sp = 0;
@@ -72,7 +72,7 @@ void error(long code)
            printf("return stack underflow\n");
            fatal = TRUE;
          }
-         if (rsp > 1023)
+         if (rsp > MAX_RETURN_STACK)
          {
            printf("return stack overflow\n");
            fatal = TRUE;

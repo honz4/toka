@@ -24,7 +24,7 @@
  *|F|   Inst *ip
  *|F|   The instruction pointer
  *|F|
- *|F|   long stack[100], rstack[100]
+ *|F|   long stack[MAX_DATA_STACK], rstack[MAX_RETURN_STACK]
  *|F|   The data and return stacks
  *|F|
  *|F|   long sp, rsp
@@ -32,7 +32,7 @@
  *|F|
  ******************************************************/
 Inst *heap, *ip;
-long stack[100], rstack[1024];
+long stack[MAX_DATA_STACK], rstack[MAX_RETURN_STACK];
 long sp = 0, rsp = 0;
 
 
@@ -62,7 +62,7 @@ void vm_run(Inst prog[])
  ******************************************************/
 void vm_stack_check()
 {
-  if ((sp < 0 || sp > 99) || (rsp < 0 || rsp > 1023))
+  if ((sp < 0 || sp > MAX_DATA_STACK) || (rsp < 0 || rsp > MAX_RETURN_STACK))
     error(ERROR_STACK);
 }
 

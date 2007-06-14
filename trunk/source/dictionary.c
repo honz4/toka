@@ -27,14 +27,15 @@ extern long parser;
 
 /******************************************************
  *|F| Variables:
- *|F|   ENTRY dictionary[4096];
- *|F|   Holds the dictionary entries, up to 4096
+ *|F|   ENTRY dictionary[MAX_DICTIONARY_ENTRIES];
+ *|F|   Holds the dictionary entries, up to 
+ *|F|   MAX_DICTIONARY_ENTRIES
  *|F|
  *|F|   long last
  *|F|   A pointer to the most recent dictionary entry
  *|F|
  ******************************************************/
-ENTRY dictionary[4096];
+ENTRY dictionary[MAX_DICTIONARY_ENTRIES];
 long  last=0;
 
 
