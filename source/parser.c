@@ -164,6 +164,7 @@ void get_token(char *s, long delim)
     {
       fclose(input[isp]);
       isp--;
+      parse_ended = TRUE;
       break;
     }
     if (c == EOF && input[isp] == stdin)
