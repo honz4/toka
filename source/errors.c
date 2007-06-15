@@ -82,6 +82,10 @@ void error(long code)
          printf("Attempt to close stdin!\n");
          fatal = TRUE;
          break;
+    case ERROR_QUOTE_TOO_BIG:
+         printf("Maximum quote length exceeded!\n");
+         fatal = TRUE;
+         break;
   }
   if (fatal == TRUE)
   {

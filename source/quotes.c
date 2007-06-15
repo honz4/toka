@@ -89,10 +89,19 @@ void begin_quote()
  ******************************************************/
 void end_quote()
 {
+  long size;
+
   *heap++ = (Inst)0;
+  push((long)heap);
+
+  size = (TOS - NOS) / sizeof(Inst); DROP;
+  if (size > MAX_QUOTE_SIZE)
+    error(ERROR_QUOTE_TOO_BIG);
+
   qdepth--;
   heap = (Inst *)quotes[qdepth].heap;
   compiler = quotes[qdepth].compiler;
+
   if (compiler == ON)
   {
     *heap++ = (Inst)&qlit;
