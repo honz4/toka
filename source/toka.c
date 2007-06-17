@@ -51,6 +51,10 @@ int main(int argc, char *argv[])
   build_dictionary();
   build_arg_list(argv, (long)argc);
 
+#ifdef SIGNALS
+  trap_signals();
+#endif
+
   isp = 0;
   input[isp] = stdin;
 

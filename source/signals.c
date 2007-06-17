@@ -5,6 +5,7 @@
 
 extern long ip, sp, rsp, stack[], rstack[];
 
+#ifdef SIGNALS
 void trap_signals()
 {
   signal(SIGINT,  caught_signal);
@@ -61,3 +62,4 @@ void caught_signal(int which)
 
   interpret();
 }
+#endif

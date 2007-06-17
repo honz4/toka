@@ -14,19 +14,26 @@ LDFLAGS = `$(CC) other/needdl.c -o a.out -ldl 2>/dev/null && echo "-ldl" && rm a
 #  - WIN32 = Windows (native)
 # ==============================================
 PLATFORM = -DUNIX
-#PLATFORM = -DWIN32
+#PLATFORM = -DWIN32 -mno-cygwin
 
 
 # ==============================================
-# Do the following to disable FFI:
+# All of the following are optional. Add whatever
+# you want. Note that all are disabled by default.
 #
-# Remove source/ffi.c
-# Add -DNOFFI to CFLAGS
+# -DSIGNALS
+#   Add support for signal trapping/processing.
+#   This improves stability and aids in debugging.
+# -DNOFFI
+#   Disable the FFI functionality. Not recommended.
 # ==============================================
+# OTHER =
+
+
 default: clean toka
 
 toka:
-	$(CC) -o toka source/*.c $(CFLAGS) $(LDFLAGS) $(PLATFORM)
+	$(CC) -o toka source/*.c $(CFLAGS) $(LDFLAGS) $(PLATFORM) $(OTHER)
 # ==============================================
 clean:
 	rm -f `find . | grep \~ `
