@@ -32,6 +32,7 @@ typedef void (*Inst)();
 #include "headers/parser.h"
 #include "headers/prompt.h"
 #include "headers/quotes.h"
+#include "headers/signals.h"
 #include "headers/stack.h"
 #include "headers/toka.h"
 #include "headers/vm.h"
