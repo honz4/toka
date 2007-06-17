@@ -38,5 +38,3 @@ cp bootstrap.toka /usr/share/toka
 You will probably need to be root, at least initially. Once installed, you
 can change the owner/permissions to allow a normal account to update it.
 --------------------------------------------------------------------------
-Documentation is now being provided in Notebook format. Notebook is a
-small hypertext editor. You can get it at 

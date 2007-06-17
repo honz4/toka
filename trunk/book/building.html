@@ -14,7 +14,7 @@
 </p>
 
 <ul>
-<li> GCC 2.9x, 3.x, or 4.x
+<li> GCC 2.9x, 3.x, or 4.x (4.x is recommended)
 <li> Make (Either GNU Make or a BSD Make should work)
 
 </ul>
@@ -34,6 +34,14 @@ as it reduces the usefulness of Toka significantly. This can be done via:
 <pre>  make CFLAGS=-DNOFFI
 </pre>
 
+<p>As of June 2007, Toka has optional support for signal trapping (this
+improves stability and makes debugging easier). This can be enabled via:
+</p>
+<pre>  make OTHER=-DSIGNALS
+</pre>
+
+<p>Note that signal trapping is <em>disabled</em> by default.
+</p>
 <p>As a final note, some pieces of documentation can be updated automatically
 as well:
 </p>
@@ -47,6 +55,6 @@ as well:
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 12 June 2007, 20:51:59 PM EDT</i></p>
+<p><i>Notebook exported on Sunday, 17 June 2007, 16:25:55 PM EDT</i></p>
 
 </body></html>
