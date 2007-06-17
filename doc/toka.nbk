@@ -140,7 +140,7 @@ Example:
 
 page Building {To build Toka, you will need the following:
 
-* GCC 2.9x, 3.x, or 4.x
+* GCC 2.9x, 3.x, or 4.x (4.x is recommended)
 * Make (Either GNU Make or a BSD Make should work)
 
 For most people, the following should work. If it fails, try checking the
@@ -160,13 +160,22 @@ as it reduces the usefulness of Toka significantly. This can be done via:
   make CFLAGS=-DNOFFI
 #unpre
 
+As of June 2007, Toka has optional support for signal trapping (this
+improves stability and makes debugging easier). This can be enabled via:
+
+#pre
+  make OTHER=-DSIGNALS
+#unpre
+
+Note that signal trapping is <em>disabled</em> by default.
+
 As a final note, some pieces of documentation can be updated automatically
 as well:
 
 #pre
   make docs
 #unpre
-} 1181695202
+} 1182111864
 
 
 #--------------------------------------------------
@@ -1315,8 +1324,7 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1181695754
+* [vm.c]} 1181695754
 
 
 #--------------------------------------------------
@@ -2547,8 +2555,7 @@ parse
 include
 needs
 end.
-#unpre
-} 1181695805
+#unpre} 1181695805
 
 
 #--------------------------------------------------
@@ -2634,12 +2641,11 @@ The process:
 ** C:\toka
 ** C:\toka\libraries
 * Install + Build using Cygwin's GCC + BINUTILS
-* Edit the Makefile and select the <b>PLATFORMS = -DWIN32</b> line
-* Run this command line: <b>make LDFLAGS=-mno-cygwin</b> 
-* Copy <b>bootstrap.toka</b> and <b>toka.exe</b> to <b>C:\toka</b>
-* Copy any libraries you want to use to <b>C:\toka\libaries</b>
+* Edit the Makefile and select the <b>PLATFORMS = -DWIN32 ...</b> line
+* Copy <b>bootstrap.toka</b> and <b>toka.exe</b> to <b>C:\toka\</b>
+* Copy any libraries you want to use to <b>C:\toka\libaries\</b>
 ** Hybrid libraries <i>will not work</i> due to the lack of FFI.
-} 1181695700
+} 1182111944
 
 
 #--------------------------------------------------
@@ -2660,8 +2666,7 @@ Variables:
 display_prompt()
 Displays the prompt if <strong>prompt</strong> is true and
 all other state conditions are met.
-#unpre
-} 1181695906
+#unpre} 1181695906
 
 
 #--------------------------------------------------
@@ -4178,8 +4183,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
-#unpre
-} 1181695735
+#unpre} 1181695735
 
 
 # End of Notebook Database File
