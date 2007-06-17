@@ -1,7 +1,7 @@
 i: Dictionary
 t:   is-macro
-   [ 1 ] is-macro [1]
-   [ [1] [1] ] 1 try 1 try invoke
+   [ 1 1 try ] is-macro [1]
+   [ [1] ] 
 t:   is
    1 2 [ 3 ] is foo
    foo 3 try 2 try 1 try
