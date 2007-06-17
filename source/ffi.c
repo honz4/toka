@@ -11,14 +11,14 @@
  *
  ******************************************************/
 
+#include "toka.h"
+
+#ifndef NOFFI
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <dlfcn.h>
 
-#include "toka.h"
-
-#ifndef NOFFI
 extern Inst *heap;
 extern long stack[], sp;
 extern ENTRY dictionary[];

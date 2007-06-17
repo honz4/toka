@@ -17,7 +17,7 @@ t:  !
 t:  compiler
    [ -1 compiler ! ] is }}
    [  0 compiler ! ] is-macro {{
-   [ 1 {{ 2 }} ] 2 try invoke 1 try
+   [ 1 {{ 2 swap }} ] swap 2 try invoke 1 try
 t:  heap
    [ 0 {{ 0 heap @ ! invoke 0 try
 t:  +!
