@@ -21,6 +21,8 @@ type     ( a- )      Display a string
 bye      ( - )       Quit Toka
 #        ( n- )      Push the following cell to
                      the stack.
+$#       ( n- )      Push the following cell to
+                     the stack.
 @        ( a-n )     Fetch the value in memory
                      location 'a'
 !        ( na- )     Store 'n' to memory location

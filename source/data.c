@@ -38,6 +38,23 @@ void make_literal()
 
 
 /******************************************************
+ *|G| $#       ( n- )      Push the following cell to
+ *|G|                      the stack.
+ *
+ *|F| make_string_literal()
+ *|F| Compile a call to string_lit() and then place TOS 
+ *|F| into the next memory location.
+ *|F|
+ ******************************************************/
+void make_string_literal()
+{
+  *heap++ = (Inst)&string_lit;
+  *heap++ = (Inst)TOS; 
+  DROP;
+}
+
+
+/******************************************************
  *|G| @        ( a-n )     Fetch the value in memory
  *|G|                      location 'a'
  *

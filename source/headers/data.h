@@ -1,4 +1,5 @@
 void make_literal();
+void make_string_literal();
 
 void fetch();
 void store();

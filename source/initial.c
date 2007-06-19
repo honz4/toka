@@ -54,6 +54,7 @@ void build_dictionary()
   add_entry("c@",        &fetch_char,    &forth_class);
   add_entry("c!",        &store_char,    &forth_class);
   add_entry("#",         &make_literal,  &forth_class);
+  add_entry("$#",        &make_string_literal,&forth_class);
   add_entry("copy",      &copy,          &forth_class);
   add_entry("cell-size", &cell_size,     &forth_class);
   add_entry("char-size", &char_size,     &forth_class);
