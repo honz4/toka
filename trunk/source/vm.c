@@ -90,3 +90,20 @@ void lit()
   TOS = (long)*ip;
   ip++;
 }
+
+
+
+
+/******************************************************
+ *|F| string_lit()
+ *|F| Push the pointer in the following memory location
+ *|F| to the stack. This is a helper function for 
+ *|F| strings.
+ *|F|
+ ******************************************************/
+void string_lit()
+{
+  sp++;
+  TOS = (long)*ip;
+  ip++;
+}

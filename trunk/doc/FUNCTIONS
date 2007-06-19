@@ -105,6 +105,10 @@ make_literal()
 Compile a call to lit() and then place TOS into
 the next memory location.
 
+make_string_literal()
+Compile a call to string_lit() and then place TOS 
+into the next memory location.
+
 fetch()
 Fetch the value in the memory location pointed to
 by TOS.
@@ -567,4 +571,9 @@ Push a number to the stack.
 lit()
 Push the value in the following memory location
 to the stack
+
+string_lit()
+Push the pointer in the following memory location
+to the stack. This is a helper function for 
+strings.
 

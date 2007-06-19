@@ -40,7 +40,7 @@
 #! Strings
 #! ---------------------------------------
 [ char: " 
-  parse compiler @ [ # ] ifTrue 
+  parse compiler @ [ $# ] ifTrue 
 ] is-macro "
 
 

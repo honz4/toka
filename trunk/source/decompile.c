@@ -54,6 +54,7 @@ void decompile(Inst *xt)
 {
   Inst this;
   long flag;
+  char *string;
 
   printf("[ ");
 
@@ -70,6 +71,27 @@ void decompile(Inst *xt)
       this = (Inst)*xt++;
       if (resolve_name(this) == 0)
         printf("%li ", (long)this);
+    }
+    if (this == &string_lit)
+    {
+      this = (Inst)*xt++;
+      string = (char *)this;
+      putchar('"');
+      putchar(' ');
+      for (; *string; string++)
+      {
+        switch (*string)
+        {
+          case 27: printf("\\^"); break;
+          case 10: printf("\\n"); break;
+          case 13: printf("\\r"); break;
+          case 92: printf("\\"); break;
+          case 34: printf("\\\""); break;
+          default: putchar(*string);
+        }
+      }
+      putchar('"');
+      putchar(' ');
     }
     if (this == &qlit)
     {
