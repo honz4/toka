@@ -1,0 +1,8 @@
+4 cells is-array foo
+
+212 1 foo put-element
+51 2 foo put-element
+12 3 foo put-element
+91 4 foo put-element
+
+reset 1 4 [ i foo get-element * ] iterate .
