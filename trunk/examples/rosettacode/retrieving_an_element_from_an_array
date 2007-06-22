@@ -1,0 +1,9 @@
+#! This retrieves the value 20 from the second item in the array: 
+
+ 3 cells is-array table
+ ( Populate the array )
+ 10 0 table put-element
+ 20 1 table put-element 
+ 30 2 table put-element
+ 
+ table 1 get-element

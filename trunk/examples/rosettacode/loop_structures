@@ -1,0 +1,21 @@
+#! iterate 
+#! Counts down, executing a quote until the counter reaches 0. 
+
+10 [ i . ] iterate
+
+
+#! +iterate 
+#! Counts up, executing a quote until the counter reaches the requested count. 
+
+10 [ i . ] +iterate
+
+
+#! whileTrue 
+#! Repeatedly executes a quote until the quote returns true. 
+
+100 [ dup . 1- dup 0 <> ] whileTrue
+
+
+#! whileFalse 
+#! Repeatedly executes a quote until the quote returns true. 
+0 [ dup . 1+ dup 101 = ] whileFalse

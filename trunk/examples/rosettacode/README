@@ -91,6 +91,10 @@ can be found at http://www.rosettacode.org.
 = R =
 
 - Regular expression matching
+  The goal of this task is:
+  - to match a string against a regular expression 
+  - to substitute part of a string using a regular expression
+  Toka only covers the first aspect of this at present.
 - Retrieving an Element of an Array
 
 
@@ -119,4 +123,7 @@ can be found at http://www.rosettacode.org.
 = U =
 
 - User Input
+  In this task, the goal is to input a string and the integer 
+  75000, from the normal user interface.
 - User Output
+  The goal is to display "Goodbye, World"

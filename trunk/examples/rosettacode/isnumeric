@@ -1,0 +1,5 @@
+#! Returns TRUE (-1) if character-string parameter represents a signed 
+#! or unsigned integer. Otherwise returns FALSE (zero). 
+
+[ ( string -- flag )
+  >number nip ] is isNumeric
