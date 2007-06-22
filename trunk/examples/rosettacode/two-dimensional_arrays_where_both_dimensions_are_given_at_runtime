@@ -1,0 +1,24 @@
+#! Toka has no direct support for 2D arrays, but they can be created 
+#! and operated on in a manner similar to normal arrays using the 
+#! following functions. 
+
+[ ( x y -- address )
+  cells malloc >r
+  dup cells >r
+  [ r> r> r> 2dup >r >r swap malloc swap i swap put-element >r ] iterate
+r> r> nip
+] is 2D-array
+
+[ ( a b address -- value )
+  get-element get-element
+] is 2D-get-element
+[ ( value a b address -- )
+  get-element put-element
+] is 2D-put-element
+
+#! And a short test: 
+
+5 5 2D-array >r             #! Create an array and save the pointer to it
+10 2 3 r@ 2D-put-element    #! Set element 2,3 to 10
+2 3 r@ 2D-get-element       #! Get the element at 2,3
+r> drop                     #! Discard the pointer to the array
