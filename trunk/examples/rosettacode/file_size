@@ -1,0 +1,16 @@
+#! In this task, the job is to verify the size of a file called "input.txt" 
+#! for a file in the current working directory and another one in the file 
+#! system root.
+
+#! A trivial method follows: 
+ " input.txt"  "R" file.open dup file.size . file.close
+ " /input.txt" "R" file.open dup file.size . file.close
+
+#! A better method would be to define a new function that actually checks whether the file exists: 
+ [ "R" file.open
+   dup 0 <> [ dup file.size . file.close ] ifTrue
+   drop
+ ] is display-size
+ 
+ " input.txt"  display-size
+ " /input.txt" display-size

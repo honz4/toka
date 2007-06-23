@@ -1,0 +1,17 @@
+#! Demonstrate all ways to include text in a language source file which is 
+#! completely ignored by the compiler or interpreter.
+
+#! Toka provides a number of ways to add comment text. As with everything in Toka, 
+#! comment characters are actually words which control the compiler. 
+
+ #! The backslash skips everything else on the line
+ ( The left paren skips everything up to the next right paren)
+
+#! The paren comments are normally used for "stack effect" notation: 
+
+ [ ( a b -- c ) ... ] is myword
+
+#! This comment means "myword takes two cells on the stack and leaves one". Sometimes, 
+#! stack effect comment names give clues about the word's function: 
+
+ [ ( a b -- a+b ) + ] is add'em
