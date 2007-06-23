@@ -1,0 +1,49 @@
+#! /usr/bin/toka
+#! A small Forth interpreter written in Toka.
+#! ==========================================================
+#! Objective:
+#!   Implement a dialect of Forth (non-ANS compliant, but it
+#!   should follow the ANS standard when possible) in Toka.
+#! ==========================================================
+#! Done so far:
+#!   : ; ;immediate s" type for next \ .s words if else then
+#!   unpack parse see
+#!
+#! Buggy:
+#!
+#! Things from Toka that need no changes:
+#!   variable value to @ ! +! -! dup drop swap rot over 2dup
+#!   2drop tuck nip = < > <> bye emit + - * /mod / mod 
+#!   on off toggle >> << not negate and or xor clear cr
+#! ==========================================================
+#!   REV      DATE       NOTES
+#! ----------------------------------------------------------
+#!    -     20070621     Implementation begins
+#! ==========================================================
+
+[ wsparse ` [ invoke ] is :
+[ ` ] invoke parser off swap is parser on ] is-macro ;
+[ ` ] invoke parser off swap is-macro parser on ] is-macro ;immediate
+` [ is-macro for
+[ ` ] invoke ` iterate compile ] is-macro next
+
+: s" escape-sequences on
+  ` " invoke count 1- compiler @ [ $# ] ifTrue 
+  escape-sequences off
+;immediate
+: type for dup c@ emit 1+ next drop ;
+
+: words :names ;
+: .s :stack ;
+: \\ lnparse drop ;immediate
+
+: if FALSE ` [ invoke ;immediate
+: else ` ] invoke drop TRUE ` [ invoke ;immediate
+: then ` ] invoke [ ` ifTrueFalse compile ] [ ` ifTrue compile ] ifTrueFalse ;immediate
+
+: unpack count 1- ;
+: parse parse unpack ;
+
+: see ` ` invoke :see ;
+
+escape-sequences off
