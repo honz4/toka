@@ -1,0 +1,17 @@
+#! Demonstrate how to define a type that behaves like an integer but has a 
+#! lowest valid value of 1 and a highest valid value of 10. Include all bounds 
+#! checking you need to write, or explain how the compiler or interpreter 
+#! creates those bounds checks for you.
+
+needs quotes
+{
+  variable update
+  [ update @ [ ! ] [ @ ] ifTrueFalse update off ] is action
+  [ dup >r 0 11 r> within [ update on ] [ drop ." Out of bounds\n " ] ifTrueFalse ]
+  [ ` [ invoke cell-size malloc # ` action compile ` ] invoke is ]
+} is value:1-10:
+  is to
+
+value:1-10: foo
+1 to foo
+foo .

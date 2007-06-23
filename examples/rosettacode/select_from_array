@@ -1,0 +1,16 @@
+#! Select certain elements from an Array into a new Array in a generic 
+#! way. To demonstrate, select all even numbers from an Array.
+
+ 10 cells is-array table
+ 10 cells is-array even
+ {
+   variable source
+   [ swap source ! >r reset r>
+     [ i source @ get-element
+       dup 2 mod 0 <> [ drop ] ifTrue 
+     ] iterate
+     depth [ i even put-element ] +iterate
+   ]
+ } is copy-even
+ 10 [ i i table put-element ] iterate
+ table 10 copy-even

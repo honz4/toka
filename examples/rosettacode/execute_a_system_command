@@ -1,0 +1,5 @@
+#! In this task, the goal is to run either the ls system 
+#! command, or the pause system command.
+
+needs shell
+" ls" system

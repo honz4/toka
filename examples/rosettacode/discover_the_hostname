@@ -1,0 +1,4 @@
+2 import gethostname
+1024 malloc is-data foo
+foo 1024 gethostname
+foo type

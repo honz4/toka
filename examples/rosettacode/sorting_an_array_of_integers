@@ -1,0 +1,9 @@
+#! Sort an array (or list) of integers in ascending numerical order. Use 
+#! a sorting facility provided by the language/library if possible.
+
+#! This can be done by using the bubble sort library: 
+
+needs bsort
+arrayname number_elements bsort
+
+#! See the Toka entry on Bubble_Sort for a full example.
