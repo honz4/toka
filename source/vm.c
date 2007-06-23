@@ -62,8 +62,10 @@ void vm_run(Inst prog[])
  ******************************************************/
 void vm_stack_check()
 {
+#ifndef DISABLE_STACK_CHECKS
   if ((sp < 0 || sp > MAX_DATA_STACK) || (rsp < 0 || rsp > MAX_RETURN_STACK))
     error(ERROR_STACK);
+#endif
 }
 
 

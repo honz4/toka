@@ -70,17 +70,15 @@ void names()
 
   primitives = 0; data = 0; quotes = 0;
 
-  printf("Primitives (macro)\n");
+  printf("Primitives:\n");
   primitives = display_names_by_class(&macro_class);
-  printf("\n\nPrimitives (normal)\n");
   primitives += display_names_by_class(&forth_class);
 
-  printf("\n\nQuotes (macro)\n");
+  printf("\n\nQuotes:\n");
   quotes = display_names_by_class(&quote_macro_class);
-  printf("\n\nQuotes (normal)\n");
   quotes = display_names_by_class(&quote_forth_class);
 
-  printf("\n\nData\n");
+  printf("\n\nData:\n");
   data = display_names_by_class(&data_class);
 
   printf("\n\nTotal: %li.\n", last);
@@ -139,8 +137,8 @@ void gc_info()
     tsize += gc_trash[a].size;
 
   a = (sizeof(GCITEM) * 128)*2;
-  printf("gc: %lu KiB (%lu bytes) used for bookkeeping\n", a/1024, a);
-  printf("gc: %lu objects totaling %lu KiB (%lu bytes)\n", gc_objects, gc_used/1024, gc_used);
-  printf("gc: Temporary:  %lu (%lu KiB, %lu bytes)\n", gc_depth, size/1024, size);
-  printf("gc: Trash:      %lu (%lu KiB, %lu bytes)\n", gc_tdepth, tsize/1024, tsize);
+  printf("gc: %lu KiB (%lu) used for bookkeeping\n", a/1024, a);
+  printf("gc: %lu objects totaling %lu KiB (%lu)\n", gc_objects, gc_used/1024, gc_used);
+  printf("gc: User:   %lu KiB (%lu) in %lu objects\n", size/1024, size, gc_depth);
+  printf("gc: System: %lu KiB (%lu) in %lu objects\n", tsize/1024, tsize, gc_tdepth);
 }

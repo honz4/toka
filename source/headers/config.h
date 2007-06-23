@@ -13,3 +13,4 @@
 #define LIBRARY "c:\\toka\\library\\"
 #define BOOTSTRAP "c:\\toka\\bootstrap.toka"
 #endif
+

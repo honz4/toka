@@ -26,6 +26,11 @@ PLATFORM = -DUNIX
 #   This improves stability and aids in debugging.
 # -DNOFFI
 #   Disable the FFI functionality. Not recommended.
+# -DDISABLE_STACK_CHECKS
+#   Remove the code which checks for over/underflow.
+#   This will bring a significant performance 
+#   improvement, but makes debugging stack problems
+#   harder.
 # ==============================================
 # OTHER =
 
