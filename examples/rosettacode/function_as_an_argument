@@ -1,0 +1,6 @@
+#! Toka allows obtaining a function pointer via the ` (backtick) word. The
+#! pointers are passed on the stack, just like all other data. 
+
+ [ ." First\n" ] is first
+ [ invoke ] is second
+ ` first second

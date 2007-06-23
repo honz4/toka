@@ -1,0 +1,10 @@
+#! Retrieve the list of command-line arguments given to the program.
+
+#! Arguments are stored into an array. The first element in the array is 
+#! the name of the program, the rest are the arguments in order. The 
+#! number of arguments is provided by #args. 
+
+ [ arglist get-element type cr ] is show-arg
+ [ dup . char: = emit space ] is #= 
+ #args 0 = [ " No arguments passed!" type cr ] ifTrue  
+ #args [ i #= show-arg ] +iterate

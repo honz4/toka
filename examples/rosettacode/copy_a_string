@@ -1,0 +1,3 @@
+ needs strings
+ " hello" is-data a
+ a clone-string is-data b

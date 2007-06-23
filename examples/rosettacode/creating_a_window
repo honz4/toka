@@ -1,0 +1,5 @@
+#! Toka has partial bindings for the SDL library. 
+
+needs sdl
+0 SDL_Init
+800 600 16 0 SDL_SetVideoMode
