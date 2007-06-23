@@ -74,8 +74,7 @@ void decompile(Inst *xt)
     }
     if (this == &string_lit)
     {
-      this = (Inst)*xt++;
-      string = (char *)this;
+      string = (char *)*xt++;
       putchar('"');
       putchar(' ');
       for (; *string; string++)
@@ -127,5 +126,5 @@ void see()
 {
   decompile((Inst *)TOS);
   DROP;
-  printf("\n");
+  putchar('\n');
 }

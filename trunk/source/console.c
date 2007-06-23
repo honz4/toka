@@ -52,7 +52,7 @@ void dot()
  ******************************************************/
 void emit()
 {
-  printf("%c", (char)TOS);
+  putchar((char)TOS);
   DROP;
 }
 
@@ -66,7 +66,7 @@ void emit()
  ******************************************************/
 void type()
 {
-  printf("%s", (char *)TOS);
+  printf((char *)TOS);
   DROP;
 }
 
