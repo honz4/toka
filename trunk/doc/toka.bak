@@ -2225,9 +2225,7 @@ page License {Toka is Copyright (c) 2006-2007 Charles R. Childers
 Portions of the library and examples were developed by Tim Larson and
 erider. All code provided in the Toka repository is distributed under the
 following license terms.  
-
 #---
-
 #pre
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -2247,7 +2245,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
 IN THE SOFTWARE.
 #unpre
-} 1182707494
+} 1182707487
 
 
 #--------------------------------------------------
