@@ -95,22 +95,10 @@ would write:
 
 <p>When a constant created with <b>is-data</b> is used in a quote, the
 resulting code is a bit different than when the constant is created as a
-quote. Specifically, comparing:
+quote. Specifically when using <b>is-data</b>, the resulting value is
+inserted directly into the quote. This saves the overhead of calling the
+function at runtime.
 </p>
-<pre> 1234 is-data foo
- [ foo + ] is add-foo
- ` add-foo :see
-</pre>
-
-<p>to 
-</p>
-<pre> [ 1234 ] is foo
- [ foo + ] is add-foo
- ` add-foo :see
-</pre>
-
-<p>When using <b>is-data</b>, the resulting value is inserted directly into
-the quote. This saves the overhead of calling the function at runtime.</p>
 
 <hr>
 
@@ -118,6 +106,6 @@ the quote. This saves the overhead of calling the function at runtime.</p>
 
 <hr>
 
-<p><i>Notebook exported on Sunday, 24 June 2007, 13:52:09 PM EDT</i></p>
+<p><i>Notebook exported on Sunday, 24 June 2007, 21:26:26 PM EDT</i></p>
 
 </body></html>
