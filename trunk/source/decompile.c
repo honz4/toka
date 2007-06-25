@@ -68,7 +68,9 @@ void decompile(Inst *xt)
     }
     if (this == &lit)
     {
-      printf("%li ", (long)*xt++);
+      this = (Inst)*xt++;
+      if (resolve_name(this) == FALSE)
+        printf("%li ", (long)this);
     }
     if (this == &string_lit)
     {

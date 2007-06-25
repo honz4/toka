@@ -501,8 +501,7 @@ Provides:
 * getchar
 ** Read a single keypress. Use <b>console_init</b> first.
 * console_dimensions
-** Return the height and width of a console
-} 1182653657
+** Return the height and width of a console} 1182653657
 
 
 #--------------------------------------------------
@@ -942,8 +941,7 @@ Toka without the FFI, do:
 #unpre
 
 Again, <i>this is only recommended if your system does not support
-dlopen()/dlsym()</i>.
-} 1182653477
+dlopen()/dlsym()</i>.} 1182653477
 
 
 #--------------------------------------------------
@@ -1126,8 +1124,7 @@ start working through these sections.
 * [Stack Comments]
 
 === Advanced Topics ===
-* [Extending the Language]
-} 1182653411
+* [Extending the Language]} 1182653411
 
 
 #--------------------------------------------------
@@ -1348,8 +1345,7 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]
-} 1182653382
+* [vm.c]} 1182653382
 
 
 #--------------------------------------------------
@@ -2145,24 +2141,10 @@ or
 
 When a constant created with <b>is-data</b> is used in a quote, the
 resulting code is a bit different than when the constant is created as a
-quote. Specifically, comparing:
-
-#pre
- 1234 is-data foo
- [ foo + ] is add-foo
- ` add-foo :see
-#unpre
-
-to 
-
-#pre
- [ 1234 ] is foo
- [ foo + ] is add-foo
- ` add-foo :see
-#unpre
-
-When using <b>is-data</b>, the resulting value is inserted directly into
-the quote. This saves the overhead of calling the function at runtime.} 1178750058
+quote. Specifically when using <b>is-data</b>, the resulting value is
+inserted directly into the quote. This saves the overhead of calling the
+function at runtime.
+} 1182734767
 
 
 #--------------------------------------------------
@@ -2246,8 +2228,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
 IN THE SOFTWARE.
-#unpre
-} 1182707494
+#unpre} 1182707494
 
 
 #--------------------------------------------------
