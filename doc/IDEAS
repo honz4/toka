@@ -1,0 +1,65 @@
+These are some things I may explore in the future:
+
+= Statistics
+  - Size Tracking
+    Add a field to dictionary headers to keep the actual size of
+    each function, data structure, etc around. This would allow
+    gathering of memory waste statistics, and could be used to
+    finetune the limits.
+  - Reference Counting
+    Keep track of which words are used the most. This could allow
+    for fine tuning of the words in bootstrap.toka, the set of
+    primitives, and the libraries.
+  - Memory Allocations/Frees
+= Optimizations
+  - JIT Compiler
+  - Expand small quotes
+    - Add an 'is-inline' class or 'can-inline' flag?
+  - Allow deletion of quotes
+    This could be done fairly easily, but we'd need a way to identify
+    subquotes.
+  - Allow replacing existing quotes
+  - Allow reversion to initial state
+    This may be tricky, but could be done with careful work. Some
+    memory leaks might occur though.
+= Libraries
+  - Expanded Regex library (bind to pcre?)
+= Bindings
+  - Little Smalltalk
+  - Rx Core
+  - 4p
+  - X11
+  - SDL (started)
+  - Allegro
+= Various
+  - Export Source
+    Given a word, find all dependencies (including strings, arrays, 
+    variables, values, etc) and write out the full, ready to load,
+    source for a custom bootstrap.toka which would contain just the
+    needed code.
+
+    Example (note that > denotes the prompt)
+
+    > variable foo
+    > [ foo @ + foo ! ] is +foo
+    > [ 10 [ foo @ . i +foo ] iterate cr ] is bar
+    >
+    > ` bar :export
+    [ 10 ] is CR
+    [ CR emit ] is cr
+    cell-size malloc is-data foo
+    [ foo @ + foo ! ] is +foo
+    [ 10 [ foo @ . i +foo ] iterate cr ] is bar
+
+    This would not be trivial, but would allow for much tighter
+    code to be exported. It'd need to be able to allow for the FFI,
+    scope, and maybe other tricky things. It would be a crucial 
+    step towards the next idea though.
+  - Standalone Runner
+    Allow a Toka program to be saved to a binary, bytecoded format. This
+    would be specific to a host word size (32 bit or 64 bit), but otherwise
+    portable format. 
+
+    The runner would encode most of the primitives into the virtual machine,
+    allowing it to be faster (less function call overhead), and possibly 
+    more tightly coded.
