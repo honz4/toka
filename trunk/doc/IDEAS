@@ -1,5 +1,23 @@
 These are some things I may explore in the future:
 
+If anyone wants to help, I'm more than willing to accept :)
+
+= Documentation
+  - Formats:
+    - HTML
+    - ASCII Text
+    - TextMaker
+    - PDF
+  - Expand, explain design decisions better
+  - Format as a book suitable for printing
+
+= Test Suite
+  - Rewrite in a cleaner way
+    - Allow for easier tests of multiple return values
+    - Better output on errors
+  - Should cover all primitives (including files)
+  - Should cover all of bootstrap.toka
+
 = Statistics
   - Size Tracking
     Add a field to dictionary headers to keep the actual size of
@@ -11,26 +29,38 @@ These are some things I may explore in the future:
     for fine tuning of the words in bootstrap.toka, the set of
     primitives, and the libraries.
   - Memory Allocations/Frees
+
 = Optimizations
   - JIT Compiler
+    For x86 this could use some of the stuff from Rx Core. It'd
+    not be ideal for everything, but should allow a significant
+    performance increase even without optimizing the compiler
+    output further.
   - Expand small quotes
     - Add an 'is-inline' class or 'can-inline' flag?
-  - Allow deletion of quotes
-    This could be done fairly easily, but we'd need a way to identify
-    subquotes.
-  - Allow replacing existing quotes
+  - Quote Manipulation
+    - Deletion
+      Would need to identify+free subquotes. Compacting the dictionary
+      is another important step here.
+    - Replace an existing quote with a new one.
+      - Free subquotes
+      - Zero out quote memory, and set 'heap' to the start of it
+      - Should be easy, if we ignore subquotes (this would lead to
+        memory leaks though)
   - Allow reversion to initial state
     This may be tricky, but could be done with careful work. Some
     memory leaks might occur though.
+
 = Libraries
   - Expanded Regex library (bind to pcre?)
-= Bindings
-  - Little Smalltalk
-  - Rx Core
-  - 4p
+  - Language Bindings
+    - Little Smalltalk
+    - Rx Core (for 32-bit systems only; this should be pretty easy)
+    - 4p
   - X11
   - SDL (started)
   - Allegro
+
 = Various
   - Export Source
     Given a word, find all dependencies (including strings, arrays, 
@@ -38,7 +68,7 @@ These are some things I may explore in the future:
     source for a custom bootstrap.toka which would contain just the
     needed code.
 
-    Example (note that > denotes the prompt)
+    Conceptual Example (note that > denotes the prompt)
 
     > variable foo
     > [ foo @ + foo ! ] is +foo
@@ -63,3 +93,6 @@ These are some things I may explore in the future:
     The runner would encode most of the primitives into the virtual machine,
     allowing it to be faster (less function call overhead), and possibly 
     more tightly coded.
+
+    It could possibly build off of the Maunga source for loading images, 
+    diagnostics, etc.
