@@ -1,2 +1,12 @@
+{
+[ parser off
+  [ wsparse
+    dup c@ char: | <>
+    [ variable last @ :entry # ` ! compile drop TRUE ] [ drop FALSE ] ifTrueFalse
+  ] whileTrue
+  parser on
+] is vars|
+
+[ ` [ invoke { vars| ] 
+} is-macro local[
 [ } ` ] invoke ] is-macro ]local
-[ ` [ invoke { variable| ] is-macro local[
