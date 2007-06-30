@@ -35,8 +35,6 @@ copy     ( sdc- )    Copy 'c' bytes from 's' to
                      'd'
 cell-size ( -n )     Return the size of a cell
 char-size ( -n )     Return the size of a char
-:names   ( - )       Display a list of all named
-                     quotes and data
 :stack   ( - )       Display all values on the
                      data stack
 :gc      (  -  )     Display information about
@@ -51,3 +49,9 @@ is-data  ( a"- )     Attach a name to data memory
 `        ( "-a )     Return a quote corresponding
                      to the specified word.
          ( $-a )     Non-parsing form
+:name    ( n-$ )     Return the name for a 
+                     dictionary entry
+:xt      ( n-$ )     Return the address of a 
+                     dictionary entry
+:class   ( n-$ )     Return the class # for a 
+                     dictionary entry

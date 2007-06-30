@@ -211,18 +211,42 @@ void return_quote()
 
 
 /******************************************************
- *|G| :entry   ( n-$a )    Return the name and address
- *|G|                      for a dictionary entry.
+ *|G| :name    ( n-$ )     Return the name for a 
+ *|G|                      dictionary entry
+ *|G| :xt      ( n-$ )     Return the address of a 
+ *|G|                      dictionary entry
+ *|G| :class   ( n-$ )     Return the class # for a 
+ *|G|                      dictionary entry
  *
- *|F| return_dictinfo()
+ *|F| return_name()
  *|F| Return a pointer to the name and the starting 
  *|F| address of a specific dictionary entry.
  *|F|
  ******************************************************/
-void return_dictinfo()
+void return_name()
 {
   long which = TOS; DROP;
-
   push((long)dictionary[which].name);
+}
+void return_xt()
+{
+  long which = TOS; DROP;
   push((long)dictionary[which].xt);
+}
+void return_class()
+{
+  long which = TOS; DROP;
+  void *class = dictionary[which].class;
+  if (class == &forth_class)
+    which = 0;
+  if (class == &macro_class)
+    which = 1;
+  if (class == &data_class)
+    which = 2;
+  if (class == &quote_forth_class)
+    which = 3;
+  if (class == &quote_macro_class)
+    which = 4;
+
+  push(which);
 }

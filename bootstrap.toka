@@ -2,13 +2,23 @@
 [ 41 parse drop ] is-macro (
 
 #! ---------------------------------------
+#! Constants for classes
+#! ---------------------------------------
+0 is-data .PRIM_WORD
+1 is-data .PRIM_MACRO
+2 is-data .DATA
+3 is-data .WORD
+4 is-data .MACRO
+
+
+#! ---------------------------------------
 #! Constants for various ASCII values
 #! ---------------------------------------
-[ 32 ] is SPACE
-[ 10 ] is CR
-[ 13 ] is LF
-[ 27 ] is ESC
-[  9 ] is TAB
+32 is-data SPACE
+10 is-data CR
+13 is-data LF
+27 is-data ESC
+ 9 is-data TAB
 
 
 #! ---------------------------------------
@@ -21,8 +31,8 @@
 #! ---------------------------------------
 #! Conditionals
 #! ---------------------------------------
-[  0 ] is FALSE
-[ -1 ] is TRUE
+ 0 is-data FALSE
+-1 is-data TRUE
 [ [ ] ifTrueFalse ] is ifTrue
 [ [ ] swap ifTrueFalse ] is ifFalse
 
@@ -218,4 +228,8 @@
 #! ---------------------------------------
 #! Debugging Aids
 #! ---------------------------------------
-[ last @ [ i :entry drop type space ] iterate cr ] is words
+[ dup last @ [ i :class over = [ i :name type space ] ifTrue ] iterate cr ] is words-within
+[ .PRIM_WORD words-within .PRIM_MACRO words-within ] is :prims
+[ .DATA words-within ] is :datas
+[ .WORD words-within .MACRO words-within ] is :quotes
+[ last @ [ i :name type space ] iterate cr ] is words
