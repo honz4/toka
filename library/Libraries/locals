@@ -1,12 +1,14 @@
 {
-[ parser off
-  [ wsparse
-    dup c@ char: | <>
-    [ variable last @ :entry # ` ! compile drop TRUE ] [ drop FALSE ] ifTrueFalse
-  ] whileTrue
-  parser on
-] is vars|
-
-[ ` [ invoke { vars| ] 
+  [ cell-size malloc dup # ` ! compile [ @ ] +action ] is var
+  [ parser off
+    compiler off
+   [ wsparse
+     dup c@ char: | <>
+     [ var TRUE ] [ drop FALSE ] ifTrueFalse
+   ] whileTrue
+    compiler on
+    parser on
+ ] is vars|
+ [ ` [ invoke { vars| ] 
 } is-macro local[
 [ } ` ] invoke ] is-macro ]local
