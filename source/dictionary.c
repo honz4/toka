@@ -46,10 +46,10 @@ long  last=0;
  ******************************************************/
 void add_entry(char *name, void *xt, void *class)
 {
+  last++;
   dictionary[last].xt = (Inst)xt;
   dictionary[last].class = (Inst)class;
   strcpy(dictionary[last].name, name);
-  last++;
 }
 
 
@@ -142,7 +142,7 @@ void find_word()
   char *s = (char *)TOS; DROP;
 
   flag = 0;
-  for (a = last-1; a >= 0; a--)
+  for (a = last; a > 0; a--)
   {
     if ((strcmp(dictionary[a].name, s) == 0) && flag == FALSE) 
     {
@@ -207,4 +207,22 @@ void return_quote()
     push(FALSE);
   }
 
+}
+
+
+/******************************************************
+ *|G| :entry   ( n-$a )    Return the name and address
+ *|G|                      for a dictionary entry.
+ *
+ *|F| return_dictinfo()
+ *|F| Return a pointer to the name and the starting 
+ *|F| address of a specific dictionary entry.
+ *|F|
+ ******************************************************/
+void return_dictinfo()
+{
+  long which = TOS; DROP;
+
+  push((long)dictionary[which].name);
+  push((long)dictionary[which].xt);
 }

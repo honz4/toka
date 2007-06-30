@@ -14,7 +14,7 @@
 </p>
 
 <ul>
-<li> GCC 2.9x, 3.x, or 4.x (4.x is recommended)
+<li> GCC 2.9x, 3.x, or 4.x
 <li> Make (Either GNU Make or a BSD Make should work)
 
 </ul>
@@ -31,17 +31,10 @@ BeOS) or whether dlopen() and dlsym() are provided by libc.so (BSD). You
 can also build a version without the <a href="ffi.html">FFI</a>, but this is not recommended
 as it reduces the usefulness of Toka significantly. This can be done via:
 </p>
-<pre>  make CFLAGS=-DNOFFI
+<pre>  rm source/ffi
+  make CFLAGS=-DNOFFI
 </pre>
 
-<p>As of June 2007, Toka has optional support for signal trapping (this
-improves stability and makes debugging easier). This can be enabled via:
-</p>
-<pre>  make OTHER=-DSIGNALS
-</pre>
-
-<p>Note that signal trapping is <i>disabled</i> by default.
-</p>
 <p>As a final note, some pieces of documentation can be updated automatically
 as well:
 </p>
@@ -55,6 +48,6 @@ as well:
 
 <hr>
 
-<p><i>Notebook exported on Sunday, 24 June 2007, 21:26:26 PM EDT</i></p>
+<p><i>Notebook exported on Saturday, 30 June 2007, 16:25:11 PM EDT</i></p>
 
 </body></html>

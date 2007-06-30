@@ -28,10 +28,6 @@ FUNCTION will be created, and will take <i>N</i> arguments off the stack.
 This function will always have a return value, even for <i>void</i>
 functions.
 </p>
-<p>If the number of arguments is -1, the FUNCTION quote will take the number
-of arguments to use from the stack each time it is called. This allows
-for importing functions that use a variable number of arguments.
-</p>
 <p>You can also make use of <b>as</b> to rename the imported function.
 </p>
 <hr>
@@ -41,10 +37,6 @@ for importing functions that use a variable number of arguments.
   from libc.so.6
   2 import printf as printf.2
   " %i\n" 100 printf.2
-
-  -1 import printf
-  " Hello, %s\n" " World!" 2 printf
-  " %i + %i = %i\n" 1 2 3 4 printf
 </pre>
 
 <hr>
@@ -67,6 +59,6 @@ dlopen()/dlsym()</i>.</p>
 
 <hr>
 
-<p><i>Notebook exported on Sunday, 24 June 2007, 21:26:26 PM EDT</i></p>
+<p><i>Notebook exported on Saturday, 30 June 2007, 16:25:11 PM EDT</i></p>
 
 </body></html>

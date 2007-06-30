@@ -30,66 +30,6 @@ extern GCITEM gc_trash[];
 
 
 /******************************************************
- *|F| long display_names_by_class(void *class)
- *|F| Display a list of all named items with the 
- *|F| specified class. Returns the number of named 
- *|F| items displayed.
- *|F|
- ******************************************************/
-long display_names_by_class(void *class)
-{
-  long names, a;
-
-  names = 0;
-
-  for (a = last-1; a >= 0; a--)
-  {
-    if (dictionary[a].class == class)
-    {
-      printf("%s ", dictionary[a].name);
-      names++;
-    }
-  }
-
-  return names;
-}
-
-
-
-/******************************************************
- *|G| :names   ( - )       Display a list of all named
- *|G|                      quotes and data
- *
- *|F| names()
- *|F| Display a list of all named items
- *|F|
- ******************************************************/
-void names()
-{
-  long primitives, data, quotes;
-
-  primitives = 0; data = 0; quotes = 0;
-
-  printf("Primitives:\n");
-  primitives = display_names_by_class(&macro_class);
-  primitives += display_names_by_class(&forth_class);
-
-  printf("\n\nQuotes:\n");
-  quotes = display_names_by_class(&quote_macro_class);
-  quotes = display_names_by_class(&quote_forth_class);
-
-  printf("\n\nData:\n");
-  data = display_names_by_class(&data_class);
-
-  printf("\n\nTotal: %li.\n", last);
-  printf(" - %li primitives.\n", primitives);
-  printf(" - %li quotes.\n", quotes);
-  printf(" - %li data.\n", data);
-}
-
-
-
-/******************************************************
  *|G| :stack   ( - )       Display all values on the
  *|G|                      data stack
  *
@@ -138,7 +78,7 @@ void gc_info()
 
   a = (sizeof(GCITEM) * 128)*2;
   printf("gc: %lu KiB (%lu) used for bookkeeping\n", a/1024, a);
-  printf("gc: %lu objects totaling %lu KiB (%lu)\n", gc_objects, gc_used/1024, gc_used);
-  printf("gc: User:   %lu KiB (%lu) in %lu objects\n", size/1024, size, gc_depth);
-  printf("gc: System: %lu KiB (%lu) in %lu objects\n", tsize/1024, tsize, gc_tdepth);
+  printf("    %lu objects totaling %lu KiB (%lu)\n", gc_objects, gc_used/1024, gc_used);
+  printf("    User:   %lu KiB (%lu) in %lu objects\n", size/1024, size, gc_depth);
+  printf("    System: %lu KiB (%lu) in %lu objects\n", tsize/1024, tsize, gc_tdepth);
 }

@@ -2,6 +2,19 @@ These are some things I may explore in the future:
 
 If anyone wants to help, I'm more than willing to accept :)
 
+= New Architectures
+  - Currently Supported
+    - x86:      Linux, FreeBSD, NetBSD, OpenBSD, DragonFly BSD,
+                Windows, Cygwin, OpenSolaris, BeOS
+    - x86-64:   Linux
+    - MIPS:     Linux, NetBSD
+    - ARM:      Linux, OpenBSD, NetBSD
+    - Itanium:  Linux
+  - Desired
+    - PowerPC:  Linux, MacOS X, AIX
+    - x86:      MacOS X
+    - x86-64:   MacOS X, any BSD, Windows
+
 = Documentation
   - Formats:
     - HTML
@@ -87,12 +100,12 @@ If anyone wants to help, I'm more than willing to accept :)
     step towards the next idea though.
   - Standalone Runner
     Allow a Toka program to be saved to a binary, bytecoded format. This
-    would be specific to a host word size (32 bit or 64 bit), but otherwise
-    portable format. 
+    would be specific to a host word size (32 bit or 64 bit), but 
+    otherwise portable format. 
 
-    The runner would encode most of the primitives into the virtual machine,
-    allowing it to be faster (less function call overhead), and possibly 
-    more tightly coded.
+    The runner would encode most of the primitives into the virtual 
+    machine, allowing it to be faster (less function call overhead), 
+    and possibly more tightly coded.
 
-    It could possibly build off of the Maunga source for loading images, 
-    diagnostics, etc.
+    It could possibly build off of the Maunga source for loading 
+    images, diagnostics, etc.

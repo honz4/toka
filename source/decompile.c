@@ -32,7 +32,7 @@ long resolve_name(Inst xt)
   long flag, a;
 
   flag = FALSE;
-  for (a = last-1; a >= 0; a--)
+  for (a = last; a > 0; a--)
   {
      if (dictionary[a].xt == xt && flag == 0)
      {
