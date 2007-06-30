@@ -22,7 +22,6 @@
 
 
 extern Inst *heap;
-extern long last;
 extern ENTRY dictionary[];
 extern long stack[], sp;
 

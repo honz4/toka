@@ -39,8 +39,6 @@ type     ( a- )      Display a string
 bye      ( - )       Quit Toka
 #        ( n- )      Push the following cell to
                      the stack.
-$#       ( n- )      Push the following cell to the
-                     stack.
 @        ( a-n )     Fetch the value in memory
                      location 'a'
 !        ( na- )     Store 'n' to memory location
@@ -53,8 +51,6 @@ copy     ( sdc- )    Copy 'c' bytes from 's' to
                      'd'
 cell-size ( -n )     Return the size of a cell
 char-size ( -n )     Return the size of a char
-:words   ( - )       Display a list of all named
-                     quotes and data
 :stack   ( - )       Display all values on the
                      data stack
 :gc      (  -  )     Display information about
@@ -69,6 +65,8 @@ is-data  ( a"- )     Attach a name to data memory
 `        ( "-a )     Return a quote corresponding
                      to the specified word.
          ( $-a )     Non-parsing form
+:entry   ( n-$a )    Return the name and address of
+                     a specific dictionary entry
 from     ( "- )      Set the library to import from
          ( $- )      Non-parsing form
 import   ( n"- )     Import a function taking 'n'
@@ -113,7 +111,6 @@ parser   ( -a )      Variable holding current parser
                      mode.
 escape-sequences ( -a)  Variable determining if
                         escape sequences are used.
-prompt   ( -a)       Enable/disable the interpreter prompt
 &gt;number  ( a-nf )    Attempt to convert a string
                      to a number
 parse    ( d-a )     Parse until the character 
@@ -260,6 +257,7 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
+words    ( - )       Display all names in the dictionary
 </pre>
 
 
@@ -269,6 +267,6 @@ value|   ( "- )      Create multiple values
 
 <hr>
 
-<p><i>Notebook exported on Sunday, 24 June 2007, 21:26:26 PM EDT</i></p>
+<p><i>Notebook exported on Saturday, 30 June 2007, 16:25:11 PM EDT</i></p>
 
 </body></html>

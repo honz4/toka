@@ -60,7 +60,6 @@ void build_dictionary()
   add_entry("char-size", &char_size,     &forth_class);
 
   /* debug.c */
-  add_entry(":names",    &names,         &forth_class);
   add_entry(":stack",    &display_stack, &forth_class);
   add_entry(":gc",       &gc_info,       &forth_class);
 
@@ -69,6 +68,7 @@ void build_dictionary()
 
   /* dictionary.c */
   add_entry("`",         &return_quote,  &macro_class);
+  add_entry(":entry",    &return_dictinfo,&forth_class);
   add_entry("is",        &name_quote,    &forth_class);
   add_entry("is-macro",  &name_macro,    &forth_class);
   add_entry("is-data",   &name_data,     &forth_class);

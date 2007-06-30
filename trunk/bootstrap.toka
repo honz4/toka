@@ -214,3 +214,8 @@
   parser on
 ] is value|
 
+
+#! ---------------------------------------
+#! Debugging Aids
+#! ---------------------------------------
+[ last @ [ i :entry drop type space ] iterate cr ] is words

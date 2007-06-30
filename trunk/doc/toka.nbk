@@ -3912,8 +3912,6 @@ copy     ( sdc- )    Copy 'c' bytes from 's' to
                      'd'
 cell-size ( -n )     Return the size of a cell
 char-size ( -n )     Return the size of a char
-:words   ( - )       Display a list of all named
-                     quotes and data
 :stack   ( - )       Display all values on the
                      data stack
 :gc      (  -  )     Display information about
@@ -3928,6 +3926,8 @@ is-data  ( a"- )     Attach a name to data memory
 `        ( "-a )     Return a quote corresponding
                      to the specified word.
          ( $-a )     Non-parsing form
+:entry   ( n-$a )    Return the name and address of
+                     a specific dictionary entry
 from     ( "- )      Set the library to import from
          ( $- )      Non-parsing form
 import   ( n"- )     Import a function taking 'n'
@@ -4119,7 +4119,9 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
-#unpre} 1180495778
+words    ( - )       Display all names in the dictionary
+#unpre
+} 1183235059
 
 
 # End of Notebook Database File

@@ -181,6 +181,6 @@ void ffi_rename()
   {
     name = (char *)TOS; DROP;
   }
-  strcpy(dictionary[last-1].name, name);
+  strcpy(dictionary[last].name, name);
 }
 #endif
