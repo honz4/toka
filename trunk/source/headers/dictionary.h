@@ -5,7 +5,9 @@ void name_macro();
 void name_data();
 void find_word();
 void return_quote();
-void return_dictinfo();
+void return_name();
+void return_xt();
+void return_class();
 
 typedef struct {
   Inst xt;

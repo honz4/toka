@@ -140,14 +140,6 @@ Push the size of a char to the stack
 
 FILE: debug.c
 
-long display_names_by_class(void *class)
-Display a list of all named items with the 
-specified class. Returns the number of named 
-items displayed.
-
-names()
-Display a list of all named items
-
 display_stack()
 Display all items on the stack.
 
@@ -212,6 +204,12 @@ return_quote()
 Find a name (from the input stream) and return a
 quote that corresponds to the word.
 
+return_name()
+Return a pointer to the name and the starting 
+address of a specific dictionary entry.
+
 
 FILE: errors.c
 
+error(long code)
+Disp
