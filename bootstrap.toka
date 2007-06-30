@@ -4,21 +4,21 @@
 #! ---------------------------------------
 #! Constants for classes
 #! ---------------------------------------
-0 is-data .PRIM_WORD
-1 is-data .PRIM_MACRO
-2 is-data .DATA
-3 is-data .WORD
-4 is-data .MACRO
+[ 0 ] is .PRIM_WORD
+[ 1 ] is .PRIM_MACRO
+[ 2 ] is .DATA
+[ 3 ] is .WORD
+[ 4 ] is .MACRO
 
 
 #! ---------------------------------------
 #! Constants for various ASCII values
 #! ---------------------------------------
-32 is-data SPACE
-10 is-data CR
-13 is-data LF
-27 is-data ESC
- 9 is-data TAB
+[ 32 ] is SPACE
+[ 10 ] is CR
+[ 13 ] is LF
+[ 27 ] is ESC
+[  9 ] is TAB
 
 
 #! ---------------------------------------
@@ -31,8 +31,8 @@
 #! ---------------------------------------
 #! Conditionals
 #! ---------------------------------------
- 0 is-data FALSE
--1 is-data TRUE
+[  0 ] is FALSE
+[ -1 ] is TRUE
 [ [ ] ifTrueFalse ] is ifTrue
 [ [ ] swap ifTrueFalse ] is ifFalse
 

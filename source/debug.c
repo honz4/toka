@@ -77,8 +77,12 @@ void gc_info()
     tsize += gc_trash[a].size;
 
   a = (sizeof(GCITEM) * 128)*2;
-  printf("gc: %lu KiB (%lu) used for bookkeeping\n", a/1024, a);
-  printf("    %lu objects totaling %lu KiB (%lu)\n", gc_objects, gc_used/1024, gc_used);
-  printf("    User:   %lu KiB (%lu) in %lu objects\n", size/1024, size, gc_depth);
-  printf("    System: %lu KiB (%lu) in %lu objects\n", tsize/1024, tsize, gc_tdepth);
+  printf("-- Memory Use -------------------------------\n");
+  printf("%lu KiB (%lu) used for bookkeeping\n", a/1024, a);
+  printf("Permanent Allocations:\n");
+  printf("  %lu objects totaling %lu KiB (%lu)\n", gc_objects - gc_depth - gc_tdepth, (gc_used - size - tsize)/1024, gc_used - size - tsize);
+  printf("Temporary Allocations:\n");
+  printf("  User:   %lu KiB (%lu) in %lu objects\n", size/1024, size, gc_depth);
+  printf("  System: %lu KiB (%lu) in %lu objects\n", tsize/1024, tsize, gc_tdepth);
+  printf("---------------------------------------------\n");
 }
