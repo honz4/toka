@@ -57,9 +57,14 @@ return_quote()
 Find a name (from the input stream) and return a
 quote that corresponds to the word.
 
-return_dictinfo()
-Returns the name and address of a specific dictionary
-entry.
+return_name()
+Return a pointer to the name of a dictionary entry
+
+return_xt()
+Return the starting address of a word 
+
+return_class()
+Return the class number for a dictionary entry
 </pre>
 
 <h2>Primitives Provided</h2>
@@ -68,7 +73,9 @@ entry.
 is-data
 is-macro
 `
-:entry
+:name
+:xt
+:class
 last
 </pre>
 
@@ -79,6 +86,6 @@ last
 
 <hr>
 
-<p><i>Notebook exported on Saturday, 30 June 2007, 16:25:11 PM EDT</i></p>
+<p><i>Notebook exported on Sunday,  1 July 2007, 19:54:43 PM EDT</i></p>
 
 </body></html>

@@ -53,8 +53,9 @@ cell-size ( -n )     Return the size of a cell
 char-size ( -n )     Return the size of a char
 :stack   ( - )       Display all values on the
                      data stack
-:gc      (  -  )     Display information about
-                     the garbage collection list
+:stat    (  -  )     Display information about
+                     Toka's memory use, stacks,
+                     and dictionary.
 :see     (  "- )     Decompile the specified quote
 is       ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form
@@ -65,8 +66,9 @@ is-data  ( a"- )     Attach a name to data memory
 `        ( "-a )     Return a quote corresponding
                      to the specified word.
          ( $-a )     Non-parsing form
-:entry   ( n-$a )    Return the name and address of
-                     a specific dictionary entry
+:name    ( n-$ )     Return the name of a dictionary entry
+:xt      ( n-a )     Return the address of a dictionary entry
+:class   ( n-n )     Return the class # of a dictionary entry
 from     ( "- )      Set the library to import from
          ( $- )      Non-parsing form
 import   ( n"- )     Import a function taking 'n'
@@ -160,6 +162,11 @@ They significantly expand the core language.
                      and scrap the results.
 (        ( "- )      Parse until ) is found and scrap
                      the results
+.PRIM_WORD  ( -n )   Class # for primitive words
+.PRIM_MACRO ( -n )   Class # for primitive macros
+.DATA       ( -n )   Class # for data elements
+.WORD       ( -n )   Class # for quote words
+.MACRO      ( -n )   Class # for quote macros
 SPACE    ( -n )      ASCII value for SPACE character
 CR       ( -n )      ASCII value for CR character
 LF       ( -n )      ASCII value for LF character
@@ -257,6 +264,10 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
+words-within ( n- )  Display all words with a specified class #
+:prims   ( - )       Display all primitives
+:quotes  ( - )       Display all named quotes
+:datas   ( - )       Display all named data items
 words    ( - )       Display all names in the dictionary
 </pre>
 
@@ -267,6 +278,6 @@ words    ( - )       Display all names in the dictionary
 
 <hr>
 
-<p><i>Notebook exported on Saturday, 30 June 2007, 16:25:11 PM EDT</i></p>
+<p><i>Notebook exported on Sunday,  1 July 2007, 19:54:43 PM EDT</i></p>
 
 </body></html>

@@ -593,8 +593,7 @@ Display information about Toka's memory use
 #pre
 :stack
 :gc
-#unpre
-} 1183234931
+#unpre} 1183234931
 
 
 #--------------------------------------------------
@@ -692,8 +691,7 @@ is-macro
 `
 :entry
 last
-#unpre
-} 1183234978
+#unpre} 1183234978
 
 
 #--------------------------------------------------
@@ -3912,12 +3910,11 @@ copy     ( sdc- )    Copy 'c' bytes from 's' to
                      'd'
 cell-size ( -n )     Return the size of a cell
 char-size ( -n )     Return the size of a char
-:words   ( - )       Display a list of all named
-                     quotes and data
 :stack   ( - )       Display all values on the
                      data stack
-:gc      (  -  )     Display information about
-                     the garbage collection list
+:stat    (  -  )     Display information about
+                     Toka's memory use, stacks,
+                     and dictionary.
 :see     (  "- )     Decompile the specified quote
 is       ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form
@@ -3928,6 +3925,9 @@ is-data  ( a"- )     Attach a name to data memory
 `        ( "-a )     Return a quote corresponding
                      to the specified word.
          ( $-a )     Non-parsing form
+:name    ( n-$ )     Return the name of a dictionary entry
+:xt      ( n-a )     Return the address of a dictionary entry
+:class   ( n-n )     Return the class # of a dictionary entry
 from     ( "- )      Set the library to import from
          ( $- )      Non-parsing form
 import   ( n"- )     Import a function taking 'n'
@@ -4022,6 +4022,11 @@ They significantly expand the core language.
                      and scrap the results.
 (        ( "- )      Parse until ) is found and scrap
                      the results
+.PRIM_WORD  ( -n )   Class # for primitive words
+.PRIM_MACRO ( -n )   Class # for primitive macros
+.DATA       ( -n )   Class # for data elements
+.WORD       ( -n )   Class # for quote words
+.MACRO      ( -n )   Class # for quote macros
 SPACE    ( -n )      ASCII value for SPACE character
 CR       ( -n )      ASCII value for CR character
 LF       ( -n )      ASCII value for LF character
@@ -4119,7 +4124,13 @@ put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
-#unpre} 1180495778
+words-within ( n- )  Display all words with a specified class #
+:prims   ( - )       Display all primitives
+:quotes  ( - )       Display all named quotes
+:datas   ( - )       Display all named data items
+words    ( - )       Display all names in the dictionary
+#unpre
+} 1183333870
 
 
 # End of Notebook Database File
