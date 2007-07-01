@@ -37,8 +37,8 @@ cell-size ( -n )     Return the size of a cell
 char-size ( -n )     Return the size of a char
 :stack   ( - )       Display all values on the
                      data stack
-:gc      (  -  )     Display information about
-                     the garbage collection list
+:stat    (  -  )     Display information about
+                     the virtual machine status
 :see     (  "- )     Decompile the specified quote
 is       ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form

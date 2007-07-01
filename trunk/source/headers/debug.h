@@ -1,2 +1,2 @@
 void display_stack();
-void gc_info();
+void vm_info();

@@ -143,8 +143,9 @@ FILE: debug.c
 display_stack()
 Display all items on the stack.
 
-gc_info()
-Display information about Toka's memory use
+vm_info()
+Display information about Toka's memory use,
+dictionary, etc.
 
 
 FILE: decompile.c
@@ -207,7 +208,4 @@ quote that corresponds to the word.
 return_name()
 Return a pointer to the name and the starting 
 address of a specific dictionary entry.
-
-
-FILE: errors.c
 

@@ -61,7 +61,7 @@ void build_dictionary()
 
   /* debug.c */
   add_entry(":stack",    &display_stack, &word_class);
-  add_entry(":gc",       &gc_info,       &word_class);
+  add_entry(":stat",     &vm_info,       &word_class);
 
   /* decompile.c */
   add_entry(":see",      &see,           &word_class);
