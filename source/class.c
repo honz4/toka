@@ -19,12 +19,12 @@ extern Inst *heap;
 
 
 /******************************************************
- *|F| forth_class()
+ *|F| word_class()
  *|F| If compiling, compile the xt into the current
  *|F| quote. If interpreting, call the word.
  *|F|
  ******************************************************/
-void forth_class()
+void word_class()
 {
   Inst xt = (Inst)TOS; DROP;
   if (compiler == ON)
@@ -88,13 +88,13 @@ void quote_class()
 
 
 /******************************************************
- *|F| quote_forth_class()
+ *|F| quote_word_class()
  *|F| Perform data_class() semantics, then, if 
  *|F| compiling, compile a call to invoke(). Otherwise,
  *|F| invoke() is called with the xt on TOS.
  *|F|
  ******************************************************/
-void quote_forth_class()
+void quote_word_class()
 {
   if (compiler == ON)
   {

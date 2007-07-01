@@ -255,7 +255,7 @@ void truefalse()
 void recurse()
 {
   push((long)top);
-  quote_forth_class();
+  quote_word_class();
 }
 
 
