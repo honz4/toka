@@ -87,12 +87,12 @@ void name_attach(void *class)
  *|F| name_quote()
  *|F| Attach a name (from the input stream) to the 
  *|F| specified quote address. This word is given the
- *|F| semantics of quote_forth_class().
+ *|F| semantics of quote_word_class().
  *|F|
  ******************************************************/
 void name_quote()
 {
-  name_attach(&quote_forth_class);
+  name_attach(&quote_word_class);
 }
 
 
@@ -186,10 +186,10 @@ void return_quote()
     class = (Inst)TOS; DROP;
     xt = (Inst)TOS; DROP;
     if (class == &quote_macro_class)
-      class = &quote_forth_class;
+      class = &quote_word_class;
     if (class == &macro_class)
-      class = &forth_class;
-    if (class != &quote_forth_class && class != &quote_macro_class)
+      class = &word_class;
+    if (class != &quote_word_class && class != &quote_macro_class)
     {
        begin_quote();
          push((long)xt);
@@ -237,13 +237,13 @@ void return_class()
 {
   long which = TOS; DROP;
   void *class = dictionary[which].class;
-  if (class == &forth_class)
+  if (class == &word_class)
     which = 0;
   if (class == &macro_class)
     which = 1;
   if (class == &data_class)
     which = 2;
-  if (class == &quote_forth_class)
+  if (class == &quote_word_class)
     which = 3;
   if (class == &quote_macro_class)
     which = 4;

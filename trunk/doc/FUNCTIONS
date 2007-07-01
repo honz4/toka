@@ -19,7 +19,7 @@ Perform a bitwise XOR
 
 FILE: class.c
 
-forth_class()
+word_class()
 If compiling, compile the xt into the current
 quote. If interpreting, call the word.
 
@@ -39,7 +39,7 @@ Handler for quotes; this takes two cells, one
 which is a call to this function, the other is
 the pointer to the quote to invoke.
 
-quote_forth_class()
+quote_word_class()
 Perform data_class() semantics, then, if 
 compiling, compile a call to invoke(). Otherwise,
 invoke() is called with the xt on TOS.
@@ -182,7 +182,7 @@ semantics of the specified class.
 name_quote()
 Attach a name (from the input stream) to the 
 specified quote address. This word is given the
-semantics of quote_forth_class().
+semantics of quote_word_class().
 
 name_macro()
 Attach a name (from the input stream) to the 
@@ -211,5 +211,3 @@ address of a specific dictionary entry.
 
 FILE: errors.c
 
-error(long code)
-Disp

@@ -149,7 +149,7 @@ void ffi_import()
       *heap++ = &ffi_invoke;
     end_quote();
     gc_keep();
-    add_entry(scratch, (void *)TOS, &quote_forth_class);
+    add_entry(scratch, (void *)TOS, &quote_word_class);
     DROP;
   }
   else
