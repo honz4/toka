@@ -21,7 +21,7 @@
 #include "toka.h"
 
 extern Inst *heap;
-extern long stack[], sp, last, base;
+extern long stack[], sp, rsp, last, base;
 extern long gc_used, gc_objects, gc_depth, gc_tdepth;
 extern ENTRY dictionary[];
 extern GCITEM gc_list[];
@@ -59,16 +59,17 @@ void display_stack()
 
 
 /******************************************************
- *|G| :gc      (  -  )     Display information about
- *|G|                      the garbage collection list
+ *|G| :stat    (  -  )     Display information about
+ *|G|                      the virtual machine status
  *
- *|F| gc_info()
- *|F| Display information about Toka's memory use
+ *|F| vm_info()
+ *|F| Display information about Toka's memory use,
+ *|F| dictionary, etc.
  *|F|
  ******************************************************/
-void gc_info()
+void vm_info()
 {
-  long a;
+  long a, permanent_objects, permanent_size;
   long size = 0, tsize = 0;
 
   for (a = 0; a != gc_depth; a++)
@@ -76,13 +77,21 @@ void gc_info()
   for (a = 0; a != gc_tdepth; a++)
     tsize += gc_trash[a].size;
 
+  permanent_objects = gc_objects - gc_depth - gc_tdepth;
+  permanent_size = gc_used - size - tsize;
+
   a = (sizeof(GCITEM) * 128)*2;
   printf("-- Memory Use -------------------------------\n");
-  printf("%lu KiB (%lu) used for bookkeeping\n", a/1024, a);
-  printf("Permanent Allocations:\n");
-  printf("  %lu objects totaling %lu KiB (%lu)\n", gc_objects - gc_depth - gc_tdepth, (gc_used - size - tsize)/1024, gc_used - size - tsize);
-  printf("Temporary Allocations:\n");
-  printf("  User:   %lu KiB (%lu) in %lu objects\n", size/1024, size, gc_depth);
-  printf("  System: %lu KiB (%lu) in %lu objects\n", tsize/1024, tsize, gc_tdepth);
+  printf("  %lu KiB (%lu) used for bookkeeping\n", a/1024, a);
+  printf("  Permanent Allocations:\n");
+  printf("    %lu objects totaling %lu KiB (%lu)\n", permanent_objects, permanent_size/1024, permanent_size);
+  printf("  Temporary Allocations:\n");
+  printf("    User:   %lu objects totaling %lu KiB (%lu)\n", gc_depth, size/1024, size);
+  printf("    System: %lu objects totaling %lu KiB (%lu)\n", gc_tdepth, tsize/1024, tsize);
+  printf("-- Dictionary -------------------------------\n");
+  printf("  %lu named items (Max: %lu)\n", last, (long)MAX_DICTIONARY_ENTRIES);
+  printf("-- Stacks -----------------------------------\n");
+  printf("  Data: %lu items (Max: %lu)\n", sp, (long)MAX_DATA_STACK);
+  printf("  Return: %lu items (Max: %lu)\n", rsp, (long)MAX_RETURN_STACK);
   printf("---------------------------------------------\n");
 }
