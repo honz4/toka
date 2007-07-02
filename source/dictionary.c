@@ -205,6 +205,7 @@ void return_quote()
   else
   {
     push(FALSE);
+    data_class();
   }
 
 }
