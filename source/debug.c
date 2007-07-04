@@ -69,7 +69,8 @@ void display_stack()
  ******************************************************/
 void vm_info()
 {
-  long a, permanent_objects, permanent_size;
+  long a, b, c, total;
+  long permanent_objects, permanent_size;
   long size = 0, tsize = 0;
 
   for (a = 0; a != gc_depth; a++)
@@ -81,13 +82,23 @@ void vm_info()
   permanent_size = gc_used - size - tsize;
 
   a = (sizeof(GCITEM) * 128)*2;
+  b = (sizeof(ENTRY) * MAX_DICTIONARY_ENTRIES);
+  c = (sizeof(long) * MAX_DATA_STACK) + (sizeof(long) * MAX_RETURN_STACK);
+
+  total = a + b + c + permanent_size + size + tsize;
+
   printf("-- Memory Use -------------------------------\n");
-  printf("  %lu KiB (%lu) used for bookkeeping\n", a/1024, a);
+  printf("  %lu KiB (%lu) used for dictionary\n", b/1024, b);
+  printf("  %lu KiB (%lu) used for gc bookkeeping\n", a/1024, a);
+  printf("  %lu KiB (%lu) used for stacks\n", c/1024, c);
+  printf("\n");
   printf("  Permanent Allocations:\n");
   printf("    %lu objects totaling %lu KiB (%lu)\n", permanent_objects, permanent_size/1024, permanent_size);
   printf("  Temporary Allocations:\n");
   printf("    User:   %lu objects totaling %lu KiB (%lu)\n", gc_depth, size/1024, size);
   printf("    System: %lu objects totaling %lu KiB (%lu)\n", gc_tdepth, tsize/1024, tsize);
+  printf("\n");
+  printf("  Total: %lu KiB (%lu)\n", total/1024, total);
   printf("-- Dictionary -------------------------------\n");
   printf("  %lu named items (Max: %lu)\n", last, (long)MAX_DICTIONARY_ENTRIES);
   printf("-- Stacks -----------------------------------\n");
