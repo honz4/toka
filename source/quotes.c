@@ -139,6 +139,7 @@ void invoke()
  ******************************************************/
 void compile()
 {
+  gc_keep();
   *heap++ = &quote_class;
   *heap++ = (Inst)TOS; DROP;
 }

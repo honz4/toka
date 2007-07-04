@@ -31,6 +31,7 @@ extern long stack[], sp;
  ******************************************************/
 void make_literal()
 {
+  gc_keep();
   *heap++ = (Inst)&lit;
   *heap++ = (Inst)TOS; 
   DROP;
@@ -48,6 +49,7 @@ void make_literal()
  ******************************************************/
 void make_string_literal()
 {
+  gc_keep();
   *heap++ = (Inst)&string_lit;
   *heap++ = (Inst)TOS; 
   DROP;
