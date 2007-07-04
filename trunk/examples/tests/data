@@ -40,3 +40,8 @@ t:  toggle
    foo @ TRUE try
    foo toggle
    foo @ FALSE try
+t:  Sizing
+   100 chars 100 char-size * try
+   100 cells 100 cell-size * try
+   1 cells cell+ 1 cells cell-size + try
+   1 chars char+ 1 chars char-size + try
