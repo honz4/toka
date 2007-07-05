@@ -71,11 +71,13 @@ void vm_info()
 {
   long a, b, c, total;
   long permanent_objects, permanent_size;
-  long size = 0, tsize = 0;
+  long size, tsize;
 
-  for (a = 0; a <= gc_depth; a++)
+  size = 0; tsize = 0;
+
+  for (a = 0; a != gc_depth; a++)
     size += gc_list[a].size;
-  for (a = 0; a <= gc_tdepth; a++)
+  for (a = 0; a != gc_tdepth; a++)
     tsize += gc_trash[a].size;
 
   permanent_objects = gc_objects - gc_depth - gc_tdepth;
