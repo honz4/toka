@@ -68,27 +68,24 @@ void *gc_alloc(long items, long size, long type)
 {
   void *memory;
 
-  /* If the allocation lists are full, perform */
-  /* a collection before proceeding.           */
   if (gc_depth == 127 || gc_tdepth == 127)
     gc();
 
   memory  = calloc((int)items, (int)size);
 
-  /* If the allocation failed, collect garbage */
-  /* and try again.                            */
   if (memory == NULL)
   {
     gc();
     memory = calloc((int)items, (int)size);
     if (memory == NULL)
-      error(ERROR_NO_MEM);
+    {
+      printf("gc: out of memory; aborting.\n");
+      exit(1);
+    }
   }
 
-  /* Leave the allocated memory in a known state */
   memset(memory, 0, size * items);
 
-  /* And finally, update the lists with the allocation */
   if (type == GC_MEM)
   {
     gc_list[gc_depth].xt = (Inst)memory;
@@ -148,9 +145,8 @@ void gc_keep()
  *
  *|F| gc()
  *|F| Free the oldest allocations on the garbage list.
- *|F| Will free up to 16 items from each list per
- *|F| call. If there are 16 or less items remaining,
- *|F| this code will leave the allocations alone.
+ *|F| Will free up to 64 trash entries and 32 normal
+ *|F| entries per call.
  *|F|
  ******************************************************/
 void gc()
@@ -158,64 +154,55 @@ void gc()
   long a, b;
 
   /* Allocations known to be temporary */
-  if (gc_tdepth > 16)
+  if (gc_tdepth < 64)
+    b = 0;
+  else
+    b = 64;
+
+  for (a = 0; a != b; a++)
   {
-    b = gc_tdepth - 16;
-
-    for (a = 0; a != b; a++)
-    {
-      free(gc_trash[a].xt);
-      gc_used -= gc_trash[a].size;
-      gc_trash[a].xt = 0;
-      gc_objects--;
-    }
-
-    if (b != gc_tdepth)
-    {
-      for (a = 0; a != b; a++)
-      {
-        gc_trash[a].xt = gc_trash[a+b].xt;
-        gc_trash[a].size = gc_trash[a+b].size;
-      }
-      for (a = 127; a != 16; a--)
-      {
-        gc_trash[a].xt = 0;
-        gc_trash[a].size = 0;
-      }
-    }
-
-    gc_tdepth -= b;
+    free(gc_trash[a].xt);
+    gc_used -= gc_trash[a].size;
+    gc_list[a].xt = 0;
+    gc_objects--;
   }
 
-  /* Allocations that may or may not be temporary */
-  if (gc_depth > 16)
+  if (b != gc_tdepth)
   {
-    b = gc_depth - 16;
-
-    for (a = 0; a != b; a++)
+    for (a = 0; a != gc_tdepth; a++)
     {
-      free(gc_list[a].xt);
-      gc_used -= gc_list[a].size;
-      gc_list[a].xt = 0;
-      gc_objects--;
+      gc_trash[a].xt = gc_trash[a+b].xt;
+      gc_trash[a].size = gc_trash[a+b].size;
     }
-
-    if (b != gc_depth)
-    {
-      for (a = 0; a != b; a++)
-      {
-        gc_list[a].xt = gc_list[a+b].xt;
-        gc_list[a].size = gc_list[a+b].size;
-      }
-      for (a = 127; a != 16; a--)
-      {
-        gc_list[a].xt = 0;
-        gc_list[a].size = 0;
-      }
-    }
-
-    gc_depth -= b;
   }
+
+  gc_tdepth -= b;
+
+
+  /* General Allocations  */
+  if (gc_depth < 32)
+    b = 0;
+  else
+    b = 32;
+
+  for (a = 0; a != b; a++)
+  {
+    free(gc_list[a].xt);
+    gc_used -= gc_list[a].size;
+    gc_list[a].xt = 0;
+    gc_objects--;
+  }
+
+  if (b != gc_depth)
+  {
+    for (a = 0; a != gc_depth; a++)
+    {
+      gc_list[a].xt = gc_list[a+b].xt;
+      gc_list[a].size = gc_list[a+b].size;
+    }
+  }
+
+  gc_depth -= b;
 }
 
 
