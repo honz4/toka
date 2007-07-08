@@ -1,0 +1,55 @@
+from libgobject-2.0.so
+ 6 import g_signal_connect_data
+ 4 import g_signal_connect_object
+
+from libgtk-x11-2.0.so
+ 2 import gtk_init
+ 1 import gtk_window_new
+ 2 import gtk_window_set_title
+ 3 import gtk_window_set_default_size
+ 1 import gtk_widget_show
+ 1 import gtk_widget_hide
+ 0 import gtk_main
+ 0 import gtk_main_quit
+
+ 2 import gtk_container_add
+ 0 import gtk_widget_destroy
+ 5 import gtk_box_pack_start
+ 2 import gtk_hbox_new
+ 2 import gtk_vbox_new
+ 0 import gtk_hbutton_box_new
+ 0 import gtk_vbutton_box_new
+ 2 import gtk_scrolled_window_new
+
+ 1 import gtk_button_new_with_label
+ 1 import gtk_button_get_label
+ 2 import gtk_button_set_label
+
+ 1 import gtk_label_new
+ 2 import gtk_label_set_text
+
+ 0 import gtk_entry_new
+ 2 import gtk_entry_set_max_length
+ 2 import gtk_entry_set_text
+ 2 import gtk_entry_append_text
+ 2 import gtk_entry_prepend_text
+ 1 import gtk_entry_get_text
+ 2 import gtk_entry_set_width_chars
+
+ 0 import gtk_text_view_new
+ 1 import gtk_text_view_get_buffer
+ 3 import gtk_text_buffer_set_text
+ 4 import gtk_text_buffer_get_text
+ 3 import gtk_text_buffer_get_bounds
+
+ 0 import gtk_notebook_new
+ 3 import gtk_notebook_append_page
+
+ 0 is-data GTK_WINDOW_TOPLEVEL
+
+0 0 gtk_init drop
+GTK_WINDOW_TOPLEVEL gtk_window_new is-data window
+
+window " Hello, There" gtk_window_set_title drop
+window gtk_widget_show
+gtk_main
