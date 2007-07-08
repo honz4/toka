@@ -24,8 +24,9 @@ from /usr/share/toka/library/C/sdl.so
 0 import sdl_render
 0 import sdl_surface_size
 0 import sdl_event_size
-{ 3 import sdl_putpixel [ sdl_putpixel drop ] } is putpixel
+{ 3 import sdl_putpixel [ sdl_putpixel drop sdl_render drop ] } is putpixel
 1 import sdl_event_type
+{ 4 import sdl_circle [ sdl_circle drop sdl_render drop ] } is circle
 
 [ SDL_Quit bye ] is bye
 
@@ -39,3 +40,6 @@ from /usr/share/toka/library/C/sdl.so
  [ to color to length to y to x ] is setup
  [ setup length [ x i + y color putpixel ] +iterate sdl_render drop ]
 } is hline
+
+[ hex wsparse >number drop decimal ] is rgb:
+

@@ -48,3 +48,41 @@ void sdl_putpixel(long x, long y, long color)
   int lineoffset = (int)y * (screen->pitch / 4);
   ptr[lineoffset + x] = (int)color;
 }
+
+
+void sdl_circle(long x, long y, long radius, long color)
+{
+    long x_position, y_position, d, delta_e, delta_se;
+
+    x_position = -1;
+    y_position = radius;
+    d = 1 - radius;
+    delta_e = -1;
+    delta_se = (-radius << 1) + 3;
+
+    while (y_position > x_position) {
+        delta_e += 2;
+        x_position++;
+
+        if (d < 0) {
+            d += delta_e;
+            delta_se += 2;
+        }
+        else {
+            d += delta_se;
+            delta_se += 4;
+            y_position--;
+        }
+
+        sdl_putpixel(x + x_position, y + y_position, color);
+        sdl_putpixel(x + y_position, y + x_position, color);
+        sdl_putpixel(x + y_position, y - x_position, color);
+        sdl_putpixel(x + x_position, y - y_position, color);
+
+        sdl_putpixel(x - x_position, y - y_position, color);
+        sdl_putpixel(x - y_position, y - x_position, color);
+        sdl_putpixel(x - y_position, y + x_position, color);
+        sdl_putpixel(x - x_position, y + y_position, color);
+    }
+    sdl_render();
+}
