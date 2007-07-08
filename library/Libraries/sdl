@@ -20,10 +20,22 @@ from libSDL.so
 
 
 from /usr/share/toka/library/C/sdl.so
-2 import sdl_open_surface as open-surface
+2 import sdl_setup
 0 import sdl_render
 0 import sdl_surface_size
 0 import sdl_event_size
-3 import putpixel
+{ 3 import sdl_putpixel [ sdl_putpixel drop ] } is putpixel
+1 import sdl_event_type
 
 [ SDL_Quit bye ] is bye
+
+{
+ value| x y length color |
+ [ to color to length to y to x ] is setup
+ [ setup length [ x i y + color putpixel ] +iterate sdl_render drop ]
+} is vline
+{
+ value| x y length color |
+ [ to color to length to y to x ] is setup
+ [ setup length [ x i + y color putpixel ] +iterate sdl_render drop ]
+} is hline
