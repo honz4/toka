@@ -32,6 +32,10 @@ sdl_event_size malloc is-data event
 50 50 17 rgb: 0f0fff circle
 50 50 14 rgb: 0f0fff circle
 
+0 0 80 80 rgb: ff00ff line
+
+30 30 60 60 rgb: ffff00 box
+
 [  
   event SDL_PollEvent drop
   event sdl_event_type 
