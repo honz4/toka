@@ -15,3 +15,15 @@ from libSDL.so
 0 import SDL_GetTicks
 
 2 import SDL_WM_SetCaption
+
+1 import SDL_PollEvent
+
+
+from /usr/share/toka/library/C/sdl.so
+2 import sdl_open_surface as open-surface
+0 import sdl_render
+0 import sdl_surface_size
+0 import sdl_event_size
+3 import putpixel
+
+[ SDL_Quit bye ] is bye

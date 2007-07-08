@@ -61,15 +61,19 @@ void ffi_invoke()
   a = 0;
   switch(args)
   {
-    case 0: a = ((xt)()); break;
-    case 1: a = ((xt)(arg[0])); break;
-    case 2: a = ((xt)(arg[0], arg[1])); break;
-    case 3: a = ((xt)(arg[0], arg[1], arg[2])); break;
-    case 4: a = ((xt)(arg[0], arg[1], arg[2], arg[3])); break;
-    case 5: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4])); break;
-    case 6: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5])); break;
-    case 7: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6])); break;
-    case 8: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7])); break;
+    case  0: a = ((xt)()); break;
+    case  1: a = ((xt)(arg[0])); break;
+    case  2: a = ((xt)(arg[0], arg[1])); break;
+    case  3: a = ((xt)(arg[0], arg[1], arg[2])); break;
+    case  4: a = ((xt)(arg[0], arg[1], arg[2], arg[3])); break;
+    case  5: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4])); break;
+    case  6: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5])); break;
+    case  7: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6])); break;
+    case  8: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7])); break;
+    case  9: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8])); break;
+    case 10: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9])); break;
+    case 11: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9], arg[10])); break;
+    case 12: a = ((xt)(arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7], arg[8], arg[9], arg[10], arg[11])); break;
     default: error(ERROR_FFI_ARGUMENTS); break;
   }
   push(a);

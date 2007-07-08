@@ -11,3 +11,4 @@ default:
 	$(CC) $(CFLAGS) floats.c -o floats.so
 	$(CC) $(CFLAGS) hexdump.c -o hexdump.so
 	$(CC) $(CFLAGS) console.c -o console.so
+	$(CC) $(CFLAGS) sdl.c -o sdl.so -lSDL
