@@ -52,37 +52,106 @@ void sdl_putpixel(long x, long y, long color)
 
 void sdl_circle(long x, long y, long radius, long color)
 {
-    long x_position, y_position, d, delta_e, delta_se;
+  long x_position, y_position, d, delta_e, delta_se;
 
-    x_position = -1;
-    y_position = radius;
-    d = 1 - radius;
-    delta_e = -1;
-    delta_se = (-radius << 1) + 3;
+  x_position = -1;
+  y_position = radius;
+  d = 1 - radius;
+  delta_e = -1;
+  delta_se = (-radius << 1) + 3;
 
-    while (y_position > x_position) {
-        delta_e += 2;
-        x_position++;
+  while (y_position > x_position)
+  {
+    delta_e += 2;
+    x_position++;
 
-        if (d < 0) {
-            d += delta_e;
-            delta_se += 2;
-        }
-        else {
-            d += delta_se;
-            delta_se += 4;
-            y_position--;
-        }
-
-        sdl_putpixel(x + x_position, y + y_position, color);
-        sdl_putpixel(x + y_position, y + x_position, color);
-        sdl_putpixel(x + y_position, y - x_position, color);
-        sdl_putpixel(x + x_position, y - y_position, color);
-
-        sdl_putpixel(x - x_position, y - y_position, color);
-        sdl_putpixel(x - y_position, y - x_position, color);
-        sdl_putpixel(x - y_position, y + x_position, color);
-        sdl_putpixel(x - x_position, y + y_position, color);
+    if (d < 0)
+    {
+      d += delta_e;
+      delta_se += 2;
     }
-    sdl_render();
+    else
+    {
+      d += delta_se;
+      delta_se += 4;
+      y_position--;
+    }
+
+    sdl_putpixel(x + x_position, y + y_position, color);
+    sdl_putpixel(x + y_position, y + x_position, color);
+    sdl_putpixel(x + y_position, y - x_position, color);
+    sdl_putpixel(x + x_position, y - y_position, color);
+
+    sdl_putpixel(x - x_position, y - y_position, color);
+    sdl_putpixel(x - y_position, y - x_position, color);
+    sdl_putpixel(x - y_position, y + x_position, color);
+    sdl_putpixel(x - x_position, y + y_position, color);
+  }
+  sdl_render();
+}
+
+
+void sdl_hline(long x1, long y, long x2, long color)
+{
+  long x;
+  for (x = x1; x <= x2; x++)
+    sdl_putpixel(x, y, color);
+  sdl_render();
+}
+
+
+void sdl_vline(long x, long y1, long y2, long color)
+{
+  long y;
+  for (y = y1; y <= y2; y++)
+    sdl_putpixel(x, y, color);
+  sdl_render();
+}
+
+void sdl_line(long x1, long y1, long x2, long y2, long color)
+{
+        long dx, dy, inx, iny, e;
+        
+        dx = x2 - x1;
+        dy = y2 - y1;
+        inx = dx > 0 ? 1 : -1;
+        iny = dy > 0 ? 1 : -1;
+
+        dx = abs(dx);
+        dy = abs(dy);
+        
+        if(dx >= dy) {
+                dy <<= 1;
+                e = dy - dx;
+                dx <<= 1;
+                while (x1 != x2) {
+                        sdl_putpixel(x1, y1, color);
+                        if(e >= 0) {
+                                y1 += iny;
+                                e-= dx;
+                        }
+                        e += dy; x1 += inx;
+                }
+        } else {
+                dx <<= 1;
+                e = dx - dy;
+                dy <<= 1;
+                while (y1 != y2) {
+                        sdl_putpixel(x1, y1, color);
+                        if(e >= 0) {
+                                x1 += inx;
+                                e -= dy;
+                        }
+                        e += dx; y1 += iny;
+                }
+        }
+        sdl_putpixel(x1, y1, color);
+}
+
+void sdl_box(long x1, long y1, long x2, long y2, long color)
+{
+  sdl_hline(x1, y1, x2, color);
+  sdl_hline(x1, y2, x2, color);
+  sdl_vline(x1, y1, y2, color);
+  sdl_vline(x2, y1, y2, color);
 }
