@@ -110,30 +110,30 @@ void sdl_vline(long x, long y1, long y2, long color)
 
 void sdl_line(long x1, long y1, long x2, long y2, long color)
 {
-        long dx, dy, inx, iny, e;
+  long dx, dy, inx, iny, e;
         
-        dx = x2 - x1;
-        dy = y2 - y1;
-        inx = dx > 0 ? 1 : -1;
-        iny = dy > 0 ? 1 : -1;
+  dx = x2 - x1;
+  dy = y2 - y1;
+  inx = dx > 0 ? 1 : -1;
+  iny = dy > 0 ? 1 : -1;
 
-        dx = abs(dx);
-        dy = abs(dy);
-        
-        if(dx >= dy) {
-                dy <<= 1;
-                e = dy - dx;
-                dx <<= 1;
-                while (x1 != x2) {
-                        sdl_putpixel(x1, y1, color);
-                        if(e >= 0) {
-                                y1 += iny;
-                                e-= dx;
-                        }
-                        e += dy; x1 += inx;
-                }
-        } else {
-                dx <<= 1;
+  dx = abs(dx);
+  dy = abs(dy);
+       
+  if(dx >= dy) {
+    dy <<= 1;
+    e = dy - dx;
+    dx <<= 1;
+      while (x1 != x2) {
+        sdl_putpixel(x1, y1, color);
+        if(e >= 0) {
+          y1 += iny;
+          e-= dx;
+        }
+        e += dy; x1 += inx;
+      }
+  } else {
+   dx <<= 1;
                 e = dx - dy;
                 dy <<= 1;
                 while (y1 != y2) {
@@ -170,10 +170,4 @@ long sdl_event_mousecoord_y(SDL_Event *event)
 long sdl_event_keysym(SDL_Event *event)
 {
   return (long)event->key.keysym.sym;
-}
-
-
-void sdl_setcaption(char *title)
-{
-  SDL_WM_SetCaption(title, title);
 }

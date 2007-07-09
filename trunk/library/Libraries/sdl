@@ -18,7 +18,6 @@ from /usr/share/toka/library/C/sdl.so
 1 import sdl_event_type
 { 4 import sdl_circle [ sdl_circle drop ] } is circle
 
-{ 1 import sdl_setcaption [ keep sdl_setcaption drop ] } is set-window-title
 { 4 import sdl_hline [ sdl_hline drop ] } is hline
 { 4 import sdl_vline [ sdl_vline drop ] } is vline
 { 5 import sdl_line  [ sdl_line drop ] } is line

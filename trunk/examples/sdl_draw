@@ -44,7 +44,6 @@ rgb: ffffff is-data WHITE
   char: 3 [ GREEN to color ] case
   char: 4 [ BLUE to color ] case
   char: 5 [ WHITE to color ] case
-
   K_UP    [ y 1 - to y ] case
   K_DOWN  [ y 1 + to y ] case
   K_LEFT  [ x 1 - to x ] case
@@ -52,7 +51,7 @@ rgb: ffffff is-data WHITE
   K_ESC   [ bye ] case
 ] is process
 
-[ check-bounds x y color putpixel ] is draw
+[ x y color putpixel ] is draw
 
 [ reset sdl_render drop
   event SDL_WaitEvent drop
@@ -61,6 +60,6 @@ rgb: ffffff is-data WHITE
   switch
   SDL_QUIT [ bye ] case
   SDL_KEYDOWN [ event get-keysym process draw ] case
-
+  SDL_MOUSEBUTTONDOWN [ event get-mouse-coords to y to x ] case
   TRUE
 ] keep whileTrue
