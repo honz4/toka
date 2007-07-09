@@ -171,3 +171,9 @@ long sdl_event_keysym(SDL_Event *event)
 {
   return (long)event->key.keysym.sym;
 }
+
+
+void sdl_setcaption(char *title)
+{
+  SDL_WM_SetCaption(title, title);
+}
