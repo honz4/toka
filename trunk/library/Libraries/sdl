@@ -43,6 +43,7 @@ from /usr/share/toka/library/C/sdl.so
   ]
 } is get-mouse-coords
 
+1 import sdl_event_keysym as get-keysym
 
 [ hex wsparse >number drop decimal ] is rgb:
 
