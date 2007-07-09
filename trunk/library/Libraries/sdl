@@ -1,23 +1,13 @@
 from libSDL.so
-1 import SDL_Init
 0 import SDL_Quit
-
-4 import SDL_SetVideoMode
-0 import SDL_GetVideoSurface
-1 import SDL_FreeSurface
-1 import SDL_LockSurface
-1 import SDL_UnlockSurface
-1 import SDL_Flip
-
-4 import SDL_MapRGB
 
 1 import SDL_Delay
 0 import SDL_GetTicks
 
-2 import SDL_WM_SetCaption
-
 1 import SDL_PollEvent
 1 import SDL_WaitEvent
+
+[ SDL_Quit bye ] is bye
 
 from /usr/share/toka/library/C/sdl.so
 2 import sdl_setup
@@ -28,8 +18,7 @@ from /usr/share/toka/library/C/sdl.so
 1 import sdl_event_type
 { 4 import sdl_circle [ sdl_circle drop ] } is circle
 
-[ SDL_Quit bye ] is bye
-
+{ 1 import sdl_setcaption [ keep sdl_setcaption drop ] } is set-window-title
 { 4 import sdl_hline [ sdl_hline drop ] } is hline
 { 4 import sdl_vline [ sdl_vline drop ] } is vline
 { 5 import sdl_line  [ sdl_line drop ] } is line
@@ -71,4 +60,3 @@ from /usr/share/toka/library/C/sdl.so
 276 is-data K_LEFT
 275 is-data K_RIGHT
  27 is-data K_ESC
-
