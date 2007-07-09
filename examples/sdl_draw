@@ -1,0 +1,67 @@
+#! /usr/bin/toka
+
+." SDL Drawing Demonstration
+------------------------------
+1   = BLACK       w   = UP
+2   = RED         s   = DOWN
+3   = GREEN       a   = LEFT
+4   = BLUE        d   = RIGHT
+5   = WHITE     ESC   = Quit
+------------------------------\n"
+
+needs sdl
+needs case
+
+
+value| x y color max-x max-y |
+
+100 to max-x
+100 to max-y
+0 to x
+0 to y
+rgb: ffffff to color
+
+[ x 1 < [ 1 to x ] ifTrue
+  y 1 < [ 1 to y ] ifTrue
+  x max-x > [ max-x to x ] ifTrue
+  y max-y 1- > [ max-y 1- to y ] ifTrue
+] is check-bounds
+
+100 100 sdl_setup drop
+
+sdl_event_size malloc is-data event
+
+rgb: 000000 is-data BLACK
+rgb: ff0000 is-data RED
+rgb: 00ff00 is-data GREEN
+rgb: 0000ff is-data BLUE
+rgb: ffffff is-data WHITE
+
+[
+  switch
+  char: 1 [ BLACK to color ] case
+  char: 2 [ RED to color ] case
+  char: 3 [ GREEN to color ] case
+  char: 4 [ BLUE to color ] case
+  char: 5 [ WHITE to color ] case
+
+  char: w [ y 1 - to y ] case
+  char: s [ y 1 + to y ] case
+  char: a [ x 1 - to x ] case
+  char: d [ x 1 + to x ] case
+
+       27 [ bye ] case
+] is process
+
+[ check-bounds x y color putpixel ] is draw
+
+[ reset sdl_render drop
+  event SDL_WaitEvent drop
+  event sdl_event_type 
+
+  switch
+  SDL_QUIT [ bye ] case
+  SDL_KEYDOWN [ event get-keysym process draw ] case
+
+  TRUE
+] keep whileTrue
