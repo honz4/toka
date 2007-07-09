@@ -155,3 +155,14 @@ void sdl_box(long x1, long y1, long x2, long y2, long color)
   sdl_vline(x1, y1, y2, color);
   sdl_vline(x2, y1, y2, color);
 }
+
+
+long sdl_event_mousecoord_x(SDL_Event *event)
+{
+  return (long)event->motion.x;
+}
+
+long sdl_event_mousecoord_y(SDL_Event *event)
+{
+  return (long)event->motion.y;
+}
