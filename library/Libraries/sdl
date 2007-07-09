@@ -65,3 +65,10 @@ from /usr/share/toka/library/C/sdl.so
 15 is-data SDL_EVENT_RESERVEDB
 16 is-data SDL_VIDEORESIZE
 17 is-data SDL_VIDEOEXPOSE
+
+273 is-data K_UP
+274 is-data K_DOWN
+276 is-data K_LEFT
+275 is-data K_RIGHT
+ 27 is-data K_ESC
+
