@@ -166,3 +166,8 @@ long sdl_event_mousecoord_y(SDL_Event *event)
 {
   return (long)event->motion.y;
 }
+
+long sdl_event_keysym(SDL_Event *event)
+{
+  return (long)event->key.keysym.sym;
+}
