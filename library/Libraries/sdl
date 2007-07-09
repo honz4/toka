@@ -45,7 +45,7 @@ from /usr/share/toka/library/C/sdl.so
 
 1 import sdl_event_keysym as get-keysym
 
-[ hex wsparse >number drop decimal ] is rgb:
+[ hex wsparse >number drop decimal compiler @ [ # ] ifTrue ] is-macro rgb:
 
  0 is-data SDL_NOEVENT
  1 is-data SDL_ACTIVEEVENT
