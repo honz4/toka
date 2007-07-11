@@ -2,7 +2,7 @@
 needs console
 needs sdl
 
-0 SDL_Init reset
+0 0 sdl_setup drop
 
 [ char: . emit ] is dot
 
