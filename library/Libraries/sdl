@@ -18,6 +18,7 @@ from /usr/share/toka/library/C/sdl.so
 1 import sdl_event_type
 { 4 import sdl_circle [ sdl_circle drop ] } is circle
 
+{ 5 import sdl_angle_line [ sdl_angle_line drop ] } is aline
 { 4 import sdl_hline [ sdl_hline drop ] } is hline
 { 4 import sdl_vline [ sdl_vline drop ] } is vline
 { 5 import sdl_line  [ sdl_line drop ] } is line
@@ -59,5 +60,3 @@ from /usr/share/toka/library/C/sdl.so
 276 is-data K_LEFT
 275 is-data K_RIGHT
  27 is-data K_ESC
-
-{ 5 import sdl_angle_line [ sdl_angle_line drop ] } is aline

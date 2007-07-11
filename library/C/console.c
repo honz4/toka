@@ -12,7 +12,7 @@
 
 struct termios new_termios, old_termios;
 
-int console_size_x() 
+long console_size_x() 
 {
   struct winsize win;
   int fd;
@@ -21,14 +21,14 @@ int console_size_x()
   if (fd == -1 || ioctl(fd, TIOCGWINSZ, &win) == -1)
   {
     close(fd);
-    return;
+    return 0;
   }
   close(fd);
-  return win.ws_col;
+  return (long)win.ws_col;
 }
 
 
-int console_size_y()
+long console_size_y()
 {
   struct winsize win;
   int fd;
@@ -37,10 +37,10 @@ int console_size_y()
   if (fd == -1 || ioctl(fd, TIOCGWINSZ, &win) == -1)
   {
     close(fd);
-    return;
+    return 0;
   }
   close(fd);
-  return win.ws_row;
+  return (long)win.ws_row;
 }
 
 
