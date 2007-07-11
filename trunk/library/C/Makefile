@@ -3,7 +3,7 @@
 # Released under the MIT License (doc/LICENSE)
 # ==============================================
 
-CFLAGS  =  -O2 -shared -fPIC -g
+CFLAGS  =  -O2 -shared -fPIC -g -Wall
 CC      =  gcc
 
 default:

@@ -14,6 +14,7 @@
 SDL_Surface *screen;
 long width, height;
 
+
 void sdl_setup(long req_width, long req_height)
 {
    height = req_height;
@@ -22,20 +23,24 @@ void sdl_setup(long req_width, long req_height)
    screen = SDL_SetVideoMode((int)width, (int)height, 32, SDL_SWSURFACE);
 }
 
+
 void sdl_render()
 {
   SDL_UpdateRect(screen, 0, 0, width, height);
 }
+
 
 long sdl_event_type(SDL_Event *event)
 {
   return (long)event->type;
 }
 
+
 long sdl_surface_size()
 {
   return (long)sizeof(SDL_Surface);
 }
+
 
 long sdl_event_size()
 {
@@ -157,6 +162,7 @@ void sdl_line(long x1, long y1, long x2, long y2, long color)
   sdl_putpixel(x1, y1, color);
 }
 
+
 void sdl_box(long x1, long y1, long x2, long y2, long color)
 {
   sdl_hline(x1, y1, x2, color);
@@ -171,10 +177,12 @@ long sdl_event_mousecoord_x(SDL_Event *event)
   return (long)event->motion.x;
 }
 
+
 long sdl_event_mousecoord_y(SDL_Event *event)
 {
   return (long)event->motion.y;
 }
+
 
 long sdl_event_keysym(SDL_Event *event)
 {
