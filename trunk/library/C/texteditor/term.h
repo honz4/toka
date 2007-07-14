@@ -58,11 +58,11 @@ void term_cleanup() {
   tcsetattr(0, TCSANOW, &old_termios);
 }
 
-void xy(int x, int y) { printf("\e[%d;%dH", y, x); }
+void xy(long x, long y) { printf("\e[%lu;%luH", y, x); }
 void home() { xy(1,1); }
 void cls() { printf("\e[2J"); home(); }
-void mode(int n) { printf("\e[%dm", n); }
-void color(int n) { printf("\e[0%s;3%d;4%dm", (n<128) ? "" : ";1", (n>>4)%8, n%8); }
+void mode(long n) { printf("\e[%lum", n); }
+void color(long n) { printf("\e[0%s;3%lu;4%lum", (n<128) ? "" : ";1", (n>>4)%8, n%8); }
 
 
 #define ALT(c)  (256+c)   // ex: ALT('a') = 353
@@ -81,7 +81,7 @@ void color(int n) { printf("\e[0%s;3%d;4%dm", (n<128) ? "" : ";1", (n>>4)%8, n%8
 #define K_PGUP  148
 #define K_PGDN  149
 
-int getkey() {
+long getkey() {
 //
 // Get a keystroke & translate to 1-byte keycodes:
 //  0-31     Control keys (no translation) .................. CTL('a') macro
@@ -90,8 +90,8 @@ int getkey() {
 //  160-255  Alt-keys (translate Alt-A -> 128+'a') .......... ALT('a') macro
 //
   char s[3];
-  int i=0;
-  int c = getchar();
+  long i=0;
+  long c = (long)getchar();
   if (c!=27)               // Regular key
     return c;
   c = getchar();
@@ -102,13 +102,13 @@ int getkey() {
     if (c>='A' && c<='D')                // Arrows
       return K_UP + c - 'A';
     if (c=='[')                          // F1-F5
-      return K_F(1) + getchar() - 'A';
+      return K_F(1) + (long)getchar() - 'A';
     while (c!='~' && i<3) {
       s[i++]= c;
-      c = getchar();
+      c = (long)getchar();
     }
     s[i]=0;
-    i = atoi(s);
+    i = atol(s);
     if (i>=1 && i<=6)                    // Home/Ins/Del/End/Pgup/Pgdn
       return K_HOME + i - 1;
     if (i>=17 && i<=21)                  // F6-F10
