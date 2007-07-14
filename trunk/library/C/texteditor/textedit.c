@@ -266,11 +266,14 @@ void load(char *file)
   char *p = buf;
   struct stat st;
 
+  for (c = 0; c < 4096*256; c++)
+    buf[c] = 0;
+
   if (-1 == stat(file, &st))
   {
     if (errno==ENOENT)
     {
-      buf[0]=0;
+      buf[0]=32; buf[1] = 0;
       msg("(New File)");
       goto done;
     }
