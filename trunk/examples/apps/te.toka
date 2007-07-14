@@ -1,0 +1,8 @@
+#! /usr/bin/toka
+needs textedit
+
+" Makefile" edit.load
+edit.start
+
+clear edit.getBuffer type cr
+bye
