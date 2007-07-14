@@ -1,8 +1,8 @@
 #! /usr/bin/toka
 needs textedit
 
-" Makefile" edit.load
-edit.start
+ " Text Editor\n./te.toka filename\n" is-data help
 
-clear edit.getBuffer type cr
-bye
+#args 0 = [ help type bye ] ifTrue
+
+1 arglist get-element edit.load edit.start clear cr bye
