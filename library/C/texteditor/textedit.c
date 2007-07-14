@@ -12,7 +12,7 @@
  *
  * It's fine for programming and notetaking, but it gets slower
  * when you edit large files. (The reason is, each file gets
- * loaded into one contiguous block of memory. Every time you
+ * loaded longo one contiguous block of memory. Every time you
  * insert of delete a character, it has to move everything 
  * beyond the cursor. That said, it's relatively efficient when
  * compared to any GUI environment.)
@@ -37,7 +37,7 @@
 #include <errno.h>
 #include <ctype.h>
 #include "term.h"
-
+#include "textedit.h"
 
 char filename[256];
 FILE *f;
@@ -46,13 +46,13 @@ char buf[4096*256];	/* Edit buffer (1M max.) */
 
 /* ************************************* DRAWING ROUTINES */
 
-int
+long
   w, h,				// Screen size
   cx, cy,			// Cursor position (on screen)
   sx,				// Scroll position (in non-wrapping mode)
   row, col;			// File coordinates
 
-int done_edit = 0;
+long done_edit = 0;
 #define TOKA_TRUE -1
 
 #define WH (h-1)	// Window height (screen height minus status line, etc.)
@@ -60,7 +60,7 @@ int done_edit = 0;
 //
 // Mode flags
 //
-int
+long
   overtype=0,       // 0: Insert  1: Overtype
   autoindent=1,
   tabmode=1,        // 0: Tabs->Spaces  1: Literal Tabs
@@ -84,7 +84,7 @@ char *draw_modes() {
 //
 // Temp variables for rendering.. draw(), etc.
 //
-int x, y;        // Current Position
+long x, y;        // Current Position
 char *p;         // Buffer ptr
 char *lptr[100]; // Ptr to each line on screen
 
@@ -95,8 +95,8 @@ void *get_buffer()
 }
 
 
-void spaces(int n) {
-  int i;
+void spaces(long n) {
+  long i;
   for (i=0; i<n; i++) putchar(32);
   x += n;
 }
@@ -112,7 +112,7 @@ void status() {
 		spaces(w-1 - printf(" %s", msgbuf));
 	} else {
 		spaces(w-30 - printf(" %s%s  ", draw_modes(), *filename?filename:"(Unnamed)") );
-		printf("Line %-4d Col %-3d %p ", 1+row+cy, 1+sx+cx, lptr[cy]);
+		printf("Line %-4lu Col %-3lu %p ", 1+row+cy, 1+sx+cx, lptr[cy]);
 	}
 	puts("\e[A\e[0m");
 	cursor();
@@ -120,14 +120,14 @@ void status() {
 
 /*
  * char *p = Start of line
- * int draw = 9: output off (just scan),  1: output on
+ * long draw = 9: output off (just scan),  1: output on
  */
-char *drawline(char *p, int draw)
+char *drawline(char *p, long draw)
 {
 //
 // Draw 1 line & return ptr to next line
 //
-  int x,c,t;
+  long x,c,t;
   for (x=0; *p; x++) {
     c=*p++;
     t=0;
@@ -141,11 +141,11 @@ char *drawline(char *p, int draw)
 }
 
 
-void draw(int flag) {
+void draw(long flag) {
 //
 // Redraw the entire screen
 //
-  int y;
+  long y;
   char *p = lptr[0];
 
   if (flag) cls();
@@ -162,7 +162,7 @@ void draw(int flag) {
 
 char *curpos() {
 //
-// Return a pointer to the cursor's position in the file
+// Return a polonger to the cursor's position in the file
 //
   return lptr[cy]+sx+cx;
 }
@@ -173,7 +173,7 @@ char *eol(char *p) {
 }
 
 
-void scrollup(int n) {
+void scrollup(long n) {
 //
 // Scroll up N lines (max.)
 //
@@ -208,7 +208,7 @@ void promptmsg(char *s)
   printf("\e[%dC", strlen(s));
 }
 
-int ync(char *s)
+long ync(char *s)
 {
   promptmsg(s);
   for (;;)
@@ -239,7 +239,7 @@ void prompt(char *msg, char *buf)
 //
 void dirty()
 {
-  int tmp = modified;
+  long tmp = modified;
   modified=1;
   if (!tmp)
     status();
@@ -247,7 +247,7 @@ void dirty()
 
 void load(char *file)
 {
-  int c;
+  long c;
   char *p = buf;
   struct stat st;
 
@@ -294,7 +294,7 @@ done:
 
 void save(char *filename)
 {
-  int fd = open(filename, O_WRONLY | O_CREAT, 0644);
+  long fd = open(filename, O_WRONLY | O_CREAT, 0644);
   if (!fd)
   {
     printf("Error saving file '%s'!\n", filename);
@@ -320,7 +320,7 @@ void Lnup()
 
 void Lndn()
 {
-  int i;
+  long i;
   xy(1,1);  printf("\e[M");  // delete top line
   xy(1,WH); printf("\e[L");  // insert line at bottom
   for (i=0; i<WH; i++)       // update lptr[]
@@ -339,7 +339,7 @@ void Pgup()
 
 void Pgdn()
 {
-  int i;
+  long i;
   if (!lptr[0])
     return;
   for (i=1; i<=WH; i++)
@@ -417,7 +417,7 @@ void Up()
 
 void Down()
 {
-  int i;
+  long i;
 
   if (!lptr[cy+1]) return;   // check for EOF
   if (cy<WH-1) { cy++; status(); return; }
@@ -468,7 +468,7 @@ void Del()
 //
 // Delete char. under cursor
 //
-  int redraw=0;
+  long redraw=0;
   char *p=curpos(), *e=eol(lptr[cy]);
 
   if (p>e) p=e;
@@ -497,7 +497,7 @@ void Back()
   Del();
 }
 
-void Insert(c)
+void Insert(long c)
 {
   if(c==13) c=10;
   if( (c>31 && c!=127 && c<256) || c==10 ) {
@@ -524,7 +524,7 @@ void edit() {
 //
 // Process keystrokes
 //
-  int c;
+  long c;
   getscreensize(); term_init(); draw(1);
 
   for (;;) {
@@ -536,7 +536,7 @@ void edit() {
     case CTL('c'):
     case CTL('q'):
       if (modified) {
-        int tmp = ync("Save changes? (Yes/No/Cancel): ");
+        long tmp = ync("Save changes? (Yes/No/Cancel): ");
         if (tmp==0) {status(); break;}
         if (tmp==1) save(filename);
       }
@@ -619,7 +619,7 @@ void edit() {
 //************************************* INITIALIZATION
 void getscreensize() {
   struct winsize win;
-  int fd;
+  long fd;
   
   fd= open(ttyname(0), O_RDWR);
   if (fd==-1) return;
