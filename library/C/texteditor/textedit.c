@@ -220,7 +220,7 @@ void promptmsg(char *s)
   puts("\e[0;1m");
   spaces(w - printf("%s", s));
   puts("\e[A\e[0m");
-  printf("\e[%dC", strlen(s));
+  printf("\e[%luC", (long)strlen(s));
 }
 
 long ync(char *s)
