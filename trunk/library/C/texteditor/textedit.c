@@ -44,7 +44,7 @@ FILE *f;
 
 char buf[4096*256];	/* Edit buffer (1M max.) */
 
-/* ************************************* DRAWING ROUTINES */
+// ************************************* DRAWING ROUTINES
 
 long
   w, h,				// Screen size
@@ -53,7 +53,6 @@ long
   row, col;			// File coordinates
 
 long done_edit = 0;
-#define TOKA_TRUE -1
 
 #define WH (h-1)	// Window height (screen height minus status line, etc.)
 
@@ -68,7 +67,8 @@ long
 
 char *msgbuf;
 
-char *draw_modes() {
+char *draw_modes()
+{
   static char s[8];
   s[0]= overtype   ? 'O' : 'I';
   s[1]= autoindent ? 'A' : 32;
@@ -95,38 +95,43 @@ void *get_buffer()
 }
 
 
-void spaces(long n) {
+void spaces(long n)
+{
   long i;
   for (i=0; i<n; i++) putchar(32);
   x += n;
 }
 
-void cursor() {
+void cursor()
+{
   xy(cx+1, cy+1);
 }
 
-void status() {
-	xy(1,h-1);
-	puts("\e[0;7m");
-	if (msgbuf) {
-		spaces(w-1 - printf(" %s", msgbuf));
-	} else {
-		spaces(w-30 - printf(" %s%s  ", draw_modes(), *filename?filename:"(Unnamed)") );
-		printf("Line %-4lu Col %-3lu %p ", 1+row+cy, 1+sx+cx, lptr[cy]);
-	}
-	puts("\e[A\e[0m");
-	cursor();
+void status()
+{
+  xy(1,h-1);
+  puts("\e[0;7m");
+  if (msgbuf)
+  {
+    spaces(w-1 - printf(" %s", msgbuf));
+  }
+  else
+  {
+    spaces(w-30 - printf(" %s%s  ", draw_modes(), *filename?filename:"(Unnamed)") );
+    printf("Line %-4lu Col %-3lu %p ", 1+row+cy, 1+sx+cx, lptr[cy]);
+  }
+  puts("\e[A\e[0m");
+  cursor();
 }
 
-/*
+/********************************************************
  * char *p = Start of line
  * long draw = 9: output off (just scan),  1: output on
- */
+ *
+ * Draw 1 line & return ptr to next line
+ ********************************************************/
 char *drawline(char *p, long draw)
 {
-//
-// Draw 1 line & return ptr to next line
-//
   long x,c,t;
   for (x=0; *p; x++) {
     c=*p++;
@@ -141,50 +146,60 @@ char *drawline(char *p, long draw)
 }
 
 
-void draw(long flag) {
 //
 // Redraw the entire screen
 //
+void draw(long flag)
+{
   long y;
   char *p = lptr[0];
 
-  if (flag) cls();
-  for (y=0; *p && y<WH; y++) {
+  if (flag)
+    cls();
+  for (y=0; *p && y<WH; y++)
+  {
     lptr[y] = p;
     p = drawline(p,flag);
     if (flag) putchar(10);
   }
-  if (*p) lptr[y++]=p;
+  if (*p)
+    lptr[y++]=p;
   lptr[y]=0;
 
-  if (flag) status();
+  if (flag)
+    status();
 }
 
-char *curpos() {
 //
 // Return a polonger to the cursor's position in the file
 //
+char *curpos()
+{
   return lptr[cy]+sx+cx;
 }
 
-char *eol(char *p) {
+char *eol(char *p)
+{
   while (*p && *p!=10) p++;
   return p;
 }
 
 
-void scrollup(long n) {
 //
 // Scroll up N lines (max.)
 //
-	char *a;
-	a= lptr[0]-1;
-	if (n<=0 || a<buf) return;
-	do {
-		if (*--a == 10) n--, row--;
-	} while (n>0 && a>=buf);
-	lptr[0] = ++a;
-	if (a==buf) row--;
+void scrollup(long n)
+{
+  char *a;
+  a = lptr[0]-1;
+  if (n<=0 || a<buf) return;
+  do
+  {
+    if (*--a == 10) n--, row--;
+  } while (n>0 && a>=buf);
+  lptr[0] = ++a;
+  if (a==buf)
+    row--;
 }
 
 // ************************************* PROMPTS
@@ -348,12 +363,13 @@ void Pgdn()
   row+=WH;
   draw(1);
   for (i=1; i<cy; i++)
-    if (!lptr[i]) {
+    if (!lptr[i])
+    {
       row -= cy-i+1;
 cur:  cy = i-1;
       status();
       break;
-}
+    }
 }
 
 void Top()
@@ -377,7 +393,8 @@ void Home()
   if (sx+cx==0)
   {
     char *p;
-    for( p=curpos(); isspace(*p); p++, cx++); // Scan to first non-space char.
+    for (p=curpos(); isspace(*p); p++, cx++)
+      ; // Scan to first non-space char.
     status();
   }
   else
@@ -390,22 +407,28 @@ void Home()
 void End()
 {    
   char *p;
-  for (cx=0, p=curpos(); !(*p==10 || *p==13); p++, cx++);  // Scan to end of line
-    if (cx<w)
-    {
-      status();
-    }
-    else
-    {
-      sx+=cx-w+1;
-      cx=w-1;
-      draw(1);
-    }
+  for (cx=0, p=curpos(); !(*p==10 || *p==13); p++, cx++)
+    ;  // Scan to end of line
+  if (cx<w)
+  {
+    status();
+  }
+  else
+  {
+    sx+=cx-w+1;
+    cx=w-1;
+    draw(1);
+  }
 }
 
 void Up()
 {
-  if (cy) { cy--; status(); return; }
+  if (cy)
+  {
+    cy--;
+    status();
+    return;
+  }
   scrollup(1);
   draw(1);
   //
@@ -419,55 +442,78 @@ void Down()
 {
   long i;
 
-  if (!lptr[cy+1]) return;   // check for EOF
-  if (cy<WH-1) { cy++; status(); return; }
+  if (!lptr[cy+1])
+    return;   // check for EOF
+  if (cy<WH-1)
+  {
+    cy++;
+    status();
+    return;
+  }
   xy(1,1);  printf("\e[M");  // delete top line
   xy(1,WH); printf("\e[L");  // insert line at bottom
   for (i=0; i<WH; i++)       // update lptr[]
     lptr[i]= lptr[i+1];
   lptr[WH]= drawline(lptr[WH-1],1);
-//  drawline(lptr[WH-1],1);
   row++;
   status();
 }
 
 void Right()
 {
-  if (cx<w-1) { cx++; status(); return; }   // No scroll
+  if (cx<w-1)
+  {
+    cx++;
+    status();
+    return;
+  }   // No scroll
   sx++; draw(1);                             // Scroll right
 }
 
 void Left()
 {
-  if (cy==0 && lptr[0]==buf && cx<=0) return;
-  if (cx) { cx--; status(); return; }
-  if (sx) { sx--; draw(1); return; }
+  if (cy==0 && lptr[0]==buf && cx<=0)
+    return;
+  if (cx)
+  {
+    cx--; 
+    status(); 
+    return;
+  }
+  if (sx)
+  { 
+    sx--;
+    draw(1); 
+    return;
+  }
   Up(); End();
 }
 
 void Wordright()
 {
   char *p = curpos();
-  do {
+  do
+  {
     Right(); p++;
-  } while( isspace(p[0]) || !isspace(p[-1]) );
+  } while(isspace(p[0]) || !isspace(p[-1]));
 }
 
 void Wordleft()
 {
   char *p = curpos();
-  do {
+  do
+  {
     Left(); p--;
-  } while( isspace(p[0]) || !isspace(p[-1]) );
+  } while(isspace(p[0]) || !isspace(p[-1]));
 }
 
 // ************************************* EDITING COMMANDS
 
-void Del()
-{
 //
 // Delete char. under cursor
 //
+void Del()
+{
   long redraw=0;
   char *p=curpos(), *e=eol(lptr[cy]);
 
@@ -476,7 +522,8 @@ void Del()
   else
   {
     printf("\e[P");
-    if (e-p > w-cx) {
+    if (e-p > w-cx)
+    {
       printf("\e7"); xy(w,cy+1);
       putchar(lptr[cy][w]);
       printf("\e8");
@@ -488,29 +535,43 @@ void Del()
   dirty();
 }
 
-void Back()
-{
+
 //
 // Delete char. left of cursor
 //
+void Back()
+{
   Left();
   Del();
 }
 
+
 void Insert(long c)
 {
-  if(c==13) c=10;
-  if( (c>31 && c!=127 && c<256) || c==10 ) {
+  if (c==13)
+    c=10;
+  if ((c>31 && c!=127 && c<256) || c==10)
+  {
     char *p=curpos(), *e=eol(lptr[cy]);
-    if (p>e) {End(); p=e;}
+    if (p>e)
+    {
+      End();
+      p=e;
+    }
     if (!overtype || *p==10 || *p==0)
       memmove(p+1, p, strlen(p));
     *p=c;
     if (c==10)
-      { cy++, cx=0, row++; dirty(); draw(1); return;}  // insert line
+    {
+      cy++, cx=0, row++; 
+      dirty(); 
+      draw(1); 
+      return;
+    }  // insert line
     else
       cx++;
-    if (!overtype) printf("\e[@");
+    if (!overtype)
+      printf("\e[@");
     putchar(c);
     status();
   }
@@ -520,117 +581,123 @@ void Insert(long c)
 
 // ************************************* KEYBOARD HANDLER
 
-void edit() {
 //
 // Process keystrokes
 //
+void edit()
+{
   long c;
   getscreensize(); term_init(); draw(1);
 
-  for (;;) {
+  for (;;)
+  {
     c = getkey();
     clearmsg();
-    switch (c) {
+    switch (c)
+    {
+      case CTL('x'):
+      case CTL('c'):
+      case CTL('q'):
+        if (modified)
+        {
+          long tmp = ync("Save changes? (Yes/No/Cancel): ");
+          if (tmp==0) {status(); break;}
+          if (tmp==1) save(filename);
+        }
+        term_cleanup();
+        return;
 
-    case CTL('x'):
-    case CTL('c'):
-    case CTL('q'):
-      if (modified) {
-        long tmp = ync("Save changes? (Yes/No/Cancel): ");
-        if (tmp==0) {status(); break;}
-        if (tmp==1) save(filename);
-      }
-      term_cleanup();
-      return;
+      case CTL('s'):
+        save(filename); break;
 
-    case CTL('s'):
-      save(filename); break;
+      case CTL('l'):
+        draw(1); break;
 
-    case CTL('l'):
-      draw(1); break;
+      case K_HOME:
+      case CTL('a'):
+        Home(); break;
 
-    case K_HOME:
-    case CTL('a'):
-      Home(); break;
+      case K_END:
+      case CTL('e'):
+        End(); break;
 
-    case K_END:
-    case CTL('e'):
-      End(); break;
+      case K_PGUP:
+      case CTL('y'):
+        Pgup(); break;
 
-    case K_PGUP:
-    case CTL('y'):
-      Pgup(); break;
-
-    case K_PGDN:
-    case CTL('v'):
-      Pgdn(); break;
+      case K_PGDN:
+      case CTL('v'):
+        Pgdn(); break;
     
-    case ALT('y'):
-      Top(); break;
+      case ALT('y'):
+        Top(); break;
 
-    case ALT('v'):
-      Bottom(); break;
+      case ALT('v'):
+        Bottom(); break;
     
-    case K_BS:
-    case CTL('H'):
-      Back(); break;
+      case K_BS:
+      case CTL('H'):
+        Back(); break;
 
-    case K_DEL:
-    case CTL('d'):
-      Del(); break;
+      case K_DEL:
+      case CTL('d'):
+        Del(); break;
 
-	case ALT('p'):
-		Lnup(); break;
-	case ALT('n'):
-		Lndn(); break;
+      case ALT('p'):
+        Lnup(); break;
+      case ALT('n'):
+        Lndn(); break;
 
-    case K_UP:
-    case CTL('p'):
-      Up(); break;
+      case K_UP:
+      case CTL('p'):
+        Up(); break;
     
-    case K_DOWN:
-    case CTL('n'):
-      Down(); break;
+      case K_DOWN:
+      case CTL('n'):
+        Down(); break;
 
-    case K_RIGHT:
-    case CTL('f'):
-      Right(); break;
+      case K_RIGHT:
+      case CTL('f'):
+        Right(); break;
 
-    case K_LEFT:
-    case CTL('b'):
-      Left(); break;
+      case K_LEFT:
+      case CTL('b'):
+        Left(); break;
 
-    case CTL('@'):
-      Wordleft(); break;
+      case CTL('@'):
+        Wordleft(); break;
 
-    case CTL('_'):
-      Wordright(); break;
+      case CTL('_'):
+        Wordright(); break;
 
-    case ALT('i'):
-      overtype = !overtype; status(); break;
+      case ALT('i'):
+        overtype = !overtype; status(); break;
 
-    default:		// Insert a character (or overwrite)
-      Insert(c);
-
+      default:		// Insert a character (or overwrite)
+        Insert(c);
     } /* end switch */
   }
 }
 
 //************************************* INITIALIZATION
-void getscreensize() {
+void getscreensize()
+{
   struct winsize win;
   long fd;
   
-  fd= open(ttyname(0), O_RDWR);
-  if (fd==-1) return;
-  if (ioctl(fd, TIOCGWINSZ, &win)==-1) return;
-  w= win.ws_col;
-  h= win.ws_row;
+  fd = open(ttyname(0), O_RDWR);
+  if (fd == -1)
+    return;
+  if (ioctl(fd, TIOCGWINSZ, &win)==-1) 
+    return;
+  w = win.ws_col;
+  h = win.ws_row;
 }
 
 //************************************* CLEANUP
 
-void quit() {
+void quit()
+{
   xy(1,h); printf("\e[2K");  // put cursor at bottom
   term_cleanup();
 }

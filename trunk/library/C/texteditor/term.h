@@ -43,7 +43,8 @@
 
 struct termios new_termios, old_termios;
 
-void term_init() {
+void term_init()
+{
   tcgetattr(0, &old_termios);
   new_termios = old_termios;
   new_termios.c_iflag &= ~(BRKINT+ISTRIP+IXON+IXOFF +ICRNL+INLCR);
@@ -54,7 +55,8 @@ void term_init() {
   tcsetattr(0, TCSANOW, &new_termios);
 }
 
-void term_cleanup() {
+void term_cleanup()
+{
   tcsetattr(0, TCSANOW, &old_termios);
 }
 
@@ -81,7 +83,8 @@ void color(long n) { printf("\e[0%s;3%lu;4%lum", (n<128) ? "" : ";1", (n>>4)%8, 
 #define K_PGUP  148
 #define K_PGDN  149
 
-long getkey() {
+long getkey()
+{
 //
 // Get a keystroke & translate to 1-byte keycodes:
 //  0-31     Control keys (no translation) .................. CTL('a') macro
