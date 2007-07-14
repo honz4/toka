@@ -11,4 +11,5 @@ default:
 	$(CC) $(CFLAGS) floats.c -o floats.so
 	$(CC) $(CFLAGS) hexdump.c -o hexdump.so
 	$(CC) $(CFLAGS) console.c -o console.so
+	@cd texteditor && $(CC) $(CFLAGS) textedit.c -o ../textedit.so
 	$(CC) $(CFLAGS) sdl.c -o sdl.so -lSDL -lm
