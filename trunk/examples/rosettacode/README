@@ -1,6 +1,11 @@
 These examples were originally done for the Rosetta Code project, which
 can be found at http://www.rosettacode.org.
 
+This serves as a collection of simple programs that illustrate common tasks. They may
+not be very useful on their own, but can be helpful as a reference. On Rosetta Code, they
+are shown along with equivilent snippits from many other languages and serve as a visual
+comparision of differing syntax and approaches between languages.
+
 
 = A =
 
