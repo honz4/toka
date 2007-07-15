@@ -10,26 +10,162 @@
 <h1>&nbsp;SDLLibrary</h1>
 
 
-<p>This library is the start of support for using the <i>Simple Directmedia
-Layer</i> in Toka. It is not complete and has no wrapper functionality at
-this time.
+<p>Toka has a wrapper over the raw SDL library that allows for use of SDL
+drawing and events.
 </p>
-<p>Imports from libsdl:
+<p><b>needs sdl</b>
+</p>
+<p>Primitive SDL functions:
 </p>
 
 <ul>
-<li> SDL_Init
-<li> SDL_Quit
-<li> SDL_SetVideoMode
-<li> SDL_GetVideoMode
-<li> SDL_FreeSurface
-<li> SDL_LockSurface
-<li> SDL_UnlockSurface
-<li> SDL_Flip
-<li> SDL_MapRGB
-<li> SDL_Delay
-<li> SDL_GetTicks
-<li> SDL_WM_SetCaption</ul>
+<li> <b>SDL_Quit</b>
+
+<ul>
+<li> <i> -- n</i>
+<li> </ul>
+
+<li> <b>SDL_Delay</b>
+
+<ul>
+<li> <i> value -- n</i>
+<li> </ul>
+
+<li> <b>SDL_GetTicks</b>
+
+<ul>
+<li> <i> -- n</i>
+<li> </ul>
+
+<li> <b>SDL_PollEvent</b>
+
+<ul>
+<li> <i> event -- n</i>
+<li> </ul>
+
+<li> <b>SDL_WaitEvent</b>
+
+<ul>
+<li> <i> event -- n</i>
+<li> 
+</ul>
+
+</ul>
+
+<p>Higher-level wrappers:
+</p>
+
+<ul>
+<li> <b>sdl_setup</b>
+
+<ul>
+<li> <i> height width -- </i>
+<li> Create a new surface and open the drawing window for it.
+</ul>
+
+<li> <b>sdl_render</b>
+
+<ul>
+<li> <i> -- </i>
+<li> Render the scene on the drawing surface
+</ul>
+
+<li> <b>sdl_surface_size</b>
+
+<ul>
+<li> <i> -- n </i>
+<li> Return the size of the drawing surface
+</ul>
+
+<li> <b>sdl_event_size</b>
+
+<ul>
+<li> <i> -- n </i>
+<li> Return the size of the event structure. <b>malloc</b> this
+   and assign a name to create an event structure for <b>SDL_PollEvent</b>
+   or <b>SDL_WaitEvent</b>. 
+</ul>
+
+<li> <b>sdl_event_type</b>
+
+<ul>
+<li> <i> event -- typecode </i>
+<li> Return a value corresponding to the type of event which happened.
+</ul>
+
+<li> <b>putpixel</b>
+
+<ul>
+<li> <i> x y color -- </i>
+<li> Draw a single pixel on the screen.
+</ul>
+
+<li> <b>circle</b>
+
+<ul>
+<li> <i> x y radius color -- </i>
+<li> Draw a hollow circle on the screen.
+</ul>
+
+<li> <b>aline</b>
+
+<ul>
+<li> <i> x y angle distance color -- </i>
+<li> Draw a line starting at x,y and extending out distance at a specified
+   angle.
+</ul>
+
+<li> <b>hline</b>
+
+<ul>
+<li> <i> x y length color -- </i>
+<li> Draw a horizontal line starting at x,y
+</ul>
+
+<li> <b>vline</b>
+
+<ul>
+<li> <i> x y height color -- </i>
+<li> Draw a vertical line starting at x,y
+</ul>
+
+<li> <b>line</b>
+
+<ul>
+<li> <i> x1 y1 x2 y2 color -- </i>
+<li> Draw a line starting at x1,y1 and ending at x2,y2
+</ul>
+
+<li> <b>box</b>
+
+<ul>
+<li> <i> x1 y2 x2 y2 color -- </i>
+<li> Draw a hollow rectangle.
+</ul>
+
+<li> <b>get-mouse-coords</b>
+
+<ul>
+<li> <i> event -- x y </i>
+<li> Get the x,y coordinates of the mouse (for mouse events)
+</ul>
+
+<li> <b>get-keysym</b>
+
+<ul>
+<li> <i> event -- keycode </i>
+<li> Get the value of the key that was pressed (for keyboard events)
+</ul>
+
+<li> <b>rgb:</b>
+
+<ul>
+<li> <i> $hex -- value </i>
+<li> Parse ahead and build a color code from the RRGGBB hex string that
+   follows.
+</ul>
+
+</ul>
 
 
 
@@ -39,6 +175,6 @@ this time.
 
 <hr>
 
-<p><i>Notebook exported on Sunday,  1 July 2007, 19:54:43 PM EDT</i></p>
+<p><i>Notebook exported on Saturday, 14 July 2007, 21:14:54 PM EDT</i></p>
 
 </body></html>

@@ -474,14 +474,31 @@ bye
 page ConsoleLibrary {This is the start of a library to make developing console-based
 applications easier.
 
-Provides:
+<b>needs console</b>
 
-* xy
-** Position the cursor to any position on the screen
-** <i>x y --</i>
-* home
-** Position the cursor to the top left corner of the screen
-** <i>--</i>} 1179677319
+* console_init
+** <i> -- n</i>
+** Initialize the console subsystem to key breaking mode
+* <b>console_cleanup</b>
+** <i> -- n</i>
+** Reset the console subsystem to the OS default
+* <b>getkey</b>
+** <i> -- n</i>
+** Read a key and return a single value code
+* <b>getchar</b>
+** <i> -- n</i>
+** Read a single byte from the keyboard; specials keys may
+   return multiple byte codes.
+* <b>console_dimensions</b>
+** <i> -- x y</i>
+** Return the rows and columns of the console window
+* <b>xy</b>
+** <i> x y -- </i>
+** Set the cursor to x,y
+* <b>home</b>
+** <i> -- </i>
+** Reset the cursor to the top left corner
+} 1184462061
 
 
 #--------------------------------------------------
@@ -584,16 +601,18 @@ debugging tool.
 display_stack()
 Display all items on the stack.
 
-gc_info()
-Display information about Toka's memory use
+vm_info()
+Display information about Toka's memory use, stacks, and
+other aspects of the virtual machine.
 #unpre
 
 = Primitives Provided =
 
 #pre
 :stack
-:gc
-#unpre} 1183234931
+:stat
+#unpre
+} 1184460160
 
 
 #--------------------------------------------------
@@ -698,8 +717,7 @@ is-macro
 :xt
 :class
 last
-#unpre
-} 1183334060
+#unpre} 1183334060
 
 
 #--------------------------------------------------
@@ -1159,11 +1177,17 @@ page {garbage collector} {The Toka implementation makes heavy use of dynamically
 To help avoid memory leaks, the memory allocation provides a very simple
 form of <i>garbage collection</i>.
 
-The model is very simple. A list containing pointers to each allocation,
-and the corresponding size (in bytes) is kept. Each time memory is
-requested, the code adds the request to the list. When the list is filled,
-or if the allocation fails, the 16 oldest items are freed and all later
-entries are shifted down.
+The model is very simple. Two lists are kept of pointers and corresponding
+sizes are kept. One list is used primarily for user-level allocations,
+and the other is only used by the primitives when they need to allocate
+memory.
+
+When either list is filled, <b>gc()</b> is called. This frees up to 64
+allocations from the internal list, and up to 32 allocations from the
+user list. Allocations are freed from oldest to newest, and the newest
+allocations in both lists (up to 32 in the user list and 64 in the
+internal list) will be kept. This prevents recent creations from falling
+out of scope until they can be used.
 
 Obviously there is also a way to mark entries as permanent. This is done
 by <b>keep</b> (the <b>[gc_keep()|gc.c]</b> function). This routine skims
@@ -1172,16 +1196,9 @@ a specific pointer. When found, that entry (and any subsequent
 allocations -- in Toka these will almost always be subquotes, strings,
 etc) are removed from the list.
 
-In actual practice things are just a little more complex. Toka actually
-maintains two lists; one for general allocations and a second one for
-internal use. The second one is only used for allocations that are known
-to be temporary. 
-
-In addition, the code will always leave the 16 newest allocations in each
-list alone to prevent them from falling out of scope.
- 
 Information regarding the current status of the garbage collection
-subsystem can be obtained via <b>:gc</b> (the <b>[gc_info()|debug.c]</b> function).} 1176697195
+subsystem can be obtained via <b>:stat</b> (the <b>[vm_info()|debug.c]</b> function).
+} 1184460703
 
 
 #--------------------------------------------------
@@ -1236,9 +1253,10 @@ silently ignore it.
 
 gc()
 Free the oldest allocations on the garbage list.
-Will free up to 16 items from each list per
-call. If there are 16 or less items remaining,
-this code will leave the allocations alone.
+Will free up to 64 trash items and 32 items from the 
+user allocation list per call. This leaves the newest
+allocations on both lists alone, even with repeated 
+calls.
 
 toka_malloc()
 Allocate TOS bytes of memory. Returns a pointer to
@@ -1251,7 +1269,8 @@ the allocated memory.
 keep
 gc
 malloc
-#unpre} 1177180123
+#unpre
+} 1184460244
 
 
 #--------------------------------------------------
@@ -2177,7 +2196,9 @@ project. To make use of this, use this at the start of a program:
 * [SocketsLibrary]
 * [StringsLibrary]
 * [StructLibrary]
-* [TimeLibrary]} 1180379808
+* [TextEditLibrary]
+* [TimeLibrary]
+} 1184460817
 
 
 #--------------------------------------------------
@@ -2208,15 +2229,22 @@ IN THE SOFTWARE.} 1175645279
 #--------------------------------------------------
 # Limitations
 
-page Limitations {* Cell size is machine dependent, generally 32 bits (4 bytes) or 64 bits
+page Limitations {These limits are dependent on the host system and can not be altered:
+
+* Cell size is machine dependent, generally 32 bits (4 bytes) or 64 bits
   (8 bytes) in size. <b>cell-size</b> returns the actual size in bytes.
 * Character size is machine and OS dependent.  Normally 8 bits (1 byte).
   <b>char-size</b> returns the actual size in bytes. This is normally
   1 byte in size.
+
+The following limits can be overridden in <b>config.h</b>:
+
 * Quotes can be up to 64 elements (values, primitives, embedded quotes,
   calls to other quotes, string pointers, etc) in length in most cases.
 * The data stack can hold up to 100 cells.
-* The return stack can hold up to 1024 cells.} 1179082807
+* The return stack can hold up to 1024 cells.
+* You can have up to 4096 named items
+} 1184460088
 
 
 #--------------------------------------------------
@@ -2924,24 +2952,81 @@ wanted to display each of the script arguments, we could do:
 #--------------------------------------------------
 # SDLLibrary
 
-page SDLLibrary {This library is the start of support for using the <i>Simple Directmedia
-Layer</i> in Toka. It is not complete and has no wrapper functionality at
-this time.
+page SDLLibrary {Toka has a wrapper over the raw SDL library that allows for use of SDL
+drawing and events.
 
-Imports from libsdl:
+<b>needs sdl</b>
 
-* SDL_Init
-* SDL_Quit
-* SDL_SetVideoMode
-* SDL_GetVideoMode
-* SDL_FreeSurface
-* SDL_LockSurface
-* SDL_UnlockSurface
-* SDL_Flip
-* SDL_MapRGB
-* SDL_Delay
-* SDL_GetTicks
-* SDL_WM_SetCaption} 1179676477
+Primitive SDL functions:
+
+* <b>SDL_Quit</b>
+** <i> -- n</i>
+** 
+* <b>SDL_Delay</b>
+** <i> value -- n</i>
+** 
+* <b>SDL_GetTicks</b>
+** <i> -- n</i>
+** 
+* <b>SDL_PollEvent</b>
+** <i> event -- n</i>
+** 
+* <b>SDL_WaitEvent</b>
+** <i> event -- n</i>
+** 
+
+Higher-level wrappers:
+
+* <b>sdl_setup</b>
+** <i> height width -- </i>
+** Create a new surface and open the drawing window for it.
+* <b>sdl_render</b>
+** <i> -- </i>
+** Render the scene on the drawing surface
+* <b>sdl_surface_size</b>
+** <i> -- n </i>
+** Return the size of the drawing surface
+* <b>sdl_event_size</b>
+** <i> -- n </i>
+** Return the size of the event structure. <b>malloc</b> this
+   and assign a name to create an event structure for <b>SDL_PollEvent</b>
+   or <b>SDL_WaitEvent</b>. 
+* <b>sdl_event_type</b>
+** <i> event -- typecode </i>
+** Return a value corresponding to the type of event which happened.
+* <b>putpixel</b>
+** <i> x y color -- </i>
+** Draw a single pixel on the screen.
+* <b>circle</b>
+** <i> x y radius color -- </i>
+** Draw a hollow circle on the screen.
+* <b>aline</b>
+** <i> x y angle distance color -- </i>
+** Draw a line starting at x,y and extending out distance at a specified
+   angle.
+* <b>hline</b>
+** <i> x y length color -- </i>
+** Draw a horizontal line starting at x,y
+* <b>vline</b>
+** <i> x y height color -- </i>
+** Draw a vertical line starting at x,y
+* <b>line</b>
+** <i> x1 y1 x2 y2 color -- </i>
+** Draw a line starting at x1,y1 and ending at x2,y2
+* <b>box</b>
+** <i> x1 y2 x2 y2 color -- </i>
+** Draw a hollow rectangle.
+* <b>get-mouse-coords</b>
+** <i> event -- x y </i>
+** Get the x,y coordinates of the mouse (for mouse events)
+* <b>get-keysym</b>
+** <i> event -- keycode </i>
+** Get the value of the key that was pressed (for keyboard events)
+* <b>rgb:</b>
+** <i> $hex -- value </i>
+** Parse ahead and build a color code from the RRGGBB hex string that
+   follows.
+} 1184461850
 
 
 #--------------------------------------------------
@@ -3296,6 +3381,30 @@ Example:
   foo.x @ .
   foo.y @ .
 #unpre} 1179676993
+
+
+#--------------------------------------------------
+# TextEditLibrary
+
+page TextEditLibrary {Toka has a hybrid library that provides a Pico/Nano style text editor.
+This is based on a simple text editor originally developed by Tom
+Novelli.
+
+<b>needs textedit</b>
+
+* <b>edit.load</b>
+** <i> $file -- </i>
+** Load a file ($file = filename) into the editor buffer
+* <b>edit.save</b>
+** <i> $file -- </i>
+** Save the editor buffer to a file ($file = filename) 
+* <b>edit.start</b>
+** <i> -- </i>
+** Begin editing the file in the editor buffer
+* <b>edit.redraw</b>
+** <i> -- </i>
+** Redraw the editor screen
+} 1184461056
 
 
 #--------------------------------------------------
@@ -4137,8 +4246,7 @@ words-within ( n- )  Display all words with a specified class #
 :quotes  ( - )       Display all named quotes
 :datas   ( - )       Display all named data items
 words    ( - )       Display all names in the dictionary
-#unpre
-} 1183333870
+#unpre} 1183333870
 
 
 # End of Notebook Database File

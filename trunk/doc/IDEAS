@@ -70,9 +70,6 @@ If anyone wants to help, I'm more than willing to accept :)
     - Little Smalltalk
     - Rx Core (for 32-bit systems only; this should be pretty easy)
     - 4p
-  - X11
-  - SDL (started)
-  - Allegro
 
 = Various
   - Export Source

@@ -14,11 +14,17 @@
 To help avoid memory leaks, the memory allocation provides a very simple
 form of <i>garbage collection</i>.
 </p>
-<p>The model is very simple. A list containing pointers to each allocation,
-and the corresponding size (in bytes) is kept. Each time memory is
-requested, the code adds the request to the list. When the list is filled,
-or if the allocation fails, the 16 oldest items are freed and all later
-entries are shifted down.
+<p>The model is very simple. Two lists are kept of pointers and corresponding
+sizes are kept. One list is used primarily for user-level allocations,
+and the other is only used by the primitives when they need to allocate
+memory.
+</p>
+<p>When either list is filled, <b>gc()</b> is called. This frees up to 64
+allocations from the internal list, and up to 32 allocations from the
+user list. Allocations are freed from oldest to newest, and the newest
+allocations in both lists (up to 32 in the user list and 64 in the
+internal list) will be kept. This prevents recent creations from falling
+out of scope until they can be used.
 </p>
 <p>Obviously there is also a way to mark entries as permanent. This is done
 by <b>keep</b> (the <b><a href="gcc.html">gc_keep()</a></b> function). This routine skims
@@ -27,16 +33,9 @@ a specific pointer. When found, that entry (and any subsequent
 allocations -- in Toka these will almost always be subquotes, strings,
 etc) are removed from the list.
 </p>
-<p>In actual practice things are just a little more complex. Toka actually
-maintains two lists; one for general allocations and a second one for
-internal use. The second one is only used for allocations that are known
-to be temporary. 
-</p>
-<p>In addition, the code will always leave the 16 newest allocations in each
-list alone to prevent them from falling out of scope.
-</p>
 <p>Information regarding the current status of the garbage collection
-subsystem can be obtained via <b>:gc</b> (the <b><a href="debugc.html">gc_info()</a></b> function).</p>
+subsystem can be obtained via <b>:stat</b> (the <b><a href="debugc.html">vm_info()</a></b> function).
+</p>
 
 <hr>
 
@@ -44,6 +43,6 @@ subsystem can be obtained via <b>:gc</b> (the <b><a href="debugc.html">gc_info()
 
 <hr>
 
-<p><i>Notebook exported on Sunday,  1 July 2007, 19:54:43 PM EDT</i></p>
+<p><i>Notebook exported on Saturday, 14 July 2007, 21:14:54 PM EDT</i></p>
 
 </body></html>

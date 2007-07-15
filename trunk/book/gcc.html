@@ -58,9 +58,10 @@ silently ignore it.
 
 gc()
 Free the oldest allocations on the garbage list.
-Will free up to 16 items from each list per
-call. If there are 16 or less items remaining,
-this code will leave the allocations alone.
+Will free up to 64 trash items and 32 items from the 
+user allocation list per call. This leaves the newest
+allocations on both lists alone, even with repeated 
+calls.
 
 toka_malloc()
 Allocate TOS bytes of memory. Returns a pointer to
@@ -81,6 +82,6 @@ malloc
 
 <hr>
 
-<p><i>Notebook exported on Sunday,  1 July 2007, 19:54:43 PM EDT</i></p>
+<p><i>Notebook exported on Saturday, 14 July 2007, 21:14:54 PM EDT</i></p>
 
 </body></html>
