@@ -44,6 +44,8 @@ sdl_event_size malloc is-data event
   SDL_QUIT [ bye ] case
   SDL_KEYDOWN [ ." A key was pressed: " event get-keysym dup ." ASCII=". ."  symbol=" emit cr ] case
   SDL_MOUSEMOTION [ event get-mouse-coords ." Mouse at x=" . ."  y=" . cr ] case
+  SDL_MOUSEBUTTONDOWN [ ." Mouse button was pressed\n" ] case
+  SDL_MOUSEBUTTONUP [ ." Mouse button was released\n" ] case
 
   TRUE
 ] keep whileTrue
