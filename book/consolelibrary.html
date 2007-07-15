@@ -13,22 +13,59 @@
 <p>This is the start of a library to make developing console-based
 applications easier.
 </p>
-<p>Provides:
+<p><b>needs console</b>
 </p>
 
 <ul>
-<li> xy
+<li> console_init
 
 <ul>
-<li> Position the cursor to any position on the screen
-<li> <i>x y --</i>
+<li> <i> -- n</i>
+<li> Initialize the console subsystem to key breaking mode
 </ul>
 
-<li> home
+<li> <b>console_cleanup</b>
 
 <ul>
-<li> Position the cursor to the top left corner of the screen
-<li> <i>--</i></ul>
+<li> <i> -- n</i>
+<li> Reset the console subsystem to the OS default
+</ul>
+
+<li> <b>getkey</b>
+
+<ul>
+<li> <i> -- n</i>
+<li> Read a key and return a single value code
+</ul>
+
+<li> <b>getchar</b>
+
+<ul>
+<li> <i> -- n</i>
+<li> Read a single byte from the keyboard; specials keys may
+   return multiple byte codes.
+</ul>
+
+<li> <b>console_dimensions</b>
+
+<ul>
+<li> <i> -- x y</i>
+<li> Return the rows and columns of the console window
+</ul>
+
+<li> <b>xy</b>
+
+<ul>
+<li> <i> x y -- </i>
+<li> Set the cursor to x,y
+</ul>
+
+<li> <b>home</b>
+
+<ul>
+<li> <i> -- </i>
+<li> Reset the cursor to the top left corner
+</ul>
 
 </ul>
 
@@ -40,6 +77,6 @@ applications easier.
 
 <hr>
 
-<p><i>Notebook exported on Sunday,  1 July 2007, 19:54:43 PM EDT</i></p>
+<p><i>Notebook exported on Saturday, 14 July 2007, 21:14:54 PM EDT</i></p>
 
 </body></html>
