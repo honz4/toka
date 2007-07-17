@@ -28,9 +28,7 @@ extern long stack[], rstack[], sp, rsp;
  ******************************************************/
 void lshift()
 {
-  long b = TOS, a = NOS;
-  DROP;
-  TOS = a << b;
+  NOS = NOS << TOS; DROP;
 }
 
 
@@ -43,9 +41,7 @@ void lshift()
  ******************************************************/
 void rshift()
 {
-  long a = NOS, b = TOS;
-  DROP;
-  TOS = a >> b;
+  NOS = NOS >> TOS; DROP;
 }
 
 
@@ -58,9 +54,7 @@ void rshift()
  ******************************************************/
 void and()
 {
-  long a = TOS, b = NOS;
-  DROP;
-  TOS = a & b;
+  NOS = TOS & NOS; DROP;
 }
 
 
@@ -73,9 +67,7 @@ void and()
  ******************************************************/
 void or()
 {
-  long a = TOS, b = NOS;
-  DROP;
-  TOS = a | b;
+  NOS = TOS | NOS; DROP;
 }
 
 
@@ -88,7 +80,5 @@ void or()
  ******************************************************/
 void xor()
 {
-  long a = TOS, b = NOS;
-  DROP;
-  TOS = a ^ b;
+  NOS = TOS ^ NOS; DROP;
 }

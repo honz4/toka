@@ -29,7 +29,7 @@ extern long stack[], sp;
  ******************************************************/
 void less_than()
 {
-  NOS = (TOS <= NOS) ?  0 : -1; DROP;
+  NOS = (TOS <= NOS) ?  FALSE : TRUE; DROP;
 }
 
 
@@ -43,7 +43,7 @@ void less_than()
  ******************************************************/
 void greater_than()
 {
-  NOS = (TOS >= NOS) ?  0 : -1; DROP;
+  NOS = (TOS >= NOS) ?  FALSE : TRUE; DROP;
 }
 
 
@@ -57,7 +57,7 @@ void greater_than()
  ******************************************************/
 void equals()
 {
-  NOS = (TOS != NOS) ? 0 : -1; DROP;
+  NOS = (TOS != NOS) ? FALSE : TRUE; DROP;
 }
 
 
@@ -71,5 +71,5 @@ void equals()
  ******************************************************/
 void not_equals()
 {
-  NOS = (TOS == NOS) ? 0 : -1; DROP;
+  NOS = (TOS == NOS) ? FALSE : TRUE; DROP;
 }
