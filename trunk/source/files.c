@@ -45,18 +45,12 @@ void file_open()
   
   switch (mode)
   {
-    case R:     f = fopen(s, "r");
-                break;
-    case RPLUS: f = fopen(s, "r+");
-                break;
-    case W:     f = fopen(s, "w");
-                break;
-    case WPLUS: f = fopen(s, "w+");
-                break;
-    case A:     f = fopen(s, "a");
-                break;
-    case APLUS: f = fopen(s, "a+");
-                break;
+    case R:     f = fopen(s, "r");  break;
+    case RPLUS: f = fopen(s, "r+"); break;
+    case W:     f = fopen(s, "w");  break;
+    case WPLUS: f = fopen(s, "w+"); break;
+    case A:     f = fopen(s, "a");  break;
+    case APLUS: f = fopen(s, "a+"); break;
   }
   if (!f)
     push(0);
