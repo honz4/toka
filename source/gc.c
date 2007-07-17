@@ -78,10 +78,7 @@ void *gc_alloc(long items, long size, long type)
     gc();
     memory = calloc((int)items, (int)size);
     if (memory == NULL)
-    {
-      printf("gc: out of memory; aborting.\n");
-      exit(1);
-    }
+      error(ERROR_GC_MALLOC_FAILED);
   }
 
   memset(memory, 0, size * items);
@@ -217,6 +214,5 @@ void gc()
  ******************************************************/
 void toka_malloc()
 {
-  long size = TOS;
-  TOS = (long)gc_alloc(size, sizeof(char), GC_MEM);
+  TOS = (long)gc_alloc(TOS, sizeof(char), GC_MEM);
 }

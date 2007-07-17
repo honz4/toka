@@ -198,7 +198,7 @@ void alt_iterate()
   rstack[rsp] = (long)ip;
   rsp++;
 
-  for (;count < bottom; count++)
+  for (; count < bottom; count++)
   {
     quote_counter = count;
     vm_run((Inst *)quote);
@@ -271,8 +271,7 @@ void recurse()
  ******************************************************/
 void qlit()
 {
-  sp++;
-  TOS = (long)*ip;
+  push((long)*ip);
   ip++;
 }
            

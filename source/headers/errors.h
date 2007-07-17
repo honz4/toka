@@ -7,3 +7,4 @@ void error(long code);
 #define ERROR_STACK                    5
 #define ERROR_CLOSE_STDIN              6
 #define ERROR_QUOTE_TOO_BIG            7
+#define ERROR_GC_MALLOC_FAILED         8

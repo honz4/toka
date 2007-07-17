@@ -28,8 +28,7 @@ extern long stack[], rstack[], sp, rsp;
  ******************************************************/
 void stack_dup()
 {
-  stack[sp+1] = TOS;
-  sp++;
+  push(TOS);
 }
 
 
@@ -97,6 +96,5 @@ void stack_from_r()
  ******************************************************/
 void stack_depth()
 {
-  long items = sp;
-  push(items);
+  push(sp);
 }
