@@ -86,6 +86,10 @@ void error(long code)
          printf("Maximum quote length exceeded!\n");
          fatal = TRUE;
          break;
+    case ERROR_GC_MALLOC_FAILED:
+         printf("Unable to allocate memory!\n");
+         fatal = TRUE;
+         break;
   }
   if (fatal == TRUE)
   {
