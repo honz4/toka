@@ -497,8 +497,7 @@ applications easier.
 ** Set the cursor to x,y
 * <b>home</b>
 ** <i> -- </i>
-** Reset the cursor to the top left corner
-} 1184462061
+** Reset the cursor to the top left corner} 1184462061
 
 
 #--------------------------------------------------
@@ -611,8 +610,7 @@ other aspects of the virtual machine.
 #pre
 :stack
 :stat
-#unpre
-} 1184460160
+#unpre} 1184460160
 
 
 #--------------------------------------------------
@@ -1197,8 +1195,7 @@ allocations -- in Toka these will almost always be subquotes, strings,
 etc) are removed from the list.
 
 Information regarding the current status of the garbage collection
-subsystem can be obtained via <b>:stat</b> (the <b>[vm_info()|debug.c]</b> function).
-} 1184460703
+subsystem can be obtained via <b>:stat</b> (the <b>[vm_info()|debug.c]</b> function).} 1184460703
 
 
 #--------------------------------------------------
@@ -1269,8 +1266,7 @@ the allocated memory.
 keep
 gc
 malloc
-#unpre
-} 1184460244
+#unpre} 1184460244
 
 
 #--------------------------------------------------
@@ -2045,7 +2041,7 @@ There are several ways to store and retrieve data values.
 #unpre
 
 "variable" defines a new word (parsing the new word name from the input
-stream, as with ":") and allocates enough data space for a number (e.g.
+stream, as with "is") and allocates enough data space for a number (e.g.
 32-bits). When you later execute the new word ("myvar" in this case), it
 pushes the address of that data area. The stack diagram for the new word
 is "( -- adr )". The initial contents of the data is undefined.
@@ -2127,24 +2123,40 @@ or
 
 When a constant created with <b>is-data</b> is used in a quote, the
 resulting code is a bit different than when the constant is created as a
-quote. Specifically, comparing:
+quote. Due to limitations in the decompiler, it is not possible to see
+this directly, but a manual breakdown may serve to illustrate:
 
+Compare this:
+ 
 #pre
  1234 is-data foo
  [ foo + ] is add-foo
- ` add-foo :see
 #unpre
 
-to 
+Which compiles down to:
+
+#pre
+ add-foo: lit 1234, call +, exit
+#unpre
+
+With this:
 
 #pre
  [ 1234 ] is foo
  [ foo + ] is add-foo
- ` add-foo :see
+#unpre
+
+Which compiles down to:
+
+#pre
+ foo:     lit 1234, exit
+ add-foo: call foo, call +, exit
 #unpre
 
 When using <b>is-data</b>, the resulting value is inserted directly into
-the quote. This saves the overhead of calling the function at runtime.} 1178750058
+the quote. This saves the overhead of calling the function at runtime,
+resulting in faster, more compact code.
+} 1184709170
 
 
 #--------------------------------------------------
@@ -2197,8 +2209,7 @@ project. To make use of this, use this at the start of a program:
 * [StringsLibrary]
 * [StructLibrary]
 * [TextEditLibrary]
-* [TimeLibrary]
-} 1184460817
+* [TimeLibrary]} 1184460817
 
 
 #--------------------------------------------------
@@ -2243,8 +2254,7 @@ The following limits can be overridden in <b>config.h</b>:
   calls to other quotes, string pointers, etc) in length in most cases.
 * The data stack can hold up to 100 cells.
 * The return stack can hold up to 1024 cells.
-* You can have up to 4096 named items
-} 1184460088
+* You can have up to 4096 named items} 1184460088
 
 
 #--------------------------------------------------
@@ -3025,8 +3035,7 @@ Higher-level wrappers:
 * <b>rgb:</b>
 ** <i> $hex -- value </i>
 ** Parse ahead and build a color code from the RRGGBB hex string that
-   follows.
-} 1184461850
+   follows.} 1184461850
 
 
 #--------------------------------------------------
@@ -3403,8 +3412,7 @@ Novelli.
 ** Begin editing the file in the editor buffer
 * <b>edit.redraw</b>
 ** <i> -- </i>
-** Redraw the editor screen
-} 1184461056
+** Redraw the editor screen} 1184461056
 
 
 #--------------------------------------------------

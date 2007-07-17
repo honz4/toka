@@ -20,7 +20,7 @@
 </pre>
 
 <p>"variable" defines a new word (parsing the new word name from the input
-stream, as with ":") and allocates enough data space for a number (e.g.
+stream, as with "is") and allocates enough data space for a number (e.g.
 32-bits). When you later execute the new word ("myvar" in this case), it
 pushes the address of that data area. The stack diagram for the new word
 is "( -- adr )". The initial contents of the data is undefined.
@@ -95,22 +95,36 @@ would write:
 
 <p>When a constant created with <b>is-data</b> is used in a quote, the
 resulting code is a bit different than when the constant is created as a
-quote. Specifically, comparing:
+quote. Due to limitations in the decompiler, it is not possible to see
+this directly, but a manual breakdown may serve to illustrate:
+</p>
+<p>Compare this:
 </p>
 <pre> 1234 is-data foo
  [ foo + ] is add-foo
- ` add-foo :see
 </pre>
 
-<p>to 
+<p>Which compiles down to:
+</p>
+<pre> add-foo: lit 1234, call +, exit
+</pre>
+
+<p>With this:
 </p>
 <pre> [ 1234 ] is foo
  [ foo + ] is add-foo
- ` add-foo :see
+</pre>
+
+<p>Which compiles down to:
+</p>
+<pre> foo:     lit 1234, exit
+ add-foo: call foo, call +, exit
 </pre>
 
 <p>When using <b>is-data</b>, the resulting value is inserted directly into
-the quote. This saves the overhead of calling the function at runtime.</p>
+the quote. This saves the overhead of calling the function at runtime,
+resulting in faster, more compact code.
+</p>
 
 <hr>
 
@@ -118,6 +132,6 @@ the quote. This saves the overhead of calling the function at runtime.</p>
 
 <hr>
 
-<p><i>Notebook exported on Saturday, 14 July 2007, 21:14:54 PM EDT</i></p>
+<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
 
 </body></html>
