@@ -24,7 +24,7 @@ install:
 	mkdir -p /usr/share/toka/library
 	mkdir -p /usr/share/toka/library/C
 	cp Libraries/* /usr/share/toka/library
-	cd C && make
+	cd C && make -kis
 	cp C/*.so /usr/share/toka/library/C
 
 clean:
