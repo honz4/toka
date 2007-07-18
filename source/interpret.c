@@ -46,7 +46,7 @@ extern long stack[], sp;
  *|G| compiler ( -a )      Variable holding the compiler
  *|G|                      state
  ******************************************************/
-long   compiler=0;
+long compiler=0;
 char *scratch;
 char *tib;
 
@@ -64,8 +64,10 @@ char *tib;
  ******************************************************/
 void count()
 {
-  char *s = (char *)TOS;
-  long length = strlen(s) + sizeof(char);
+  char *s;
+  long length;
+  s = (char *)TOS;
+  length = strlen(s) + sizeof(char);
   push(length);
 }
 
