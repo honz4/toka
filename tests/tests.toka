@@ -27,6 +27,7 @@ include data
 include parser
 include dictionary
 include array
+include bits
 include scope
 include colors
 
