@@ -1,0 +1,5 @@
+i: Parser
+t:   >number
+   [ 10 parse >number ] is #:
+   #: 10
+   -1 try 10 try

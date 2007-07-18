@@ -39,27 +39,28 @@ default: clean toka
 
 toka:
 	$(CC) -o toka source/*.c $(CFLAGS) $(LDFLAGS) $(PLATFORM) $(OTHER)
-# ==============================================
+
 clean:
 	rm -f `find . | grep \~ `
 	rm -f source/*.o source/a.out
 	rm -f toka test.log
-# ==============================================
+
 install: toka
 	cp toka /usr/bin
 	mkdir -p /usr/share/toka
 	cp bootstrap.toka /usr/share/toka
 	chmod +x examples/*
-# ==============================================
+	cd tests && toka tests.toka >../test.log
+
 remove:
 	rm -rf /usr/bin/toka
 	rm -rf /usr/share/toka
-# ==============================================
+
+.PHONY : tests
 tests:
-	cd examples && toka tests.toka >../test.log
-# ==============================================
+	cd tests && toka tests.toka >../test.log
+
 docs:
 	chmod +x scripts/*
 	cd source && ../scripts/tokadoc
 	cd source && mv FUNCTIONS GLOSSARY ../doc
-# ==============================================
