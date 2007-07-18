@@ -19,16 +19,16 @@ i: to charles.childers@gmail.com with a subject
 i: of "[toka] bug report: failed tests"
 i: ----------------------------------------------
 
-include tests/stack
-include tests/quotes
-include tests/math
-include tests/conditionals
-include tests/data
-include tests/parser
-include tests/dictionary
-include tests/array
-include tests/scope
-include tests/colors
+include stack
+include quotes
+include math
+include conditionals
+include data
+include parser
+include dictionary
+include array
+include scope
+include colors
 
 cr
 i: ----------------------------------------------
