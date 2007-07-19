@@ -14,5 +14,5 @@ t:  Recursion
    5 count2
    1 try  2 try  3 try  4 try  5 try
 t:  Loops
-   0 [ 1+ dup 10 = ] whileFalse 10 try
-   0 [ 1+ dup 10 <> ] whileTrue 10 try
+   0 [ 1 + dup 10 = ] whileFalse 10 try
+   0 [ 1 + dup 10 <> ] whileTrue 10 try

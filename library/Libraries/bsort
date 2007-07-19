@@ -6,11 +6,11 @@ value changed
   to count to array
   count
   [ count
-    [ i array get-element i 1+ array get-element 2dup >
-      [ i array put-element  i 1+ array put-element ]
+    [ i array get-element i 1 + array get-element 2dup >
+      [ i array put-element  i 1 + array put-element ]
       [ 2drop ] ifTrueFalse
     ] +iterate
-    count 1- to count
+    count 1 - to count
   ] +iterate
 ] is bsort
 
