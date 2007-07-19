@@ -1,5 +1,5 @@
 i: Scope
-t: { }
+t:  {  }
   100 is-data foo
   {
     200 is-data foo

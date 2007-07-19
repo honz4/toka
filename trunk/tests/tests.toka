@@ -1,23 +1,17 @@
 #! /usr/bin/toka
 
+[ 64 [ char: - emit ] iterate ] is ---
+
 [ = [ ." \nFailed\n" cr bye ] ifFalse ] is try
-[ cr
-  " ----------------------------------------------" type cr
-  include
-] is include
+[ cr --- cr include ] is include
 
 [ lnparse type cr ] is i:
 [ lnparse type SPACE emit ] is t:
 
 i: TESTS BEGIN
-i: ----------------------------------------------
-i: Unless otherwise noted, all tests should be
-i: silent. 
-cr
-i: If any of these fail, please email the results
-i: to charles.childers@gmail.com with a subject
-i: of "[toka] bug report: failed tests"
-i: ----------------------------------------------
+--- cr
+i: If any of these fail, please email the results to charles.childers@gmail.com 
+--- cr
 
 include stack
 include quotes
@@ -32,7 +26,7 @@ include scope
 include colors
 
 cr
-i: ----------------------------------------------
+--- cr
 i: This test has also made use of the following
 i: words:
 i: 
@@ -45,6 +39,6 @@ i:
 i: By reaching this point we have reasonible 
 i: confidence that all of these words operate as
 i: expected.
-i: ----------------------------------------------
+--- cr
 i: COMPLETED
 bye
