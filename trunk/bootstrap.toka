@@ -108,8 +108,6 @@
 #! ---------------------------------------
 #! Math
 #! ---------------------------------------
-[ 1 + ] is 1+
-[ 1 - ] is 1-
 [ -1 * ] is negate
 [ /mod nip ] is /
 [ /mod drop ] is mod
@@ -193,11 +191,11 @@
 #! ---------------------------------------
 4 cells is-array <list>
 
-[ last @ <list> @ 1+ <list> put-element
+[ last @ <list> @ 1 + <list> put-element
   1 <list> +!
 ] is {
 [ 1 <list> -!
-  <list> @ 1+ <list> get-element last !
+  <list> @ 1 + <list> get-element last !
 ] is }
 
 
