@@ -226,7 +226,7 @@ functions directly to Toka.
 = Functions Provided =
 
 #pre
-forth_class()
+word_class()
 If compiling, compile the xt into the current
 quote. If interpreting, call the word.
 
@@ -246,7 +246,7 @@ Handler for quotes; this takes two cells, one
 which is a call to this function, the other is
 the pointer to the quote to invoke.
 
-quote_forth_class()
+quote_word_class()
 Perform data_class() semantics, then, if 
 compiling, compile a call to invoke(). Otherwise,
 invoke() is called with the xt on TOS.
@@ -254,7 +254,18 @@ invoke() is called with the xt on TOS.
 
 = Primitives Provided =
 
-<i>None</i>} 1177736547
+<i>None</i>
+
+= Related Words =
+
+#pre
+.PRIM_WORD
+.PRIM_MACRO
+.DATA
+.WORD
+.MACRO
+#unpre
+} 1184886177
 
 
 #--------------------------------------------------
@@ -542,6 +553,10 @@ make_literal()
 Compile a call to lit() and then place TOS into
 the next memory location.
 
+make_string_literal()
+Compile a call to string_lit() and then place TOS 
+into the next memory location.
+
 fetch()
 Fetch the value in the memory location pointed to
 by TOS.
@@ -582,7 +597,9 @@ c@
 !
 @
 #
-#unpre} 1175294055
+#$
+#unpre
+} 1184886272
 
 
 #--------------------------------------------------
@@ -655,8 +672,8 @@ search for a specific entry.
 
 #pre
 Variables:
-  ENTRY dictionary[4096];
-  Holds the dictionary entries, up to 4096
+  ENTRY dictionary[MAX_DICTIONARY_ENTRIES];
+  Holds the dictionary entries, up to MAX_DICTIONARY_ENTRIES
 
   long last
   A pointer to the most recent dictionary entry
@@ -715,7 +732,8 @@ is-macro
 :xt
 :class
 last
-#unpre} 1183334060
+#unpre
+} 1184886349
 
 
 #--------------------------------------------------
@@ -2123,25 +2141,39 @@ or
 
 When a constant created with <b>is-data</b> is used in a quote, the
 resulting code is a bit different than when the constant is created as a
-quote. Specifically, comparing:
+quote. Due to limitations in the decompiler, it is not possible to see
+this directly, but a manual breakdown may serve to illustrate:
 
+Compare this:
+ 
 #pre
  1234 is-data foo
  [ foo + ] is add-foo
- ` add-foo :see
 #unpre
 
-to 
+Which compiles down to:
+
+#pre
+ add-foo: lit 1234, call +, exit
+#unpre
+
+With this:
 
 #pre
  [ 1234 ] is foo
  [ foo + ] is add-foo
- ` add-foo :see
+#unpre
+
+Which compiles down to:
+
+#pre
+ foo:     lit 1234, exit
+ add-foo: call foo, call +, exit
 #unpre
 
 When using <b>is-data</b>, the resulting value is inserted directly into
-the quote. This saves the overhead of calling the function at runtime.
-} 1184708958
+the quote. This saves the overhead of calling the function at runtime,
+resulting in faster, more compact code.} 1184709170
 
 
 #--------------------------------------------------
@@ -2516,13 +2548,21 @@ Variables:
   When ON (TRUE), system parsing words will parse. When
   OFF (FALSE), they will take a string from the stack.
 
+  long escapes
+  When ON (TRUE), escape sequences will be handled
+  by the parser. When OFF (FALSE), they will be ignored.
+
+  long parse_ended
+  A helper for the display_prompt, to suppress it while
+  interpreting each word.
+
 to_number()
 Attempt to convert a string (on TOS) to a number.
 This accepts a format of:
   [-]number
 If successful, it leaves the number and a flag of
--1 on the stack. Otherwise, it leaves the original
-string, and a flag of 0.
+TRUE on the stack. Otherwise, it leaves the original
+string, and a flag of FALSE.
 
 parse()
 Parse the input buffer until the character passed
@@ -2562,7 +2602,8 @@ parse
 include
 needs
 end.
-#unpre} 1178016664
+#unpre
+} 1184886532
 
 
 #--------------------------------------------------
@@ -3929,13 +3970,19 @@ Push a number to the stack.
 lit()
 Push the value in the following memory location
 to the stack
+
+string_lit()
+Push the pointer in the following memory location
+to the stack. This is a helper function for 
+strings.
 #unpre
 
 = Primitives Provided =
 
 #pre
 heap
-#unpre} 1175294932
+#unpre
+} 1184886760
 
 
 #--------------------------------------------------
@@ -4008,13 +4055,15 @@ type     ( a- )      Display a string
 bye      ( - )       Quit Toka
 #        ( n- )      Push the following cell to
                      the stack.
+$#       ( n- )      Push the following cell to
+                     the stack.
 @        ( a-n )     Fetch the value in memory
                      location 'a'
 !        ( na- )     Store 'n' to memory location
                      'a'
-c@       ( a-n )     Fetch a byte from memory
+c@        ( a-n )    Fetch a byte from memory
                      location 'a'
-c!       ( na- )     Store byte 'n' to memory
+c!        ( na- )    Store byte 'n' to memory
                      location 'a'
 copy     ( sdc- )    Copy 'c' bytes from 's' to
                      'd'
@@ -4023,8 +4072,7 @@ char-size ( -n )     Return the size of a char
 :stack   ( - )       Display all values on the
                      data stack
 :stat    (  -  )     Display information about
-                     Toka's memory use, stacks,
-                     and dictionary.
+                     the virtual machine status
 :see     (  "- )     Decompile the specified quote
 is       ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form
@@ -4035,9 +4083,12 @@ is-data  ( a"- )     Attach a name to data memory
 `        ( "-a )     Return a quote corresponding
                      to the specified word.
          ( $-a )     Non-parsing form
-:name    ( n-$ )     Return the name of a dictionary entry
-:xt      ( n-a )     Return the address of a dictionary entry
-:class   ( n-n )     Return the class # of a dictionary entry
+:name    ( n-$ )     Return the name for a 
+                     dictionary entry
+:xt      ( n-$ )     Return the address of a 
+                     dictionary entry
+:class   ( n-$ )     Return the class # for a 
+                     dictionary entry
 from     ( "- )      Set the library to import from
          ( $- )      Non-parsing form
 import   ( n"- )     Import a function taking 'n'
@@ -4087,19 +4138,20 @@ escape-sequences ( -a)  Variable determining if
 parse    ( d-a )     Parse until the character 
                      represented by 'd' is found.
                      Return a pointer to the string
-include  ( "- )      Attempt to open a file and
+include   ( "- )     Attempt to open a file and
                      add it to the input stack.
-         ( $- )      Non-parsing form
-needs    ( "- )      Attempt to include a file
+          ( $- )     Non-parsing form
+needs     ( "- )     Attempt to include a file
                      from the library (normally
                      /usr/share/toka/library)
-         ( $- )      Non-parsing form
-end.     ( - )       Remove the current file from
+          ( $- )     Non-parsing form
+end.      ( - )      Remove the current file from
                      the input stack
+prompt   ( -a )      prompt display variable
 [        ( -a )      Create a new quote
 ]        ( - )       Close an open quote
 invoke   ( a- )      Execute a quote
-compile  ( a- )      Compile the code needed to call 'a'
+compile  ( a- )      Compile a call to the quote
 iterate  ( na- )     Execute a quote 'n' times
 +iterate ( na- )     Execute a quote 'n' times
 ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
@@ -4111,15 +4163,15 @@ whileTrue  ( a- )    Execute quote. If the quote
                      returns TRUE, execute again.
                      otherwise end the cycle.
 whileFalse ( a- )    Execute quote. If the quote
-                     returns FALSE, execute again.
+                     returns TRUE, execute again.
                      otherwise end the cycle.
 dup      ( n-nn )    Duplicate the TOS
 drop     ( n- )      Drop the TOS
 swap     ( ab-ba )   Exchange the TOS and NOS
 >r       ( n- )      Push TOS to return stack, DROP
 r>       ( -n )      Pop TORS to the data stack
-depth    ( -n )      Return the number of items
-                     on the stack
+depth    ( -n )      Return the number of items on 
+                     the stack
 #unpre
 
 = Bootstrap =
@@ -4156,26 +4208,26 @@ char:    ( "-c )     Parse ahead and return one character
 cr       ( - )       Display a CR character
 space    ( - )       Display a space
 tab      ( - )       Display a tab
-."       ( "- )      Parse to the next ", display the string.
-clear    ( - )       Clear the screen
-normal   ( - )       Set the colors back to the default
-bold     ( - )       Set the bold attribute for the foreground color
-black    ( - )       Set the foreground color to black
-red      ( - )       Set the foreground color to red
-green    ( - )       Set the foreground color to green
-yellow   ( - )       Set the foreground color to yellow
-blue     ( - )       Set the foreground color to blue
-magenta  ( - )       Set the foreground color to magenta
-cyan     ( - )       Set the foreground color to cyan
-white    ( - )       Set the foreground color to white
-onBlack  ( - )       Set the background color to black
-onRed    ( - )       Set the background color to red
-onGreen  ( - )       Set the background color to green
-onYellow ( - )       Set the background color to yellow
-onBlue   ( - )       Set the background color to blue
-onMagenta( - )       Set the background color to magenta
-onCyan   ( - )       Set the background color to cyan
-onWhite  ( - )       Set the background color to white
+."       ( "- )      Parse to the next <b>"</b> and display the string.
+clear    ( - )       VT100: Clear the screen
+normal   ( - )       VT100: Set the colors back to the default
+bold     ( - )       VT100: Set the bold attribute for the foreground color
+black    ( - )       VT100: Set the foreground color to black
+red      ( - )       VT100: Set the foreground color to red
+green    ( - )       VT100: Set the foreground color to green
+yellow   ( - )       VT100: Set the foreground color to yellow
+blue     ( - )       VT100: Set the foreground color to blue
+magenta  ( - )       VT100: Set the foreground color to magenta
+cyan     ( - )       VT100: Set the foreground color to cyan
+white    ( - )       VT100: Set the foreground color to white
+onBlack  ( - )       VT100: Set the background color to black
+onRed    ( - )       VT100: Set the background color to red
+onGreen  ( - )       VT100: Set the background color to green
+onYellow ( - )       VT100: Set the background color to yellow
+onBlue   ( - )       VT100: Set the background color to blue
+onMagenta( - )       VT100: Set the background color to magenta
+onCyan   ( - )       VT100: Set the background color to cyan
+onWhite  ( - )       VT100: Set the background color to white
 nip      ( xy-y )    Remove the second item on the stack
 rot      ( abc-bca ) Rotate top three values on stack
 -rot     ( abc-acb ) Rotate top three values on stack twice
@@ -4185,8 +4237,6 @@ tuck     ( xy-yxy )  Put a copy of TOS under NOS
 2drop    ( xy- )     Drop TOS and NOS
 reset    ( *- )      Drop all items on the stack
 r@       ( -x )      Get a copy of the top item on the return stack
-1+       ( x-y )     Increase value on stack by 1
-1-       ( x-y )     Decrease value on stack by 1
 negate   ( x-y )     Invert the sign of TOS
 /        ( xy-z )    Divide two numbers
 mod      ( xy-z )    Divide two numbers and get remainder
@@ -4239,7 +4289,7 @@ words-within ( n- )  Display all words with a specified class #
 :quotes  ( - )       Display all named quotes
 :datas   ( - )       Display all named data items
 words    ( - )       Display all names in the dictionary
-#unpre} 1183333870
+#unpre} 1184885262
 
 
 # End of Notebook Database File

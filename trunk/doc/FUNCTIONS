@@ -209,6 +209,14 @@ return_name()
 Return a pointer to the name and the starting 
 address of a specific dictionary entry.
 
+return_xt()
+Return a pointer to the execution token (address)
+of a specific dictionary entry.
+
+return_class()
+Return the class id number of a specific dictionary
+entry.
+
 
 FILE: errors.c
 
