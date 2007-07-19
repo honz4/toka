@@ -223,6 +223,14 @@ void return_quote()
  *|F| Return a pointer to the name and the starting 
  *|F| address of a specific dictionary entry.
  *|F|
+ *|F| return_xt()
+ *|F| Return a pointer to the execution token (address)
+ *|F| of a specific dictionary entry.
+ *|F|
+ *|F| return_class()
+ *|F| Return the class id number of a specific dictionary
+ *|F| entry.
+ *|F|
  ******************************************************/
 void return_name()
 {
