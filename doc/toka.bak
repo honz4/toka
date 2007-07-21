@@ -257,8 +257,7 @@ invoke() is called with the xt on TOS.
 .DATA       ( -n )   Class # for data elements
 .WORD       ( -n )   Class # for quote words
 .MACRO      ( -n )   Class # for quote macros
-#unpre
-} 1185042562
+#unpre} 1185042562
 
 
 #--------------------------------------------------
@@ -298,8 +297,7 @@ arg_list[]. Also sets arg_count.
 #args    (  -n )     Return the number of arguments
 arglist  (  -a )     Return a pointer to the 
                      argument list.
-#unpre
-} 1185042585
+#unpre} 1185042585
 
 
 #--------------------------------------------------
@@ -419,7 +417,23 @@ Compare TOS and NOS, return a flag.
 <>       ( ab-f )    Compare 'a' and 'b', return
                      a flag
 #unpre
-} 1185042616
+
+= Related Words =
+
+#pre
+FALSE    ( -f )      Value returned for FALSE
+TRUE     ( -f )      Value returned for TRUE
+ifTrue   ( fq- )     Execute quote ('q') if flag ('f') is TRUE
+ifFalse  ( fq- )     Execute quote ('q') if flag ('f') is FALSE
+ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
+                     true, 'b' if false.
+whileTrue  ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+whileFalse ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+#unpre} 1185044576
 
 
 #--------------------------------------------------
@@ -505,8 +519,7 @@ onBlue   ( - )       VT100: Set the background color to blue
 onMagenta( - )       VT100: Set the background color to magenta
 onCyan   ( - )       VT100: Set the background color to cyan
 onWhite  ( - )       VT100: Set the background color to white
-#unpre
-} 1185043335
+#unpre} 1185043335
 
 
 #--------------------------------------------------
@@ -636,7 +649,37 @@ copy     ( sdc- )    Copy 'c' bytes from 's' to
 cell-size ( -n )     Return the size of a cell
 char-size ( -n )     Return the size of a char
 #unpre
-} 1185042682
+
+= Related Words =
+
+#pre
+>char    ( n-c )     Convert the value on TOS to a single character
+char:    ( "-c )     Parse ahead and return one character
+"        ( "-$ )     Parse until " is encountered and return a string
+chars    ( x-y )     Multiply TOS by char-size. Useful w/arrays
+char+    ( x-y )     Increase TOS by char-size
+char-    ( x-y )     Decrease TOS by char-size
+cells    ( x-y )     Multiply TOS by cell-size. Useful w/arrays
+cell+    ( x-y )     Increase TOS by cell-size
+cell-    ( x-y )     Decrease TOS by cell-size
++!       ( xa- )     Add 'x' to the value in address 'a'
+-!       ( xa- )     Subtract 'x' from the value in address 'a'
+on       ( a- )      Set a variable to TRUE
+off      ( a- )      Set a variable to FALSE
+toggle   ( a- )      Toggle a variable between TRUE and FALSE
+variable ( "- )      Create a variable
+variable| ( "- )     Create multiple variables
+is-array          ( n"- )   Create an array of size 'n'
+get-element       ( ia-n )  Get element 'i' from array 'a'
+put-element       ( nia- )  Put value 'n' into element 'i' of array 'a'
+get-char-element  ( ia-n )  Get char-size element 'i' from 
+                            array 'a'
+put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of 
+                            array 'a'
+value    ( "- )      Create a new value
+to       ( - )       Set the value of a value
+value|   ( "- )      Create multiple values
+#unpre} 1185043649
 
 
 #--------------------------------------------------
@@ -676,8 +719,7 @@ words-within ( n- )  Display all words with a specified class #
 :quotes  ( - )       Display all named quotes
 :datas   ( - )       Display all named data items
 words    ( - )       Display all names in the dictionary
-#unpre
-} 1185043301
+#unpre} 1185043301
 
 
 #--------------------------------------------------
@@ -707,8 +749,7 @@ Decompile the quote on the stack.
 
 #pre
 :see     ( "- )      Decompile the specified quote
-#unpre
-} 1185042731
+#unpre} 1185042731
 
 
 #--------------------------------------------------
@@ -793,7 +834,14 @@ is-data  ( a"- )     Attach a name to data memory
 last     ( - a )     Variable holding the number of
                      the most recent dictionary entry 
 #unpre
-} 1185042823
+
+= Related Words =
+
+#pre
+<list>   ( -a )      Stores a list of pointers used by { and }
+{        ( - )       Start a scoped area
+}        ( - )       End a scoped area
+#unpre} 1185044459
 
 
 #--------------------------------------------------
@@ -828,7 +876,20 @@ currently open library.
 This error arises when Toka detects a problem with either the data or
 return stack. It can be either fatal (when the problem is with the return
 stack) or nonfatal (when the problem is with the data stack). When
-nonfatal, Toka resets the data stack to an empty state.} 1179083037
+nonfatal, Toka resets the data stack to an empty state.
+
+= E6 =
+Fatal. This error arises when the stdin device is closed unexpectedly.
+
+= E7 =
+Fatal. This error arises when a quote exceeds the maximum size permitted.
+See [Limitations].
+
+= E8 = 
+Fatal. This error arises when a malloc fails. Normally you shouldn't see
+this unless you are dealing with a bad malloc/free implementation or very
+large sets of data.
+} 1185045179
 
 
 #--------------------------------------------------
@@ -1048,8 +1109,7 @@ import   ( n"- )     Import a function taking 'n'
          ( n$- )     Non-parsing form
 as       ( "- )      Rename the last defined word
          ( $-  )     Non-parsing form
-#unpre
-} 1185042851
+#unpre} 1185042851
 
 
 #--------------------------------------------------
@@ -1171,8 +1231,7 @@ START       ( -x )   Mode for file.seek
 CURRENT     ( -x )   Mode for file.seek
 END         ( -x )   Mode for file.seek
 file.slurp  ( $-a )  Read a file into a dynamically allocated buffer 
-#unpre
-} 1185042945
+#unpre} 1185042945
 
 
 #--------------------------------------------------
@@ -1376,8 +1435,7 @@ keep     ( a-a )     Mark quotes/allocated memory
                      as permanent.
 gc       ( - )       Clean the garbage
 malloc   ( n-a )     Allocate 'n' bytes of memory
-#unpre
-} 1185042971
+#unpre} 1185042971
 
 
 #--------------------------------------------------
@@ -1536,8 +1594,7 @@ compiler ( -a )      Variable holding the compiler
                      state
 count    ( a-ac )    Return an address/count pair
                      for a string
-#unpre
-} 1185043001
+#unpre} 1185043001
 
 
 #--------------------------------------------------
@@ -2484,8 +2541,7 @@ negate   ( x-y )     Invert the sign of TOS
 mod      ( xy-z )    Divide two numbers and get remainder
 not      ( x-y )     Invert the value 'x'
 */       ( abc-d )   (a*b)/c
-#unpre
-} 1185043038
+#unpre} 1185043038
 
 
 #--------------------------------------------------
@@ -2590,15 +2646,15 @@ character is encountered. <b>get_token()</b> also leaves a pointer to the
 resulting token on the stack. A Toka-level wrapper, <b>parse()</b>, makes
 use of <b>get_token()</b>.
 
-When parsing, a number of <i>escape sequences</i> are recognized. These
+When parsing, a number of <i>escape sequences</i> can be recognized. These
 are listed below:
 
 #pre
   \n
-  Embed a carriage return (ASCII 10) into the token
+  Embed a line feed (ASCII 10) into the token
  
   \r
-  Embed a line feed (ASCII 13) into the token
+  Embed a carriage return (ASCII 13) into the token
 
   \^
   Embed ASCII 27 into the token. Useful with VT100/ANSI terminal
@@ -2627,7 +2683,7 @@ Processing of escape sequences can be enabled or disabled by turning the
 * If the delimiter = 10, <b>get_token()</b> will also break on
   encountering ASCII 13.
 * If the delimiter = 32, <b>get_token()</b> will also break on
-  encountering ASCII 10 or ASCII 13.} 1177990380
+  encountering ASCII 10 or ASCII 13.} 1185044710
 
 
 #--------------------------------------------------
@@ -2723,9 +2779,21 @@ needs     ( "- )     Attempt to include a file
           ( $- )     Non-parsing form
 end.      ( - )      Remove the current file from
                      the input stack
-prompt    ( -a )      prompt display variable
+prompt    ( -a )     prompt display variable
 #unpre
-} 1185043126
+
+= Related Words =
+
+#pre
+wsparse  ( -a )      Parse until a SPACE is encountered
+lnparse  ( -a )      Parse to the end of the line,
+                     leave the resulting string on the
+                     stack.
+hex      ( - )       Set the base to hexadecimal (16)
+decimal  ( - )       Set the base to decimal (10)
+binary   ( - )       Set the base to binary (2)
+octal    ( - )       Set the base to octal (8)
+#unpre} 1185044631
 
 
 #--------------------------------------------------
@@ -2923,8 +2991,7 @@ whileTrue  ( a- )    Execute quote. If the quote
 whileFalse ( a- )    Execute quote. If the quote
                      returns TRUE, execute again.
                      otherwise end the cycle.
-#unpre
-} 1185043166
+#unpre} 1185043166
 
 
 #--------------------------------------------------
@@ -3410,8 +3477,7 @@ tuck     ( xy-yxy )  Put a copy of TOS under NOS
 2drop    ( xy- )     Drop TOS and NOS
 reset    ( *- )      Drop all items on the stack
 r@       ( -x )      Get a copy of the top item on the return stack
-#unpre
-} 1185043213
+#unpre} 1185043213
 
 
 #--------------------------------------------------
@@ -3665,13 +3731,14 @@ Setup and call the interpreter.
 
 #pre
 main()
-The main entry point into Toka. Sets up the
+The main entry point into Toka. Calls
+the functions needed to setup the initial
 dictionary and calls interpret().
 #unpre
 
 = Primitives Provided =
 
-<i>None</i>} 1175294848
+<i>None</i>} 1185044771
 
 
 #--------------------------------------------------
@@ -3856,10 +3923,10 @@ proc clickToContinue {name} {
 #--------------------------------------------------
 # UsingTheStack
 
-page UsingTheStack {he language makes use of a stack to pass data between functions (called
-<i>quotes</i> in toka). Imagine a stack of blocks with numbers on them.
-You can add or remove numbers from the top of the stack. You can also
-rearrange the order of the numbers.
+page UsingTheStack {The Toka language makes use of a stack to pass data between functions
+(called <i>quotes</i> in toka). Imagine a stack of blocks with numbers on
+them. You can add or remove numbers from the top of the stack. You can
+also rearrange the order of the numbers.
 
 The stack is initially empty. Let's start by putting some numbers on the
 stack. Type in:
@@ -4014,7 +4081,8 @@ parentheses is just a comment and need not be entered.
   2dup ( xy-xyxy )
   nip ( xyz-xz )
   tuck ( xy-yxy )
-#unpre} 1177452284
+#unpre
+} 1185045473
 
 
 #--------------------------------------------------
@@ -4128,8 +4196,7 @@ strings.
 #pre
 heap     ( -a )      Variable pointing to the top
                      of the local heap
-#unpre
-} 1185043250
+#unpre} 1185043250
 
 
 #--------------------------------------------------
@@ -4221,6 +4288,9 @@ char-size ( -n )     Return the size of a char
 :stat    (  -  )     Display information about
                      the virtual machine status
 :see     (  "- )     Decompile the specified quote
+last     ( -a )      Variable holding a pointer to
+                     the most recent dictionary entry
+                     number
 is       ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form
 is-macro ( a"- )     Attach a name to a quote
@@ -4436,7 +4506,8 @@ words-within ( n- )  Display all words with a specified class #
 :quotes  ( - )       Display all named quotes
 :datas   ( - )       Display all named data items
 words    ( - )       Display all names in the dictionary
-#unpre} 1184885262
+#unpre
+} 1185044931
 
 
 # End of Notebook Database File
