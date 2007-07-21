@@ -151,22 +151,15 @@ process using Make:
   make
 #unpre
 
-The build system should be able to detect the need for libdl.so (Linux,
-BeOS) or whether dlopen() and dlsym() are provided by libc.so (BSD). You
-can also build a version without the [FFI], but this is not recommended
-as it reduces the usefulness of Toka significantly. This can be done via:
-
-#pre
-  rm source/ffi
-  make CFLAGS=-DNOFFI
-#unpre
+If you experience problems, check the PLATFORM line in the Makefile and
+add any OS-specific flags your system may need.
 
 As a final note, some pieces of documentation can be updated automatically
 as well:
 
 #pre
   make docs
-#unpre} 1177366685
+#unpre} 1185041836
 
 
 #--------------------------------------------------
@@ -259,13 +252,13 @@ invoke() is called with the xt on TOS.
 = Related Words =
 
 #pre
-.PRIM_WORD
-.PRIM_MACRO
-.DATA
-.WORD
-.MACRO
+.PRIM_WORD  ( -n )   Class # for primitive words
+.PRIM_MACRO ( -n )   Class # for primitive macros
+.DATA       ( -n )   Class # for data elements
+.WORD       ( -n )   Class # for quote words
+.MACRO      ( -n )   Class # for quote macros
 #unpre
-} 1184886177
+} 1185042562
 
 
 #--------------------------------------------------
@@ -302,9 +295,11 @@ arg_list[]. Also sets arg_count.
 = Primitives Provided =
 
 #pre
-#args
-arglist
-#unpre} 1177367383
+#args    (  -n )     Return the number of arguments
+arglist  (  -a )     Return a pointer to the 
+                     argument list.
+#unpre
+} 1185042585
 
 
 #--------------------------------------------------
@@ -415,11 +410,16 @@ Compare TOS and NOS, return a flag.
 = Primitives Provided =
 
 #pre
-<
->
-=
-<>
-#unpre} 1175293903
+<        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+>        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+=        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+<>       ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+#unpre
+} 1185042616
 
 
 #--------------------------------------------------
@@ -472,11 +472,41 @@ Quit Toka
 = Primitives Provided =
 
 #pre
-.
-emit
-type
-bye
-#unpre} 1175293981
+.        ( n- )      Display the TOS
+emit     ( c- )      Display the ASCII character
+                     for TOS
+type     ( a- )      Display a string
+bye      ( - )       Quit Toka
+#unpre
+
+= Related Words =
+
+#pre
+cr       ( - )       Display a CR character
+space    ( - )       Display a space
+tab      ( - )       Display a tab
+."       ( "- )      Parse to the next <b>"</b> and display the string.
+clear    ( - )       VT100: Clear the screen
+normal   ( - )       VT100: Set the colors back to the default
+bold     ( - )       VT100: Set the bold attribute for the foreground color
+black    ( - )       VT100: Set the foreground color to black
+red      ( - )       VT100: Set the foreground color to red
+green    ( - )       VT100: Set the foreground color to green
+yellow   ( - )       VT100: Set the foreground color to yellow
+blue     ( - )       VT100: Set the foreground color to blue
+magenta  ( - )       VT100: Set the foreground color to magenta
+cyan     ( - )       VT100: Set the foreground color to cyan
+white    ( - )       VT100: Set the foreground color to white
+onBlack  ( - )       VT100: Set the background color to black
+onRed    ( - )       VT100: Set the background color to red
+onGreen  ( - )       VT100: Set the background color to green
+onYellow ( - )       VT100: Set the background color to yellow
+onBlue   ( - )       VT100: Set the background color to blue
+onMagenta( - )       VT100: Set the background color to magenta
+onCyan   ( - )       VT100: Set the background color to cyan
+onWhite  ( - )       VT100: Set the background color to white
+#unpre
+} 1185043335
 
 
 #--------------------------------------------------
@@ -589,17 +619,55 @@ Push the size of a char to the stack
 = Primitives Provided =
 
 #pre
-char-size
-cell-size
-copy
-c!
-c@
-!
-@
-#
-#$
+#        ( n- )      Push the following cell to
+                     the stack.
+$#       ( n- )      Push the following cell to
+                     the stack.
+@        ( a-n )     Fetch the value in memory
+                     location 'a'
+!        ( na- )     Store 'n' to memory location
+                     'a'
+c@        ( a-n )    Fetch a byte from memory
+                     location 'a'
+c!        ( na- )    Store byte 'n' to memory
+                     location 'a'
+copy     ( sdc- )    Copy 'c' bytes from 's' to
+                     'd'
+cell-size ( -n )     Return the size of a cell
+char-size ( -n )     Return the size of a char
 #unpre
-} 1184886272
+
+= Related Words =
+
+#pre
+>char    ( n-c )     Convert the value on TOS to a single character
+char:    ( "-c )     Parse ahead and return one character
+"        ( "-$ )     Parse until " is encountered and return a string
+chars    ( x-y )     Multiply TOS by char-size. Useful w/arrays
+char+    ( x-y )     Increase TOS by char-size
+char-    ( x-y )     Decrease TOS by char-size
+cells    ( x-y )     Multiply TOS by cell-size. Useful w/arrays
+cell+    ( x-y )     Increase TOS by cell-size
+cell-    ( x-y )     Decrease TOS by cell-size
++!       ( xa- )     Add 'x' to the value in address 'a'
+-!       ( xa- )     Subtract 'x' from the value in address 'a'
+on       ( a- )      Set a variable to TRUE
+off      ( a- )      Set a variable to FALSE
+toggle   ( a- )      Toggle a variable between TRUE and FALSE
+variable ( "- )      Create a variable
+variable| ( "- )     Create multiple variables
+is-array          ( n"- )   Create an array of size 'n'
+get-element       ( ia-n )  Get element 'i' from array 'a'
+put-element       ( nia- )  Put value 'n' into element 'i' of array 'a'
+get-char-element  ( ia-n )  Get char-size element 'i' from 
+                            array 'a'
+put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of 
+                            array 'a'
+value    ( "- )      Create a new value
+to       ( - )       Set the value of a value
+value|   ( "- )      Create multiple values
+#unpre
+} 1185043649
 
 
 #--------------------------------------------------
@@ -625,9 +693,22 @@ other aspects of the virtual machine.
 = Primitives Provided =
 
 #pre
-:stack
-:stat
-#unpre} 1184460160
+:stack   ( - )       Display all values on the
+                     data stack
+:stat    ( - )       Display information about
+                     the virtual machine status
+#unpre
+
+= Related Words =
+
+#pre
+words-within ( n- )  Display all words with a specified class #
+:prims   ( - )       Display all primitives
+:quotes  ( - )       Display all named quotes
+:datas   ( - )       Display all named data items
+words    ( - )       Display all names in the dictionary
+#unpre
+} 1185043301
 
 
 #--------------------------------------------------
@@ -656,8 +737,9 @@ Decompile the quote on the stack.
 = Primitives Provided =
 
 #pre
-:see
-#unpre} 1175294160
+:see     ( "- )      Decompile the specified quote
+#unpre
+} 1185042731
 
 
 #--------------------------------------------------
@@ -724,16 +806,25 @@ Return the class number for a dictionary entry
 = Primitives Provided =
 
 #pre
-is
-is-data
-is-macro
-`
-:name
-:xt
-:class
-last
+is       ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
+is-macro ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
+is-data  ( a"- )     Attach a name to data memory
+         ( a$- )     Non-parsing form
+`        ( "-a )     Return a quote corresponding
+                     to the specified word.
+         ( $-a )     Non-parsing form
+:name    ( n-$ )     Return the name for a 
+                     dictionary entry
+:xt      ( n-$ )     Return the address of a 
+                     dictionary entry
+:class   ( n-$ )     Return the class # for a 
+                     dictionary entry
+last     ( - a )     Variable holding the number of
+                     the most recent dictionary entry 
 #unpre
-} 1184886349
+} 1185042823
 
 
 #--------------------------------------------------
@@ -981,10 +1072,15 @@ dictionary.
 = Primitives Provided =
 
 #pre
-from
-import
-as
-#unpre} 1176257909
+from     ( "- )      Set the library to import from
+         ( $- )      Non-parsing form
+import   ( n"- )     Import a function taking 'n'
+                     arguments.
+         ( n$- )     Non-parsing form
+as       ( "- )      Rename the last defined word
+         ( $-  )     Non-parsing form
+#unpre
+} 1185042851
 
 
 #--------------------------------------------------
@@ -1074,14 +1170,40 @@ This is just a simple wrapper over ftell().
 = Primitives Provided =
 
 #pre
-file.open
-file.close
-file.read
-file.write
-file.size
-file.seek
-file.pos
-#unpre} 1175294463
+file.open  ( $m-n )  Open a specified file with
+                     the specified mode.
+file.close ( n- )    Close the specified file handle
+file.read  ( nbl-r ) Read 'l' bytes into buffer 'b'
+                     from file handle 'n'. Returns
+                     the number of bytes read.
+file.write ( nbl-w ) Write 'l' bytes from buffer 'b'
+                     to file handle 'n'. Returns
+                     the number of bytes written.
+file.size  ( n-s )   Return the size (in bytes)
+                     of the specified file.
+file.seek  ( nom-a ) Seek a new position in the
+                     file. Valid modes are
+                     START, CURRENT, and END. These
+                     have values of 1, 2, and 3.
+file.pos   ( n-a )   Return a pointer to the current
+                     offset into the file.
+#unpre
+
+= Related Words =
+
+#pre
+"R"         ( -x )   Mode for file.open
+"R+"        ( -x )   Mode for file.open
+"W"         ( -x )   Mode for file.open
+"W+"        ( -x )   Mode for file.open
+"A"         ( -x )   Mode for file.open
+"A+"        ( -x )   Mode for file.open
+START       ( -x )   Mode for file.seek
+CURRENT     ( -x )   Mode for file.seek
+END         ( -x )   Mode for file.seek
+file.slurp  ( $-a )  Read a file into a dynamically allocated buffer 
+#unpre
+} 1185042945
 
 
 #--------------------------------------------------
@@ -1281,10 +1403,12 @@ the allocated memory.
 = Primitives Provided =
 
 #pre
-keep
-gc
-malloc
-#unpre} 1184460244
+keep     ( a-a )     Mark quotes/allocated memory
+                     as permanent.
+gc       ( - )       Clean the garbage
+malloc   ( n-a )     Allocate 'n' bytes of memory
+#unpre
+} 1185042971
 
 
 #--------------------------------------------------
@@ -1439,9 +1563,12 @@ Accept and process input.
 = Primitives Provided =
 
 #pre
-compiler
-count
-#unpre} 1177177233
+compiler ( -a )      Variable holding the compiler
+                     state
+count    ( a-ac )    Return an address/count pair
+                     for a string
+#unpre
+} 1185043001
 
 
 #--------------------------------------------------
@@ -2374,11 +2501,22 @@ Divide and return the result, including remainder
 = Primitives Provided =
 
 #pre
-+
--
-*
-/mod
-#unpre} 1175294665
++        ( ab-c )    Add TOS and NOS
+-        ( ab-c )    Subtract TOS from NOS
+*        ( ab-c )    Multiply TOS by NOS
+/mod     ( ab-cd )   Divide and get remainder
+#unpre
+
+= Related Words =
+
+#pre
+negate   ( x-y )     Invert the sign of TOS
+/        ( xy-z )    Divide two numbers
+mod      ( xy-z )    Divide two numbers and get remainder
+not      ( x-y )     Invert the value 'x'
+*/       ( abc-d )   (a*b)/c
+#unpre
+} 1185043038
 
 
 #--------------------------------------------------
@@ -2596,14 +2734,29 @@ can be used to abort an include.
 = Primitives Provided =
 
 #pre
->number
-parser
-parse
-include
-needs
-end.
+base     ( -a )      Variable containg the current
+                     numeric base
+parser   ( -a )      Variable holding current parser
+                     mode.
+escape-sequences     Variable determining if
+         ( -a)       escape sequences are used.
+>number  ( a-nf )    Attempt to convert a string
+                     to a number
+parse    ( d-a )     Parse until the character 
+                     represented by 'd' is found.
+                     Return a pointer to the string
+include   ( "- )     Attempt to open a file and
+                     add it to the input stack.
+          ( $- )     Non-parsing form
+needs     ( "- )     Attempt to include a file
+                     from the library (normally
+                     /usr/share/toka/library)
+          ( $- )     Non-parsing form
+end.      ( - )      Remove the current file from
+                     the input stack
+prompt    ( -a )      prompt display variable
 #unpre
-} 1184886532
+} 1185043126
 
 
 #--------------------------------------------------
@@ -2656,7 +2809,7 @@ Requires libdl.so (from http://bebits.com/app/2917)
 You may also need (or want) to use the newer GCC from
 http://bebits.com/app/4011
 
-Build with <b>CFLAGS=-I/beos/develop/headers</b>
+Build with <b>OTHER=-I/beos/develop/headers</b>
 
 #---
 = Cygwin =
@@ -2664,15 +2817,16 @@ Build with <b>CFLAGS=-I/beos/develop/headers</b>
 Supported CPUs: x86
 
 Toka has been built and run under Cygwin on both Windows XP and Windows
-Vista. This port is not officially supported, and may be buggy,
-especially when using the FFI.
+Vista. Note that some of the libraries and examples may not function
+under Cygwin at this time.
 
 #---
 = OpenSolaris =
 
 Supported CPUs: x86
 
-Only tested under Nexenta GNU/Solaris distribution} 1178750601
+Only tested under Nexenta GNU/Solaris distribution but builds and works
+fine.} 1185042293
 
 
 #--------------------------------------------------
@@ -2783,18 +2937,25 @@ returns TRUE.
 = Primitives Provided =
 
 #pre
-[
-]
-recurse
-i
-whileTrue
-whileFalse
-compile
-invoke
-iterate
-+iterate
-ifTrueFalse
-#unpre} 1178881760
+[        ( -a )      Create a new quote
+]        ( - )       Close an open quote
+invoke   ( a- )      Execute a quote
+compile  ( a- )      Compile a call to the quote
+iterate  ( na- )     Execute a quote 'n' times
++iterate ( na- )     Execute a quote 'n' times
+ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
+                     true, 'b' if false.
+recurse  ( - )       Compile a call to the top
+                     quote.
+i        ( -n )      Return the current loop index
+whileTrue  ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+whileFalse ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+#unpre
+} 1185043166
 
 
 #--------------------------------------------------
@@ -3259,13 +3420,29 @@ Return the number of items on the stack
 = Primitives Provided =
 
 #pre
-dup
-drop
-swap
->r
-r>
-depth
-#unpre} 1176258218
+dup      ( n-nn )    Duplicate the TOS
+drop     ( n- )      Drop the TOS
+swap     ( ab-ba )   Exchange the TOS and NOS
+>r       ( n- )      Push TOS to return stack, DROP
+r>       ( -n )      Pop TORS to the data stack
+depth    ( -n )      Return the number of items on 
+                     the stack
+#unpre
+
+= Related Words =
+
+#pre
+nip      ( xy-y )    Remove the second item on the stack
+rot      ( abc-bca ) Rotate top three values on stack
+-rot     ( abc-acb ) Rotate top three values on stack twice
+over     ( xy-xyx )  Put a copy of NOS above the TOS
+tuck     ( xy-yxy )  Put a copy of TOS under NOS     
+2dup     ( xy-xyxy ) Duplicate the top two items on the stack
+2drop    ( xy- )     Drop TOS and NOS
+reset    ( *- )      Drop all items on the stack
+r@       ( -x )      Get a copy of the top item on the return stack
+#unpre
+} 1185043213
 
 
 #--------------------------------------------------
@@ -3949,7 +4126,7 @@ Variables:
   Inst *ip
   The instruction pointer
 
-  long stack[100], rstack[1024]
+  long stack[MAX_DATA_SIZE], rstack[MAX_RETURN_STACK]
   The data and return stacks
 
   long sp, rsp
@@ -3980,9 +4157,10 @@ strings.
 = Primitives Provided =
 
 #pre
-heap
+heap     ( -a )      Variable pointing to the top
+                     of the local heap
 #unpre
-} 1184886769
+} 1185043250
 
 
 #--------------------------------------------------

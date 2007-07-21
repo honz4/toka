@@ -34,6 +34,10 @@ extern long parser;
  *|F|   long last
  *|F|   A pointer to the most recent dictionary entry
  *|F|
+ *
+ *|G| last     ( -a )      Variable holding the number
+ *|G|                      of the most recent dictionary
+ *|G|                      entry
  ******************************************************/
 ENTRY dictionary[MAX_DICTIONARY_ENTRIES];
 long  last=0;
