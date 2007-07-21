@@ -40,6 +40,9 @@ char-size ( -n )     Return the size of a char
 :stat    (  -  )     Display information about
                      the virtual machine status
 :see     (  "- )     Decompile the specified quote
+last     ( -a )      Variable holding the number
+                     of the most recent dictionary
+                     entry
 is       ( a"- )     Attach a name to a quote
          ( a$- )     Non-parsing form
 is-macro ( a"- )     Attach a name to a quote
