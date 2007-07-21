@@ -16,7 +16,6 @@ LDFLAGS = `$(CC) other/needdl.c -o a.out -ldl 2>/dev/null && echo "-ldl" && rm a
 PLATFORM = -DUNIX
 #PLATFORM = -DWIN32 -mno-cygwin
 
-
 # ==============================================
 # All of the following are optional. Add whatever
 # you want. Note that all are disabled by default.
@@ -26,11 +25,6 @@ PLATFORM = -DUNIX
 #   This improves stability and aids in debugging.
 # -DNOFFI
 #   Disable the FFI functionality. Not recommended.
-# -DDISABLE_STACK_CHECKS
-#   Remove the code which checks for over/underflow.
-#   This will bring a significant performance 
-#   improvement, but makes debugging stack problems
-#   harder.
 # ==============================================
 # OTHER =
 
