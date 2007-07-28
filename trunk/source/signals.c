@@ -3,7 +3,8 @@
 #include <signal.h>
 #include "toka.h"
 
-extern long ip, sp, rsp, stack[], rstack[];
+extern Inst *ip;
+extern long sp, rsp, stack[], rstack[];
 
 #ifdef SIGNALS
 void trap_signals()
@@ -41,7 +42,7 @@ void caught_signal(int which)
     case SIGILL:  printf("SIGILL\n");  break;
   }
 
-  printf("\nIP: %li\n", ip);
+  printf("\nIP: %li\n", (long)ip);
 
   printf("Data Stack:   ");  display_stack();
   printf("Return Stack: <%li> ", rsp);
