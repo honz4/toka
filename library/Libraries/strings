@@ -20,7 +20,7 @@
 [ $[cr] string.append ] is +cr
 [ $[lf] string.append ] is +lf
 
-[ 1 grow-string ] is string.clone
+[ 1 string.grow ] is string.clone
 
 [ swap string.clone swap strtok ] is string.findToken
 [ swap string.clone swap strstr ] is string.findSubstring
