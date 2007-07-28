@@ -5,4 +5,4 @@ needs textedit
 
 #args 0 = [ help type bye ] ifTrue
 
-1 arglist get-element edit.load edit.start clear cr bye
+1 arglist array.get edit.load edit.start clear cr bye

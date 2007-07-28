@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="errorsc.html">errors.c</a> | Previous Page: <a href="dictionaryc.html">dictionary.c</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="extending_the_language.html">Extending the Language</a> | Previous Page: <a href="datac.html">data.c</a></p>
 
 <hr>
 
@@ -39,14 +39,26 @@ currently open library.
 <p>This error arises when Toka detects a problem with either the data or
 return stack. It can be either fatal (when the problem is with the return
 stack) or nonfatal (when the problem is with the data stack). When
-nonfatal, Toka resets the data stack to an empty state.</p>
+nonfatal, Toka resets the data stack to an empty state.
+</p>
+<h2>E6</h2>
+<p>Fatal. This error arises when the stdin device is closed unexpectedly.
+</p>
+<h2>E7</h2>
+<p>Fatal. This error arises when a quote exceeds the maximum size permitted.
+See <a href="limitations.html">Limitations</a>.
+</p>
+<p>= E8 = 
+Fatal. This error arises when a malloc fails. Normally you shouldn't see
+this unless you are dealing with a bad malloc/free implementation or very
+large sets of data.</p>
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="errorsc.html">errors.c</a> | Previous Page: <a href="dictionaryc.html">dictionary.c</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="extending_the_language.html">Extending the Language</a> | Previous Page: <a href="datac.html">data.c</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

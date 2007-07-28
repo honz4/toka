@@ -58,9 +58,9 @@ value| TP buffer loop-ptr |
 [ " bf: can't open " type type cr ] is error
 
 console_init
-#args [ i arglist get-element
+#args [ i arglist array.get
         file.slurp dup 0 <>
-        [ bf ] [ drop i arglist get-element error ] ifTrueFalse
+        [ bf ] [ drop i arglist array.get error ] ifTrueFalse
       ] keep +iterate
 console_cleanup
 bye

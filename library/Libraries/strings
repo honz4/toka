@@ -11,9 +11,9 @@
 2 import strtok    #! char *strtok(char *str, const char *delim)
 
 2 chars is-array $[cr]
-13 0 $[cr] put-char-element
+13 0 $[cr] array.putChar
 2 chars is-array $[lf]
-10 0 $[lf] put-char-element
+10 0 $[lf] array.putChar
 
 [ >r count r> + malloc swap strcpy ] is grow-string
 [ swap count 1 + grow-string swap strcat ] is append-string 

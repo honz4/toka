@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="wordclasses.html">WordClasses</a> | Previous Page: <a href="variables.html">Variables</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="words_and_their_uses.html">Words and Their Uses</a> | Previous Page: <a href="usingthestack.html">UsingTheStack</a></p>
 
 <hr>
 
@@ -23,7 +23,7 @@
   Inst *ip
   The instruction pointer
 
-  long stack[100], rstack[100]
+  long stack[MAX_DATA_SIZE], rstack[MAX_RETURN_STACK]
   The data and return stacks
 
   long sp, rsp
@@ -44,20 +44,26 @@ Push a number to the stack.
 lit()
 Push the value in the following memory location
 to the stack
+
+string_lit()
+Push the pointer in the following memory location
+to the stack. This is a helper function for 
+strings.
 </pre>
 
 <h2>Primitives Provided</h2>
 
-<pre>heap
+<pre>heap     ( -a )      Variable pointing to the top
+                     of the local heap
 </pre>
 
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="wordclasses.html">WordClasses</a> | Previous Page: <a href="variables.html">Variables</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="words_and_their_uses.html">Words and Their Uses</a> | Previous Page: <a href="usingthestack.html">UsingTheStack</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

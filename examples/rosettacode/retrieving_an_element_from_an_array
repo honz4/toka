@@ -2,8 +2,8 @@
 
  3 cells is-array table
  ( Populate the array )
- 10 0 table put-element
- 20 1 table put-element 
- 30 2 table put-element
+ 10 0 table array.put
+ 20 1 table array.put 
+ 30 2 table array.put
  
- table 1 get-element
+ table 1 array.get

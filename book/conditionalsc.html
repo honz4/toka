@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="conditionalslibrary.html">ConditionalsLibrary</a> | Previous Page: <a href="conditionals.html">Conditionals</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="datac.html">data.c</a> | Previous Page: <a href="classc.html">class.c</a></p>
 
 <hr>
 
@@ -32,19 +32,39 @@ Compare TOS and NOS, return a flag.
 
 <h2>Primitives Provided</h2>
 
-<pre>&lt;
-&gt;
-=
-&lt;&gt;
+<pre>&lt;        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+&gt;        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+=        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+&lt;&gt;       ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>FALSE    ( -f )      Value returned for FALSE
+TRUE     ( -f )      Value returned for TRUE
+ifTrue   ( fq- )     Execute quote ('q') if flag ('f') is TRUE
+ifFalse  ( fq- )     Execute quote ('q') if flag ('f') is FALSE
+ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
+                     true, 'b' if false.
+whileTrue  ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+whileFalse ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
 </pre>
 
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="conditionalslibrary.html">ConditionalsLibrary</a> | Previous Page: <a href="conditionals.html">Conditionals</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="datac.html">data.c</a> | Previous Page: <a href="classc.html">class.c</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

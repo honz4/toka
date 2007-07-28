@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="ports.html">Ports</a> | Previous Page: <a href="parser.html">parser</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="scripts.html">Scripts</a> | Previous Page: <a href="limitations.html">Limitations</a></p>
 
 <hr>
 
@@ -31,13 +31,21 @@
   When ON (TRUE), system parsing words will parse. When
   OFF (FALSE), they will take a string from the stack.
 
+  long escapes
+  When ON (TRUE), escape sequences will be handled
+  by the parser. When OFF (FALSE), they will be ignored.
+
+  long parse_ended
+  A helper for the display_prompt, to suppress it while
+  interpreting each word.
+
 to_number()
 Attempt to convert a string (on TOS) to a number.
 This accepts a format of:
   [-]number
 If successful, it leaves the number and a flag of
--1 on the stack. Otherwise, it leaves the original
-string, and a flag of 0.
+TRUE on the stack. Otherwise, it leaves the original
+string, and a flag of FALSE.
 
 parse()
 Parse the input buffer until the character passed
@@ -70,21 +78,48 @@ can be used to abort an include.
 
 <h2>Primitives Provided</h2>
 
-<pre>&gt;number
-parser
-parse
-include
-needs
-end.
+<pre>base     ( -a )      Variable containg the current
+                     numeric base
+parser   ( -a )      Variable holding current parser
+                     mode.
+escape-sequences     Variable determining if
+         ( -a)       escape sequences are used.
+&gt;number  ( a-nf )    Attempt to convert a string
+                     to a number
+parse    ( d-a )     Parse until the character 
+                     represented by 'd' is found.
+                     Return a pointer to the string
+include   ( "- )     Attempt to open a file and
+                     add it to the input stack.
+          ( $- )     Non-parsing form
+needs     ( "- )     Attempt to include a file
+                     from the library (normally
+                     /usr/share/toka/library)
+          ( $- )     Non-parsing form
+end.      ( - )      Remove the current file from
+                     the input stack
+prompt    ( -a )     prompt display variable
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>wsparse  ( -a )      Parse until a SPACE is encountered
+lnparse  ( -a )      Parse to the end of the line,
+                     leave the resulting string on the
+                     stack.
+hex      ( - )       Set the base to hexadecimal (16)
+decimal  ( - )       Set the base to decimal (10)
+binary   ( - )       Set the base to binary (2)
+octal    ( - )       Set the base to octal (8)
 </pre>
 
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="ports.html">Ports</a> | Previous Page: <a href="parser.html">parser</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="scripts.html">Scripts</a> | Previous Page: <a href="limitations.html">Limitations</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

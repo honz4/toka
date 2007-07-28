@@ -2,16 +2,16 @@
  {
    variable| array fn |
    [ i 1- array @ ] is I
-   [ fn ! swap array ! [ I get-element fn @ invoke I put-element ] +iterate ]
+   [ fn ! swap array ! [ I array.get fn @ invoke I array.put ] +iterate ]
  } is map-array
  
  ( Build an array )
  5 cells is-array a
- 10 0 a put-element
- 11 1 a put-element
- 12 2 a put-element
- 13 3 a put-element
- 14 4 a put-element
+ 10 0 a array.put
+ 11 1 a array.put
+ 12 2 a array.put
+ 13 3 a array.put
+ 14 4 a array.put
  
  ( Add 1 to each item in the array )
  a 5 ` 1+ map-array

@@ -39,12 +39,26 @@ Return the number of items on the stack
 
 <h2>Primitives Provided</h2>
 
-<pre>dup
-drop
-swap
-&gt;r
-r&gt;
-depth
+<pre>dup      ( n-nn )    Duplicate the TOS
+drop     ( n- )      Drop the TOS
+swap     ( ab-ba )   Exchange the TOS and NOS
+&gt;r       ( n- )      Push TOS to return stack, DROP
+r&gt;       ( -n )      Pop TORS to the data stack
+depth    ( -n )      Return the number of items on 
+                     the stack
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>nip      ( xy-y )    Remove the second item on the stack
+rot      ( abc-bca ) Rotate top three values on stack
+-rot     ( abc-acb ) Rotate top three values on stack twice
+over     ( xy-xyx )  Put a copy of NOS above the TOS
+tuck     ( xy-yxy )  Put a copy of TOS under NOS     
+2dup     ( xy-xyxy ) Duplicate the top two items on the stack
+2drop    ( xy- )     Drop TOS and NOS
+reset    ( *- )      Drop all items on the stack
+r@       ( -x )      Get a copy of the top item on the return stack
 </pre>
 
 
@@ -54,6 +68,6 @@ depth
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>
