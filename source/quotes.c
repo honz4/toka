@@ -18,9 +18,6 @@
 
 #include "toka.h"
 
-#define ON -1
-#define OFF 0
-
 extern long compiler;
 extern long stack[], sp;
 extern long rstack[], rsp;
@@ -102,7 +99,7 @@ void end_quote()
   heap = (Inst *)quotes[qdepth].heap;
   compiler = quotes[qdepth].compiler;
 
-  if (compiler == ON)
+  if (COMPILING)
   {
     *heap++ = (Inst)&qlit;
     *heap++ = (Inst)TOS; DROP;

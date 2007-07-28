@@ -27,7 +27,7 @@ extern Inst *heap;
 void word_class()
 {
   Inst xt = (Inst)TOS; DROP;
-  if (compiler == ON)
+  if (COMPILING)
     *heap++ = xt;
   else
     ((xt)());
@@ -55,7 +55,7 @@ void macro_class()
  ******************************************************/
 void data_class()
 {
-  if (compiler == ON) {
+  if (COMPILING) {
     *heap++ = (Inst)&lit;
     *heap++ = (Inst)TOS; DROP;
   }
@@ -96,7 +96,7 @@ void quote_class()
  ******************************************************/
 void quote_word_class()
 {
-  if (compiler == ON)
+  if (COMPILING)
   {
     *heap++ = &quote_class;
     *heap++ = (Inst)TOS; DROP;

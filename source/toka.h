@@ -8,6 +8,7 @@
 #define TRUE -1
 #define ON   -1
 #define OFF   0
+#define COMPILING compiler == ON
 
 typedef void (*Inst)();
 
