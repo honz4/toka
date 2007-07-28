@@ -15,18 +15,18 @@
 2 chars is-array $[lf]
 10 0 $[lf] array.putChar
 
-[ >r count r> + malloc swap strcpy ] is grow-string
-[ swap count 1 + grow-string swap strcat ] is append-string 
-[ $[cr] append-string ] is +cr
-[ $[lf] append-string ] is +lf
+[ >r count r> + malloc swap strcpy ] is string.grow
+[ swap count 1 + string.grow swap strcat ] is string.append 
+[ $[cr] string.append ] is +cr
+[ $[lf] string.append ] is +lf
 
-[ 1 grow-string ] is clone-string
+[ 1 grow-string ] is string.clone
 
-[ swap clone-string swap strtok ] is string-find-token
-[ swap clone-string swap strstr ] is string-find-substring
-[ swap clone-string swap strchr ] is string-find-char
+[ swap string.clone swap strtok ] is string.findToken
+[ swap string.clone swap strstr ] is string.findSubstring
+[ swap string.clone swap strchr ] is string.findChar
 
-[ char: " parse swap append-string
+[ char: " parse swap string.append
   compiler @
   [ count dup malloc dup # swap copy ]
   ifTrue

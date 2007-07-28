@@ -154,8 +154,8 @@ variable| socket connection |
 #! filename.
 #! ---------------------------------------------------------------
 [
-  buffer " /" string-find-substring char+ 
-  DELIMS string-find-token
+  buffer " /" string.findSubstring char+ 
+  DELIMS string.findToken
 ] is extract-filename
 
 
@@ -165,8 +165,8 @@ variable| socket connection |
 #! like "GET /" as well as requests like "GET /filename".
 #! ---------------------------------------------------------------
 [
-  buffer " /" string-find-substring 
-  DELIMS string-find-token " /" strcmp 0 =
+  buffer " /" string.findSubstring 
+  DELIMS string.findToken " /" strcmp 0 =
   [ DEFAULT-PAGE ]
   [ extract-filename ]
   ifTrueFalse
@@ -193,7 +193,7 @@ variable| socket connection |
 #!
 #! The output from CGI scripts will be captured in a CGIOUT file.
 #! ---------------------------------------------------------------
-docroot " CGIOUT" append-string is-data CGIOUT
+docroot " CGIOUT" string.append is-data CGIOUT
 
 [ 
   cgi-cmd " %s %s%s >%s" " perl" docroot obtain-filename CGIOUT sprintf
@@ -214,7 +214,7 @@ docroot " CGIOUT" append-string is-data CGIOUT
 #! Default handler for any type of text file. This is factored
 #! out from return-requested.
 #! ---------------------------------------------------------------
-[ docroot obtain-filename append-string ] is text-file
+[ docroot obtain-filename string.append ] is text-file
 
 
 
@@ -285,7 +285,7 @@ variable| #requests |
 [
   1 #requests +!
   ." REQUEST #" #requests @ . space space
-  buffer " \n" string-find-token type cr
+  buffer " \n" string.findToken type cr
 ] is log-request
 
 

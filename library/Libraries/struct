@@ -2,7 +2,7 @@
   variable source
 
   [ ( string - string )
-    " ." swap append-string append-string 
+    " ." swap string.append string.append
   ] is (member)
 
   [ ( string string size -- )   
