@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="cmdlinec.html">cmdline.c</a> | Previous Page: <a href="caselibrary.html">CaseLibrary</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="datac.html">data.c</a> | Previous Page: <a href="caselibrary.html">CaseLibrary</a></p>
 
 <hr>
 
@@ -17,7 +17,7 @@ functions directly to Toka.
 </p>
 <h2>Functions Provided</h2>
 
-<pre>forth_class()
+<pre>word_class()
 If compiling, compile the xt into the current
 quote. If interpreting, call the word.
 
@@ -37,7 +37,7 @@ Handler for quotes; this takes two cells, one
 which is a call to this function, the other is
 the pointer to the quote to invoke.
 
-quote_forth_class()
+quote_word_class()
 Perform data_class() semantics, then, if 
 compiling, compile a call to invoke(). Otherwise,
 invoke() is called with the xt on TOS.
@@ -45,14 +45,24 @@ invoke() is called with the xt on TOS.
 
 <h2>Primitives Provided</h2>
 
-<p><i>None</i></p>
+<p><i>None</i>
+</p>
+<h2>Related Words</h2>
+
+<pre>.PRIM_WORD  ( -n )   Class # for primitive words
+.PRIM_MACRO ( -n )   Class # for primitive macros
+.DATA       ( -n )   Class # for data elements
+.WORD       ( -n )   Class # for quote words
+.MACRO      ( -n )   Class # for quote macros
+</pre>
+
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="cmdlinec.html">cmdline.c</a> | Previous Page: <a href="caselibrary.html">CaseLibrary</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="datac.html">data.c</a> | Previous Page: <a href="caselibrary.html">CaseLibrary</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="stringslibrary.html">StringsLibrary</a> | Previous Page: <a href="stackc.html">stack.c</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="types.html">Types</a> | Previous Page: <a href="stack_comments.html">Stack Comments</a></p>
 
 <hr>
 
@@ -21,12 +21,12 @@ array. For example the following two are functionally identical:
   hello type cr
 
   5 chars is-array hello
-  char: h 0 hello put-char-element
-  char: e 1 hello put-char-element
-  char: l 2 hello put-char-element
-  char: l 3 hello put-char-element
-  char: o 4 hello put-char-element
-        0 5 hello put-char-element
+  char: h 0 hello array.putChar
+  char: e 1 hello array.putChar
+  char: l 2 hello array.putChar
+  char: l 3 hello array.putChar
+  char: o 4 hello array.putChar
+        0 5 hello array.putChar
   hello type cr
 </pre>
 
@@ -37,7 +37,7 @@ in a string:
   hello type cr
 
   #! Now change the lowercase 'h' to uppercase.
-  char: H 0 hello put-char-element
+  char: H 0 hello array.putChar
   hello type cr
 </pre>
 
@@ -50,16 +50,17 @@ in a string:
 <li> It is possible (though not likely) to have a <b>char-size</b> larger
   than one byte.
 <li> Use <b>c@</b> and <b>c!</b> when manipulating <b>char-size</b> elements.
-<li> Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).</ul>
+<li> Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).
+</ul>
 
 
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="stringslibrary.html">StringsLibrary</a> | Previous Page: <a href="stackc.html">stack.c</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="types.html">Types</a> | Previous Page: <a href="stack_comments.html">Stack Comments</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

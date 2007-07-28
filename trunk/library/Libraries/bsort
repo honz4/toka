@@ -1,16 +1,17 @@
-value array
-value count
-value changed
+{
+  value array
+  value count
+  value changed
 
-[ ( address count -- )
-  to count to array
-  count
-  [ count
-    [ i array get-element i 1 + array get-element 2dup >
-      [ i array put-element  i 1 + array put-element ]
-      [ 2drop ] ifTrueFalse
+  [ ( address count -- )
+    to count to array
+    count
+    [ count
+      [ i array array.get i 1 + array array.get 2dup >
+        [ i array array.put  i 1 + array array.put ]
+        [ 2drop ] ifTrueFalse
+      ] +iterate
+      count 1 - to count
     ] +iterate
-    count 1 - to count
-  ] +iterate
-] is bsort
-
+  ]
+} is bsort

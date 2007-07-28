@@ -99,7 +99,7 @@ t: Stage 6: Bubble Sort (6,000 numbers)
 t: ----------------------------------
 6001 cells is-array foo
 t: a) Filling with random numbers
-[ 6000 [ random i foo put-element ] iterate ] :time
+[ 6000 [ random i foo array.put ] iterate ] :time
 t: b) Perform bubble sort
 [ foo 6000 bsort ] :time
 gc

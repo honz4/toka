@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="debugc.html">debug.c</a> | Previous Page: <a href="ctypelibrary.html">CtypeLibrary</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="extending_the_language.html">Extending the Language</a> | Previous Page: <a href="classc.html">class.c</a></p>
 
 <hr>
 
@@ -19,6 +19,10 @@
 <pre>make_literal()
 Compile a call to lit() and then place TOS into
 the next memory location.
+
+make_string_literal()
+Compile a call to string_lit() and then place TOS 
+into the next memory location.
 
 fetch()
 Fetch the value in the memory location pointed to
@@ -51,23 +55,61 @@ Push the size of a char to the stack
 
 <h2>Primitives Provided</h2>
 
-<pre>char-size
-cell-size
-copy
-c!
-c@
-!
-@
-#
+<pre>#        ( n- )      Push the following cell to
+                     the stack.
+$#       ( n- )      Push the following cell to
+                     the stack.
+@        ( a-n )     Fetch the value in memory
+                     location 'a'
+!        ( na- )     Store 'n' to memory location
+                     'a'
+c@        ( a-n )    Fetch a byte from memory
+                     location 'a'
+c!        ( na- )    Store byte 'n' to memory
+                     location 'a'
+copy     ( sdc- )    Copy 'c' bytes from 's' to
+                     'd'
+cell-size ( -n )     Return the size of a cell
+char-size ( -n )     Return the size of a char
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>&gt;char    ( n-c )     Convert the value on TOS to a single character
+char:    ( "-c )     Parse ahead and return one character
+"        ( "-$ )     Parse until " is encountered and return a string
+chars    ( x-y )     Multiply TOS by char-size. Useful w/arrays
+char+    ( x-y )     Increase TOS by char-size
+char-    ( x-y )     Decrease TOS by char-size
+cells    ( x-y )     Multiply TOS by cell-size. Useful w/arrays
+cell+    ( x-y )     Increase TOS by cell-size
+cell-    ( x-y )     Decrease TOS by cell-size
++!       ( xa- )     Add 'x' to the value in address 'a'
+-!       ( xa- )     Subtract 'x' from the value in address 'a'
+on       ( a- )      Set a variable to TRUE
+off      ( a- )      Set a variable to FALSE
+toggle   ( a- )      Toggle a variable between TRUE and FALSE
+variable ( "- )      Create a variable
+variable| ( "- )     Create multiple variables
+is-array          ( n"- )   Create an array of size 'n'
+array.get         ( ia-n )  Get element 'i' from array 'a'
+array.put         ( nia- )  Put value 'n' into element 'i' of array 'a'
+array.getChar     ( ia-n )  Get char-size element 'i' from 
+                            array 'a'
+array.putChar     ( nia- )  Put char-size value 'n' into element 'i' of 
+                            array 'a'
+value    ( "- )      Create a new value
+to       ( - )       Set the value of a value
+value|   ( "- )      Create multiple values
 </pre>
 
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="debugc.html">debug.c</a> | Previous Page: <a href="ctypelibrary.html">CtypeLibrary</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="extending_the_language.html">Extending the Language</a> | Previous Page: <a href="classc.html">class.c</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

@@ -9,10 +9,10 @@ needs regex
 
 ." Test 1: Search for [Hh]ello in: " test1 type cr
 preg test1 2 pmatch try-regex
-[ 0 pmatch get-element test1 + type cr ] [ ." No match found\n" ] ifTrueFalse
+[ 0 pmatch array.get test1 + type cr ] [ ." No match found\n" ] ifTrueFalse
 
 ." Test 2: Search for [Hh]ello in: " test2 type cr
 preg test2 2 pmatch try-regex
-[ 0 pmatch get-element test2 + type cr ] [ ." No match found\n" ] ifTrueFalse
+[ 0 pmatch array.get test2 + type cr ] [ ." No match found\n" ] ifTrueFalse
 
 bye

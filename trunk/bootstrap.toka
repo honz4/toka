@@ -180,10 +180,10 @@
 [ parser @
   [ malloc ] [ >r malloc r> ] ifTrueFalse is-data 
 ] is is-array
-[ swap cell-size * + @ ] is get-element
-[ swap cell-size * + ! ] is put-element
-[ swap char-size * + c@ ] is get-char-element
-[ swap char-size * + c! ] is put-char-element
+[ swap cell-size * + @ ] is array.get
+[ swap cell-size * + ! ] is array.put
+[ swap char-size * + c@ ] is array.getChar
+[ swap char-size * + c! ] is array.putChar
 
 
 #! ---------------------------------------
@@ -191,11 +191,11 @@
 #! ---------------------------------------
 4 cells is-array <list>
 
-[ last @ <list> @ 1 + <list> put-element
+[ last @ <list> @ 1 + <list> array.put
   1 <list> +!
 ] is {
 [ 1 <list> -!
-  <list> @ 1 + <list> get-element last !
+  <list> @ 1 + <list> array.get last !
 ] is }
 
 

@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="quoteslibrary.html">QuotesLibrary</a> | Previous Page: <a href="quotes.html">Quotes</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="scripts.html">Scripts</a> | Previous Page: <a href="limitations.html">Limitations</a></p>
 
 <hr>
 
@@ -86,26 +86,32 @@ returns TRUE.
 
 <h2>Primitives Provided</h2>
 
-<pre>[
-]
-recurse
-i
-whileTrue
-whileFalse
-compile
-invoke
-iterate
-+iterate
-ifTrueFalse
+<pre>[        ( -a )      Create a new quote
+]        ( - )       Close an open quote
+invoke   ( a- )      Execute a quote
+compile  ( a- )      Compile a call to the quote
+iterate  ( na- )     Execute a quote 'n' times
++iterate ( na- )     Execute a quote 'n' times
+ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
+                     true, 'b' if false.
+recurse  ( - )       Compile a call to the top
+                     quote.
+i        ( -n )      Return the current loop index
+whileTrue  ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+whileFalse ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
 </pre>
 
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="quoteslibrary.html">QuotesLibrary</a> | Previous Page: <a href="quotes.html">Quotes</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="scripts.html">Scripts</a> | Previous Page: <a href="limitations.html">Limitations</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

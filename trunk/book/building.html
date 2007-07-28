@@ -26,15 +26,9 @@ process using Make:
 <pre>  make
 </pre>
 
-<p>The build system should be able to detect the need for libdl.so (Linux,
-BeOS) or whether dlopen() and dlsym() are provided by libc.so (BSD). You
-can also build a version without the <a href="ffi.html">FFI</a>, but this is not recommended
-as it reduces the usefulness of Toka significantly. This can be done via:
+<p>If you experience problems, check the PLATFORM line in the Makefile and
+add any OS-specific flags your system may need.
 </p>
-<pre>  rm source/ffi
-  make CFLAGS=-DNOFFI
-</pre>
-
 <p>As a final note, some pieces of documentation can be updated automatically
 as well:
 </p>
@@ -48,6 +42,6 @@ as well:
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

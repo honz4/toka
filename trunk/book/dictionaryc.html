@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="errorcodes.html">ErrorCodes</a> | Previous Page: <a href="decompilec.html">decompile.c</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="extending_the_language.html">Extending the Language</a> | Previous Page: <a href="datac.html">data.c</a></p>
 
 <hr>
 
@@ -18,8 +18,8 @@ search for a specific entry.
 <h2>Functions Provided</h2>
 
 <pre>Variables:
-  ENTRY dictionary[4096];
-  Holds the dictionary entries, up to 4096
+  ENTRY dictionary[MAX_DICTIONARY_ENTRIES];
+  Holds the dictionary entries, up to MAX_DICTIONARY_ENTRIES
 
   long last
   A pointer to the most recent dictionary entry
@@ -69,23 +69,39 @@ Return the class number for a dictionary entry
 
 <h2>Primitives Provided</h2>
 
-<pre>is
-is-data
-is-macro
-`
-:name
-:xt
-:class
-last
+<pre>is       ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
+is-macro ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
+is-data  ( a"- )     Attach a name to data memory
+         ( a$- )     Non-parsing form
+`        ( "-a )     Return a quote corresponding
+                     to the specified word.
+         ( $-a )     Non-parsing form
+:name    ( n-$ )     Return the name for a 
+                     dictionary entry
+:xt      ( n-$ )     Return the address of a 
+                     dictionary entry
+:class   ( n-$ )     Return the class # for a 
+                     dictionary entry
+last     ( - a )     Variable holding the number of
+                     the most recent dictionary entry 
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>&lt;list&gt;   ( -a )      Stores a list of pointers used by { and }
+{        ( - )       Start a scoped area
+}        ( - )       End a scoped area
 </pre>
 
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="errorcodes.html">ErrorCodes</a> | Previous Page: <a href="decompilec.html">decompile.c</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="extending_the_language.html">Extending the Language</a> | Previous Page: <a href="datac.html">data.c</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

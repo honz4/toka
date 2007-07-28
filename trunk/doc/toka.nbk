@@ -36,10 +36,10 @@ The words provided are:
 
 #pre
   is-array          n"-     Create an array of size n. Parses for the name.
-  put-element       nia-    Put value (n) into array (a) at index (i)
-  get-element       ia-n    Get the value (n) from array (a) at index (i)
-  put-char-element  nia-    Put character value (n) into array (a) at index (i)
-  get-char-element  ia-n    Get the character value (n) from array (a) at 
+  array.put         nia-    Put value (n) into array (a) at index (i)
+  array.get         ia-n    Get the value (n) from array (a) at index (i)
+  array.putChar     nia-    Put character value (n) into array (a) at index (i)
+  array.getChar     ia-n    Get the character value (n) from array (a) at 
                             index (i)
 #unpre
 
@@ -47,11 +47,11 @@ The words provided are:
 
 #pre
   10 cells is-array foo
-  0 foo get-element .
-  100 0 foo put-element 
-  10 1 foo put-element 
-  0 foo get-element .
-  1 foo get-element .
+  0 foo array.get .
+  100 0 foo array.put 
+  10 1 foo array.put 
+  0 foo array.get .
+  1 foo array.get .
 #unpre
 
 = Tips =
@@ -59,7 +59,8 @@ The words provided are:
 * The command line arguments are stored in an array (*arglist*).
 ** At 0 is the name of the script
 ** Actual arguments start at 1.
-* Be careful not to exceed the length of your array when giving an index} 1177366441
+* Be careful not to exceed the length of your array when giving an index
+} 1185584494
 
 
 #--------------------------------------------------
@@ -116,23 +117,24 @@ Example:
 
   10 cells is-array foo
 
-   20   1 foo put-element
-   50   2 foo put-element
-  650   3 foo put-element
-  120   4 foo put-element
-  110   5 foo put-element
-  101   6 foo put-element
- 1321   7 foo put-element
- 1310   8 foo put-element
-  987   9 foo put-element
-   10  10 foo put-element
+   20   1 foo array.put
+   50   2 foo array.put
+  650   3 foo array.put
+  120   4 foo array.put
+  110   5 foo array.put
+  101   6 foo array.put
+ 1321   7 foo array.put
+ 1310   8 foo array.put
+  987   9 foo array.put
+   10  10 foo array.put
 
- [ [ dup i swap get-element . ] +iterate drop cr ] is .array
+ [ [ dup i swap array.get . ] +iterate drop cr ] is .array
 
  foo 10 .array
  foo 10 bsort
  foo 10 .array
-#unpre} 1180379836
+#unpre
+} 1185584533
 
 
 #--------------------------------------------------
@@ -670,16 +672,17 @@ toggle   ( a- )      Toggle a variable between TRUE and FALSE
 variable ( "- )      Create a variable
 variable| ( "- )     Create multiple variables
 is-array          ( n"- )   Create an array of size 'n'
-get-element       ( ia-n )  Get element 'i' from array 'a'
-put-element       ( nia- )  Put value 'n' into element 'i' of array 'a'
-get-char-element  ( ia-n )  Get char-size element 'i' from 
+array.get         ( ia-n )  Get element 'i' from array 'a'
+array.put         ( nia- )  Put value 'n' into element 'i' of array 'a'
+array.getChar     ( ia-n )  Get char-size element 'i' from 
                             array 'a'
-put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of 
+array.putChar     ( nia- )  Put char-size value 'n' into element 'i' of 
                             array 'a'
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
-#unpre} 1185043649
+#unpre
+} 1185584567
 
 
 #--------------------------------------------------
@@ -888,8 +891,7 @@ See [Limitations].
 = E8 = 
 Fatal. This error arises when a malloc fails. Normally you shouldn't see
 this unless you are dealing with a bad malloc/free implementation or very
-large sets of data.
-} 1185045179
+large sets of data.} 1185045179
 
 
 #--------------------------------------------------
@@ -1014,8 +1016,7 @@ Or, with a slightly more complex example, try this:
   [ [ . ] +action ] is foo
   100 foo bar
   bar
-#unpre
-} 1185045508
+#unpre} 1185045508
 
 
 #--------------------------------------------------
@@ -3092,12 +3093,13 @@ Example:
   
   ." Test 1: Search for [Hh]ello in: " test1 type cr
   preg test1 2 pmatch try-regex
-  [ 0 pmatch get-element test1 + type cr ] [ ." No match found\n" ] ifTrueFalse
+  [ 0 pmatch array.get test1 + type cr ] [ ." No match found\n" ] ifTrueFalse
   
   ." Test 2: Search for [Hh]ello in: " test2 type cr
   preg test2 2 pmatch try-regex
-  [ 0 pmatch get-element test2 + type cr ] [ ." No match found\n" ] ifTrueFalse
-#unpre} 1179675743
+  [ 0 pmatch array.get test2 + type cr ] [ ." No match found\n" ] ifTrueFalse
+#unpre
+} 1185584592
 
 
 #--------------------------------------------------
@@ -3149,7 +3151,7 @@ command line arguments. Toka allows for this using the following words:
 #pre
   #args        ( -n )   Returns the number of command line arguments
   arglist      ( -a )   An array containing the arguments
-  get-element  ( ia-n ) Return a pointer to an element in the array
+  array.get    ( ia-n ) Return a pointer to an element in the array
 #unpre
 
 Toka accepts a command line like the following:
@@ -3179,8 +3181,9 @@ You can iterate over the arguments to process them. For instance, if we
 wanted to display each of the script arguments, we could do:
 
 #pre
-  #args [ i arglist get-element type cr ] +iterate
-#unpre} 1177553596
+  #args [ i arglist array.get type cr ] +iterate
+#unpre
+} 1185584612
 
 
 #--------------------------------------------------
@@ -3496,12 +3499,12 @@ array. For example the following two are functionally identical:
   hello type cr
 
   5 chars is-array hello
-  char: h 0 hello put-char-element
-  char: e 1 hello put-char-element
-  char: l 2 hello put-char-element
-  char: l 3 hello put-char-element
-  char: o 4 hello put-char-element
-        0 5 hello put-char-element
+  char: h 0 hello array.putChar
+  char: e 1 hello array.putChar
+  char: l 2 hello array.putChar
+  char: l 3 hello array.putChar
+  char: o 4 hello array.putChar
+        0 5 hello array.putChar
   hello type cr
 #unpre
 
@@ -3513,7 +3516,7 @@ in a string:
   hello type cr
 
   #! Now change the lowercase 'h' to uppercase.
-  char: H 0 hello put-char-element
+  char: H 0 hello array.putChar
   hello type cr
 #unpre
 
@@ -3524,7 +3527,8 @@ in a string:
 * It is possible (though not likely) to have a <b>char-size</b> larger
   than one byte.
 * Use <b>c@</b> and <b>c!</b> when manipulating <b>char-size</b> elements.
-* Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).} 1177537581
+* Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).
+} 1185584654
 
 
 #--------------------------------------------------
@@ -4082,8 +4086,7 @@ parentheses is just a comment and need not be entered.
   2dup ( xy-xyxy )
   nip ( xyz-xz )
   tuck ( xy-yxy )
-#unpre
-} 1185045473
+#unpre} 1185045473
 
 
 #--------------------------------------------------
@@ -4488,11 +4491,11 @@ CURRENT  ( -x )      Mode for file.seek
 END      ( -x )      Mode for file.seek
 file.slurp        ( $-a )   Read a file into a dynamically allocated buffer 
 is-array          ( n"- )   Create an array of size 'n'
-get-element       ( ia-n )  Get element 'i' from array 'a'
-put-element       ( nia- )  Put value 'n' into element 'i' of array 'a'
-get-char-element  ( ia-n )  Get char-size element 'i' from 
+array.get         ( ia-n )  Get element 'i' from array 'a'
+array.put         ( nia- )  Put value 'n' into element 'i' of array 'a'
+array.getChar     ( ia-n )  Get char-size element 'i' from 
                             array 'a'
-put-char-element  ( nia- )  Put char-size value 'n' into element 'i' of 
+array.putChar     ( nia- )  Put char-size value 'n' into element 'i' of 
                             array 'a'
 <list>   ( -a )      Stores a list of pointers used by { and }
 {        ( - )       Start a scoped area
@@ -4508,7 +4511,7 @@ words-within ( n- )  Display all words with a specified class #
 :datas   ( - )       Display all named data items
 words    ( - )       Display all names in the dictionary
 #unpre
-} 1185044931
+} 1185584417
 
 
 # End of Notebook Database File

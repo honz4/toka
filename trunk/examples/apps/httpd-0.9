@@ -26,7 +26,7 @@
 #! ./httpd.toka /var/www/
 #! ---------------------------------------------------------------
 
-#args 1 = [ 1 arglist get-element ]
+#args 1 = [ 1 arglist array.get ]
           [ DEFAULT-DOCROOT ] ifTrueFalse
 is-data docroot
 #! ---------------------------------------------------------------
@@ -135,7 +135,7 @@ variable| socket connection |
  " \n "  is-data DELIMS
 
  4 chars is-array REQUEST 
- 0 3 REQUEST put-char-element   ( Add a null byte to the REQUEST array )
+ 0 3 REQUEST array.putChar   ( Add a null byte to the REQUEST array )
 
 
 #! ---------------------------------------------------------------

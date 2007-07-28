@@ -3,7 +3,7 @@
 <body>
 
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="first_steps.html">First Steps</a> | Previous Page: <a href="files.html">Files</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="lesson_5.html">Lesson 5</a> | Previous Page: <a href="extending_the_language.html">Extending the Language</a></p>
 
 <hr>
 
@@ -44,22 +44,46 @@ This is just a simple wrapper over ftell().
 
 <h2>Primitives Provided</h2>
 
-<pre>file.open
-file.close
-file.read
-file.write
-file.size
-file.seek
-file.pos
+<pre>file.open  ( $m-n )  Open a specified file with
+                     the specified mode.
+file.close ( n- )    Close the specified file handle
+file.read  ( nbl-r ) Read 'l' bytes into buffer 'b'
+                     from file handle 'n'. Returns
+                     the number of bytes read.
+file.write ( nbl-w ) Write 'l' bytes from buffer 'b'
+                     to file handle 'n'. Returns
+                     the number of bytes written.
+file.size  ( n-s )   Return the size (in bytes)
+                     of the specified file.
+file.seek  ( nom-a ) Seek a new position in the
+                     file. Valid modes are
+                     START, CURRENT, and END. These
+                     have values of 1, 2, and 3.
+file.pos   ( n-a )   Return a pointer to the current
+                     offset into the file.
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>"R"         ( -x )   Mode for file.open
+"R+"        ( -x )   Mode for file.open
+"W"         ( -x )   Mode for file.open
+"W+"        ( -x )   Mode for file.open
+"A"         ( -x )   Mode for file.open
+"A+"        ( -x )   Mode for file.open
+START       ( -x )   Mode for file.seek
+CURRENT     ( -x )   Mode for file.seek
+END         ( -x )   Mode for file.seek
+file.slurp  ( $-a )  Read a file into a dynamically allocated buffer 
 </pre>
 
 
 <hr>
 
-<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="first_steps.html">First Steps</a> | Previous Page: <a href="files.html">Files</a></p>
+<p><b>toka.nbk:</b> <a href="home.html">Home</a> | <a href="index.html">Index</a> | Next Page: <a href="lesson_5.html">Lesson 5</a> | Previous Page: <a href="extending_the_language.html">Extending the Language</a></p>
 
 <hr>
 
-<p><i>Notebook exported on Tuesday, 17 July 2007, 17:53:03 PM EDT</i></p>
+<p><i>Notebook exported on Friday, 27 July 2007, 21:04:36 PM EDT</i></p>
 
 </body></html>

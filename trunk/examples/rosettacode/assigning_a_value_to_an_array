@@ -1,1 +1,1 @@
- 1000 10 array put-element    ( number index array -- )
+ 1000 10 array array.put    ( number index array -- )

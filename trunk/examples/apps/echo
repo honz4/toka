@@ -8,4 +8,4 @@
 #!   Add -n flag (no trailing newline)
 #! ================================================
 
-[ #args [ i arglist get-element type space ] +iterate cr bye ] invoke
+[ #args [ i arglist array.get type space ] +iterate cr bye ] invoke

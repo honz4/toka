@@ -6,11 +6,11 @@
  {
    variable source
    [ swap source ! >r reset r>
-     [ i source @ get-element
+     [ i source @ array.get
        dup 2 mod 0 <> [ drop ] ifTrue 
      ] iterate
-     depth [ i even put-element ] +iterate
+     depth [ i even array.put ] +iterate
    ]
  } is copy-even
- 10 [ i i table put-element ] iterate
+ 10 [ i i table array.put ] iterate
  table 10 copy-even
