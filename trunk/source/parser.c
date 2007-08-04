@@ -257,7 +257,7 @@ void include()
 {
   char *s;
 
-  if (parser == TRUE)
+  if (PARSING)
   {
     s = gc_alloc(256, sizeof(char), GC_TEMP);
     get_token(s, 32); DROP;
@@ -292,7 +292,7 @@ void needs()
   d = gc_alloc(384, sizeof(char), GC_TEMP);
   strcpy(d, LIBRARY);
 
-  if (parser == TRUE)
+  if (PARSING)
   {
     s = gc_alloc(256, sizeof(char), GC_TEMP);
     get_token(s, 32); DROP;

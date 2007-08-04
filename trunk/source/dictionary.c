@@ -69,7 +69,7 @@ void name_attach(void *class)
   char *s;
   Inst xt;
 
-  if (parser == TRUE)
+  if (PARSING)
   {
     s = gc_alloc(128, sizeof(char), GC_TEMP);
     get_token(s, 32); DROP;
@@ -176,7 +176,7 @@ void return_quote()
 
   char *s;
 
-  if (parser == TRUE)
+  if (PARSING)
   {
     s = gc_alloc(128, sizeof(char), GC_TEMP);
     get_token(s, 32);

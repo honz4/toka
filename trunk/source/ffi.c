@@ -92,7 +92,7 @@ void ffi_from()
 {
   char *scratch;
 
-  if (parser == TRUE)
+  if (PARSING)
   {
     scratch = gc_alloc(256, sizeof(char), GC_TEMP);
     get_token(scratch, 32); DROP;
@@ -127,7 +127,7 @@ void ffi_import()
   long args, xt;
   char *scratch;
 
-  if (parser == TRUE)
+  if (PARSING)
   {
     scratch = gc_alloc(256, sizeof(char), GC_TEMP);
     get_token(scratch, 32); DROP;
@@ -176,7 +176,7 @@ void ffi_import()
 void ffi_rename()
 {
   char *name;
-  if (parser == TRUE)
+  if (PARSING)
   {
     name = gc_alloc(256, sizeof(char), GC_TEMP);
     get_token(name, 32); DROP;

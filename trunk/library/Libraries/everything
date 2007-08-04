@@ -4,7 +4,6 @@ needs case
 needs conditionals
 needs console
 needs ctype
-needs debug
 needs floats
 needs math
 needs quotes
@@ -14,6 +13,7 @@ needs sockets
 needs console
 needs ctype
 needs math
+needs quotes
 needs regex
 needs shell
 needs sockets
