@@ -9,6 +9,7 @@
 #define ON   -1
 #define OFF   0
 #define COMPILING compiler == ON
+#define PARSING parser == ON
 
 typedef void (*Inst)();
 
