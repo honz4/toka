@@ -18,7 +18,7 @@ building for specific targets.
 
 <p>CPUs: x86, x86-64, ARM, MIPS, Itanium
 </p>
-<p>OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin, OpenSolaris
+<p>OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin, OpenSolaris, Windows (Win32)
 </p>
 <hr>
 <h2>Linux</h2>
@@ -74,7 +74,20 @@ under Cygwin at this time.
 <p>Supported CPUs: x86
 </p>
 <p>Only tested under Nexenta GNU/Solaris distribution but builds and works
-fine.</p>
+fine.
+</p>
+<hr>
+<h2>Windows</h2>
+
+<p>Supported CPUs: x86
+</p>
+<p>Toka can now be built under Windows. Install Cygwin, and edit the
+Makefile to select the proper PLATFORM line. Build and copy toka.exe and
+bootstrap.toka to a c:\toka directory.
+</p>
+<p>Note that not all of the library works at this time, though we will try to
+fully support it in the future.
+</p>
 
 <hr>
 
@@ -82,6 +95,6 @@ fine.</p>
 
 <hr>
 
-<p><i>Notebook exported on Saturday, 28 July 2007, 10:55:53 AM EDT</i></p>
+<p><i>Notebook exported on Saturday,  4 August 2007, 21:48:57 PM EDT</i></p>
 
 </body></html>

@@ -37,7 +37,7 @@ toka:
 clean:
 	rm -f `find . | grep \~ `
 	rm -f source/*.o source/a.out
-	rm -f toka test.log
+	rm -f toka toka.exe test.log
 
 install: toka
 	cp toka /usr/bin
