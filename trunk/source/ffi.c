@@ -24,8 +24,6 @@
 
 #ifdef WIN32
 #include <Windows.h>
-#define dlopen LoadLibrary
-#define dlsym GetProcAddress
 #endif
 
 extern Inst *heap;
@@ -111,7 +109,13 @@ void ffi_from()
     scratch = (char *)TOS; DROP;
   }
 
+#ifdef UNIX
   library = dlopen(scratch, RTLD_LAZY);
+#endif
+
+#ifdef WIN32
+  library = LoadLibrary(scratch);
+#endif
 
   if (library == NULL)
   {
@@ -147,7 +151,14 @@ void ffi_import()
   }
 
   args = TOS; DROP;
+
+#ifdef UNIX
   xt = (long)dlsym(library, scratch);
+#endif
+
+#ifdef WIN32
+  xt = (long)GetProcAddress(library, scratch);
+#endif
 
   if (xt != (long)NULL)
   {
