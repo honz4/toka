@@ -17,7 +17,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef UNIX
 #include <dlfcn.h>
+#endif
+
+#ifdef WIN32
+#include <Windows.h>
+#define dlopen LoadLibrary
+#define dlsym GetProcAddress
+#endif
 
 extern Inst *heap;
 extern long stack[], sp;

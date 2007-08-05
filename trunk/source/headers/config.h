@@ -9,7 +9,6 @@
 #endif
 
 #ifdef WIN32
-#define NOFFI
 #define LIBRARY "c:\\toka\\library\\"
 #define BOOTSTRAP "c:\\toka\\bootstrap.toka"
 #endif
