@@ -59,8 +59,7 @@ The words provided are:
 * The command line arguments are stored in an array (*arglist*).
 ** At 0 is the name of the script
 ** Actual arguments start at 1.
-* Be careful not to exceed the length of your array when giving an index
-} 1185584494
+* Be careful not to exceed the length of your array when giving an index} 1185584494
 
 
 #--------------------------------------------------
@@ -133,8 +132,7 @@ Example:
  foo 10 .array
  foo 10 bsort
  foo 10 .array
-#unpre
-} 1185584533
+#unpre} 1185584533
 
 
 #--------------------------------------------------
@@ -681,8 +679,7 @@ array.putChar     ( nia- )  Put char-size value 'n' into element 'i' of
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
-#unpre
-} 1185584567
+#unpre} 1185584567
 
 
 #--------------------------------------------------
@@ -3098,8 +3095,7 @@ Example:
   ." Test 2: Search for [Hh]ello in: " test2 type cr
   preg test2 2 pmatch try-regex
   [ 0 pmatch array.get test2 + type cr ] [ ." No match found\n" ] ifTrueFalse
-#unpre
-} 1185584592
+#unpre} 1185584592
 
 
 #--------------------------------------------------
@@ -3182,8 +3178,7 @@ wanted to display each of the script arguments, we could do:
 
 #pre
   #args [ i arglist array.get type cr ] +iterate
-#unpre
-} 1185584612
+#unpre} 1185584612
 
 
 #--------------------------------------------------
@@ -3527,8 +3522,7 @@ in a string:
 * It is possible (though not likely) to have a <b>char-size</b> larger
   than one byte.
 * Use <b>c@</b> and <b>c!</b> when manipulating <b>char-size</b> elements.
-* Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).
-} 1185584654
+* Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).} 1185584654
 
 
 #--------------------------------------------------
@@ -3546,36 +3540,36 @@ allow for many common actions to be done quickly and easily.
  Provides:
    Data:    $[cr]     $[lf]
    Words:
-            grow-string
+            string.grow
             ( an-b )  
             Allocate a new string 'n' chars longer than the original
             'a' and copy the original string to it. Returns a pointer
             to the new string ('b').
 
-            append-string
+            string.append
             ( ab-c )
             Combine strings 'a' and 'b' into a new string 'c'. This
             allocates the necessary space for the new string
             automatically.
 
-            clone-string
+            string.clone
             ( a-b )
             Create a new string ('b') identical to string 'a'. Space
             is allocated automatically.
 
-            string-find-token
+            string.findToken
             ( ac-b )
             Search for character 'c' in string 'a'. Returns a new
             string containing everything up to, but not including
             'c'.
 
-            string-find-substring
+            string.findSubstring
             ( ab-c )
             Search for string 'b' in string 'a'. Return a new string
             'c' starting with string 'b' and containing the rest of
             string 'a'.
 
-            string-find-char
+            string.findChar
             ( ac-b )
             Search string 'a' for character 'c'. Return a new string
             'b' that starts with character 'c'.
@@ -3594,7 +3588,8 @@ allow for many common actions to be done quickly and easily.
             ( a-b )
             Append a carriage return (ascii 10) to a string. Returns
             a new string.
-#unpre} 1177901521
+#unpre
+} 1185634522
 
 
 #--------------------------------------------------
@@ -4510,8 +4505,7 @@ words-within ( n- )  Display all words with a specified class #
 :quotes  ( - )       Display all named quotes
 :datas   ( - )       Display all named data items
 words    ( - )       Display all names in the dictionary
-#unpre
-} 1185584417
+#unpre} 1185584417
 
 
 # End of Notebook Database File
