@@ -2,7 +2,7 @@
 #! of creating a defining word such as the following will work: 
 
 [ ( n "name" -- n+1 )
-  dup is-data 1+ ] is enum
+  dup is-data 1 + ] is enum
 
 
 #! This word defines a new constant of the value specified and returns the next 

@@ -2,7 +2,7 @@
 
  needs ctype
  
- [ i 1- ] is I
+ [ i 1 - ] is I
  [ count [ dup I + c@ toupper over I + c! ] +iterate ] is >upper
  [ count [ dup I + c@ tolower over I + c! ] +iterate ] is >lower
  

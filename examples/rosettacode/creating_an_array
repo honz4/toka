@@ -6,4 +6,4 @@
 
  3 cells is-array foo
  reset
- 1 2 3 depth [ i 1- foo array.put ] iterate
+ 1 2 3 depth [ i 1 - foo array.put ] iterate

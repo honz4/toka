@@ -25,7 +25,7 @@
 
  [ ( source dest -- ) 
    swap file.slurp dup 0 <>
-   [ >r "W" file.open dup r> count 1- file.write drop file.close ] ifTrue
+   [ >r "W" file.open dup r> count 1 - file.write drop file.close ] ifTrue
  ] is copy-file
 
 #! And a test: 
