@@ -13,9 +13,9 @@
 #! whileTrue 
 #! Repeatedly executes a quote until the quote returns true. 
 
-100 [ dup . 1- dup 0 <> ] whileTrue
+100 [ dup . 1 - dup 0 <> ] whileTrue
 
 
 #! whileFalse 
 #! Repeatedly executes a quote until the quote returns true. 
-0 [ dup . 1+ dup 101 = ] whileFalse
+0 [ dup . 1 + dup 101 = ] whileFalse

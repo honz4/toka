@@ -1,7 +1,7 @@
  ( array count function -- )
  {
    variable| array fn |
-   [ i 1- array @ ] is I
+   [ i 1 - array @ ] is I
    [ fn ! swap array ! [ I array.get fn @ invoke I array.put ] +iterate ]
  } is map-array
  
@@ -14,4 +14,4 @@
  14 4 a array.put
  
  ( Add 1 to each item in the array )
- a 5 ` 1+ map-array
+ a 5 ` 1 + map-array
