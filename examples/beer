@@ -11,7 +11,7 @@
 
 #! Wrap it all up
 [ .bottles beer wall .bottles beer cr 
-  take 1- .bottles beer wall cr cr
+  take 1 - .bottles beer wall cr cr
 ] is sing
 
 #! Sing the song

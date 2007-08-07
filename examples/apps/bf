@@ -40,15 +40,15 @@ value| TP buffer loop-ptr |
 
 [ to buffer
   [ buffer c@ switch
-    char: > [ TP 1+ to TP ] case
-    char: < [ TP 1- to TP ] case 
-    char: + [ this c@ 1+ this c! ] case
-    char: - [ this c@ 1- this c! ] case
+    char: > [ TP char+ to TP ] case
+    char: < [ TP char- to TP ] case 
+    char: + [ this c@ char+ this c! ] case
+    char: - [ this c@ char- this c! ] case
     char: . [ this c@ emit ] case
     char: , [ getkey this c! ] case
     char: [ [ buffer to loop-ptr ] case
     char: ] [ this c@ 0 <> [ loop-ptr to buffer ] ifTrue ] case
-    buffer 1+ to buffer
+    buffer char+ to buffer
     buffer c@ 0 <>
   ] whileTrue
   cr
