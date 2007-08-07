@@ -24,7 +24,7 @@ rgb: ffffff to color
 [ x 1 < [ 1 to x ] ifTrue
   y 1 < [ 1 to y ] ifTrue
   x max-x > [ max-x to x ] ifTrue
-  y max-y 1- > [ max-y 1- to y ] ifTrue
+  y max-y 1 - > [ max-y 1 - to y ] ifTrue
 ] is check-bounds
 
 100 100 sdl_setup drop

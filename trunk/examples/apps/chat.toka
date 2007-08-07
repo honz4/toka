@@ -29,7 +29,7 @@ needs strings
 #! Global Data && Utilities
 from libc.so.6
 3 import memset     #! void *memset(void *s, int c, size_t n);
- [ count 1- ] is count
+ [ count char- ] is count
 
 #! Handle Host connection. 
 

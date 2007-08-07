@@ -6,12 +6,13 @@
 #!   should follow the ANS standard when possible) in Toka.
 #! ==========================================================
 #! Done so far:
-#!   : ; ;immediate s" type for next \ .s words if else then
+#!   : ; ;immediate s" type for next \ .s if else then
 #!   unpack parse see
 #!
 #! Buggy:
 #!
 #! Things from Toka that need no changes:
+#!   words
 #!   variable value to @ ! +! -! dup drop swap rot over 2dup
 #!   2drop tuck nip = < > <> bye emit + - * /mod / mod 
 #!   on off toggle >> << not negate and or xor clear cr
@@ -28,12 +29,11 @@
 [ ` ] invoke ` iterate compile ] is-macro next
 
 : s" escape-sequences on
-  ` " invoke count 1- compiler @ [ $# ] ifTrue 
+  ` " invoke count char- compiler @ [ $# ] ifTrue 
   escape-sequences off
 ;immediate
-: type for dup c@ emit 1+ next drop ;
+: type for dup c@ emit char+ next drop ;
 
-: words :names ;
 : .s :stack ;
 : \\ lnparse drop ;immediate
 
@@ -41,7 +41,7 @@
 : else ` ] invoke drop TRUE ` [ invoke ;immediate
 : then ` ] invoke [ ` ifTrueFalse compile ] [ ` ifTrue compile ] ifTrueFalse ;immediate
 
-: unpack count 1- ;
+: unpack count char- ;
 : parse parse unpack ;
 
 : see ` ` invoke :see ;
