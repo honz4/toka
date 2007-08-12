@@ -56,5 +56,5 @@ tests:
 
 docs:
 	chmod +x scripts/*
-	cd source && ../scripts/tokadoc
+	cd source && ../scripts/tokadoc-c
 	cd source && mv FUNCTIONS GLOSSARY ../doc

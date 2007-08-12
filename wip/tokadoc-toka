@@ -1,0 +1,3 @@
+#! /bin/bash
+cat * | grep \#\!\ \|F\|  | colrm 1 7 >TOKA_FUNCTIONS
+cat * | grep \#\!\ \|G\|  | colrm 1 7 >TOKA_GLOSSARY

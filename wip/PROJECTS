@@ -1,0 +1,50 @@
+Current Projects
+==============================================
+This directory contains a variety of things I
+am working on, but which are not complete 
+enough to merge into the main sections of the
+Toka codebase and library.
+
+Not all of these will prove useful, and many
+may be of very limited scope for people other
+than myself.
+==============================================
+
+
+= tokadoc-toka =
+This is a varient of the simple tokadoc-c script,
+which looks for comments taking one of the following
+forms:
+
+
+  #! |F| ........description...............
+
+  #! |G| name ( stack ) description........
+
+These are put into TOKA_FUNCTIONS (for |F|) and
+TOKA_GLOSSARY (for |G|).
+
+The goal is to be able to document libraries and
+applications using the same approach used for the 
+C parts of Toka.
+==============================================
+
+= enum =
+This adds support for basic enumerated constants.
+
+Example:
+
+  1 enum| a b c d e |
+  213 enum| f g h i |
+
+It may be added to the bootstrap, or moved into a
+new or existing library module in the future.
+==============================================
+
+= build_pkg =
+This is the start of a set of scripts and tools
+to automate the building of .deb, .rpm, and other
+packaging formats for the nightly builds of Toka.
+
+It is no where near complete enough at this time.
+==============================================

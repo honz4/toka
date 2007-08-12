@@ -1,0 +1,13 @@
+#! /bin/sh
+cp ../../../toka root/usr/bin
+cp ../../../bootstrap.toka root/usr/share/toka
+cp ../../../book/* root/usr/share/doc/toka
+cp ../../../library/Libraries/strings root/usr/share/toka/library
+cd root
+tar cf ../data.tar .
+cd ..
+gzip -9 data.tar
+
+rm -f root/usr/bin/* root/usr/share/toka/* root/usr/share/doc/toka/* root/usr/share/toka/library/*
+
+ar cr toka.deb debian-binary control.tar.gz data.tar.gz
