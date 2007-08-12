@@ -304,7 +304,25 @@ variable| #requests |
 
 [ ( - )   " <form id=\"main\" action=\"browse\" method=\"get\">\n" send ] is form-begin
 [ ( - )   " </form>\n" send ] is form-end
-[ ( $- )  " <option>" send send " </option>" send ] is <option>
+
+
+2 malloc is-data output
+value source
+[ ( $- )
+  dup to source
+  count char- nip
+  [
+    i char- source array.getChar   
+    switch
+      char: < [ " &lt;" send break ] case
+      char: > [ " &gt;" send break ] case
+      char: & [ " &amp;" send break ] case
+      [ <cond> 0 output array.putChar output send ] default 
+  ] +iterate
+] is send-with-escapes
+
+[ ( $- )  " <option>" send send-with-escapes " </option>" send ] is <option>
+
 
 [ ( - )
   " <select name=\"word\" style=\"width: 200px;\" size=\"20\" onchange=\"javascript:document.getElementById('main').submit();\">\n" send
