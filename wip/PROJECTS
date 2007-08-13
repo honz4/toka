@@ -48,3 +48,14 @@ packaging formats for the nightly builds of Toka.
 
 It is no where near complete enough at this time.
 ==============================================
+
+= httpd-listener =
+This is a fairly large project seeking to add a
+web-based frontend to Toka. Work on the first 
+stage (allowing you to select documentation,
+and eventually view source, for any word in the
+core or bootstrap) is under way.
+
+Later I hope to allow use of it to extend and
+document a running Toka instance, with some
+debugging facilities.
