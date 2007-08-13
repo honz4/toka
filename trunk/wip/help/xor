@@ -1,3 +1,3 @@
-<div class="name"></div>
-<div class="stack">-</style>
-<div class="description"></description>
+<div class="name">xor</div>
+<div class="stack">ab-c</style>
+<div class="description">Perform a bitwise XOR</description>
