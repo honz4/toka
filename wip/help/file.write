@@ -1,3 +1,0 @@
-<div class="name">file.write</div>
-<div class="stack">nbl-w</style>
-<div class="description">Write 'l' bytes from buffer 'b' to file 'n'. Return the number of bytes written.</description>

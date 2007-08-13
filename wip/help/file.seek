@@ -1,4 +1,0 @@
-<div class="name">file.seek</div>
-<div class="stack">nom-a</style>
-<div class="description">Seek a new position in the file. Valid modes are
-                        START, CURRENT, and END.</description>

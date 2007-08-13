@@ -1,0 +1,25 @@
+{
+  value top 1 to top
+  4096 cells is-array names
+  4096 cells is-array docstrings
+
+  [ keep top names array.put ] is +name
+  [ keep top docstrings array.put ] is +docstring
+  [ top 1 + to top ] is next
+
+  [ ( $- )
+    wsparse +name +docstring next ] is document:
+   value which
+  [ ( $- )
+    to which
+    top 1 - [ i names array.get which strcmp 0 = [ i docstrings array.get send ] ifTrue ] +iterate
+  ] is :help
+
+  ` document:
+  ` :help
+}
+
+is :help
+is document:
+
+include help.toka
