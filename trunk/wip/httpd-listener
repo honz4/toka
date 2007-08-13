@@ -25,6 +25,8 @@
 #! of the MIT/X11 License.
 #! ---------------------------------------------------------------
 
+{
+
 #! =============================================================== LIBRARIES NEEDED
 needs strings
 needs sockets
@@ -57,18 +59,10 @@ is-data docroot
 #! ---------------------------------------------------------------
 
 #! ---------------------------------------------------------------
-#! 404
-#! Sent when a page is not found.
+#! UNKNOWN
+#! Sent when help for a word is not found.
 #! ---------------------------------------------------------------
-[ 
-  " <html>
-    <head><title>toka-httpd: 404 Page not found</title></head>
-    <body>
-    <h1>Error 404</h1>
-    <p>Sorry, but the page you requested was not found.</p>
-    </body>
-    </html>"
-] is ERROR404
+[ " <p>Sorry, but the word you requested has no help.</p>" ] is UNKNOWN
 
 
 #! =============================================================== SOCKET I/O
@@ -115,7 +109,7 @@ variable| socket connection |
 #! the file can be slurp'd into a buffer. If it fails, a 404 page
 #! is sent instead.
 #! ---------------------------------------------------------------
-[ file.slurp dup FALSE <> [ send ] [ ERROR404 send ] ifTrueFalse ] is send?
+[ file.slurp dup FALSE <> [ send ] [ UNKNOWN send ] ifTrueFalse ] is send?
 
 
 #! ---------------------------------------------------------------
@@ -225,7 +219,14 @@ variable| #requests |
 ] is log-request
 
 
-[ " <html>\n<head>\n<title>Toka: Listener</title>\n</head>\n<body>\n" send ] is html-begin
+[ " <html>\n<head>\n<title>Toka: Listener</title>\n" send
+  " <style>\n" send
+    " .name { background: #cccccc; width: 600px%; }" send
+    " .stack { }" send
+    " .description { }" send
+  " </style>" send
+  " </head>\n<body>\n" send 
+] is html-begin
 [ " </body></html>" send ] is html-end
 
 [ ( - )   " <form id=\"main\" action=\"browse\" method=\"get\">\n" send ] is form-begin
@@ -255,11 +256,14 @@ value source
   " </select>\n" send
 ] is select-word
 
+[ " help/" extract-filename count 13 chars > [ 12 chars + ] ifTrue string.append send? ] is display-help
+
 [ html-begin
   form-begin
-  " <table>\n<tr><td>" send
+  " <table width='800px'>\n<tr><td width='200px'>" send
   select-word
-  " </td><td valign=top><h1>" send extract-filename count 13 > [ 12 + ] ifTrue send " </h1></td>" send
+  " </td><td valign=top width='600px'>" send 
+  display-help " </td>" send
   " </tr></table>" send
   form-end
   html-end
@@ -277,5 +281,7 @@ value source
   end-connection
   reset
   TRUE
-] keep whileTrue
+] keep
+}
+ whileTrue
 bye
