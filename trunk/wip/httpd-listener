@@ -76,7 +76,6 @@ is-data docroot
 #! ---------------------------------------------------------------
 1024 chars is-data 1KiB
 1KiB is-array buffer
-1KiB is-array cgi-cmd
 1KiB is-array scratch
 
 
@@ -194,32 +193,6 @@ variable| socket connection |
 
 
 #! ---------------------------------------------------------------
-#! Build command lines for CGI purposes
-#!
-#! This provides:
-#!   cgi:perl
-#!   cgi:php
-#!   cgi:toka
-#!
-#! The output from CGI scripts will be captured in a CGIOUT file.
-#! ---------------------------------------------------------------
-docroot " CGIOUT" string.append is-data CGIOUT
-
-[ 
-  cgi-cmd " %s %s%s >%s" " perl" docroot obtain-filename CGIOUT sprintf
-  cgi-cmd system
-] is cgi:perl
-[ 
-  cgi-cmd " %s %s%s >%s" " php" docroot obtain-filename CGIOUT sprintf
-  cgi-cmd system
-] is cgi:php
-[ 
-  cgi-cmd " %s %s%s >%s" " toka" docroot obtain-filename CGIOUT sprintf
-  cgi-cmd system
-] is cgi:toka
-
-
-#! ---------------------------------------------------------------
 #! text-file
 #! Default handler for any type of text file. This is factored
 #! out from return-requested.
@@ -230,53 +203,6 @@ docroot " CGIOUT" string.append is-data CGIOUT
 
 
 #! =============================================================== REQUEST HANDLING, PART 2
-#! check-type-cgi
-#! Check for CGI file types
-#! ---------------------------------------------------------------
-[
-  [ cgi:perl CGIOUT ] " *.pl"   check-type
-  [ cgi:php  CGIOUT ] " *.php"  check-type
-  [ cgi:toka CGIOUT ] " *.toka" check-type
-] is check-type-cgi
-
-
-#! ---------------------------------------------------------------
-#! check-type-text
-#! Check for text (ascii, html, svg, etc) file types
-#! ---------------------------------------------------------------
-[
-  [ text-file ] " *.html" check-type
-  [ text-file ] " *.txt"  check-type
-  [ text-file ] " *.svg"  check-type
-  [ text-file ] " *.css"  check-type
-  [ text-file ] " *.shar" check-type
-] is check-type-text
-
-
-#! ---------------------------------------------------------------
-#! return-requested
-#! Append the requested filename to the docroot
-#!
-#! If a CGI script, this will return the output instead.
-#! ---------------------------------------------------------------
-[ 
-  check-type-cgi
-  check-type-text
-] is return-requested
-
-
-#! ---------------------------------------------------------------
-#! string-case Statement to handle Client Request
-#! When this handles messages other than GET, we may achieve 
-#! HTTP/1.0 compatibility.
-#! ---------------------------------------------------------------
-[ split-request
-  switch
-  GET  [ return-requested send? ] string-case
-] is check-request
-
-
-
 
 #! =============================================================== LOGGING
 #! Log requests to stdout.
@@ -306,7 +232,7 @@ variable| #requests |
 [ ( - )   " </form>\n" send ] is form-end
 
 
-2 malloc is-data output
+2 chars is-array output
 value source
 [ ( $- )
   dup to source
@@ -320,7 +246,6 @@ value source
       [ <cond> 0 output array.putChar output send ] default 
   ] +iterate
 ] is send-with-escapes
-
 [ ( $- )  " <option>" send send-with-escapes " </option>" send ] is <option>
 
 
@@ -332,21 +257,22 @@ value source
 
 [ html-begin
   form-begin
+  " <table>\n<tr><td>" send
   select-word
+  " </td><td valign=top><h1>" send extract-filename count 13 > [ 12 + ] ifTrue send " </h1></td>" send
+  " </tr></table>" send
   form-end
   html-end
 ] is send-table
 
 
 #! =============================================================== MAIN LOOP
-." Docroot set to: " docroot type cr 
-." ---------- Starting Toka HTTP Daemon ----------\n"
+." ---------- Starting Toka HTTP Listener ----------\n"
 
 [
   new-connection
   get-request 
   log-request
-(  check-request )
   send-table
   end-connection
   reset
