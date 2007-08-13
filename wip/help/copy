@@ -1,3 +1,3 @@
-<div class="name"></div>
-<div class="stack">-</style>
-<div class="description"></description>
+<div class="name">copy</div>
+<div class="stack">sdc-</style>
+<div class="description">Copy 'c' bytes from 's' to 'd'</description>

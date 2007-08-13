@@ -1,3 +1,3 @@
-<div class="name"></div>
-<div class="stack">-</style>
-<div class="description"></description>
+<div class="name">last</div>
+<div class="stack">-a</style>
+<div class="description">Variable holding the number of the most recent dictionary entry</description>
