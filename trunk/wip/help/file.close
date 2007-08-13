@@ -1,3 +1,3 @@
-<div class="name"></div>
-<div class="stack">-</style>
-<div class="description"></description>
+<div class="name">file.close</div>
+<div class="stack">n-</style>
+<div class="description">Close an open file</description>
