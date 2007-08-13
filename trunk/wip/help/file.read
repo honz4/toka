@@ -1,3 +1,0 @@
-<div class="name">file.read</div>
-<div class="stack">nbl-r</style>
-<div class="description">Read 'l' bytes from file 'n' into buffer 'b'. Return the number of bytes read.</description>

@@ -1,4 +1,0 @@
-<div class="name">parse</div>
-<div class="stack">d-a</style>
-<div class="description">Parse until the character represented by 'd' is found.
-                         Return a pointer to the string</description>

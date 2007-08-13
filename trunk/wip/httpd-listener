@@ -104,15 +104,6 @@ variable| socket connection |
 
 
 #! ---------------------------------------------------------------
-#! send?
-#! Attempt to send a file to the client. This will only succeed if
-#! the file can be slurp'd into a buffer. If it fails, a 404 page
-#! is sent instead.
-#! ---------------------------------------------------------------
-[ file.slurp dup FALSE <> [ send ] [ UNKNOWN send ] ifTrueFalse ] is send?
-
-
-#! ---------------------------------------------------------------
 #! get-request
 #! This reads a client request of up to 1k into the buffer. The
 #! number of bytes read is returned.
@@ -256,7 +247,8 @@ value source
   " </select>\n" send
 ] is select-word
 
-[ " help/" extract-filename count 13 chars > [ 12 chars + ] ifTrue string.append send? ] is display-help
+include helpdb
+[ extract-filename count 13 chars > [ 12 chars + ] ifTrue :help ] is display-help
 
 [ html-begin
   form-begin
