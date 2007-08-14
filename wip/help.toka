@@ -8,229 +8,229 @@
 
 " <div class='name'>&lt;&lt;</div>
   <div class='stack'>ab-c</div>
-  <div class='description'></div>
+  <div class='description'>Shift 'a' left by 'b' bits</div>
   <div class='source'></div>
 " document: %3C%3C
 
 " <div class='name'>&gt;&gt;</div>
   <div class='stack'>ab-c</div>
-  <div class='description'></div>
+  <div class='description'>Shift 'a' right by 'b' bits</div>
   <div class='source'></div>
 " document: %3E%3E
 
 " <div class='name'>and</div>
   <div class='stack'>ab-c</div>
-  <div class='description'></div>
+  <div class='description'>Perform a bitwise AND</div>
   <div class='source'></div>
 " document: and
 
 " <div class='name'>or</div>
   <div class='stack'>ab-c</div>
-  <div class='description'></div>
+  <div class='description'>Perform a bitwise OR</div>
   <div class='source'></div>
 " document: or
 
 " <div class='name'>xor</div>
   <div class='stack'>ab-c</div>
-  <div class='description'></div>
+  <div class='description'>Perform a bitwise XOR</div>
   <div class='source'></div>
 " document: xor
 
 " <div class='name'>#args</div>
   <div class='stack'>-n</div>
-  <div class='description'></div>
+  <div class='description'>Return the number of arguments</div>
   <div class='source'></div>
 " document: %23args
 
 " <div class='name'>arglist</div>
   <div class='stack'>-a</div>
-  <div class='description'></div>
+  <div class='description'>Return a pointer to the argument list</div>
   <div class='source'></div>
 " document: arglist
 
 " <div class='name'>&lt;</div>
   <div class='stack'>ab-f</div>
-  <div class='description'></div>
+  <div class='description'>Compare 'a' and 'b', return a flag</div>
   <div class='source'></div>
 " document: %3C
 
 " <div class='name'>&gt;</div>
   <div class='stack'>ab-f</div>
-  <div class='description'></div>
+  <div class='description'>Compare 'a' and 'b', return a flag</div>
   <div class='source'></div>
 " document: %3E
 
 " <div class='name'>=</div>
   <div class='stack'>ab-f</div>
-  <div class='description'></div>
+  <div class='description'>Compare 'a' and 'b', return a flag</div>
   <div class='source'></div>
 " document: %3D
 
 " <div class='name'>&lt;&gt;</div>
   <div class='stack'>ab-f</div>
-  <div class='description'></div>
+  <div class='description'>Compare 'a' and 'b', return a flag</div>
   <div class='source'></div>
 " document: %3C%3E
 
 " <div class='name'>.</div>
   <div class='stack'>n-</div>
-  <div class='description'></div>
+  <div class='description'>Display the numeric value on the top of the stack</div>
   <div class='source'></div>
 " document: .
 
 " <div class='name'>emit</div>
   <div class='stack'>c-</div>
-  <div class='description'></div>
+  <div class='description'>Display the ASCII character on the top of the stack</div>
   <div class='source'></div>
 " document: emit
 
 " <div class='name'>type</div>
   <div class='stack'>$-</div>
-  <div class='description'></div>
+  <div class='description'>Display a string</div>
   <div class='source'></div>
 " document: type
 
 " <div class='name'>bye</div>
   <div class='stack'>-</div>
-  <div class='description'></div>
+  <div class='description'>Exit Toka</div>
   <div class='source'></div>
 " document: bye
 
 " <div class='name'>#</div>
   <div class='stack'>n-</div>
-  <div class='description'></div>
+  <div class='description'>Push the following cell to the stack</div>
   <div class='source'></div>
 " document: %23
 
 " <div class='name'>$#</div>
   <div class='stack'>n-</div>
-  <div class='description'></div>
+  <div class='description'>Push the following cell to the stack</div>
   <div class='source'></div>
 " document: %24%23
 
 " <div class='name'>@</div>
   <div class='stack'>a-n</div>
-  <div class='description'></div>
+  <div class='description'>Fetch the value in memory location a</div>
   <div class='source'></div>
 " document: %40
 
 " <div class='name'>!</div>
   <div class='stack'>na-</div>
-  <div class='description'></div>
+  <div class='description'>Store a value to memory location a</div>
   <div class='source'></div>
 " document: %21
 
 " <div class='name'>c@</div>
   <div class='stack'>a-c</div>
-  <div class='description'></div>
+  <div class='description'>Fetch the character value in memory location a</div>
   <div class='source'></div>
 " document: c%40
 
-" <div class='name'>c!O2A</div>
+" <div class='name'>c!</div>
   <div class='stack'>ca-</div>
-  <div class='description'></div>
+  <div class='description'>Store a character value in memory location a</div>
   <div class='source'></div>
 " document: c%21
 
 " <div class='name'>copy</div>
   <div class='stack'>sdc-</div>
-  <div class='description'></div>
+  <div class='description'>Copy 'c' bytes from 's' to 'd'</div>
   <div class='source'></div>
 " document: copy
 
 " <div class='name'>cell-size</div>
   <div class='stack'>-n</div>
-  <div class='description'></div>
+  <div class='description'>Return the size of a cell (in bytes)</div>
   <div class='source'></div>
 " document: cell-size
 
 " <div class='name'>char-size</div>
   <div class='stack'>-n</div>
-  <div class='description'></div>
+  <div class='description'>Return the size of a character (in bytes)</div>
   <div class='source'></div>
 " document: char-size
 
 " <div class='name'>:stack</div>
   <div class='stack'>-</div>
-  <div class='description'></div>
+  <div class='description'>Display all values on the stack</div>
   <div class='source'></div>
 " document: %3Astack
 
 " <div class='name'>:stat</div>
   <div class='stack'>-</div>
-  <div class='description'></div>
+  <div class='description'>Display information about the Toka VM</div>
   <div class='source'></div>
 " document: %3Astat
 
 " <div class='name'>:see</div>
   <div class='stack'>$-</div>
-  <div class='description'></div>
+  <div class='description'>Decompile a word</div>
   <div class='source'></div>
 " document: %3Asee
 
 " <div class='name'>last</div>
   <div class='stack'>-a</div>
-  <div class='description'></div>
+  <div class='description'>Variable holding the number of the most recent dictionary entry</div>
   <div class='source'></div>
 " document: last
 
 " <div class='name'>is</div>
   <div class='stack'>$ &quot;-</div>
-  <div class='description'></div>
+  <div class='description'>Attach a name to a quote</div>
   <div class='source'></div>
 " document: is
 
 " <div class='name'>is-macro</div>
   <div class='stack'>$ &quot;-</div>
-  <div class='description'></div>
+  <div class='description'>Attach a name to a quote</div>
   <div class='source'></div>
 " document: is-macro
 
 " <div class='name'>is-data</div>
   <div class='stack'>$ &quot;-</div>
-  <div class='description'></div>
+  <div class='description'>Attach a name to a data element</div>
   <div class='source'></div>
 " document: is-data
 
 " <div class='name'>`</div>
   <div class='stack'>&quot;-a</div>
-  <div class='description'></div>
+  <div class='description'>Return a quote corresponding to the specified word.</div>
   <div class='source'></div>
 " document: %60
 
 " <div class='name'>:name</div>
   <div class='stack'>n-$</div>
-  <div class='description'></div>
+  <div class='description'>Return the name for a dictionary entry</div>
   <div class='source'></div>
 " document: %3Aname
 
 " <div class='name'>:xt</div>
   <div class='stack'>n-$</div>
-  <div class='description'></div>
+  <div class='description'>Return the address for a dictionary entry</div>
   <div class='source'></div>
 " document: %3Axt
 
 " <div class='name'>:class</div>
   <div class='stack'>n-$</div>
-  <div class='description'></div>
+  <div class='description'>Return the class number for a dictionary entry</div>
   <div class='source'></div>
 " document: %3Aclass
 
 " <div class='name'>from</div>
   <div class='stack'>&quot;-</div>
-  <div class='description'></div>
+  <div class='description'>Select a library to import from</div>
   <div class='source'></div>
 " document: from
 
 " <div class='name'>import</div>
   <div class='stack'>n &quot;-</div>
-  <div class='description'></div>
+  <div class='description'>Import a function taking 'n' arguments</div>
   <div class='source'></div>
 " document: import
 
 " <div class='name'>as</div>
   <div class='stack'>&quot;-</div>
-  <div class='description'></div>
+  <div class='description'>Rename the last defined word</div>
   <div class='source'></div>
 " document: as
 
