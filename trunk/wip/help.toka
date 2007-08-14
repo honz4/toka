@@ -885,26 +885,17 @@
   <div class='source'></div>
 " document: cell-
 
-
-
-
-end.
-
-
-
-[ dup @ rot + swap ! ] is +!
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>+!</div>
+  <div class='stack'>na-</div>
+  <div class='description'>Add 'n' to the value in variable 'a'</div>
   <div class='source'></div>
-" document:
+" document: %2B%21
 
-[ dup @ rot - swap ! ] is -!
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>-!</div>
+  <div class='stack'>na-</div>
+  <div class='description'>Subtract 'n' from the value in variable 'a'</div>
   <div class='source'></div>
-" document:
+" document: -%21
 
 " <div class='name'>on</div>
   <div class='stack'>a-</div>
@@ -930,24 +921,12 @@ end.
   <div class='source'></div>
 " document: variable
 
-[ parser off
-  [ wsparse
-    dup c@ char: | <>
-    [ variable TRUE ] [ drop FALSE ] ifTrueFalse
-  ] whileTrue
-  parser on
-] is variable|
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>variable|</div>
+  <div class='stack'>&quot;-</div>
+  <div class='description'>Create multiple variables</div>
   <div class='source'></div>
-" document:
+" document: variable%7C
 
-
-
-#! ---------------------------------------
-#! Numeric bases
-#! ---------------------------------------
 " <div class='name'>hex</div>
   <div class='stack'>-</div>
   <div class='description'>Set the numeric base to hexadecimal.</div>
@@ -972,52 +951,41 @@ end.
   <div class='source'></div>
 " document: octal
 
-
-
-#! ---------------------------------------
-#! File I/O
-#! ---------------------------------------
-[ 1 ] is "R"
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>&quot;R&quot;</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Mode for file.open</div>
   <div class='source'></div>
-" document:
+" document: %22R%22
 
-[ 2 ] is "R+"
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>&quot;R+&quot;</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Mode for file.open</div>
   <div class='source'></div>
-" document:
+" document: %22R%2B%22
 
-[ 3 ] is "W"
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>&quot;W&quot;</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Mode for file.open</div>
   <div class='source'></div>
-" document:
+" document: %22W%22
 
-[ 4 ] is "W+"
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>&quot;W+&quot;</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Mode for file.open</div>
   <div class='source'></div>
-" document:
+" document: %22W%2B%22
 
-[ 5 ] is "A"
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>&quot;A&quot;</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Mode for file.open</div>
   <div class='source'></div>
-" document:
+" document: %22A%22
 
-[ 6 ] is "A+"
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>&quot;A+&quot;</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Mode for file.open</div>
   <div class='source'></div>
-" document:
+" document: %22A%2B%22
 
 " <div class='name'>START</div>
   <div class='stack'>-n</div>
@@ -1043,88 +1011,61 @@ end.
   <div class='source'></div>
 " document: file.slurp
 
-
-
-#! ---------------------------------------
-#! Arrays
-#! ---------------------------------------
 " <div class='name'>is-array</div>
   <div class='stack'>n &quot;-</div>
   <div class='description'>Create a new array of size 'n'.</div>
   <div class='source'></div>
 " document: is-array
 
-[ swap cell-size * + @ ] is array.get
 " <div class='name'>array.get</div>
-  <div class='stack'></div>
-  <div class='description'></div>
+  <div class='stack'>ia-n</div>
+  <div class='description'>Fetch element 'i' from array 'a'</div>
   <div class='source'></div>
 " document: array.get
 
-[ swap cell-size * + ! ] is array.put
 " <div class='name'>array.put</div>
-  <div class='stack'></div>
-  <div class='description'></div>
+  <div class='stack'>nia-</div>
+  <div class='description'>Put 'n' into element 'i' of array 'a'</div>
   <div class='source'></div>
 " document: array.put
 
-[ swap char-size * + c@ ] is array.getChar
 " <div class='name'>array.getChar</div>
-  <div class='stack'></div>
-  <div class='description'></div>
+  <div class='stack'>ia-c</div>
+  <div class='description'>Fetch character 'c' from array 'a' at index 'i'</div>
   <div class='source'></div>
 " document: array.getChar
 
-[ swap char-size * + c! ] is array.putChar
 " <div class='name'>array.putChar</div>
-  <div class='stack'></div>
-  <div class='description'></div>
+  <div class='stack'>cia-</div>
+  <div class='description'>Put character 'c' into array 'a' at index 'i'</div>
   <div class='source'></div>
 " document: array.putChar
 
-
-
-#! ---------------------------------------
-#! Scope
-#! ---------------------------------------
-4 cells is-array <list>
 " <div class='name'>&lt;list&gt;</div>
   <div class='stack'>-a</div>
   <div class='description'>Array of scope pointers</div>
   <div class='source'></div>
-" document:
+" document: %3Clist%3E
 
 
-[ last @ <list> @ 1 + <list> array.put
-  1 <list> +!
-] is {
 " <div class='name'>{</div>
   <div class='stack'>-</div>
   <div class='description'>Create a new scope</div>
   <div class='source'></div>
-" document:
+" document: %7B
 
-[ 1 <list> -!
-  <list> @ 1 + <list> array.get last !
-] is }
 " <div class='name'>}</div>
   <div class='stack'>-</div>
   <div class='description'>Close the active scope</div>
   <div class='source'></div>
-" document:
+" document: %7D
 
-
-
-#! ---------------------------------------
-#! Make extending the language a little easier
-#! ---------------------------------------
-[ ` [ invoke >r swap # compile r> ` ] invoke parser @ [ swap ] ifFalse is ] is +action
 " <div class='name'>+action</div>
-  <div class='stack'></div>
-  <div class='description'></div>
+  <div class='stack'>aq &quot;-</div>
+  <div class='description'>Create a new word (") with the action of the
+                     specified quote (q) and data element (a)</div>
   <div class='source'></div>
-" document:
-
+" document: %2Baction
 
 " <div class='name'>value</div>
   <div class='stack'>&quot;-</div>
@@ -1138,54 +1079,38 @@ end.
   <div class='source'></div>
 " document: to
 
-[ parser off
-  [ wsparse
-    dup c@ char: | <>
-    [ value TRUE ] [ drop FALSE ] ifTrueFalse
-  ] whileTrue
-  parser on
-] is value|
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>value|</div>
+  <div class='stack'>&quot;-</div>
+  <div class='description'>Create multiple values</div>
   <div class='source'></div>
-" document:
+" document: value%7C
 
-
-
-#! ---------------------------------------
-#! Debugging Aids
-#! ---------------------------------------
 " <div class='name'>words-within</div>
   <div class='stack'>n-</div>
   <div class='description'>Display all words with a given class</div>
   <div class='source'></div>
 " document: words-within
 
-[ .PRIM_WORD words-within .PRIM_MACRO words-within ] is :prims
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>:prims</div>
+  <div class='stack'>-</div>
+  <div class='description'>Display all primitives</div>
   <div class='source'></div>
-" document:
+" document: %3Aprims
 
-[ .DATA words-within ] is :datas
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>:datas</div>
+  <div class='stack'>-</div>
+  <div class='description'>Display all data elements</div>
   <div class='source'></div>
-" document:
+" document: %3Adatas
 
-[ .WORD words-within .MACRO words-within ] is :quotes
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>:quotes</div>
+  <div class='stack'>-</div>
+  <div class='description'>Display all quotes</div>
   <div class='source'></div>
-" document:
+" document: %3Aquotes
 
 " <div class='name'>words</div>
   <div class='stack'>-</div>
   <div class='description'>Display all names in the dictionary</div>
   <div class='source'></div>
 " document: words
-
