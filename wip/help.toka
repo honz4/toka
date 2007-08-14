@@ -7,487 +7,487 @@
 )
 
 " <div class='name'>&lt;&lt;</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-c</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3C%3C
 
 " <div class='name'>&gt;&gt;</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-c</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3E%3E
 
 " <div class='name'>and</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-c</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: and
 
 " <div class='name'>or</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-c</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: or
 
 " <div class='name'>xor</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-c</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: xor
 
 " <div class='name'>#args</div>
-  <div class='stack'></div>
+  <div class='stack'>-n</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %23args
 
 " <div class='name'>arglist</div>
-  <div class='stack'></div>
+  <div class='stack'>-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: arglist
 
 " <div class='name'>&lt;</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-f</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3C
 
 " <div class='name'>&gt;</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-f</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3E
 
 " <div class='name'>=</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-f</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3D
 
 " <div class='name'>&lt;&gt;</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-f</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3C%3E
 
 " <div class='name'>.</div>
-  <div class='stack'></div>
+  <div class='stack'>n-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: .
 
 " <div class='name'>emit</div>
-  <div class='stack'></div>
+  <div class='stack'>c-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: emit
 
 " <div class='name'>type</div>
-  <div class='stack'></div>
+  <div class='stack'>$-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: type
 
 " <div class='name'>bye</div>
-  <div class='stack'></div>
+  <div class='stack'>-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: bye
 
 " <div class='name'>#</div>
-  <div class='stack'></div>
+  <div class='stack'>n-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %23
 
 " <div class='name'>$#</div>
-  <div class='stack'></div>
+  <div class='stack'>n-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %24%23
 
 " <div class='name'>@</div>
-  <div class='stack'></div>
+  <div class='stack'>a-n</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %40
 
 " <div class='name'>!</div>
-  <div class='stack'></div>
+  <div class='stack'>na-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %21
 
 " <div class='name'>c@</div>
-  <div class='stack'></div>
+  <div class='stack'>a-c</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: c%40
 
 " <div class='name'>c!O2A</div>
-  <div class='stack'></div>
+  <div class='stack'>ca-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: c%21
 
 " <div class='name'>copy</div>
-  <div class='stack'></div>
+  <div class='stack'>sdc-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: copy
 
 " <div class='name'>cell-size</div>
-  <div class='stack'></div>
+  <div class='stack'>-n</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: cell-size
 
 " <div class='name'>char-size</div>
-  <div class='stack'></div>
+  <div class='stack'>-n</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: char-size
 
 " <div class='name'>:stack</div>
-  <div class='stack'></div>
+  <div class='stack'>-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3Astack
 
 " <div class='name'>:stat</div>
-  <div class='stack'></div>
+  <div class='stack'>-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3Astat
 
 " <div class='name'>:see</div>
-  <div class='stack'></div>
+  <div class='stack'>$-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3Asee
 
 " <div class='name'>last</div>
-  <div class='stack'></div>
+  <div class='stack'>-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: last
 
 " <div class='name'>is</div>
-  <div class='stack'></div>
+  <div class='stack'>$ &quot;-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: is
 
 " <div class='name'>is-macro</div>
-  <div class='stack'></div>
+  <div class='stack'>$ &quot;-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: is-macro
 
 " <div class='name'>is-data</div>
-  <div class='stack'></div>
+  <div class='stack'>$ &quot;-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: is-data
 
 " <div class='name'>`</div>
-  <div class='stack'></div>
+  <div class='stack'>&quot;-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %60
 
 " <div class='name'>:name</div>
-  <div class='stack'></div>
+  <div class='stack'>n-$</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3Aname
 
 " <div class='name'>:xt</div>
-  <div class='stack'></div>
+  <div class='stack'>n-$</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3Axt
 
 " <div class='name'>:class</div>
-  <div class='stack'></div>
+  <div class='stack'>n-$</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3Aclass
 
 " <div class='name'>from</div>
-  <div class='stack'></div>
+  <div class='stack'>&quot;-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: from
 
 " <div class='name'>import</div>
-  <div class='stack'></div>
+  <div class='stack'>n &quot;-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: import
 
 " <div class='name'>as</div>
-  <div class='stack'></div>
+  <div class='stack'>&quot;-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: as
 
 " <div class='name'>file.open</div>
-  <div class='stack'></div>
+  <div class='stack'>$m-n</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: file.open
 
 " <div class='name'>file.close</div>
-  <div class='stack'></div>
+  <div class='stack'>n-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: file.close
 
 " <div class='name'>file.read</div>
-  <div class='stack'></div>
+  <div class='stack'>nbl-r</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: file.read
 
 " <div class='name'>file.write</div>
-  <div class='stack'></div>
+  <div class='stack'>nbl-w</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: file.write
 
 " <div class='name'>file.size</div>
-  <div class='stack'></div>
+  <div class='stack'>n-s</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: file.size
 
 " <div class='name'>file.seek</div>
-  <div class='stack'></div>
+  <div class='stack'>nom-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: file.seek
 
 " <div class='name'>file.pos</div>
-  <div class='stack'></div>
+  <div class='stack'>n-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: file.pos
 
 " <div class='name'>keep</div>
-  <div class='stack'></div>
+  <div class='stack'>a-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: keep
 
 " <div class='name'>gc</div>
-  <div class='stack'></div>
+  <div class='stack'>-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: gc
 
 " <div class='name'>malloc</div>
-  <div class='stack'></div>
+  <div class='stack'>n-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: malloc
 
 " <div class='name'>heap</div>
-  <div class='stack'></div>
+  <div class='stack'>-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: heap
 
 " <div class='name'>compiler</div>
-  <div class='stack'></div>
+  <div class='stack'>-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: compiler
 
 " <div class='name'>count</div>
-  <div class='stack'></div>
+  <div class='stack'>$-$n</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: count
 
 " <div class='name'>+</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-c</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %2B
 
 " <div class='name'>-</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-c</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: -
 
 " <div class='name'>*</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-c</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %2A
 
 " <div class='name'>/mod</div>
-  <div class='stack'></div>
+  <div class='stack'>ab-cd</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %2Fmod
 
 " <div class='name'>base</div>
-  <div class='stack'></div>
+  <div class='stack'>-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: base
 
 " <div class='name'>parser</div>
-  <div class='stack'></div>
+  <div class='stack'>-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: parser
 
 " <div class='name'>escape-sequences</div>
-  <div class='stack'></div>
+  <div class='stack'>-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: escape-sequences
 
 " <div class='name'>&gt;number</div>
-  <div class='stack'></div>
+  <div class='stack'>$-nf</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3Enumber
 
 " <div class='name'>parse</div>
-  <div class='stack'></div>
+  <div class='stack'>c-$</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: parse
 
 " <div class='name'>include</div>
-  <div class='stack'></div>
+  <div class='stack'>&quot;-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: include
 
 " <div class='name'>needs</div>
-  <div class='stack'></div>
+  <div class='stack'>&quot;-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: needs
 
 " <div class='name'>end.</div>
-  <div class='stack'></div>
+  <div class='stack'>-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: end.
 
 " <div class='name'>prompt</div>
-  <div class='stack'></div>
+  <div class='stack'>-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: prompt
 
 " <div class='name'>[</div>
-  <div class='stack'></div>
+  <div class='stack'>-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %5B
 
 " <div class='name'>]</div>
-  <div class='stack'></div>
+  <div class='stack'>a-a</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %5D
 
 " <div class='name'>invoke</div>
-  <div class='stack'></div>
+  <div class='stack'>a-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: invoke
 
 " <div class='name'>compile</div>
-  <div class='stack'></div>
+  <div class='stack'>a-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: compile
 
 " <div class='name'>iterate</div>
-  <div class='stack'></div>
+  <div class='stack'>na-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: iterate
 
 " <div class='name'>+iterate</div>
-  <div class='stack'></div>
+  <div class='stack'>na-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %2Biterate
 
 " <div class='name'>ifTrueFalse</div>
-  <div class='stack'></div>
+  <div class='stack'>ftf-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: ifTrueFalse
 
 " <div class='name'>recurse</div>
-  <div class='stack'></div>
+  <div class='stack'>-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: recurse
 
 " <div class='name'>i</div>
-  <div class='stack'></div>
+  <div class='stack'>-n</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: i
 
 " <div class='name'>whileTrue</div>
-  <div class='stack'></div>
+  <div class='stack'>a-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: whileTrue
 
 " <div class='name'>whileFalse</div>
-  <div class='stack'></div>
+  <div class='stack'>a-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: whileFalse
 
 " <div class='name'>dup</div>
-  <div class='stack'></div>
+  <div class='stack'>n-nn</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: dup
 
 " <div class='name'>drop</div>
-  <div class='stack'></div>
+  <div class='stack'>xy-x</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: drop
 
 " <div class='name'>swap</div>
-  <div class='stack'></div>
+  <div class='stack'>xy-yx</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: swap
 
 " <div class='name'>&gt;r</div>
-  <div class='stack'></div>
+  <div class='stack'>n- | rs: -n</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: %3Er
 
 " <div class='name'>r&gt;</div>
-  <div class='stack'></div>
+  <div class='stack'>-n | rs: n-</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: r%3E
 
 " <div class='name'>depth</div>
-  <div class='stack'></div>
+  <div class='stack'>-n</div>
   <div class='description'></div>
   <div class='source'></div>
 " document: depth
