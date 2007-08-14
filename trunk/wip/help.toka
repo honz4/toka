@@ -236,258 +236,262 @@
 
 " <div class='name'>file.open</div>
   <div class='stack'>$m-n</div>
-  <div class='description'></div>
+  <div class='description'>Open a specified file with the specified mode</div>
   <div class='source'></div>
 " document: file.open
 
 " <div class='name'>file.close</div>
   <div class='stack'>n-</div>
-  <div class='description'></div>
+  <div class='description'>Close an open file</div>
   <div class='source'></div>
 " document: file.close
 
 " <div class='name'>file.read</div>
   <div class='stack'>nbl-r</div>
-  <div class='description'></div>
+  <div class='description'>Read 'l' bytes from file 'n' into buffer 'b'</div>
   <div class='source'></div>
 " document: file.read
 
 " <div class='name'>file.write</div>
   <div class='stack'>nbl-w</div>
-  <div class='description'></div>
+  <div class='description'>Write 'l' bytes from buffer 'b' into file 'n'</div>
   <div class='source'></div>
 " document: file.write
 
 " <div class='name'>file.size</div>
   <div class='stack'>n-s</div>
-  <div class='description'></div>
+  <div class='description'>Return the size (in bytes) of a file</div>
   <div class='source'></div>
 " document: file.size
 
 " <div class='name'>file.seek</div>
   <div class='stack'>nom-a</div>
-  <div class='description'></div>
+  <div class='description'>Seek a new position in a file. Valid modes are START, CURRENT, and END.</div>
   <div class='source'></div>
 " document: file.seek
 
 " <div class='name'>file.pos</div>
   <div class='stack'>n-a</div>
-  <div class='description'></div>
+  <div class='description'>Return the current position in a file</div>
   <div class='source'></div>
 " document: file.pos
 
 " <div class='name'>keep</div>
   <div class='stack'>a-a</div>
-  <div class='description'></div>
+  <div class='description'>Mark allocated memory as permanent</div>
   <div class='source'></div>
 " document: keep
 
 " <div class='name'>gc</div>
   <div class='stack'>-</div>
-  <div class='description'></div>
+  <div class='description'>Collect the temporary and old memory items</div>
   <div class='source'></div>
 " document: gc
 
 " <div class='name'>malloc</div>
   <div class='stack'>n-a</div>
-  <div class='description'></div>
+  <div class='description'>Allocate memory.</div>
   <div class='source'></div>
 " document: malloc
 
 " <div class='name'>heap</div>
   <div class='stack'>-a</div>
-  <div class='description'></div>
+  <div class='description'>Variable pointing to the top of the local heap</div>
   <div class='source'></div>
 " document: heap
 
 " <div class='name'>compiler</div>
   <div class='stack'>-a</div>
-  <div class='description'></div>
+  <div class='description'>Variable holding compiler state</div>
   <div class='source'></div>
 " document: compiler
 
 " <div class='name'>count</div>
   <div class='stack'>$-$n</div>
-  <div class='description'></div>
+  <div class='description'>Given a string pointer, return the pointer and the actual length of the string</div>
   <div class='source'></div>
 " document: count
 
 " <div class='name'>+</div>
   <div class='stack'>ab-c</div>
-  <div class='description'></div>
+  <div class='description'>Add TOS and NOS</div>
   <div class='source'></div>
 " document: %2B
 
 " <div class='name'>-</div>
   <div class='stack'>ab-c</div>
-  <div class='description'></div>
+  <div class='description'>Subtract TOS from NOS</div>
   <div class='source'></div>
 " document: -
 
 " <div class='name'>*</div>
   <div class='stack'>ab-c</div>
-  <div class='description'></div>
+  <div class='description'>Multiply TOS by NOS</div>
   <div class='source'></div>
 " document: %2A
 
 " <div class='name'>/mod</div>
   <div class='stack'>ab-cd</div>
-  <div class='description'></div>
+  <div class='description'>Divide and get remainder</div>
   <div class='source'></div>
 " document: %2Fmod
 
 " <div class='name'>base</div>
   <div class='stack'>-a</div>
-  <div class='description'></div>
+  <div class='description'>Variable holding current base for numeric conversion/display</div>
   <div class='source'></div>
 " document: base
 
 " <div class='name'>parser</div>
   <div class='stack'>-a</div>
-  <div class='description'></div>
+  <div class='description'>Enable/disable parsing mode on primitives</div>
   <div class='source'></div>
 " document: parser
 
 " <div class='name'>escape-sequences</div>
   <div class='stack'>-a</div>
-  <div class='description'></div>
+  <div class='description'>Enable/disable escape sequences</div>
   <div class='source'></div>
 " document: escape-sequences
 
 " <div class='name'>&gt;number</div>
   <div class='stack'>$-nf</div>
-  <div class='description'></div>
+  <div class='description'>Convert a string to a number</div>
   <div class='source'></div>
 " document: %3Enumber
 
 " <div class='name'>parse</div>
   <div class='stack'>c-$</div>
-  <div class='description'></div>
+  <div class='description'>Parse ahead until character value 'c' is found. Return the string.</div>
   <div class='source'></div>
 " document: parse
 
 " <div class='name'>include</div>
   <div class='stack'>&quot;-</div>
-  <div class='description'></div>
+  <div class='description'>Add a file to the input stack</div>
   <div class='source'></div>
 " document: include
 
 " <div class='name'>needs</div>
   <div class='stack'>&quot;-</div>
-  <div class='description'></div>
+  <div class='description'>Add a library file to the input stack</div>
   <div class='source'></div>
 " document: needs
 
 " <div class='name'>end.</div>
   <div class='stack'>-</div>
-  <div class='description'></div>
+  <div class='description'>Remove the current file from the input stack</div>
   <div class='source'></div>
 " document: end.
 
 " <div class='name'>prompt</div>
   <div class='stack'>-a</div>
-  <div class='description'></div>
+  <div class='description'>Enable/disable the prompt</div>
   <div class='source'></div>
 " document: prompt
 
 " <div class='name'>[</div>
   <div class='stack'>-a</div>
-  <div class='description'></div>
+  <div class='description'>Start a quote</div>
   <div class='source'></div>
 " document: %5B
 
 " <div class='name'>]</div>
   <div class='stack'>a-a</div>
-  <div class='description'></div>
+  <div class='description'>End a quote</div>
   <div class='source'></div>
 " document: %5D
 
 " <div class='name'>invoke</div>
   <div class='stack'>a-</div>
-  <div class='description'></div>
+  <div class='description'>Execute a quote</div>
   <div class='source'></div>
 " document: invoke
 
 " <div class='name'>compile</div>
   <div class='stack'>a-</div>
-  <div class='description'></div>
+  <div class='description'>Compile a call to a quote</div>
   <div class='source'></div>
 " document: compile
 
 " <div class='name'>iterate</div>
   <div class='stack'>na-</div>
-  <div class='description'></div>
+  <div class='description'>Execute a quote 'n' times</div>
   <div class='source'></div>
 " document: iterate
 
 " <div class='name'>+iterate</div>
   <div class='stack'>na-</div>
-  <div class='description'></div>
+  <div class='description'>Execute a quote 'n' times</div>
   <div class='source'></div>
 " document: %2Biterate
 
 " <div class='name'>ifTrueFalse</div>
-  <div class='stack'>ftf-</div>
-  <div class='description'></div>
+  <div class='stack'>fab-</div>
+  <div class='description'>Invoke 'a' if 'f' flag is true, 'b' if false.</div>
   <div class='source'></div>
 " document: ifTrueFalse
 
 " <div class='name'>recurse</div>
   <div class='stack'>-</div>
-  <div class='description'></div>
+  <div class='description'>Compile a call to the top quote</div>
   <div class='source'></div>
 " document: recurse
 
 " <div class='name'>i</div>
   <div class='stack'>-n</div>
-  <div class='description'></div>
+  <div class='description'>Return the current loop index</div>
   <div class='source'></div>
 " document: i
 
 " <div class='name'>whileTrue</div>
   <div class='stack'>a-</div>
-  <div class='description'></div>
+  <div class='description'>Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.</div>
   <div class='source'></div>
 " document: whileTrue
 
 " <div class='name'>whileFalse</div>
   <div class='stack'>a-</div>
-  <div class='description'></div>
+  <div class='description'>Execute quote. If the quote
+                     returns FALSE, execute again.
+                     otherwise end the cycle.</div>
   <div class='source'></div>
 " document: whileFalse
 
 " <div class='name'>dup</div>
   <div class='stack'>n-nn</div>
-  <div class='description'></div>
+  <div class='description'>Duplicate TOS</div>
   <div class='source'></div>
 " document: dup
 
 " <div class='name'>drop</div>
   <div class='stack'>xy-x</div>
-  <div class='description'></div>
+  <div class='description'>Drop TOS</div>
   <div class='source'></div>
 " document: drop
 
 " <div class='name'>swap</div>
   <div class='stack'>xy-yx</div>
-  <div class='description'></div>
+  <div class='description'>Exchange TOS and NOS</div>
   <div class='source'></div>
 " document: swap
 
 " <div class='name'>&gt;r</div>
   <div class='stack'>n- | rs: -n</div>
-  <div class='description'></div>
+  <div class='description'>Push TOS to the return stack</div>
   <div class='source'></div>
 " document: %3Er
 
 " <div class='name'>r&gt;</div>
   <div class='stack'>-n | rs: n-</div>
-  <div class='description'></div>
+  <div class='description'>Pop TOS from the return stack</div>
   <div class='source'></div>
 " document: r%3E
 
 " <div class='name'>depth</div>
   <div class='stack'>-n</div>
-  <div class='description'></div>
+  <div class='description'>Return the current depth of the stack</div>
   <div class='source'></div>
 " document: depth
