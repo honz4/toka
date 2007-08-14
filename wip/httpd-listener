@@ -212,8 +212,8 @@ variable| #requests |
 
 [ " <html>\n<head>\n<title>Toka: Listener</title>\n" send
   " <style>\n" send
-    " .name { background: #cccccc; width: 600px%; }" send
-    " .stack { }" send
+    " .name { background: #cccccc; width: 600px%; font-size: 18pt; font-family: sans-serif; font-style: normal; font-weight: bold; }" send
+    " .stack { font-weight: bold; }" send
     " .description { }" send
   " </style>" send
   " </head>\n<body>\n" send 
