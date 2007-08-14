@@ -169,23 +169,6 @@ variable| socket connection |
 
 
 
-#! =============================================================== FILE TYPES
-#! check-type
-#! Check to see if the requested filename matches the pattern. If
-#! so, invokes the quote.
-#! ---------------------------------------------------------------
-[ swap >r obtain-filename basename 0 fnmatch 0 = r> ifTrue ] is check-type
-
-
-#! ---------------------------------------------------------------
-#! text-file
-#! Default handler for any type of text file. This is factored
-#! out from return-requested.
-#! ---------------------------------------------------------------
-[ docroot obtain-filename string.append ] is text-file
-
-
-
 
 #! =============================================================== REQUEST HANDLING, PART 2
 
@@ -212,9 +195,9 @@ variable| #requests |
 
 [ " <html>\n<head>\n<title>Toka: Listener</title>\n" send
   " <style>\n" send
-    " .name { background: #cccccc; width: 600px%; font-size: 18pt; font-family: sans-serif; font-style: normal; font-weight: bold; }" send
-    " .stack { font-weight: bold; }" send
-    " .description { }" send
+    " .name { padding: 5px; background: #E0DDD2; width: 600px%; font-size: 18pt; font-family: sans-serif; font-style: normal; font-weight: bold; }" send
+    " .stack { padding: 5px; background: #F2E5DD; font-size: 14pt; font-family: sans-serif; font-style: normal; }" send
+    " .description { padding: 5px; background: #F5E9C8; font-size: 12pt; font-family: sans-serif; font-style: normal; }" send
   " </style>" send
   " </head>\n<body>\n" send 
 ] is html-begin
