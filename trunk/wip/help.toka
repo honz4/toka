@@ -687,161 +687,133 @@
   <div class='source'></div>
 " document: green
 
+" <div class='name'>yellow</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the foreground color to yellow</div>
+  <div class='source'></div>
+" document: yellow
+
+" <div class='name'>blue</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the foreground color to blue</div>
+  <div class='source'></div>
+" document: blue
+
+" <div class='name'>magenta</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the foreground color to magenta</div>
+  <div class='source'></div>
+" document: magenta
+
+" <div class='name'>cyan</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the foreground color to cyan</div>
+  <div class='source'></div>
+" document: cyan
+
+" <div class='name'>white</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the foreground color to white</div>
+  <div class='source'></div>
+" document: white
+
+" <div class='name'>onBlack</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the background color to black</div>
+  <div class='source'></div>
+" document: onBlack
+
+" <div class='name'>onRed</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the background color to red</div>
+  <div class='source'></div>
+" document: onRed
+
+" <div class='name'>onGreen</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the background color to green</div>
+  <div class='source'></div>
+" document: onGreen
+
+" <div class='name'>onYellow</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the background color to yellow</div>
+  <div class='source'></div>
+" document: onYellow
+
+" <div class='name'>onBlue</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the background color to blue</div>
+  <div class='source'></div>
+" document: onBlue
+
+" <div class='name'>onMagenta</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the background color to magenta</div>
+  <div class='source'></div>
+" document: onMagenta
+
+" <div class='name'>onCyan</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the background color to cyan</div>
+  <div class='source'></div>
+" document: onCyan
+
+" <div class='name'>onWhite</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the background color to white</div>
+  <div class='source'></div>
+" document: onWhite
+
+" <div class='name'>nip</div>
+  <div class='stack'>xy-y</div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document: nip
+
+" <div class='name'>rot</div>
+  <div class='stack'>abc-bca</div>
+  <div class='description'>Rotate the values on the stack</div>
+  <div class='source'></div>
+" document: rot
+
+" <div class='name'>-rot</div>
+  <div class='stack'>abc-acb</div>
+  <div class='description'>Same as doing rot twice.</div>
+  <div class='source'></div>
+" document: -rot
+
+" <div class='name'>over</div>
+  <div class='stack'>xy-xyx</div>
+  <div class='description'>Put a copy of NOS on top of the stack</div>
+  <div class='source'></div>
+" document: over
+
+" <div class='name'>tuck</div>
+  <div class='stack'>xy-yxy</div>
+  <div class='description'>Put a copy of TOS under NOS</div>
+  <div class='source'></div>
+" document: tuck
+
+" <div class='name'>2dup</div>
+  <div class='stack'>xy-xyxy</div>
+  <div class='description'>Duplicate the top two items on the stack</div>
+  <div class='source'></div>
+" document: 2dup
+
+" <div class='name'>2drop</div>
+  <div class='stack'>xy-</div>
+  <div class='description'>Drop the top two items on the stack</div>
+  <div class='source'></div>
+" document: 2drop
+
+" <div class='name'>reset</div>
+  <div class='stack'>...-</div>
+  <div class='description'>Drop all items on the stack</div>
+  <div class='source'></div>
+" document: reset
+
 end.
-
-
-[ ." \^[33m" ] is yellow
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[34m" ] is blue
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[35m" ] is magenta
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[36m" ] is cyan
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[37m" ] is white
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[40m" ] is onBlack
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[41m" ] is onRed
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[42m" ] is onGreen
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[43m" ] is onYellow
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[44m" ] is onBlue
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[45m" ] is onMagenta
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[46m" ] is onCyan
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[47m" ] is onWhite
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-
-
-#! ---------------------------------------
-#! Stack manipulation
-#! ---------------------------------------
-[ swap drop ] is nip
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ >r swap r> swap ] is rot
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ rot rot ] is -rot
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ >r dup r> swap ] is over
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ dup -rot ] is tuck
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ over over ] is 2dup
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ drop drop ] is 2drop
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ depth [ drop ] iterate ] is reset
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
 [ r> r> tuck >r >r ] is r@
 " <div class='name'></div>
   <div class='stack'></div>
