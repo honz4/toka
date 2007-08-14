@@ -1062,8 +1062,8 @@
 
 " <div class='name'>+action</div>
   <div class='stack'>aq &quot;-</div>
-  <div class='description'>Create a new word (") with the action of the
-                     specified quote (q) and data element (a)</div>
+  <div class='description'>Create a new word (&quot;) with the action of the
+                           specified quote (q) and data element (a)</div>
   <div class='source'></div>
 " document: %2Baction
 
