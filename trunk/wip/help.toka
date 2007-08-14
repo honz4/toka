@@ -813,100 +813,84 @@
   <div class='source'></div>
 " document: reset
 
+" <div class='name'>r@</div>
+  <div class='stack'>-n | rs: n-n</div>
+  <div class='description'>Get a copy of the top value on the return stack</div>
+  <div class='source'></div>
+" document: r%40
+
+" <div class='name'>negate</div>
+  <div class='stack'>x-y</div>
+  <div class='description'>Invert the sign of a number</div>
+  <div class='source'></div>
+" document: negate
+
+" <div class='name'>/</div>
+  <div class='stack'>ab-c</div>
+  <div class='description'>Divide a by b</div>
+  <div class='source'></div>
+" document: %2F
+
+" <div class='name'>mod</div>
+  <div class='stack'>ab-c</div>
+  <div class='description'>Divide a by b and get the remainder</div>
+  <div class='source'></div>
+" document: mod
+
+" <div class='name'>not</div>
+  <div class='stack'>x-y</div>
+  <div class='description'>Invert the value 'x'</div>
+  <div class='source'></div>
+" document: not
+
+" <div class='name'>*/</div>
+  <div class='stack'>abc-d</div>
+  <div class='description'>(a*b)/c</div>
+  <div class='source'></div>
+" document: %2A%2F
+
+" <div class='name'>chars</div>
+  <div class='stack'>x-y</div>
+  <div class='description'>Return a size in chars</div>
+  <div class='source'></div>
+" document: chars
+
+" <div class='name'>char+</div>
+  <div class='stack'>x-y</div>
+  <div class='description'>Advance x by one char-size</div>
+  <div class='source'></div>
+" document: char%2B
+
+" <div class='name'>char-</div>
+  <div class='stack'>x-y</div>
+  <div class='description'>Decrease x by one char-size</div>
+  <div class='source'></div>
+" document: char-
+
+" <div class='name'>cells</div>
+  <div class='stack'>x-y</div>
+  <div class='description'>Return a size in cells</div>
+  <div class='source'></div>
+" document: cells
+
+" <div class='name'>cell+</div>
+  <div class='stack'>x-y</div>
+  <div class='description'>Advance x by one cell-size</div>
+  <div class='source'></div>
+" document: cell%2B
+
+" <div class='name'>cell-</div>
+  <div class='stack'>x-y</div>
+  <div class='description'>Decrease x by one cell-size</div>
+  <div class='source'></div>
+" document: cell-
+
+
+
+
 end.
-[ r> r> tuck >r >r ] is r@
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
 
 
-
-#! ---------------------------------------
-#! Math
-#! ---------------------------------------
-[ -1 * ] is negate
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ /mod nip ] is /
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ /mod drop ] is mod
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ -1 xor ] is not
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ swap >r / r> * ] is */
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-
-
-#! ---------------------------------------
-#! Memory and Variables
-#! ---------------------------------------
-[ char-size * ] is chars
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ char-size + ] is char+
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ char-size - ] is char-
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ cell-size * ] is cells
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ cell-size + ] is cell+
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ cell-size - ] is cell-
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
 
 [ dup @ rot + swap ! ] is +!
 " <div class='name'></div>
