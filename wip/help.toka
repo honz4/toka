@@ -596,144 +596,99 @@
   <div class='description'>Value for TRUE flag</div>
   <div class='source'></div>
 " document: TRUE
+
+" <div class='name'>ifTrue</div>
+  <div class='stack'>fq-</div>
+  <div class='description'>Execute quote 'q' if flag 'f' is TRUE.</div>
+  <div class='source'></div>
+" document: ifTrue
+
+" <div class='name'>ifFalse</div>
+  <div class='stack'>fq-</div>
+  <div class='description'>Execute quote 'q' if flag 'f' is FALSE.</div>
+  <div class='source'></div>
+" document: ifFalse
+
+" <div class='name'>&gt;char</div>
+  <div class='stack'>n-c</div>
+  <div class='description'>Convert a cell to a character value</div>
+  <div class='source'></div>
+" document: %3Echar
+
+" <div class='name'>char:</div>
+  <div class='stack'>&quot-c</div>
+  <div class='description'>Parse ahead for an ASCII character</div>
+  <div class='source'></div>
+" document: char%3A
+
+" <div class='name'>&quot;</div>
+  <div class='stack'>&quot;-$</div>
+  <div class='description'>Parse until the next &quot;, return a string</div>
+  <div class='source'></div>
+" document: %22
+
+" <div class='name'>cr</div>
+  <div class='stack'>-</div>
+  <div class='description'>Display an ASCII CR</div>
+  <div class='source'></div>
+" document: cr
+
+" <div class='name'>space</div>
+  <div class='stack'>-</div>
+  <div class='description'>Display an ASCII SPACE</div>
+  <div class='source'></div>
+" document: space
+
+" <div class='name'>tab</div>
+  <div class='stack'>-</div>
+  <div class='description'>Display an ASCII TAB</div>
+  <div class='source'></div>
+" document: tab
+
+" <div class='name'>.&quot;</div>
+  <div class='stack'>-</div>
+  <div class='description'>Parse until &quot; and display the resulting string</div>
+  <div class='source'></div>
+" document: .%22
+
+" <div class='name'>clear</div>
+  <div class='stack'>-</div>
+  <div class='description'>Clear the screen</div>
+  <div class='source'></div>
+" document: clear
+
+" <div class='name'>normal</div>
+  <div class='stack'>-</div>
+  <div class='description'>Reset the colors to the default</div>
+  <div class='source'></div>
+" document: normal
+
+" <div class='name'>bold</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set foreground color to bold</div>
+  <div class='source'></div>
+" document: bold
+
+" <div class='name'>black</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the foreground color to black</div>
+  <div class='source'></div>
+" document: black
+
+" <div class='name'>red</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the foreground color to red</div>
+  <div class='source'></div>
+" document: red
+
+" <div class='name'>green</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the foreground color to green</div>
+  <div class='source'></div>
+" document: green
+
 end.
 
-
-
-
-
-[ [ ] ifTrueFalse ] is ifTrue
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ [ ] swap ifTrueFalse ] is ifFalse
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-
-
-#! ---------------------------------------
-#! Obtaining Character
-#! ---------------------------------------
-[ 255 and ] is >char
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ wsparse @ >char
-  compiler @ [ # ] ifTrue
-] is-macro char:
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-
-
-#! ---------------------------------------
-#! Strings
-#! ---------------------------------------
-[ char: " 
-  parse compiler @ [ $# ] ifTrue 
-] is-macro "
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-
-
-#! ---------------------------------------
-#! Output
-#! ---------------------------------------
-[ CR LF emit emit ] is cr
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ SPACE emit ] is space
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[   TAB emit ] is tab
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ` " invoke 
-  compiler @ [ ` type compile ] [ type ] ifTrueFalse
-] is-macro ."
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[2J"
-  ." \^[1;1H"
-] is clear
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-
-
-#! ---------------------------------------
-#! Colors
-#! ---------------------------------------
-[ ." \^[0m"  ] is normal
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[1m"  ] is bold
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[30m" ] is black
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[31m" ] is red
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
-
-[ ." \^[32m" ] is green
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
-  <div class='source'></div>
-" document:
 
 [ ." \^[33m" ] is yellow
 " <div class='name'></div>
@@ -995,35 +950,29 @@ end.
   <div class='source'></div>
 " document:
 
-[ TRUE  swap ! ] is on
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>on</div>
+  <div class='stack'>a-</div>
+  <div class='description'>Set a variable to TRUE</div>
   <div class='source'></div>
-" document:
+" document: on
 
-[ FALSE swap ! ] is off
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>off</div>
+  <div class='stack'>a-</div>
+  <div class='description'>Set a variable to FALSE</div>
   <div class='source'></div>
-" document:
+" document: off
 
-[ dup @ not swap ! ] is toggle
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>toggle</div>
+  <div class='stack'>a-</div>
+  <div class='description'>Switch a variable between TRUE and FALSE</div>
   <div class='source'></div>
-" document:
+" document: toggle
 
-[ cell-size malloc 
-  parser @ [ swap ] ifFalse is-data 
-] is variable
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>variable</div>
+  <div class='stack'>&quot;-</div>
+  <div class='description'>Create a new variable</div>
   <div class='source'></div>
-" document:
+" document: variable
 
 [ parser off
   [ wsparse
@@ -1043,33 +992,29 @@ end.
 #! ---------------------------------------
 #! Numeric bases
 #! ---------------------------------------
-[ 16 base ! ] is hex
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>hex</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the numeric base to hexadecimal.</div>
   <div class='source'></div>
-" document:
+" document: hex
 
-[ 10 base ! ] is decimal
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>decimal</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set numeric base to decimal</div>
   <div class='source'></div>
-" document:
+" document: decimal
 
-[  2 base ! ] is binary
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>binary</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set the numeric base to binary</div>
   <div class='source'></div>
-" document:
+" document: binary
 
-[  8 base ! ] is octal
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>octal</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set numeric base to octal</div>
   <div class='source'></div>
-" document:
+" document: octal
 
 
 
@@ -1118,84 +1063,68 @@ end.
   <div class='source'></div>
 " document:
 
-[ 1 ] is START
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>START</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Mode for file.seek</div>
   <div class='source'></div>
-" document:
+" document: START
 
-[ 2 ] is CURRENT
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>CURRENT</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Mode for file.seek</div>
   <div class='source'></div>
-" document:
+" document: CURRENT
 
-[ 3 ] is END
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>END</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Mode for file.seek</div>
   <div class='source'></div>
-" document:
+" document: END
 
-
-[ "R" file.open 
-  dup 0 <>
-  [
-    dup dup
-    file.size 1 + dup malloc dup >r swap
-    file.read drop
-    file.close r>
-  ] ifTrue
-] is file.slurp
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>file.slurp</div>
+  <div class='stack'>$-a</div>
+  <div class='description'>Read a file into a dynamically allocated buffer</div>
   <div class='source'></div>
-" document:
+" document: file.slurp
 
 
 
 #! ---------------------------------------
 #! Arrays
 #! ---------------------------------------
-[ parser @
-  [ malloc ] [ >r malloc r> ] ifTrueFalse is-data 
-] is is-array
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>is-array</div>
+  <div class='stack'>n &quot;-</div>
+  <div class='description'>Create a new array of size 'n'.</div>
   <div class='source'></div>
-" document:
+" document: is-array
 
 [ swap cell-size * + @ ] is array.get
-" <div class='name'></div>
+" <div class='name'>array.get</div>
   <div class='stack'></div>
   <div class='description'></div>
   <div class='source'></div>
-" document:
+" document: array.get
 
 [ swap cell-size * + ! ] is array.put
-" <div class='name'></div>
+" <div class='name'>array.put</div>
   <div class='stack'></div>
   <div class='description'></div>
   <div class='source'></div>
-" document:
+" document: array.put
 
 [ swap char-size * + c@ ] is array.getChar
-" <div class='name'></div>
+" <div class='name'>array.getChar</div>
   <div class='stack'></div>
   <div class='description'></div>
   <div class='source'></div>
-" document:
+" document: array.getChar
 
 [ swap char-size * + c! ] is array.putChar
-" <div class='name'></div>
+" <div class='name'>array.putChar</div>
   <div class='stack'></div>
   <div class='description'></div>
   <div class='source'></div>
-" document:
+" document: array.putChar
 
 
 
@@ -1203,9 +1132,9 @@ end.
 #! Scope
 #! ---------------------------------------
 4 cells is-array <list>
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>&lt;list&gt;</div>
+  <div class='stack'>-a</div>
+  <div class='description'>Array of scope pointers</div>
   <div class='source'></div>
 " document:
 
@@ -1213,18 +1142,18 @@ end.
 [ last @ <list> @ 1 + <list> array.put
   1 <list> +!
 ] is {
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>{</div>
+  <div class='stack'>-</div>
+  <div class='description'>Create a new scope</div>
   <div class='source'></div>
 " document:
 
 [ 1 <list> -!
   <list> @ 1 + <list> array.get last !
 ] is }
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>}</div>
+  <div class='stack'>-</div>
+  <div class='description'>Close the active scope</div>
   <div class='source'></div>
 " document:
 
@@ -1234,34 +1163,24 @@ end.
 #! Make extending the language a little easier
 #! ---------------------------------------
 [ ` [ invoke >r swap # compile r> ` ] invoke parser @ [ swap ] ifFalse is ] is +action
-" <div class='name'></div>
+" <div class='name'>+action</div>
   <div class='stack'></div>
   <div class='description'></div>
   <div class='source'></div>
 " document:
 
 
-
-#! ---------------------------------------
-#! Values
-#! ---------------------------------------
-{
-  variable update
-  [ update on ]
-  [ cell-size malloc [ update @ [ ! ] [ @ ] ifTrueFalse update off ] +action ] 
-} is value
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>value</div>
+  <div class='stack'>&quot;-</div>
+  <div class='description'>Create a new value</div>
   <div class='source'></div>
-" document:
+" document: value
 
-  is to
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>to</div>
+  <div class='stack'>-</div>
+  <div class='description'>Set a flag telling the next value to update itself</div>
   <div class='source'></div>
-" document:
+" document: to
 
 [ parser off
   [ wsparse
@@ -1281,12 +1200,11 @@ end.
 #! ---------------------------------------
 #! Debugging Aids
 #! ---------------------------------------
-[ dup last @ [ i :class over = [ i :name type space ] ifTrue ] iterate cr ] is words-within
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>words-within</div>
+  <div class='stack'>n-</div>
+  <div class='description'>Display all words with a given class</div>
   <div class='source'></div>
-" document:
+" document: words-within
 
 [ .PRIM_WORD words-within .PRIM_MACRO words-within ] is :prims
 " <div class='name'></div>
@@ -1309,10 +1227,9 @@ end.
   <div class='source'></div>
 " document:
 
-[ last @ [ i :name type space ] iterate cr ] is words
-" <div class='name'></div>
-  <div class='stack'></div>
-  <div class='description'></div>
+" <div class='name'>words</div>
+  <div class='stack'>-</div>
+  <div class='description'>Display all names in the dictionary</div>
   <div class='source'></div>
-" document:
+" document: words
 
