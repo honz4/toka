@@ -6,6 +6,7 @@
 " document:
 )
 
+#! ================================================================= PRIMITIVES
 " <div class='name'>&lt;&lt;</div>
   <div class='stack'>ab-c</div>
   <div class='description'>Shift 'a' left by 'b' bits</div>
@@ -495,3 +496,823 @@
   <div class='description'>Return the current depth of the stack</div>
   <div class='source'></div>
 " document: depth
+
+#! ================================================================= BOOTSTRAP
+[ 10 parse drop ] is #!
+" <div class='name'>#!</div>
+  <div class='stack'>&quot;-</div>
+  <div class='description'>Ignore the rest of the line</div>
+  <div class='source'></div>
+" document: %23%21
+
+[ 41 parse drop ] is-macro (
+" <div class='name'>(</div>
+  <div class='stack'>&quot-</div>
+  <div class='description'>Ignore everything up to the next )</div>
+  <div class='source'></div>
+" document: %28
+
+" <div class='name'>.PRIM_WORD</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Return the class number for primitive words</div>
+  <div class='source'></div>
+" document: .PRIM_WORD
+
+" <div class='name'>.PRIM_MACRO</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Return the class number for primitive macros</div>
+  <div class='source'></div>
+" document: .PRIM_MACRO
+
+" <div class='name'>.DATA</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Return the class number for data elements</div>
+  <div class='source'></div>
+" document: .DATA
+
+" <div class='name'>.WORD</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Return the class number for high-level words</div>
+  <div class='source'></div>
+" document: .WORD
+
+" <div class='name'>.MACRO</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Return the class number for high-level macros</div>
+  <div class='source'></div>
+" document: .MACRO
+
+" <div class='name'>SPACE</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Return the ASCII value for a SPACE character</div>
+  <div class='source'></div>
+" document: SPACE
+
+" <div class='name'>CR</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Return the ASCII value for a CR character</div>
+  <div class='source'></div>
+" document: CR
+
+" <div class='name'>LF</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Return the ASCII value for a LF character</div>
+  <div class='source'></div>
+" document: LF
+
+" <div class='name'>ESC</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Return the ASCII value for an ESC character</div>
+  <div class='source'></div>
+" document: ESC
+
+" <div class='name'>TAB</div>
+  <div class='stack'></div>
+  <div class='description'>Return the ASCII value for a TAB character</div>
+  <div class='source'></div>
+" document: TAB
+
+" <div class='name'>wsparse</div>
+  <div class='stack'>-$</div>
+  <div class='description'>Parse until whitespace is encountered, return a string</div>
+  <div class='source'></div>
+" document: wsparse
+
+[ CR parse ] is lnparse
+" <div class='name'>lnparse</div>
+  <div class='stack'>-$</div>
+  <div class='description'>Parse until the end of the line. Return a string.</div>
+  <div class='source'></div>
+" document: lnparse
+
+" <div class='name'>FALSE</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Value for FALSE flag</div>
+  <div class='source'></div>
+" document: FALSE
+
+" <div class='name'>TRUE</div>
+  <div class='stack'>-n</div>
+  <div class='description'>Value for TRUE flag</div>
+  <div class='source'></div>
+" document: TRUE
+end.
+
+
+
+
+
+[ [ ] ifTrueFalse ] is ifTrue
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ [ ] swap ifTrueFalse ] is ifFalse
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Obtaining Character
+#! ---------------------------------------
+[ 255 and ] is >char
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ wsparse @ >char
+  compiler @ [ # ] ifTrue
+] is-macro char:
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Strings
+#! ---------------------------------------
+[ char: " 
+  parse compiler @ [ $# ] ifTrue 
+] is-macro "
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Output
+#! ---------------------------------------
+[ CR LF emit emit ] is cr
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ SPACE emit ] is space
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[   TAB emit ] is tab
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ` " invoke 
+  compiler @ [ ` type compile ] [ type ] ifTrueFalse
+] is-macro ."
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[2J"
+  ." \^[1;1H"
+] is clear
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Colors
+#! ---------------------------------------
+[ ." \^[0m"  ] is normal
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[1m"  ] is bold
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[30m" ] is black
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[31m" ] is red
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[32m" ] is green
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[33m" ] is yellow
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[34m" ] is blue
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[35m" ] is magenta
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[36m" ] is cyan
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[37m" ] is white
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[40m" ] is onBlack
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[41m" ] is onRed
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[42m" ] is onGreen
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[43m" ] is onYellow
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[44m" ] is onBlue
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[45m" ] is onMagenta
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[46m" ] is onCyan
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ ." \^[47m" ] is onWhite
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Stack manipulation
+#! ---------------------------------------
+[ swap drop ] is nip
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ >r swap r> swap ] is rot
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ rot rot ] is -rot
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ >r dup r> swap ] is over
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ dup -rot ] is tuck
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ over over ] is 2dup
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ drop drop ] is 2drop
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ depth [ drop ] iterate ] is reset
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ r> r> tuck >r >r ] is r@
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Math
+#! ---------------------------------------
+[ -1 * ] is negate
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ /mod nip ] is /
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ /mod drop ] is mod
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ -1 xor ] is not
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ swap >r / r> * ] is */
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Memory and Variables
+#! ---------------------------------------
+[ char-size * ] is chars
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ char-size + ] is char+
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ char-size - ] is char-
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ cell-size * ] is cells
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ cell-size + ] is cell+
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ cell-size - ] is cell-
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ dup @ rot + swap ! ] is +!
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ dup @ rot - swap ! ] is -!
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ TRUE  swap ! ] is on
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ FALSE swap ! ] is off
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ dup @ not swap ! ] is toggle
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ cell-size malloc 
+  parser @ [ swap ] ifFalse is-data 
+] is variable
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ parser off
+  [ wsparse
+    dup c@ char: | <>
+    [ variable TRUE ] [ drop FALSE ] ifTrueFalse
+  ] whileTrue
+  parser on
+] is variable|
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Numeric bases
+#! ---------------------------------------
+[ 16 base ! ] is hex
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 10 base ! ] is decimal
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[  2 base ! ] is binary
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[  8 base ! ] is octal
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! File I/O
+#! ---------------------------------------
+[ 1 ] is "R"
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 2 ] is "R+"
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 3 ] is "W"
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 4 ] is "W+"
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 5 ] is "A"
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 6 ] is "A+"
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 1 ] is START
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 2 ] is CURRENT
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 3 ] is END
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+[ "R" file.open 
+  dup 0 <>
+  [
+    dup dup
+    file.size 1 + dup malloc dup >r swap
+    file.read drop
+    file.close r>
+  ] ifTrue
+] is file.slurp
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Arrays
+#! ---------------------------------------
+[ parser @
+  [ malloc ] [ >r malloc r> ] ifTrueFalse is-data 
+] is is-array
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ swap cell-size * + @ ] is array.get
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ swap cell-size * + ! ] is array.put
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ swap char-size * + c@ ] is array.getChar
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ swap char-size * + c! ] is array.putChar
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Scope
+#! ---------------------------------------
+4 cells is-array <list>
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+[ last @ <list> @ 1 + <list> array.put
+  1 <list> +!
+] is {
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ 1 <list> -!
+  <list> @ 1 + <list> array.get last !
+] is }
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Make extending the language a little easier
+#! ---------------------------------------
+[ ` [ invoke >r swap # compile r> ` ] invoke parser @ [ swap ] ifFalse is ] is +action
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Values
+#! ---------------------------------------
+{
+  variable update
+  [ update on ]
+  [ cell-size malloc [ update @ [ ! ] [ @ ] ifTrueFalse update off ] +action ] 
+} is value
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+  is to
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ parser off
+  [ wsparse
+    dup c@ char: | <>
+    [ value TRUE ] [ drop FALSE ] ifTrueFalse
+  ] whileTrue
+  parser on
+] is value|
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+
+
+#! ---------------------------------------
+#! Debugging Aids
+#! ---------------------------------------
+[ dup last @ [ i :class over = [ i :name type space ] ifTrue ] iterate cr ] is words-within
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ .PRIM_WORD words-within .PRIM_MACRO words-within ] is :prims
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ .DATA words-within ] is :datas
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ .WORD words-within .MACRO words-within ] is :quotes
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
+[ last @ [ i :name type space ] iterate cr ] is words
+" <div class='name'></div>
+  <div class='stack'></div>
+  <div class='description'></div>
+  <div class='source'></div>
+" document:
+
