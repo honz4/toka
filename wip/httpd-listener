@@ -25,27 +25,26 @@
   3 import memset     #! void *memset(void *s, int c, size_t n);
 
   ." -------------------------------------- Preparing Server...\n"
-  1024 chars is-data 1KiB
-  1KiB is-array buffer
-  [ buffer 0 1KiB memset reset ] is reset
+  8192 chars is-data 8KiB
+  8KiB is-array buffer
+  [ ( ...- )
+    buffer 0 8KiB memset ] is reset-buffer
 
-  variable| socket connection |
-  9812 pBind socket !
-  [ socket @ pAccept connection ! ] is new-connection
-  [ connection @ pClose ] is end-connection
-  [ >r connection @ r> count char- pWrite drop ] is send
-
-  ." -------------------------------------- Preparing Request Handler...\n"
-  [ connection @ buffer 1KiB pRead ] is get-request
-   " \n "  is-data DELIMS
-  [
-    buffer " /" string.findSubstring char+ 
-    DELIMS string.findToken
-  ] is extract-filename
-
+  value| socket connection |
+  9812 pBind to socket
+  [ ( - )
+     socket pAccept to connection ] is new-connection
+  [ ( - )
+     connection pClose drop ] is end-connection
+  [ ( - )
+    >r connection r> count char- pWrite drop ] is send
 
   ." -------------------------------------- Preparing Request Handler...\n"
-
+  " \n "  is-data DELIMS
+  [ ( - ) 
+    connection buffer 8KiB pRead drop ] is get-request
+  [ ( -$ )
+    buffer " /" string.findSubstring char+ DELIMS string.findToken ] is extract-filename
 
   " <html>
       <head>
@@ -79,11 +78,7 @@
         [ <cond> 0 output array.putChar output send ] default 
     ] +iterate
   ] is send-with-escapes
-  [ ( $- )  extract-filename count 13 chars > [ 12 chars + ] ifTrue
-            over strcmp 0 = 
-            [ " <option selected='selected'>" send send-with-escapes " </option>" send ] 
-            [ " <option>" send send-with-escapes " </option>" send ] ifTrueFalse
-  ] is <option>
+  [ ( $- ) " <option>" send send-with-escapes " </option>" send ] is <option>
 
 
   [ ( - )
@@ -92,9 +87,11 @@
     " </select>\n" send
   ] is select-word
 
-  [ extract-filename count 13 chars > [ 12 chars + ] ifTrue :getHelp send ] is display-help
+  [ ( - )
+    extract-filename count 13 chars > [ 12 chars + ] ifTrue :getHelp send ] is display-help
 
-  [ html-begin
+  [ ( - )
+    html-begin
     form-begin
     " <table width='800px'>\n<tr><td width='200px'>" send
     select-word
@@ -107,12 +104,11 @@
 
 
   ." -------------------------------------- Main Loop...\n"
-
   [ new-connection
-    get-request 
+    get-request
     send-table
     end-connection
-    reset
+    reset-buffer
     TRUE
   ] keep
 }
