@@ -12,166 +12,109 @@
 
 
 {
+  ." -------------------------------------- Loading Libraries...\n"
+  needs strings
+  needs sockets
+  needs shell
+  needs case
 
-#! =============================================================== LIBRARIES NEEDED
-needs strings
-needs sockets
-needs shell
-needs case
+  needs helpdb
+  include help.toka
 
-needs helpdb
-include help.toka
+  from libc.so.6
+  3 import memset     #! void *memset(void *s, int c, size_t n);
 
-from libc.so.6
-3 import memset     #! void *memset(void *s, int c, size_t n);
-#! ---------------------------------------------------------------
+  ." -------------------------------------- Preparing Server...\n"
+  1024 chars is-data 1KiB
+  1KiB is-array buffer
+  [ buffer 0 1KiB memset reset ] is reset
 
+  variable| socket connection |
+  9812 pBind socket !
+  [ socket @ pAccept connection ! ] is new-connection
+  [ connection @ pClose ] is end-connection
+  [ >r connection @ r> count char- pWrite drop ] is send
 
-
-#! =============================================================== SOCKET I/O
-#! Several buffers used for input and CGI related tasks
-#! ---------------------------------------------------------------
-1024 chars is-data 1KiB
-1KiB is-array buffer
-1KiB is-array scratch
-
-
-#! ---------------------------------------------------------------
-#! Extend reset to purge the input buffer as well as the stack
-#! ---------------------------------------------------------------
-[ buffer 0 1KiB memset reset ] is reset
-
-
-#! ---------------------------------------------------------------
-#! new-connection
-#! Setup a new connection. This involves bindings port 80 to 
-#! localhost, and waiting for a client to connect to it. The 
-#! connection and socket variables are set by this code.
-#!
-#! end-connection
-#! Closes the current connection. This allows for new connections
-#! to be made.
-#! ---------------------------------------------------------------
-variable| socket connection |
-
-9812 pBind socket !
-[ socket @ pAccept connection ! ] is new-connection
-[ connection @ pClose ] is end-connection
-
-
-#! ---------------------------------------------------------------
-#! send
-#! Send a string to the currently connected client
-#! ---------------------------------------------------------------
-[ >r connection @ r> count char- pWrite drop ] is send
-
-
-#! ---------------------------------------------------------------
-#! get-request
-#! This reads a client request of up to 1k into the buffer. The
-#! number of bytes read is returned.
-#! ---------------------------------------------------------------
-[ connection @ buffer 1KiB pRead ] is get-request
-
-
-
-
-#! =============================================================== REQUEST HANDLING, PART 1
-
-#! ---------------------------------------------------------------
-#! The following section is for processing requests
-#! Method:    Function:
-#! --------------------------------------------------------------- 
-#! GET     -  the word GET, used for locating a GET request
-#! DELIMS  -  A set of delimiters used to help break apart 
-#!            the request
-#! REQUEST -  A string containing a three character request. This
-#!            may need to be made larger in the future.
-#! ---------------------------------------------------------------
-#! " GET"  is-data GET
- " \n "  is-data DELIMS
-
-#! 4 chars is-array REQUEST 
-#! 0 3 REQUEST array.putChar   ( Add a null byte to the REQUEST array )
-
-#! ---------------------------------------------------------------
-#! extract-filename
-#! Strip out the leading / and junk that follows the requested
-#! filename.
-#! ---------------------------------------------------------------
-[
-  buffer " /" string.findSubstring char+ 
-  DELIMS string.findToken
-] is extract-filename
-
-
-
-
-[ " <html>\n<head>\n<title>Toka: Listener</title>\n" send
-  " <style>\n" send
-    " .name { padding: 5px; background: #E0DDD2; width: 600px%; font-size: 18pt; font-family: sans-serif; font-style: normal; font-weight: bold; }" send
-    " .stack { padding: 5px; background: #F2E5DD; font-size: 14pt; font-family: sans-serif; font-style: normal; }" send
-    " .description { padding: 5px; background: #F5E9C8; font-size: 12pt; font-family: sans-serif; font-style: normal; }" send
-  " </style>" send
-  " </head>\n<body>\n" send 
-] is html-begin
-[ " </body></html>" send ] is html-end
-
-[ ( - )   " <form id=\"main\" action=\"browse\" method=\"get\">\n" send ] is form-begin
-[ ( - )   " </form>\n" send ] is form-end
-
-2 chars is-array output
-value source
-[ ( $- )
-  dup to source
-  count char- nip
+  ." -------------------------------------- Preparing Request Handler...\n"
+  [ connection @ buffer 1KiB pRead ] is get-request
+   " \n "  is-data DELIMS
   [
-    i char- source array.getChar   
-    switch
-      char: < [ " &lt;" send break ] case
-      char: > [ " &gt;" send break ] case
-      char: & [ " &amp;" send break ] case
-      [ <cond> 0 output array.putChar output send ] default 
-  ] +iterate
-] is send-with-escapes
-[ ( $- )  extract-filename count 13 chars > [ 12 chars + ] ifTrue
-          over strcmp 0 = 
-          [ " <option selected='selected'>" send send-with-escapes " </option>" send ] 
-          [ " <option>" send send-with-escapes " </option>" send ] ifTrueFalse
-] is <option>
+    buffer " /" string.findSubstring char+ 
+    DELIMS string.findToken
+  ] is extract-filename
 
 
-[ ( - )
-  " <select name=\"word\" style=\"width: 200px;\" size=\"20\" onchange=\"javascript:document.getElementById('main').submit();\">\n" send
-  last @ [ i :name <option> ] iterate
-  " </select>\n" send
-] is select-word
-
-[ extract-filename count 13 chars > [ 12 chars + ] ifTrue :getHelp send ] is display-help
-
-[ html-begin
-  form-begin
-  " <table width='800px'>\n<tr><td width='200px'>" send
-  select-word
-  " </td><td valign=top width='600px'>" send 
-  display-help " </td>" send
-  " </tr></table>" send
-  form-end
-  html-end
-] is send-table
+  ." -------------------------------------- Preparing Request Handler...\n"
 
 
-#! =============================================================== MAIN LOOP
-." ---------- Starting Toka HTTP Listener ----------\n"
+  " <html>
+      <head>
+        <title>Toka: Listener</title>
+        <style>
+          .name { padding: 5px; background: #E0DDD2; width: 600px%; font-size: 18pt; font-family: sans-serif; font-style: normal; font-weight: bold; }
+          .stack { padding: 5px; background: #F2E5DD; font-size: 14pt; font-family: sans-serif; font-style: normal; }
+          .description { padding: 5px; background: #F5E9C8; font-size: 12pt; font-family: sans-serif; font-style: normal; }
+        </style>
+      </head>
+      <body>
+  " is-data PREAMBLE
 
-[
-  new-connection
-  get-request 
-  send-table
-  end-connection
-  reset
-  TRUE
-] keep
+  [ ( - ) PREAMBLE send ] is html-begin
+  [ ( - ) " </body></html>" send ] is html-end
+
+  [ ( - ) " <form id=\"main\" action=\"browse\" method=\"get\">\n" send ] is form-begin
+  [ ( - ) " </form>\n" send ] is form-end
+
+  2 chars is-array output
+  value source
+  [ ( $- )
+    dup to source
+    count char- nip
+    [
+      i char- source array.getChar   
+      switch
+        char: < [ " &lt;" send break ] case
+        char: > [ " &gt;" send break ] case
+        char: & [ " &amp;" send break ] case
+        [ <cond> 0 output array.putChar output send ] default 
+    ] +iterate
+  ] is send-with-escapes
+  [ ( $- )  extract-filename count 13 chars > [ 12 chars + ] ifTrue
+            over strcmp 0 = 
+            [ " <option selected='selected'>" send send-with-escapes " </option>" send ] 
+            [ " <option>" send send-with-escapes " </option>" send ] ifTrueFalse
+  ] is <option>
+
+
+  [ ( - )
+    " <select name=\"word\" style=\"width: 200px;\" size=\"20\" onchange=\"javascript:document.getElementById('main').submit();\">\n" send
+    last @ [ i :name <option> ] iterate
+    " </select>\n" send
+  ] is select-word
+
+  [ extract-filename count 13 chars > [ 12 chars + ] ifTrue :getHelp send ] is display-help
+
+  [ html-begin
+    form-begin
+    " <table width='800px'>\n<tr><td width='200px'>" send
+    select-word
+    " </td><td valign=top width='600px'>" send 
+    display-help " </td>" send
+    " </tr></table>" send
+    form-end
+    html-end
+  ] is send-table
+
+
+  ." -------------------------------------- Main Loop...\n"
+
+  [ new-connection
+    get-request 
+    send-table
+    end-connection
+    reset
+    TRUE
+  ] keep
 }
  whileTrue
 bye
