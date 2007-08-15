@@ -6,6 +6,10 @@
 " document:
 )
 
+" <h2>Toka HTTP Listener</h2>
+  <p>This is a web-based interface to Toka. To view documentation
+     about a word, just select it from the list.</p>" is-data welcome-message
+
 #! ================================================================= PRIMITIVES
 " <div class='name'>&lt;&lt;</div>
   <div class='stack'>ab-c</div>
