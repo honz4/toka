@@ -1438,6 +1438,28 @@ malloc   ( n-a )     Allocate 'n' bytes of memory
 
 
 #--------------------------------------------------
+# HelpDBLibrary
+
+page HelpDBLibrary {This library adds the core support for a basic help database.
+
+It is intended to be used as part of larger applications and not by
+itself.
+ 
+#pre
+  document: ( $"- )     Add documentation ($) for a word (")
+  :getHelp  ( $-$ )     Get documentation string for a word.
+#unpre
+
+=== Example ===
+
+#pre
+  " This does nothing" document: foo
+  " foo" :getHelp type cr
+#unpre
+} 1187133794
+
+
+#--------------------------------------------------
 # Home
 
 page Home {Hello, and welcome to Toka!
@@ -2367,6 +2389,7 @@ project. To make use of this, use this at the start of a program:
 * [ConsoleLibrary]
 * [CtypeLibrary]
 * [FloatsLibrary]
+* [HelpDBLibrary]
 * [LocalsLibrary]
 * [MathLibrary]
 * [QuotesLibrary]
@@ -2378,7 +2401,8 @@ project. To make use of this, use this at the start of a program:
 * [StringsLibrary]
 * [StructLibrary]
 * [TextEditLibrary]
-* [TimeLibrary]} 1184460817
+* [TimeLibrary]
+} 1187133645
 
 
 #--------------------------------------------------
@@ -2874,8 +2898,7 @@ Makefile to select the proper PLATFORM line. Build and copy toka.exe and
 bootstrap.toka to a c:\toka directory.
 
 Note that not all of the library works at this time, though we will try to
-fully support it in the future.
-} 1186278512
+fully support it in the future.} 1186278512
 
 
 #--------------------------------------------------

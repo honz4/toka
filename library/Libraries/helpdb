@@ -1,4 +1,5 @@
 {
+  2 import strcmp
   value top 1 to top
   4096 cells is-array names
   4096 cells is-array docstrings
@@ -12,14 +13,12 @@
    value which
   [ ( $- )
     to which
-    top 1 - [ i names array.get which strcmp 0 = [ i docstrings array.get send ] ifTrue ] +iterate
-  ] is :help
+    top 1 - [ i names array.get which strcmp 0 = [ i docstrings array.get ] ifTrue ] +iterate
+  ] is :getHelp
 
   ` document:
-  ` :help
+  ` :getHelp
 }
 
-is :help
+is :getHelp
 is document:
-
-include help.toka
