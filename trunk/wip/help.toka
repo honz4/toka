@@ -771,7 +771,7 @@
 
 " <div class='name'>nip</div>
   <div class='stack'>xy-y</div>
-  <div class='description'></div>
+  <div class='description'>Drop NOS</div>
   <div class='source'></div>
 " document: nip
 
