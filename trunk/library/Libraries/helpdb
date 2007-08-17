@@ -10,10 +10,13 @@
 
   [ ( $- )
     wsparse +name +docstring next ] is document:
-   value which
+
+  value| which found |
   [ ( $- )
     to which
-    top 1 - [ i names array.get which strcmp 0 = [ i docstrings array.get ] ifTrue ] +iterate
+    0 to found
+    top 1 - [ i names array.get which strcmp 0 = [ i docstrings array.get to found ] ifTrue ] +iterate
+    found 0 <> [ found ] [ " Sorry, no help was found\n" ] ifTrueFalse
   ] is :getHelp
 
   ` document:

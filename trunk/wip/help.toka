@@ -3,12 +3,10 @@
   <div class='stack'></div>
   <div class='description'></div>
   <div class='source'></div>
+  <div class='related'>See also: <a href='/?word='></a></div>
+  <div class='example'><h4>Example:</h4></div>
 " document:
 )
-
-" <h2>Toka HTTP Listener</h2>
-  <p>This is a web-based interface to Toka. To view documentation
-     about a word, just select it from the list.</p>" is-data welcome-message
 
 #! ================================================================= PRIMITIVES
 " <div class='name'>&lt;&lt;</div>
@@ -45,36 +43,50 @@
   <div class='stack'>-n</div>
   <div class='description'>Return the number of arguments</div>
   <div class='source'></div>
+  <div class='related'>See also: <a href='/?word=arglist'>arglist</a></div>
 " document: %23args
 
 " <div class='name'>arglist</div>
   <div class='stack'>-a</div>
   <div class='description'>Return a pointer to the argument list</div>
   <div class='source'></div>
+  <div class='related'>See also: <a href='/?word=%23args'>#args</a></div>
 " document: arglist
 
 " <div class='name'>&lt;</div>
   <div class='stack'>ab-f</div>
   <div class='description'>Compare 'a' and 'b', return a flag</div>
   <div class='source'></div>
+  <div class='related'>See also: <a href='/?word=%3E'>&gt;</a>
+                                 <a href='/?word=%3D'>=</a>
+                                 <a href='/?word=%3C%3E'>&lt;&gt;</a></div>
 " document: %3C
 
 " <div class='name'>&gt;</div>
   <div class='stack'>ab-f</div>
   <div class='description'>Compare 'a' and 'b', return a flag</div>
   <div class='source'></div>
+  <div class='related'>See also: <a href='/?word=%3C'>&lt;</a>
+                                 <a href='/?word=%3D'>=</a>
+                                 <a href='/?word=%3C%3E'>&lt;&gt;</a></div>
 " document: %3E
 
 " <div class='name'>=</div>
   <div class='stack'>ab-f</div>
   <div class='description'>Compare 'a' and 'b', return a flag</div>
   <div class='source'></div>
+  <div class='related'>See also: <a href='/?word=%3E'>&gt;</a>
+                                 <a href='/?word=%3C'>&lt;</a>
+                                 <a href='/?word=%3C%3E'>&lt;&gt;</a></div>
 " document: %3D
 
 " <div class='name'>&lt;&gt;</div>
   <div class='stack'>ab-f</div>
   <div class='description'>Compare 'a' and 'b', return a flag</div>
   <div class='source'></div>
+  <div class='related'>See also: <a href='/?word=%3E'>&gt;</a>
+                                 <a href='/?word=%3C'>&lt;</a>
+                                 <a href='/?word=%3D'>=</a></div>
 " document: %3C%3E
 
 " <div class='name'>.</div>
@@ -507,6 +519,7 @@
   <div class='stack'>&quot;-</div>
   <div class='description'>Ignore the rest of the line</div>
   <div class='source'></div>
+  <div class='example'><h4>Example:</h4>#! This is a comment</div>
 " document: %23%21
 
 [ 41 parse drop ] is-macro (
@@ -514,6 +527,7 @@
   <div class='stack'>&quot-</div>
   <div class='description'>Ignore everything up to the next )</div>
   <div class='source'></div>
+  <div class='example'><h4>Example:</h4>( This is a comment )</div>
 " document: %28
 
 " <div class='name'>.PRIM_WORD</div>
@@ -923,12 +937,14 @@
   <div class='stack'>&quot;-</div>
   <div class='description'>Create a new variable</div>
   <div class='source'></div>
+  <div class='example'><h4>Example:</h4>variable a</div>
 " document: variable
 
 " <div class='name'>variable|</div>
   <div class='stack'>&quot;-</div>
   <div class='description'>Create multiple variables</div>
   <div class='source'></div>
+  <div class='example'><h4>Example:</h4>variable| a b c d e |</div>
 " document: variable%7C
 
 " <div class='name'>hex</div>
