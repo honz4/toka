@@ -1,5 +1,5 @@
 #! /usr/bin/toka 
-#! --------------------------------------------------------------- 
+#! -------------------------- 
 #! HTTP Based Listener
 #!
 #! This is a simple http server designed to run a basic listener.
@@ -8,11 +8,11 @@
 #!
 #! Eventually I hope to have it accept code and run it in a separate
 #! process.
-#! --------------------------------------------------------------- 
+#! -------------------------- 
 
 
 {
-  ." -------------------------------------- Loading Libraries...\n"
+  ." - Loading Libraries...\n"
   needs strings
   needs sockets
   needs shell
@@ -24,7 +24,7 @@
   from libc.so.6
   3 import memset     #! void *memset(void *s, int c, size_t n);
 
-  ." -------------------------------------- Preparing Server...\n"
+  ." - Preparing Server...\n"
   8192 chars is-data 8KiB
   8KiB is-array buffer
   [ ( ...- )
@@ -39,7 +39,7 @@
   [ ( - )
     >r connection r> count char- pWrite drop ] is send
 
-  ." -------------------------------------- Preparing Request Handler...\n"
+  ." - Preparing Request Handler...\n"
   " \n "  is-data DELIMS
   [ ( - ) 
     connection buffer 8KiB pRead drop ] is get-request
@@ -53,6 +53,8 @@
           .name { padding: 5px; background: #E0DDD2; width: 600px%; font-size: 18pt; font-family: sans-serif; font-style: normal; font-weight: bold; }
           .stack { padding: 5px; background: #F2E5DD; font-size: 14pt; font-family: sans-serif; font-style: normal; }
           .description { padding: 5px; background: #F5E9C8; font-size: 12pt; font-family: sans-serif; font-style: normal; }
+          .related { padding: 5px; background: #F2E5DD; font-size: 10pt; font-family: sans-serif; font-style: normal; }
+          .example { padding: 5px; background: #E0DDD2; font-size: 10pt; font-family: sans-serif; font-style: normal; }
         </style>
       </head>
       <body>
@@ -61,7 +63,7 @@
   [ ( - ) PREAMBLE send ] is html-begin
   [ ( - ) " </body></html>" send ] is html-end
 
-  [ ( - ) " <form id=\"main\" action=\"browse\" method=\"get\">\n" send ] is form-begin
+  [ ( - ) " <form id=\"main\" action=\"/\" method=\"get\">\n" send ] is form-begin
   [ ( - ) " </form>\n" send ] is form-end
 
   2 chars is-array output
@@ -72,8 +74,8 @@
     [
       i char- source array.getChar   
       switch
-        char: < [ " &lt;" send break ] case
-        char: > [ " &gt;" send break ] case
+        char: < [ " &lt;"  send break ] case
+        char: > [ " &gt;"  send break ] case
         char: & [ " &amp;" send break ] case
         [ <cond> 0 output array.putChar output send ] default 
     ] +iterate
@@ -88,7 +90,7 @@
   ] is select-word
 
   [ ( - )
-    extract-filename count 13 chars > [ 12 chars + ] ifTrue :getHelp send ] is display-help
+    extract-filename count 7 chars > [ 6 chars + ] ifTrue :getHelp send ] is display-help
 
   [ ( - )
     html-begin
@@ -103,7 +105,7 @@
   ] is send-table
 
 
-  ." -------------------------------------- Main Loop...\n"
+  ." - Main Loop...\n"
   [ new-connection
     get-request
     send-table
