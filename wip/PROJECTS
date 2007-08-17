@@ -11,11 +11,15 @@ than myself.
 ==============================================
 
 
-= tokadoc-toka =
-This is a varient of the simple tokadoc-c script,
-which looks for comments taking one of the following
-forms:
+= tokadoc =
+A set of scripts that can be used to document
+the basic function information for programs 
+written in various languages. Current targets 
+are C or Toka.
 
+Currently there is a varient of the simple 
+tokadoc-c script, which looks for comments 
+taking one of the following forms:
 
   #! |F| ........description...............
 
@@ -24,9 +28,8 @@ forms:
 These are put into TOKA_FUNCTIONS (for |F|) and
 TOKA_GLOSSARY (for |G|).
 
-The goal is to be able to document libraries and
-applications using the same approach used for the 
-C parts of Toka.
+In the future it will be possible to build helpdb
+sources from the GLOSSARY file.
 ==============================================
 
 = enum =
@@ -46,15 +49,18 @@ This is the start of a set of scripts and tools
 to automate the building of .deb, .rpm, and other
 packaging formats for the nightly builds of Toka.
 
-It is no where near complete enough at this time.
+It is no where near complete at this time.
 ==============================================
 
-= httpd-listener =
-This is a fairly large project seeking to add a
-web-based frontend to Toka. Work on the first 
-stage (allowing you to select documentation,
-and eventually view source, for any word in the
-core or bootstrap) is under way.
+= http-listener =
+This is an ambitious project in which I hope to
+develop a web-based frontend to Toka.
+
+At present the first stage is mostly done. This
+is a documentation browser, allowing you to view
+the documentation for any word in the Toka core
+and bootstrap. Work on adding related entries and 
+examples is ongoing.
 
 Later I hope to allow use of it to extend and
 document a running Toka instance, with some
