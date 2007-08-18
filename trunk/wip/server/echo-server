@@ -1,0 +1,13 @@
+#! /usr/bin/toka
+#! ---------------------------------------------------------------
+#! Partially RFC862 Compliant Echo Server
+#!
+#! Copyright (c)2007 by Charles Childers
+#! This code may be used under the terms of the MIT/X11 License.
+#! ---------------------------------------------------------------
+
+needs sockets
+include server
+
+8192 chars is-array buffer
+[ buffer 8192 server.readString buffer server.sendString ] 7 server.start
