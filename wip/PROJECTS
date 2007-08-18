@@ -65,3 +65,11 @@ examples is ongoing.
 Later I hope to allow use of it to extend and
 document a running Toka instance, with some
 debugging facilities.
+==============================================
+
+= server =
+
+This is a minimal framework for building server
+applications. It'll become the basis for revised
+http servers, echo server, and http listener
+someday.

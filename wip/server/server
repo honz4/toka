@@ -1,0 +1,25 @@
+#! ---------------------------------------------------------------
+#! server
+#!
+#! This is a simple framework for building simple servers. It 
+#! needs:
+#!  - sockets
+#! ---------------------------------------------------------------
+
+  value| server.socket server.connection server.action |
+  [ ( n- )
+    pBind to server.socket ] is server.setSocket
+
+  [ ( - )
+     server.socket pAccept to server.connection ] is server.acceptConnection
+  [ ( - )
+     server.connection pClose drop ] is server.closeConnection
+  [ ( $- )
+    >r server.connection r> count char- pWrite drop ] is server.sendString
+
+  [ ( an- )
+    server.connection -rot pRead drop ] is server.readString
+
+  [ ( qn- ) swap to server.action
+    server.setSocket
+    [ server.acceptConnection server.action invoke server.closeConnection TRUE ] whileTrue ] is server.start
