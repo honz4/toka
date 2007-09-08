@@ -171,7 +171,7 @@ void toka_float_drop()
  ******************************************************/
 void toka_float_swap()
 {
-  long a, b;
+  double a, b;
   a = TOS;    b = NOS;
   TOS = b;    NOS = a;
 }

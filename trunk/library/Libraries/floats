@@ -73,7 +73,7 @@ from /usr/share/toka/library/C/floats.so
 
 [ fswap fdrop ] is fnip
 [ fdrop fdrop ] is f2drop
-[ fdepth [ fdrop ] iterate ] is freset
+[ fdepth 0 [ fdrop ] countedLoop ] is freset
 
 {
   fvariable a
@@ -109,4 +109,3 @@ from /usr/share/toka/library/C/floats.so
   [ ` [ invoke float-size malloc # ` action compile ` ] invoke is ]
 } is fvalue
   is fto
-

@@ -1,6 +1,5 @@
 # ==============================================
 # Toka Library
-# Released under the MIT License (doc/LICENSE)
 # ==============================================
 
 CFLAGS  =  -O2 -shared -fPIC
@@ -18,6 +17,10 @@ default:
 	@echo
 	@echo - remove
 	@echo Uninstall Toka Library
+	@echo
+	@echo - test
+	@echo Run a series of automated tests agains the
+	@echo newly installed libraries.
 	@echo ==============================================
 
 install:
@@ -29,7 +32,10 @@ install:
 
 clean:
 	rm -f `find . | grep \~ `
-	rm -f C/*.so C/*.o
+	rm -f C/*.so C/*.o test.log
 
 remove:
 	rm -rf /usr/share/toka/library
+
+test:
+	cd tests && toka tests.toka >../test.log

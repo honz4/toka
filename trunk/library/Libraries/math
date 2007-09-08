@@ -2,7 +2,7 @@
 0 import random
 1 import srandom
 
-[ over swap 1 - [ over * ] iterate nip ] is ^
+[ over swap 1 [ over * ] countedLoop nip ] is ^
 
 [ 2dup / over + 2 / tuck <> [ recurse ] ifTrue ] is sqrt-closer
 [ 1 sqrt-closer nip ] is sqrt
