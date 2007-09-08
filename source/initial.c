@@ -5,10 +5,23 @@
  *|F| FILE: initial.c
  *|F|
  *
- * Copyright (C) 2007 Charles R. Childers
- * Distributed under the terms of the MIT/X11 License
- * (see doc/LICENSE for full terms)
+ * Copyright (c) 2006, 2007  Charles R. Childers
  *
+ * Permission to use, copy, modify, and distribute this 
+ * software for any purpose with or without fee is hereby 
+ * granted, provided that the above copyright notice and 
+ * this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR 
+ * DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE 
+ * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY 
+ * AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE 
+ * FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL 
+ * DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS 
+ * OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF 
+ * CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING 
+ * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE 
+ * OF THIS SOFTWARE.
  ******************************************************/
 
 #include "toka.h"
@@ -98,7 +111,6 @@ void build_dictionary()
   add_entry("gc",        &gc,            &word_class);
 
   /* interpret.c */
-  add_entry("count",     &count,         &word_class);
   add_entry("compiler",  &compiler,      &data_class);
 
   /* math.c */
@@ -117,17 +129,13 @@ void build_dictionary()
   add_entry("parser",    &parser,        &data_class);
   add_entry("escape-sequences",&escapes, &data_class);
 
-  /* prompt.c */
-  add_entry("prompt",    &prompt,        &data_class);
-
   /* quotes.c */
   add_entry("[",         &begin_quote,   &macro_class);
   add_entry("]",         &end_quote,     &macro_class);
   add_entry("recurse",   &recurse,       &macro_class);
   add_entry("invoke",    &invoke,        &word_class);
   add_entry("compile",   &compile,       &word_class);
-  add_entry("iterate",   &iterate,       &word_class);
-  add_entry("+iterate",  &alt_iterate,   &word_class);
+  add_entry("countedLoop", &countedLoop, &word_class);
   add_entry("i",         &quote_index,   &word_class);
   add_entry("ifTrueFalse",&truefalse,    &word_class);
   add_entry("whileTrue",  &quote_while_true,  &word_class);
@@ -140,6 +148,9 @@ void build_dictionary()
   add_entry(">r",        &stack_to_r,    &word_class);
   add_entry("r>",        &stack_from_r,  &word_class);
   add_entry("depth",     &stack_depth,   &word_class);
+
+  /* prompt.c */
+  add_entry("prompt",    &prompt,        &data_class);
 
   /* vm.c */
   add_entry("heap",      &heap,          &data_class);
