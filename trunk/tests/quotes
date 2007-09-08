@@ -5,10 +5,7 @@ t:  Creating
 t:  Invoking
    9. 9 try
    3. 3 try
-t:  Iteration
-   [ 1 5 [ dup 1 + ] iterate drop ] is count
-   count
-   5 try  4 try  3 try  2 try  1 try
+   [ 4 5 ] invoke 5 try 4 try
 t:  Recursion
    [ dup 0 <> [ dup 1 - recurse ] [ drop ] ifTrueFalse ] is count2
    5 count2
@@ -16,3 +13,7 @@ t:  Recursion
 t:  Loops
    0 [ 1 + dup 10 = ] whileFalse 10 try
    0 [ 1 + dup 10 <> ] whileTrue 10 try
+   10 5 [ i ] countedLoop
+   6 try 7 try 8 try 9 try 10 try
+   5 10 [ i ] countedLoop
+   9 try 8 try 7 try 6 try 5 try

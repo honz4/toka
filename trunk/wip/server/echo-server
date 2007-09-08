@@ -10,4 +10,4 @@ needs sockets
 include server
 
 8192 chars is-array buffer
-[ buffer 8192 server.readString buffer server.sendString ] 7 server.start
+[ buffer 8192 server.recieve buffer server.send ] 7 server.start

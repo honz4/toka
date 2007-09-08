@@ -69,29 +69,6 @@
 
 
 #! ---------------------------------------
-#! Colors
-#! ---------------------------------------
-[ ." \^[0m"  ] is normal
-[ ." \^[1m"  ] is bold
-[ ." \^[30m" ] is black
-[ ." \^[31m" ] is red
-[ ." \^[32m" ] is green
-[ ." \^[33m" ] is yellow
-[ ." \^[34m" ] is blue
-[ ." \^[35m" ] is magenta
-[ ." \^[36m" ] is cyan
-[ ." \^[37m" ] is white
-[ ." \^[40m" ] is onBlack
-[ ." \^[41m" ] is onRed
-[ ." \^[42m" ] is onGreen
-[ ." \^[43m" ] is onYellow
-[ ." \^[44m" ] is onBlue
-[ ." \^[45m" ] is onMagenta
-[ ." \^[46m" ] is onCyan
-[ ." \^[47m" ] is onWhite
-
-
-#! ---------------------------------------
 #! Stack manipulation
 #! ---------------------------------------
 [ swap drop ] is nip
@@ -101,7 +78,7 @@
 [ dup -rot ] is tuck
 [ over over ] is 2dup
 [ drop drop ] is 2drop
-[ depth [ drop ] iterate ] is reset
+[ depth 0 [ drop ] countedLoop ] is reset
 [ r> r> tuck >r >r ] is r@
 
 
@@ -224,10 +201,36 @@
 
 
 #! ---------------------------------------
+#! Strings
+#! ---------------------------------------
+{
+  1 import strlen 
+  [ dup strlen ]
+} is string.getLength 
+{
+  2 import strcpy
+  [ >r string.getLength char+ r> + malloc swap strcpy ]
+} is string.grow
+{
+  2 import strcat
+  [ swap string.getLength 2 chars + string.grow swap strcat ]
+} is string.append
+{
+  2 chars is-array append
+  [ 0 append array.putChar append string.append ]
+} is string.appendChar
+{
+  2 import strcmp
+  [ strcmp 0 = ]
+} is string.compare
+[ 1 string.grow ] is string.clone
+
+
+#! ---------------------------------------
 #! Debugging Aids
 #! ---------------------------------------
-[ dup last @ [ i :class over = [ i :name type space ] ifTrue ] iterate cr ] is words-within
+[ dup last @ 0 [ i :class over = [ i :name type space ] ifTrue ] countedLoop cr ] is words-within
 [ .PRIM_WORD words-within .PRIM_MACRO words-within ] is :prims
 [ .DATA words-within ] is :datas
 [ .WORD words-within .MACRO words-within ] is :quotes
-[ last @ [ i :name type space ] iterate cr ] is words
+[ last @ 0 [ i :name type space ] countedLoop cr ] is words

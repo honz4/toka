@@ -1,6 +1,6 @@
 #! /usr/bin/toka
 
-[ 64 [ char: - emit ] iterate ] is ---
+[ 64 0 [ char: - emit ] countedLoop ] is ---
 
 [ = [ ." \nFailed\n" cr bye ] ifFalse ] is try
 [ cr --- cr include ] is include
@@ -23,7 +23,6 @@ include dictionary
 include array
 include bits
 include scope
-include colors
 
 cr
 --- cr
@@ -31,7 +30,6 @@ i: This test has also made use of the following
 i: words:
 i: 
 i:   include
-i:   count
 i:   copy
 i:   #
 i:   parse

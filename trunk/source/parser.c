@@ -5,10 +5,23 @@
  *|F| FILE: parser.c
  *|F|
  *
- * Copyright (C) 2007 Charles R. Childers
- * Distributed under the terms of the MIT/X11 License
- * (see doc/LICENSE for full terms)
+ * Copyright (c) 2006, 2007  Charles R. Childers
  *
+ * Permission to use, copy, modify, and distribute this 
+ * software for any purpose with or without fee is hereby 
+ * granted, provided that the above copyright notice and 
+ * this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR 
+ * DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE 
+ * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY 
+ * AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE 
+ * FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL 
+ * DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS 
+ * OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF 
+ * CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING 
+ * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE 
+ * OF THIS SOFTWARE.
  ******************************************************/
 
 #include <stdio.h>
@@ -79,11 +92,33 @@ long parse_ended=TRUE;
 void to_number()
 {
   char *s, *t;
-  long flag;
+  long flag, old_base;
 
   s = (char *)TOS; DROP;
   t = s;
   flag = TRUE;
+  old_base = base;
+
+  if (*t == '\%')
+  {
+    base = 2;
+    t++; s++;
+  }
+  if (*t == '&')
+  {
+    base = 8;
+    t++; s++;
+  }
+  if (*t == '#')
+  {
+    base = 10;
+    t++; s++;
+  }
+  if (*t == '$')
+  {
+    base = 16;
+    t++; s++;
+  }
 
   if (*t == '-')
     t++;
@@ -113,6 +148,8 @@ void to_number()
   else
      push((long)s);
   push(flag);
+
+  base = old_base;
 }
 
 
