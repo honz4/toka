@@ -1,6 +1,0 @@
-#! In this task, the goal is to spawn a new process which can run simultaneously 
-#! with, and independently of, the original parent process.
-
-needs shell
-getpid is-data PID
-[ fork getpid PID = [ ." Child PID: " . cr ] [ ." In child\n" ] ifTrueFalse ] invoke

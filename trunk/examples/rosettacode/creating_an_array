@@ -1,9 +1,0 @@
-#! In this task, the goal is to create an array. Mention if the array base begins at a number other than zero.
-
- 100 cells is-array foo
-
-#! To create an array with several initial values: 
-
- 3 cells is-array foo
- reset
- 1 2 3 depth [ i 1 - foo array.put ] iterate

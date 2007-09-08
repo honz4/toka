@@ -1,5 +1,0 @@
-#! /usr/bin/toka
-[ 3 mod 0 = [ " Fizz " type TRUE ] [ FALSE ] ifTrueFalse ] is fizz?
-[ 5 mod 0 = [ " Buzz " type TRUE ] [ FALSE ] ifTrueFalse ] is buzz?
-[ 100 [ i fizz? i buzz? or [ i . ] ifFalse ] +iterate ] is gb
-gb bye
