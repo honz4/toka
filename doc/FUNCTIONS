@@ -348,12 +348,6 @@ Variables:
   char *tib
   Pointer to the text input buffer.
 
-count()
-Perform strlen() on the string passed on TOS. This
-returns the string and the count on the stack. The
-count is increased by 1 to include the trailing 
-ASCII 0.
-
 interpret()
 Accept and process input.
 
@@ -394,14 +388,10 @@ Variables:
   When ON (TRUE), escape sequences will be handled
   by the parser. When OFF (FALSE), they will be ignored.
 
-  long parse_ended
-  A helper for the display_prompt, to suppress it while
-  interpreting each word.
-
 to_number()
 Attempt to convert a string (on TOS) to a number.
 This accepts a format of:
-  [-]number
+  [prefix][-]number
 If successful, it leaves the number and a flag of
 TRUE on the stack. Otherwise, it leaves the original
 string, and a flag of FALSE.
@@ -435,17 +425,6 @@ Remove the current file from the input stack. This
 can be used to abort an include.
 
 
-FILE: prompt.c
-
-Variables:
-  long prompt
-  Variable that determines whether or not to
-  display the prompt.
-
-display_prompt()
-Display the prompt if 'prompt' variable is TRUE
-
-
 FILE: quotes.c
 
 Variables:
@@ -477,13 +456,10 @@ Call a quote (passed on TOS)
 compile()
 Compile the code needed to call a quote (passed on TOS)
 
-iterate()
-Repeat execution of a quote (passed on TOS), NOS
-number of times.
-
-alt_iterate()
-Repeat execution of a quote (passed on TOS), NOS
-number of times.
+countedLoop()
+Execute a quote a given number of times. You pass
+a quote, and upper/lower limits. The loop counter,
+'i', is updated with each cycle.
 
 truefalse()
 Takes three items (true-xt, false-xt, and a flag)

@@ -1,32 +1,6 @@
 # Notebook Database File
 
 #--------------------------------------------------
-# ANSLibrary
-
-page ANSLibrary {This is a library that provides a partial subset of ANS FORTH
-functionality to Toka. It is not complete, and may have bugs.
-
-Words provided:
-* within
-* spaces
-* num>char
-* >lower
-* char>num
-* digit?
-* holdaddr
-** Variable
-* hld
-** Variable
-* &lt;#
-* hold
-* #&gt;
-* sign
-* #
-* #s
-* (ud.)} 1179676690
-
-
-#--------------------------------------------------
 # Arrays
 
 page Arrays {The standard bootstrap adds support for arrays. These are a superset of
@@ -100,42 +74,6 @@ xor      ( ab-c )    Perform a bitwise XOR
 
 
 #--------------------------------------------------
-# BsortLibrary
-
-page BsortLibrary {This library provides an implementation of <i>bubble sort</i> for
-sorting arrays.
-
-Provides:
-* bsort
-** <i>array number_elements -- </i>
-
-Example:
-
-#pre
- needs bsort
-
-  10 cells is-array foo
-
-   20   1 foo array.put
-   50   2 foo array.put
-  650   3 foo array.put
-  120   4 foo array.put
-  110   5 foo array.put
-  101   6 foo array.put
- 1321   7 foo array.put
- 1310   8 foo array.put
-  987   9 foo array.put
-   10  10 foo array.put
-
- [ [ dup i swap array.get . ] +iterate drop cr ] is .array
-
- foo 10 .array
- foo 10 bsort
- foo 10 .array
-#unpre} 1185584533
-
-
-#--------------------------------------------------
 # Building
 
 page Building {To build Toka, you will need the following:
@@ -160,52 +98,6 @@ as well:
 #pre
   make docs
 #unpre} 1185041836
-
-
-#--------------------------------------------------
-# CaseLibrary
-
-page CaseLibrary {This library provides basic functionality for a switch/case style
-construct for both numbers and strings.
-
-
-Provides:
-
-* &lt;cond&gt;
-** Data element, stores the value to check against
-* switch
-** Stores the value to check against into the <b>&lt;cond&gt;</b> variable
-** <i>number -- </i>
-* case
-** Compare NOS to value in <b>&lt;cond&gt;</b> and invoke the quote (TOS)
-   if they match
-** <i>number quote --</i>
-* string-case
-** Compare string in NOS to value in <b>&lt;cond&gt;</b> and invoke the
-   quote (TOS) if they match
-** <i>string_pointer quote --</i>
-
-Example:
-
-#pre
- needs case
- 
- [ switch
-   1 [ ." One!\n"   ] case
-   2 [ ." Two!\n"   ] case
-   3 [ ." Three!\n" ] case
-   4 [ ." Four!\n"  ] case
-   5 [ ." Five!\n"  ] case
- ] is try
- 
- ." Inputs are: 1 3 5 2 5 4\n"
- 1 try
- 3 try
- 5 try
- 2 try
- 5 try
- 4 try
-#unpre} 1179676345
 
 
 #--------------------------------------------------
@@ -437,27 +329,6 @@ whileFalse ( a- )    Execute quote. If the quote
 
 
 #--------------------------------------------------
-# ConditionalsLibrary
-
-page ConditionalsLibrary {This library provides additional conditionals to help with comparisions.
-
-Provides:
-
-* &gt;=
-** Return TRUE if x greater than or equal to y. FALSE otherwise.
-** <i>x y -- flag</i>
-* &lt;=
-** Return TRUE if x less than or equal to y. FALSE otherwise.
-** <i>x y -- flag</i>
-* &gt;!=
-** Return TRUE if x greater than or not equal to y. FALSE otherwise.
-** <i>x y -- flag</i>
-* &lt;!=
-** Return TRUE if x less than or not equal to y. FALSE otherwise.
-** <i>x y -- flag</i>} 1179677225
-
-
-#--------------------------------------------------
 # console.c
 
 page console.c {= Use =
@@ -523,38 +394,6 @@ onWhite  ( - )       VT100: Set the background color to white
 
 
 #--------------------------------------------------
-# ConsoleLibrary
-
-page ConsoleLibrary {This is the start of a library to make developing console-based
-applications easier.
-
-<b>needs console</b>
-
-* console_init
-** <i> -- n</i>
-** Initialize the console subsystem to key breaking mode
-* <b>console_cleanup</b>
-** <i> -- n</i>
-** Reset the console subsystem to the OS default
-* <b>getkey</b>
-** <i> -- n</i>
-** Read a key and return a single value code
-* <b>getchar</b>
-** <i> -- n</i>
-** Read a single byte from the keyboard; specials keys may
-   return multiple byte codes.
-* <b>console_dimensions</b>
-** <i> -- x y</i>
-** Return the rows and columns of the console window
-* <b>xy</b>
-** <i> x y -- </i>
-** Set the cursor to x,y
-* <b>home</b>
-** <i> -- </i>
-** Reset the cursor to the top left corner} 1184462061
-
-
-#--------------------------------------------------
 # Constants
 
 page Constants {For data that does not change, a <i>constant</i> can be created as
@@ -573,13 +412,6 @@ which can also be used at the listener or inside quotes.
 The use of constants is encouraged as it makes code easier to read and
 maintain. They have minimal impact on performance, and are significantly
 faster to use than variables.} 1177888754
-
-
-#--------------------------------------------------
-# CtypeLibrary
-
-page CtypeLibrary {This library provides various imports from ctype.h for working with
-single character values.} 1179272565
 
 
 #--------------------------------------------------
@@ -883,12 +715,12 @@ Fatal. This error arises when the stdin device is closed unexpectedly.
 
 = E7 =
 Fatal. This error arises when a quote exceeds the maximum size permitted.
-See [Limitations].
+See [Limitations]. 
 
-= E8 = 
+= E8 =
 Fatal. This error arises when a malloc fails. Normally you shouldn't see
 this unless you are dealing with a bad malloc/free implementation or very
-large sets of data.} 1185045179
+large sets of data.} 1188752328
 
 
 #--------------------------------------------------
@@ -1238,14 +1070,8 @@ file.slurp  ( $-a )  Read a file into a dynamically allocated buffer
 
 page {First Steps} {The following is a set of topical guides to various aspects of the Toka
 language. It was written as the initial tutorial material, but as should
-be evident, I am not a great writer of tutorials.
-
-The material should be fairly easy for a moderately experienced
-programmer to pick up. Easier still if one has experience with Forth,
-Joy, Factor, or other stack-based languages. If you have no experience
-with stack based languages, the [tutorial] may be helpful before you
-start working through these sections.
-
+be evident, I am not a great writer of tutorials. The material should be
+fairly easy for a moderately experienced Forth or Joy programmer to pick up.
 #---
 
 === Introductory Bits ===
@@ -1269,70 +1095,13 @@ start working through these sections.
 * [Files]
 * [FFI]
 * [Scripts]
-* [Libraries]
 
 === Practical Matters ===
 * [Commenting Code]
 * [Stack Comments]
 
 === Advanced Topics ===
-* [Extending the Language]} 1180379851
-
-
-#--------------------------------------------------
-# FloatsLibrary
-
-page FloatsLibrary {This library adds support for floating point numbers and math. As with
-many Forth implementations, it provides a separate stack for floating
-point numbers, and alternative versions of the main stack and math words.
- 
-#pre
-  float:    ( "-n )     Parse ahead for a new floating point
-                        number
-  fvariable ( "- )      Create a new floating-point variable
-  f@        ( a-n )     Fetch the value in memory location 'a'
-  f!        ( na- )     Store 'n' to memory location 'a'
-  fdup      ( n-nn )    Duplicate the TOS
-  fdrop     ( n- )      Drop the TOS
-  fswap     ( ab-ba )   Exchange the TOS and NOS
-  fdepth    ( -n )      Return the number of items on the stack
-  fnip      ( xy-y )    Remove the second item on the stack
-  frot      ( abc-bca ) Rotate top three values on stack
-  f-rot     ( abc-acb ) Rotate top three values on stack twice
-  fover     ( xy-xyx )  Put a copy of NOS above the TOS
-  ftuck     ( xy-yxy )  Put a copy of TOS under NOS     
-  f2dup     ( xy-xyxy ) Duplicate the top two items on the stack
-  f2drop    ( xy- )     Drop TOS and NOS
-  freset    ( *- )      Drop all items on the stack
-  f+        ( ab-c )    Add TOS and NOS
-  f-        ( ab-c )    Subtract TOS from NOS
-  f*        ( ab-c )    Multiply TOS by NOS
-  f/        ( ab-c )    Divide and get remainder
-  :fstack   ( - )       Display all items on the float stack
-  f.        ( n- )      Display the top item on the float stack
-  f=        ( ab-f )    Compare two floats
-  f<        ( ab-f )    Compare two floats
-  f>        ( ab-f )    Compare two floats
-  f<>       ( ab-f )    Compare two floats
-  >float    ( data:n -- float:n )   Convert number 'n' to a float
-  float>    ( float:n -- data:n )   Convert float 'n' to a normal integer
-  fvalue    ( "- )      Create a new "value"
-  fto       ( - )       Toggle values to set their value 
-#unpre
-
-=== Example ===
-
-#pre
-  needs floats
-  float: 100
-  float: 200.12
-  f+
-  f.
-
-  fvalue kilometer
-  1.609344 fto kilometer
-  kilometer f.
-#unpre} 1180142865
+* [Extending the Language]} 1189119677
 
 
 #--------------------------------------------------
@@ -1438,39 +1207,15 @@ malloc   ( n-a )     Allocate 'n' bytes of memory
 
 
 #--------------------------------------------------
-# HelpDBLibrary
-
-page HelpDBLibrary {This library adds the core support for a basic help database.
-
-It is intended to be used as part of larger applications and not by
-itself.
- 
-#pre
-  document: ( $"- )     Add documentation ($) for a word (")
-  :getHelp  ( $-$ )     Get documentation string for a word.
-#unpre
-
-=== Example ===
-
-#pre
-  " This does nothing" document: foo
-  " foo" :getHelp type cr
-#unpre
-} 1187133794
-
-
-#--------------------------------------------------
 # Home
 
 page Home {Hello, and welcome to Toka!
 
-Toka is an experimental language related to Forth. It is still under
-development, and will continue to evolve over time. 
-
-Don't expect your existing knowledge to apply directly to Toka. It allows
-a good deal of low-level control, while supporting some useful
-abstractions that make development easier. Some influences come from
-RetroForth, HelFORTH, 4p, Factor, and SmallTalk.
+Toka is a concatenative language with roots in Forth. Don't expect your
+existing knowledge to apply directly to Toka. It allows a good deal of
+low-level control, while supporting some useful abstractions that make
+development easier. Some influences come from RetroForth, HelFORTH, 4p,
+Factor, and SmallTalk.
 
 <i>If you can't find something, try the [index]. A more structured set of
 topics can be found in [First Steps].</i> 
@@ -1479,7 +1224,6 @@ topics can be found in [First Steps].</i>
 
 * [License]
 * [Building] and [Installation]
-* A [Tutorial] for new programmers
 * [First Steps], a short guide to the language
 * The [Words and Their Uses]
 
@@ -1517,7 +1261,7 @@ topics can be found in [First Steps].</i>
 * [quotes.c]
 * [stack.c]
 * [toka.c]
-* [vm.c]} 1178750209
+* [vm.c]} 1189119643
 
 
 #--------------------------------------------------
@@ -1598,11 +1342,6 @@ Variables:
   char *tib
   Pointer to the text input buffer.
 
-count()
-Perform strlen() on the string passed on TOS. This
-returns the string and the count on the stack. The
-count is increased by 1 to include the trailing 
-ASCII 0.
 
 interpret()
 Accept and process input.
@@ -1613,821 +1352,25 @@ Accept and process input.
 #pre
 compiler ( -a )      Variable holding the compiler
                      state
-count    ( a-ac )    Return an address/count pair
-                     for a string
-#unpre} 1185043001
-
-
-#--------------------------------------------------
-# Lesson 0
-
-page {Lesson 0} {= Why Bother? =
-
-Toka is weird compared to most popular computer languages. Until you
-learn how, it is hard to read because it is not based on the syntax of
-algebraic expressions.
-
-But it is worth learning because a running Toka system gives you an
-extraordinary degree of low-level control over the system. Unlike most
-other programming environments that put up walls to hide or block access
-to "unauthorized" things, Toka makes it easy to get at anything, at any
-level from low to high.
-
-= Toka Syntax =
-
-Here is syntactically-valid line of Toka code: 
-
-#pre
- this is a test 123 456
-#unpre
-
-Don't try to guess what it does; in fact it doesn't necessarily actually
-work, because some of the symbols might not be defined. But it is
-syntactically valid. It consists of 6 words, "this" "is" "a" "test" "123"
-"456". Words are separated by white space - spaces, tabs, and newlines.
-In most cases, spaces and newlines are the same.
-
-Another syntactically valid line: 
-
-#pre
- asdf  foo  jello  @W#$%^,T/%$  1a2qw2   gibbet
-#unpre
-
-That's 6 words. One of them is pretty strange, consisting mostly of
-punctuation, but it is a word nevertheless. Any string of printing
-characters is a word. Toka limits word names to 255 characters.
- 
-= Left to Right Execution =
-
-The Toka interpreter is very simple. It parses the next word (i.e. it
-skips whitespace, then collects characters until it sees another
-whitespace character) and executes it.
-
-That is it in a nutshell. So if you are trying to understand a Toka
-program in detail, you have to look at each word in turn and work out
-what it does. That sounds simple, but it will trip you up if you insist
-on looking for algebra. Just go left to right, one word at a time.
-
-With practice, you will learn enough of the Toka vocabulary (the meanings
-of standard words) so that you can see what is going on at a glance,
-without having to puzzle out each individual word. It is just like
-learning to read - it is tedious until you get the basic vocabulary down,
-then it is easy. 
-
-<i>Thus endeth the lesson.</i>} 1178666311
-
-
-#--------------------------------------------------
-# Lesson 1
-
-page {Lesson 1} {= Review =
-
-In the previous lesson we learned that: 
-* The top-level parser only looks for whitespace, so Forth words must be
-  separated by one or more spaces
-* Execution proceeds from left to right. Get a word, execute it. 
-
-Today we will start trying some commands. 
-
-= The Stack =
-
-Toka has an explicitly visible stack that is used to pass numbers between
-words (commands). Using Toka effectively requires you to think in terms
-of the stack. That can be hard at first, but as with anything, it becomes
-much easier with practice.
-
-Toka also has a secondary stack - the "return stack" - that is used for
-return addresses and a few other things. Toka automatically manages the
-return stack so you don't have to think about it for the most part (but
-you can get at it if you need to; Toka doesn't block you from doing
-anything). 
-
-== Displaying the Stack ==
-
-#pre
-  :stack
-#unpre
-
-Doing this will cause Toka to show you what is on the stack. If the stack
-contained the numbers 5678 and 112233, you would see:
-
-#pre
- <2> 5678 112233
-#unpre
-
-The number to the right is the top of the stack and the number in
-brackets on the left is the number of items on the stack. 
-
-== Putting Numbers on the Stack ==
-
-If you type a number, it gets pushed onto the stack: 
-#pre
- 12345 998877
- :stack
- <2> 12345 998877
-#unpre
-
-What we see here is that the two numbers did get pushed onto the stack,
-and since <b>:stack</b> was called, the stack contents were displayed.
-
-= First Words =
-
-#pre
- 12345 998877 + :stack
- <1> 1011222
-#unpre
-
-The <b>+</b> word pops two numbers from the stack, adds them, and pushes
-the sum back on the stack. Note that: 
-
-* + doesn't display the result, it just pushes the result back on the stack. In this case, however, we are assuming that "showstack" mode is on, so the interpreter displayed the stack for us automatically before the next prompt. 
-* The numbers are in decimal. Toka can operate in bases 2, 8, 10, and 16,
-  however it can not display binary numbers at present. The default base
-  is decimal. You can change the base at any time by typing <b>hex</b> or
-  <b>decimal</b>. All of the examples in this tutorial series will use
-  decimal as the default base.
-* The current number base applies to both number input and number output. 
-
-= Displaying Numbers =
-
-#pre
- 12345
-#unpre
-
-Now the number is on the stack. It can be displayed:
-
-#pre
- :stack
- <1> 12345
- :stack
- <1> 12345
-#unpre
-
-<b>:stack displays the entire stack, non-destructively. 
-
-#pre
- 12345
- .
- 12345
- :stack
- <0>
-#unpre
-
-<b>.</b> pops the top of the stack and displays that number. Afterwards,
-the number is no longer there.
-
-
-= How the Interpreter Works =
-
-The Toka interpreter is very simple. It just does this over and over: 
-
-* Read a line of input 
-* While there is more data in the line: 
-* Parse a whitespace-delimited word 
-* Lookup the word in a list of defined words. If found, execute the code
-  for that word. 
-* Otherwise, try to interpret the word as a number in the current number
-  base. If so, push it on the stack. 
-* Otherwise display an error message 
-
-<i>Thus endeth the lesson.</i>} 1178666959
-
-
-#--------------------------------------------------
-# Lesson 2
-
-page {Lesson 2} {= Review =
-
-In the previous lesson we learned to: 
-
-* Display the stack with <b>:stack</b> 
-* Push numbers on the stack by typing them 
-* Control the number base with <b>hex</b> and <b>decimal</b> 
-* Execute words by typing their names 
-
-= Stack Diagrams =
-
-Pay attention to this section because it introduces notation that will be
-used over and over.
-
-Since Toka words use the stack for arguments and results, their
-description must tell you the arguments that they pop from the stack and
-the results that they push back on the stack. That is done with a <i>stack
-diagram</i>.
-
-#pre
- +  ( n1 n2 -- n3 )
-#unpre
-
-That indicates that the Toka word <b>+</b>, which we saw in the last lesson,
-pops two numbers n1 and n2 from the stack and pushes back one number n3.
-The list of items before the "--" is the arguments, the list after is the
-results. In each list, the items at the right is the top of the stack.
-
-In general, Toka words can take any number of arguments and leave any
-number of results.
-
-This is purely a notation convention. The Toka interpreter does not
-process stack diagrams other than to skip them. The way it knows to skip
-them is because the Toka word <b>(</b> introduces a comment, which is
-terminated by the next <b>)</b>. 
-
-Another example:
-
-#pre 
- :stack  ( -- )
-#unpre
-
-That means that <b>:stack</b> has no net stack effect. It doesn't pop
-anything off the stack (no arguments) and it doesn't leave any extra
-items on the stack after it finishes. It might push and pop numbers while
-it is executing, but when it is done, the stack is the same as it was
-before.
-
-#pre 
- .  ( n -- )
-#unpre
-
-The word <b>.</b> (which displays a number), pops its one argument from the
-stack and leaves nothing in its place.
-
-The names in the argument and result lists (e.g. "n1", "n2", "n3") are
-arbitrary, but as an aid to understanding, they are often chosen to
-convey extra information. For example: 
-
-#pre
- type  ( adr -- )
-#unpre
-
-We haven't seen the word <b>type</b> yet, but clearly it takes one
-argument, an address. It pops the argument from the stack, leaving
-nothing in its place. 
-
-Conventionally, stack item names beginning with "n" refer to signed
-integers, "u" to unsigned integers, "d" to double numbers (two stack
-numbers interpreted as a 64-bit integer), "adr" to addresses, "flag" to
-values that are either true (0xfffffff) or false (0). But that is not a
-hard and fast rule.
-
-Toka also has a shorter form of stack comments that is often used. See
-[Stack Comments] for further details on the short form.
-
-= How Comments Work =
-
-The following is in some sense an implementation detail, but it's good to
-understand it, because it is key to Toka's approach to syntax, which is
-vastly different to most other languages.
-
-In the section above I mentioned that the word <b>(</b> skips to the next
-<b>)</b>. That might seem like an exception to the rule that the
-interpreter only parses whitespace-delimited words, but it is not.
-
-What actually happens is that the main interpreter loop only sees the
-<b>(</b>. The <b>(</b> must be followed by whitespace, otherwise the
-interpreter will not parse just </b>(</b> but rather some longer string
-beginning with </b>(</b>. The interpreter then looks in the list of
-defined words for one named <b>(</b>, and executes it.
-
-The behavior of the <b>(</b> word is to call the parser, asking it to collect a sequence of characters delimited by <b>)</b>, and then to discard the result. So
-Any word can call the input parser, not just the main interpreter.
-
-The parser itself can use any character as a delimiter, not just
-whitespace. The main interpreter only asks the parser for
-whitespace-delimited words, but other words can and do parse using other
-delimiters.
-
-This same approach (main interpreter calls a word that then parses using
-a different delimiter) is also used for string literals where the
-delimiter is <b>"</b>. 
-
-You can, if you wish, call the parser yourself from user code, to collect
-any kind of string you want. It's best to use this capability sparingly
-to avoid confusion, but it illustrates the fact that the entire Toka
-system is available to you; nothing is magic or hidden.
-
-= Comment to End of Line =
-
-The <b>( .... )</b> comment form stops at the <b>)</b>; stuff after it will be interpreted as usual. To comment out everything else on the line, use <b>#!</b>. 
-
-#pre
- #! everything after the first #! will be ignored
-#unpre
-
-Note that the <b>#!</b> must be followed by whitespace, because <b>#!</b>
-is just a word like anything else. The way that <b>#!</b> works is to
-call the parser with a delimiter value (10) that matches a line ending
-character, discarding the result. The parser will stop at the end of the
-line, having found the delimiter. 
-
-<i>Thus endeth the lesson</i>} 1178668132
-
-
-#--------------------------------------------------
-# Lesson 3
-
-page {Lesson 3} {= Review =
-
-In the previous lesson we learned that: 
-* Toka words are described by stack diagrams like: ( argn .. arg0 --
-  resultm .. result0 ) 
-* Comments are either <b>( this is a comment )</b> or <b>#! the rest of the line is a comment</b>
-* Both <b>(</b> and <b>#!</b> must be followed by whitespace 
-* Comments work by executing a word that then explicitly calls the input parser 
-
-= Arithmetic and Logical Operators =
-
-We have already seen <b>+</b>, which pops two numbers, adds them, and
-pushes the result. Here are some more numeric operators with their stack
-diagrams:
-
-#pre
- +       ( n1 n2 -- n1+n2 )
- -       ( n1 n2 -- n1-n2 )
- *       ( n1 n2 -- n1*n2 )   \ Signed multiplication
- /       ( n1 n2 -- n1/n2 )   \ Signed division
- mod     ( n1 n2 -- n1%n2 )
- /mod    ( n1 n2 -- n1%n2 n1/n2 )
- and     ( n1 n2 -- n1&n2 )
- or      ( n1 n2 -- n1|n2 )
- xor     ( n1 n2 -- n1^n2 )
- <<      ( n1 n2 -- n1<<n2 )  \ Shift bits left
- >>      ( n1 n2 -- n1>>n2 )  \ Shift bits right
- not     ( n -- ~n )          \ Bitwise logical inversion
- negate  ( n -- -n )          \ Arithmetic negation, i.e. 0-n
- 1-      ( n -- n-1 )         \ Decrement by 1
- 1+      ( n -- n+1 )         \ Increment by 1  
-#unpre
-
-All of the above operators work on integers of the natural size for the
-machine (32 bits on 32-bit processors). 
-
-= Using Toka as a Calculator =
-
-Armed with those operators, plus the <b>.</b> (pop and display) word that
-we have already seen, we can use Toka as an integer calculator. But since
-everything is stack based, we have to use Reverse Polish instead of
-algebraic syntax. Instead of writing down an algebraic expression with
-parentheses to control the grouping, we have to think about what to do
-first, and then do it.
-
-So, suppose that we want to calculate ( 5 + ( 4 * 7 ) ). The
-multiplication has to be done first, before we can add the 5. We could
-perform that calculation in Toka with:
-
-#pre
- 4 7 * 5 + .
-#unpre
-
-Breaking this down into the individual steps, 
-
-* push 4 on the stack 
-* push 7 on the stack 
-* pop two items from the stack, multiply them, and push the result (28)
-  back on the stack 
-* push 5 on the stack 
-* pop two items from the stack, add them, and push the result (33) back
-  on the stack
-* pop the stack and display it 
-
-The same calculation can be written in a different way 
-
-#pre
- 5 4 7 * + .
-#unpre
-
-In this version, we push all three numbers onto the stack at once, then
-perform the arithmetic - first the multiplication of 4 and 7, and finally
-the addition of 5 to the product.
-
-The key to using RPN is that you have to think in terms of doing steps in
-order instead of writing a picture of the algebraic expression and
-letting the compiler sort it out.
-
-= Stack Operators =
-
-Sometimes you need to copy or rearrange the stack to bring items to the
-correct position for further use. Four basic stack operators get the most
-use. 
-
-#pre
- dup  ( a -- a a )
- drop ( a -- )
- swap ( a b -- b a )
- over ( a b -- a b a )
-#unpre
-
-Stack operators will be examined in more detail in a later lesson. 
- 
-<i>Thus endeth the lesson</i>} 1178668498
-
-
-#--------------------------------------------------
-# Lesson 4
-
-page {Lesson 4} {= Review =
-
-In the previous lesson we learned that: 
-
-* Forth has the usual collection of integer arithmetic and logical operators 
-* You have to do calculations in postfix (Reverse Polish) form 
-
-= Making New Words =
-
-So far we have done everything interactively, using only numbers and
-predefined words - and only a miniscule fraction of the predefined words
-that exist. Now we will learn how to make our own new words.
-
-Suppose that we want to add 12345 to several other numbers and display
-the results. Using just what we have learned so far, we could write:
-
-#pre
- 55 12345 + .
- 12400
- 2442 12345 + .
- 14787
-#unpre
-
-and so on. This wouldn't even be particularly tedious if you use a tool
-like <i>rlwrap</i> to provide command line history and editing. But we
-want to learn to make new words, so we will.
-
-#pre
- [ 12345 + . ] is foo
- 55 foo
- 12400
- 2442 foo
- 14787
-#unpre
-
-We made a new word "foo" whose behavior is the same as "12345 + ." . Now
-"foo" can be used just the same as any other word in the system. Here's
-how the process works:
-
-The Toka word <b>&lb;</b> (which must be followed by whitespace, just like
-every other word) creates a new <i>quote</i> and sets the interpreter to
-<i>compile state</i> (normally the interpreter is in <i>interpret
-state</i>). In compile state, instead of executing each word that it
-encounters, the interpreter compiles the behavior of the encountered word
-into the body of the new word. When it sees a number in compile state,
-the interpreter compiles code that will push that number on the stack
-when the new word later executes. When the interpreter encounters
-<b>&rb;</b>, it compiles something akin to "return from subroutine" and
-switches back to interpret state. The word <b>is</b> parses for a
-whitespace delimited token and creates a new name using this token and
-attaches the quote to it.
-
-What about arguments and results? Well, since the stack is used for
-passing arguments, everything just works. The <b>+</b> that is compiled
-inside "foo" can pop two numbers off the stack (e.g. the "55" that was
-pushed outside of foo, and the "12345" that was pushed earlier during the
-execution of foo), in the same way as it would if you executed "+"
-directly from the interpreter.
-
-But wait, you say, what about the return address that is necessary to get
-back when foo executes? Doesn't that go on the stack, and thus interfere
-with the numbers? No, because a separate stack (the "return stack") is
-used for return addresses. 
-
-= Compiled Code =
-
-What does the compiled code (inside the new word "foo") look like? Toka
-makes use of "threaded code", in which the body of "foo" consists of an
-array of addresses, one for each constituent. A tiny "tree walker"
-machine language code sequence grabs each address in turn and calls to
-it. Each approach has its advantages and disadvantages. Threaded code
-offers a good balance between speed, compactness, simplicity,
-portability, and ease of debugging. 
-
-= Redefinitions =
-
-What happens if you try to make a new word that has the same name as an
-existing one? Perhaps surprisingly, Toka will let you do that. Consider:
-
-#pre
- [ 5678 . ] is word1
- word1
- 5678
- [ word1 123 . ] is word2
- word2
- 5678 123
- [ 999 . ] is word1 
- word1
- 999
- word2
- 5678 123
-#unpre
-
-Whoa! This is weird! Or is it? 
-
-First we create "word1" that displays "5678". Then we create "word2" that
-calls "word1" then displays "123". So far so obvious.
-
-Now we create "word1" again. Now when we interpret "word1" we see "999"
-instead of "5678". But when we interpret "word2", it still shows "5678".
-
-What has happened is that the both definitions of "word1" exist in the
-system, as separate chunks of code that happen to have the same name.
-"word2" still calls the first one - the only one that existed when
-"word2" was compiled (early binding). But the interactive interpreter
-sees that most recent one, because the search for defined words starts
-with later definitions and stops when it gets a match.
-
-Recursion and Chaining 
-
-This next topic is perhaps a bit too advanced for this stage of the
-lesson series, but I'm including it anyway because I know that some
-readers will wonder about it...
-
-Okay, what happens if you try to use the word "xyz" inside the definition
-of "xyz"? The question is especially interesting in light of the fact
-that you can have multiple definitions with the same name. You might
-reasonably want a new definition to "xyz" to call a previous version of
-"xyz" and then extend its behavior. You might also reasonably want
-recursion. And in fact, you can do either.
-
-#pre
- [ dup 1 > [ dup 1- recurse * ] ifTrue ] is factorial
- 5 factorial .
- 120
-#unpre
-
-Don't worry about the words you don't yet know. Just notice that
-"factorial" calls "factorial" recursively, which works because we used
-<b>recurse</b> inside the definition.
-
-Now let's look at the other possibility, in which we want a new
-definition to call and extend an existing definition of the same name: 
-
-#pre
- [ 111 . ] is init
- init
- 111
-
- [ init 222 . ] is init
- init
- 111 222
- 
- [ 0 . init ] is init
- init
- 0 111 222
-#unpre
-
-Here we have created a word "init" that displays the number 111, then we
-made a new word of the same name that calls the old one and also displays
-"222", and finally we made a third one that first displays "0", then
-calls the second one (which still calls the first one). It works because
-the name of each successive redefinition is hidden until complete, so the
-interpreter/compiler finds the previous one during the compilation of the
-new one.
-
-Clearly, you should use this redefinition thing sparingly, lest confusion
-reign, but there are situations where this sort of thing can be extremely
-useful. It's especially nice for initialization sequences where each
-module can just add its own init code to whatever is already there.
-
-The reason I'm explaining how all this works is because, unlike most
-other languages, Toka gives the programmer explicit access to the same
-machinery that the compiler uses. This, perhaps more than any other
-feature, is what makes Toka so powerful with such a small memory
-footprint. (LISP is similar in that respect.) Since the machinery is an
-integral part of the proposition, you have to understand the basics of
-how it works.
-
-= Stack Comments, Reprised =
-
-So far I have just been tossing out new definitions willy-nilly, without
-any documentation. That is fine when you are just fooling around
-interactively, experimenting. But, of course, when you are writing
-"keepers", source code that you want to save in a file, you need some
-documentation. The minimum documentation is a stack diagram. If I were to
-save the previous recursive definition of factorial in a file, I would
-probably write:
-
-#pre
- [ ( n -- n! )
-   dup 1 > [ dup 1- recurse * ] ifTrue
- ] is factorial
-#unpre
-
-The stack diagram "( n -- n! )" indicates that there is one argument and
-one result. For this example, that would probably be enough, since
-factorial is a well-known mathematical function and the name is pretty
-clear. If the intent of the new word were not so obvious, I would have
-added a line or two of commentary (beginning with "#!") before the
-definition. 
-
-<i>Thus endeth the lesson</i>} 1180214403
-
-
-#--------------------------------------------------
-# Lesson 5
-
-page {Lesson 5} {= Data =
-
-There are several ways to store and retrieve data values. 
-
-== Variables ==
-
-#pre
- variable myvar
-#unpre
-
-"variable" defines a new word (parsing the new word name from the input
-stream, as with "is") and allocates enough data space for a number (e.g.
-32-bits). When you later execute the new word ("myvar" in this case), it
-pushes the address of that data area. The stack diagram for the new word
-is "( -- adr )". The initial contents of the data is undefined.
-
-You can put data into the variable with: 
-
-#pre
- 12345 myvar !
-#unpre
-
-"!" is pronunced "store". Its stack diagram is "( n adr -- )".
-
-To get the data back, use 
-
-#pre
- myvar @ .
- 12345
- 555 mvar !
- myvar @ .
- 555
-#unpre
-
-"@" is pronounced "fetch". Its stack diagram is "( adr -- n )". Note
-that, after the example above, the data value is on top of the stack. To
-display it, you would need to say "." afterwards (unless "showstack" mode
-is on).
-
-== Other Memory Access Operators ==
-
-The size of the number that "variable", "@", and "!" use is the "natural"
-size for the implementation, similar to "long int" in C.
-
-"@" and "!" are not limited to addresses returned by variables; they can
-be used with arbitrary memory addresses. However, for externally-defined
-data, it is usually a good idea to use memory access operators that
-explicitly specify the data size.
-
-#pre
- c@  ( adr -- b )    \ Fetch a 8-bit value
- c!  ( b adr -- )    \ Store a 8-bit value
-#unpre
-
-== Constants ==
-
-Suppose you need a Toka word that returns (i.e. pushes on the stack) a
-single numeric value. You could do that with a quote, as in:
-
-#pre
- [ 12345 ] is mynum
-#unpre
-
-However, constants are important enough that Toka allows defining them as
-a data element:
-
-#pre
- 12345 is-data mynum
-#unpre
-
-Functionally, the two different definitions of "mynum" are equivalent,
-but the <b>is-data</b> definition will execute faster and occupy less
-space.
-
-When you are writing code in a file for saving, it is a good idea to
-specify the number base explicitly, instead of assuming a particular
-value (e.g. hex or decimal) for the current number base. So in a file I
-would write:
-
-#pre
- decimal 12345 is-data mynum
-#unpre
-
-or 
-
-#pre
- hex 1a234f is-data mynum
-#unpre
-
-== Efficiency of Constants ==
-
-When a constant created with <b>is-data</b> is used in a quote, the
-resulting code is a bit different than when the constant is created as a
-quote. Due to limitations in the decompiler, it is not possible to see
-this directly, but a manual breakdown may serve to illustrate:
-
-Compare this:
- 
-#pre
- 1234 is-data foo
- [ foo + ] is add-foo
-#unpre
-
-Which compiles down to:
-
-#pre
- add-foo: lit 1234, call +, exit
-#unpre
-
-With this:
-
-#pre
- [ 1234 ] is foo
- [ foo + ] is add-foo
-#unpre
-
-Which compiles down to:
-
-#pre
- foo:     lit 1234, exit
- add-foo: call foo, call +, exit
-#unpre
-
-When using <b>is-data</b>, the resulting value is inserted directly into
-the quote. This saves the overhead of calling the function at runtime,
-resulting in faster, more compact code.} 1184709170
-
-
-#--------------------------------------------------
-# Libraries
-
-page Libraries {Toka has a set of external libraries that allow significantly
-more functionality. These are included with a standard Toka
-distribution, but must be built and installed:
-
-#pre
-  cd library 
-  make install
-  make clean
-#unpre
-
-You may need to be root for this to work.
-
-Libraries can be loaded with <b>needs</b>. For example, to load the
-<i>strings</i> library (if installed), do:
-
-#pre
-  needs strings
-#unpre
-
-A master library, <i>everything</i>, is provided to import all current
-libraries. This makes it easy to access all provided functionality in any
-project. To make use of this, use this at the start of a program:
-
-#pre
-  needs everything
-#unpre
-
-=== Library Documentation ===
-
-* [ANSLibrary]
-* [BsortLibrary]
-* [CaseLibrary]
-* [ConditionalsLibrary]
-* [ConsoleLibrary]
-* [CtypeLibrary]
-* [FloatsLibrary]
-* [HelpDBLibrary]
-* [LocalsLibrary]
-* [MathLibrary]
-* [QuotesLibrary]
-* [ReadlineLibrary]
-* [RegexLibrary]
-* [SDLLibrary]
-* [ShellLibrary]
-* [SocketsLibrary]
-* [StringsLibrary]
-* [StructLibrary]
-* [TextEditLibrary]
-* [TimeLibrary]
-} 1187133645
+#unpre} 1188341545
 
 
 #--------------------------------------------------
 # License
 
-page License {Toka is Copyright (c) 2007 Charles R. Childers
+page License {Copyright (c) 2006, 2007, Charles R. Childers <charles.childers@gmail.com>
 
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy 
-of this software and associated documentation files (the "Software"), to deal 
-in the Software without restriction, including without limitation the rights 
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-copies of the Software, and to permit persons to whom the Software is furnished 
-to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in 
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
-IN THE SOFTWARE.} 1175645279
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.} 1188801267
 
 
 #--------------------------------------------------
@@ -2451,56 +1394,31 @@ The following limits can be overridden in <b>config.h</b>:
 
 
 #--------------------------------------------------
-# LocalsLibrary
-
-page LocalsLibrary {This library adds a form of local variable to Toka. Words using this are
-not reentrant, but it may help make some pieces of code cleaner.
-
-Provided:
-* local[
-** Start a new localized quote
-** <i>"names.... |" -- pointer</i>
-* ]local
-** Close a localized quote
-** <i> -- </i>
-
-Example:
-
-#pre
- local[ a b c | 
-        a ! b ! c !
-        a @ c @ * b @ + .
- ]local is foo
- foo
-#unpre} 1179712142
-
-
-#--------------------------------------------------
 # Loops
 
 page Loops {Toka provides a limited collection of primitives for building various
 types of simple loops.
 
-The most basic form is <b>iterate</b>, which takes the following form:
+The most basic form is <b>countedLoop</b>, which takes the following form:
 
 #pre
-  number-of-iterations quote  iterate
+  upper-limit lower-limit quote  countedLoop
 #unpre
 
-<b>iterate</b> will invoke <i>quote</i> the specified number of times.
-With <b>iterate</b>, the count goes down from N to 1, with 1 being the
-last cycle of the loop. To count up from 1 to N instead, use
-<b>+iterate</b>. Other than this, both of these words take the same form.
+<b>countedLoop</b> will invoke <i>quote</i> the specified number of
+times. Upper and lower indexes can be set as desired; Toka will count up
+or down as necessary.
+
 Some examples:
 
 #pre
-  10 [ i . ] iterate
-  10 [ i . ] +iterate
+  10 0 [ i . ] countedLoop
+  0 10 [ i . ] countedLoop
 #unpre
 
-Note the use of <b>i</b>, the loop index. When looping via <b>iterate</b>
-and <b>+iterate</b>, the loop index is set to the current cycle number.
-<i>Other types of loops do not set the loop index.</i> 
+Note the use of <b>i</b>, the loop index. When looping via
+<b>countedLoop</b>, the loop index is set to the current cycle number.
+<i>Other types of loops do not set the loop index.</i>
 
 The other type of loop is a <b>whileTrue</b> or <b>whileFalse</b> loop.
 The normal form:
@@ -2521,7 +1439,7 @@ Some examples:
 #pre
   1 [ dup . 1 + dup 101 < ] whileTrue
   101 [ dup . 1 - dup 1 < ] whileFalse
-#unpre} 1177019422
+#unpre} 1189119302
 
 
 #--------------------------------------------------
@@ -2568,39 +1486,6 @@ not      ( x-y )     Invert the value 'x'
 
 
 #--------------------------------------------------
-# MathLibrary
-
-page MathLibrary {This library extends the core math functionality of Toka in minor ways. 
-
-The provided API follows:
-
-#pre
-     abs
-     ( n-n )
-     Returns the absolute value of 'n'
-
-     random
-     ( -n )
-     Returns a random number
-
-     srandom
-     ( s-x )
-     Set a new seed for the random number generator
-
-     ^
-     ( xy-z )
-     Returns x^y power
-
-     sqrt
-     ( x-y )
-     Returns the square root of x
-
-     sqrt-closer
-     Used internally by sqrt
-#unpre} 1177901677
-
-
-#--------------------------------------------------
 # MathOperations
 
 page MathOperations {Toka provides a very basic set of math functionality, sufficient for many
@@ -2624,27 +1509,6 @@ In addition, the standard bootstrap adds some additional operations:
   not      ( x-y )     Invert the value 'x'
   */       ( abc-d )   (a*b)/c
 #unpre} 1177020107
-
-
-#--------------------------------------------------
-# New Pages
-
-page {New Pages} {To create a new page,
-
-* Add a link to it in this page (or on any other page where the link would
-  be more appropriate):
-** Press the "Edit" button.
-** Go to the bottom of the page (or anywhere, really).
-** Type the page's name in square brackets, &lb;Like This&rb;.
-** Press the "Done" button.
-* Click on the link.
-* On the Status Line, down at the bottom of the window, Notebook will ask
-  if you want to create the page.  Type "yes" or "y", and press Enter.
-
-<h>New Pages</h>
-
-* [Tour]
-* [Sandbox]} 1102291321
 
 
 #--------------------------------------------------
@@ -2738,9 +1602,6 @@ Variables:
   When ON (TRUE), escape sequences will be handled
   by the parser. When OFF (FALSE), they will be ignored.
 
-  long parse_ended
-  A helper for the display_prompt, to suppress it while
-  interpreting each word.
 
 to_number()
 Attempt to convert a string (on TOS) to a number.
@@ -2802,7 +1663,6 @@ needs     ( "- )     Attempt to include a file
           ( $- )     Non-parsing form
 end.      ( - )      Remove the current file from
                      the input stack
-prompt    ( -a )     prompt display variable
 #unpre
 
 = Related Words =
@@ -2816,7 +1676,7 @@ hex      ( - )       Set the base to hexadecimal (16)
 decimal  ( - )       Set the base to decimal (10)
 binary   ( - )       Set the base to binary (2)
 octal    ( - )       Set the base to octal (8)
-#unpre} 1185044631
+#unpre} 1187824025
 
 
 #--------------------------------------------------
@@ -2830,7 +1690,7 @@ building for specific targets.
 
 CPUs: x86, x86-64, ARM, MIPS, Itanium
 
-OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin, OpenSolaris, Windows (Win32)
+OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin, OpenSolaris
 
 #---
 = Linux =
@@ -2886,19 +1746,7 @@ under Cygwin at this time.
 Supported CPUs: x86
 
 Only tested under Nexenta GNU/Solaris distribution but builds and works
-fine.
-
-#---
-= Windows =
-
-Supported CPUs: x86
-
-Toka can now be built under Windows. Install Cygwin, and edit the
-Makefile to select the proper PLATFORM line. Build and copy toka.exe and
-bootstrap.toka to a c:\toka directory.
-
-Note that not all of the library works at this time, though we will try to
-fully support it in the future.} 1186278512
+fine.} 1189119608
 
 
 #--------------------------------------------------
@@ -2967,13 +1815,10 @@ Call a quote (passed on TOS)
 compile()
 Compile the code needed to call a quote (passed on TOS)
 
-iterate()
-Repeat execution of a quote (passed on TOS), NOS
-number of times.
-
-alt_iterate()
-Repeat execution of a quote (passed on TOS), NOS
-number of times.
+countedLoop()
+Execute a quote a given number of times. You pass
+a quote, and upper/lower limits. The loop counter,
+'i', is updated with each cycle.
 
 truefalse()
 Takes three items (true-xt, false-xt, and a flag)
@@ -3013,8 +1858,9 @@ returns TRUE.
 ]        ( - )       Close an open quote
 invoke   ( a- )      Execute a quote
 compile  ( a- )      Compile a call to the quote
-iterate  ( na- )     Execute a quote 'n' times
-+iterate ( na- )     Execute a quote 'n' times
+countedLoop ( ulq- ) Execute a quote a set number
+                     of times, updating the 'i'
+                     counter each time.
 ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
                      true, 'b' if false.
 recurse  ( - )       Compile a call to the top
@@ -3026,142 +1872,13 @@ whileTrue  ( a- )    Execute quote. If the quote
 whileFalse ( a- )    Execute quote. If the quote
                      returns TRUE, execute again.
                      otherwise end the cycle.
-#unpre} 1185043166
-
-
-#--------------------------------------------------
-# QuotesLibrary
-
-page QuotesLibrary {This library provides a set of words for using quotes in new ways.
-
-#pre
-          apply
-          ( ab-... )
-          Evaluate quote 'a' and apply quote 'b' to each item
-          left on the stack by 'a'. '...' is the result.
-
-          fix?
-          ( ...-... )
-          Use this with apply to keep the stack balanced as
-          necessary.
-
-          [[
-          ( - )
-          Turn the compiler off, but does not close the
-          current quote.
-
-
-          ]]
-          ( - )
-          Turn the compiler back on; does not start a new
-          quote.
-
-          within
-          ( abc-f )
-          Check to see if 'c' is between 'a' and 'b' in size
-
-          range
-          ( ab-... )
-          Generate a sequence of numbers starting with 'a' and
-          ending with 'b'
-#unpre
-
-Examples:
-
-#pre
-  1 7 range [ fix? + ] apply .
-#unpre} 1179271809
-
-
-#--------------------------------------------------
-# ReadlineLibrary
-
-page ReadlineLibrary {This library provides access to the GNU readline library.
-
-Imports from readline library:
-* readline
-** Read a line of text into a dynamically allocated buffer
-** <i>-- string_pointer</i>} 1179676548
+#unpre} 1189119327
 
 
 #--------------------------------------------------
 # Recent Changes
 
 page {Recent Changes} {[@recentChanges@]} 1026585675
-
-
-#--------------------------------------------------
-# RegexLibrary
-
-page RegexLibrary {This library provides support for traditional POSIX-style regular
-expression matching.
-
-
-Imports from the standard C library:
-
-* regcomp
-* regexec
-* regerror
-* regfree
-
-Wrapper functions:
-
-* regex:
-** Create a regular expression
-** <i>string "name" -- </i>
-* try-regex
-** Run a regular expression against a string
-** <i>expression string max_number_of_matches array -- flag</i>
-
-Example:
-
-#pre
-  needs regex
-  
-  2 cells is-array pmatch
-  " This is a test: Hello, World!" is-data test1
-  " This is a test: Goodbye, World!" is-data test2
-  
-  " [Hh]ello" regex: preg
-  
-  ." Test 1: Search for [Hh]ello in: " test1 type cr
-  preg test1 2 pmatch try-regex
-  [ 0 pmatch array.get test1 + type cr ] [ ." No match found\n" ] ifTrueFalse
-  
-  ." Test 2: Search for [Hh]ello in: " test2 type cr
-  preg test2 2 pmatch try-regex
-  [ 0 pmatch array.get test2 + type cr ] [ ." No match found\n" ] ifTrueFalse
-#unpre} 1185584592
-
-
-#--------------------------------------------------
-# Sandbox
-
-page Sandbox {This is place to experiment with Notebook's way of marking up text.
-Edit this page to see how you type things; then save it to see what it looks
-like when you're browsing.
-
-= You Can Have Section Headers =
-
-*	You can have bulleted lists.
-*	You can type <b>bold</b>, <i>italic</i>, and <m>monospace</m> text,
-	or any combination.
-*   You can have <h>inline header text</h>.
-*	You can have <s>very small</s> text.
-*   You can <x>strike things out</x>.
-
-:	You can simply indent a paragraph without adding a bullet.
-
-Paragraphs end with the first blank line, bullet item, or indented line.
-No matter how many lines long a paragraph is, Notebook will wrap it for
-display so that it looks nice.
-
- If you leave a space character at the beginning of a paragraph, the whole
- paragraph is "Preformatted".  That means that it's displayed in a monospace
- font, exactly as is.  It's conventional to put whitespace at the beginning of
- every line of a preformatted paragraph, but that's not necessary.
-
-Preformatted text is useful for typing in tables and things like that.} 1113419698
 
 
 #--------------------------------------------------
@@ -3209,215 +1926,19 @@ The breakdown in the <b>arglist</b> will then be as follows:
 * Element 2 is <i>banana</i>
 * Element 3 is <i>carrot</i>
 
-You can iterate over the arguments to process them. For instance, if we
+You can loop over the arguments to process them. For instance, if we
 wanted to display each of the script arguments, we could do:
 
 #pre
-  #args [ i arglist array.get type cr ] +iterate
-#unpre} 1185584612
-
-
-#--------------------------------------------------
-# SDLLibrary
-
-page SDLLibrary {Toka has a wrapper over the raw SDL library that allows for use of SDL
-drawing and events.
-
-<b>needs sdl</b>
-
-Primitive SDL functions:
-
-* <b>SDL_Quit</b>
-** <i> -- n</i>
-** 
-* <b>SDL_Delay</b>
-** <i> value -- n</i>
-** 
-* <b>SDL_GetTicks</b>
-** <i> -- n</i>
-** 
-* <b>SDL_PollEvent</b>
-** <i> event -- n</i>
-** 
-* <b>SDL_WaitEvent</b>
-** <i> event -- n</i>
-** 
-
-Higher-level wrappers:
-
-* <b>sdl_setup</b>
-** <i> height width -- </i>
-** Create a new surface and open the drawing window for it.
-* <b>sdl_render</b>
-** <i> -- </i>
-** Render the scene on the drawing surface
-* <b>sdl_surface_size</b>
-** <i> -- n </i>
-** Return the size of the drawing surface
-* <b>sdl_event_size</b>
-** <i> -- n </i>
-** Return the size of the event structure. <b>malloc</b> this
-   and assign a name to create an event structure for <b>SDL_PollEvent</b>
-   or <b>SDL_WaitEvent</b>. 
-* <b>sdl_event_type</b>
-** <i> event -- typecode </i>
-** Return a value corresponding to the type of event which happened.
-* <b>putpixel</b>
-** <i> x y color -- </i>
-** Draw a single pixel on the screen.
-* <b>circle</b>
-** <i> x y radius color -- </i>
-** Draw a hollow circle on the screen.
-* <b>aline</b>
-** <i> x y angle distance color -- </i>
-** Draw a line starting at x,y and extending out distance at a specified
-   angle.
-* <b>hline</b>
-** <i> x y length color -- </i>
-** Draw a horizontal line starting at x,y
-* <b>vline</b>
-** <i> x y height color -- </i>
-** Draw a vertical line starting at x,y
-* <b>line</b>
-** <i> x1 y1 x2 y2 color -- </i>
-** Draw a line starting at x1,y1 and ending at x2,y2
-* <b>box</b>
-** <i> x1 y2 x2 y2 color -- </i>
-** Draw a hollow rectangle.
-* <b>get-mouse-coords</b>
-** <i> event -- x y </i>
-** Get the x,y coordinates of the mouse (for mouse events)
-* <b>get-keysym</b>
-** <i> event -- keycode </i>
-** Get the value of the key that was pressed (for keyboard events)
-* <b>rgb:</b>
-** <i> $hex -- value </i>
-** Parse ahead and build a color code from the RRGGBB hex string that
-   follows.} 1184461850
+  1 #args [ i arglist array.get type cr ] countedLoop
+#unpre
+} 1189120235
 
 
 #--------------------------------------------------
 # Search
 
 page Search {[@searchIndex@]} 1175217539
-
-
-#--------------------------------------------------
-# ShellLibrary
-
-page ShellLibrary {This library provides the fundamental support for calling external files
-and doing actions normally done at the shell.
-
-The provided API follows:
-
-#pre
-  remove
-  ( $-n )
-  Delete file '$'
-
-  system
-  ( $-n )
-  Run string '$' as a shell command
-
-  getpid
-  ( -n )
-  Return the current process ID
-
-  fork
-  ( -f )
-  Fork the current process.
- 
-  basename
-  ( $-$ )
-  Return the base name (name+extension), of a file.
-  Strips any directories from the filename.
-
-  mkdir
-  ( $m-n )
-  Create a directory named "$" with a mode of "m".
-
-  fnmatch
-  ( ab-f )
-  Returns TRUE if filename "a" matches the pattern in "b". 
-  Returns FALSE otherwise.
-#unpre} 1179271672
-
-
-#--------------------------------------------------
-# SocketLibrary
-
-page SocketLibrary {The socket library is a <i>hybrid library</i>. It provides both a C
-library module and a set of Toka bindings. The functionality is dependent
-on both.
-
-The provided API is as follows:
-
-#pre
-  pBind
-  ( n-x )
-  Bind to a specific port
-
-  pConnect
-  ( $n-s )
-  Connect to host (string '$') at port 'n'. Returns a socket.
-
-  pAccept
-  ( n-x )
-  Accept a new connection upon a socket.  Return the new client.
-
-  pRead
-  ( sbl-n )
-  Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
-  the number of bytes read.
-
-  pWrite
-  ( sbl-n )
-  Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
-    the number of bytes written.
-
-  pClose
-  ( s-x )
-  Attempt to close socket 's'.
-#unpre
-
-This API, while minimalistic, is sufficient to allow development of both
-client and server applications. It has been used in conjunction with the
-[StringsLibrary] and the [ShellLibrary] to implement a working HTTP
-server.} 1177901287
-
-
-#--------------------------------------------------
-# SocketsLibrary
-
-page SocketsLibrary {This library was provided by erider to allow working with sockets. It is
-sufficient to handle the needs of a basic IRC client, HTTP server, and
-other tasks.
-
-Requires:
-
-* sockets.so (built during installation)
-
-Provides:
-
-* pBind
-** <i>n -- x</i>
-** Bind to a specific port
-* pConnect
-** <i>$ n -- s</i>
-** Connect to host (string '$') at port 'n'. Returns a socket.
-* pAccept
-** <i>n -- x</i>
-* pRead
-** <i>s b l -- n</i>
-** Attempt to read 'l' chars from socket 's' into buffer 'b'. Returns
-   the number of bytes read.
-* pWrite
-** <i>s b l -- n</i>
-** Attempt to write 'l' bytes from buffer 'b' to socket 's'. Returns
-   the number of bytes written.
-* pClose
-** <i>s -- x</i>
-** Attempt to close socket 's'.} 1179677630
 
 
 #--------------------------------------------------
@@ -3562,133 +2083,6 @@ in a string:
 
 
 #--------------------------------------------------
-# StringsLibrary
-
-page StringsLibrary {Toka provides a [loose abstraction|types] for strings. The strings
-library is an attempt to significantly expand on that abstraction and
-allow for many common actions to be done quickly and easily.
-
-#pre
- Provides (from libc):
-   strcpy   strncpy   strcat   strncat   strcmp   strncmp
-   strchr   strstr    strlen   strrchr   strtok
-
- Provides:
-   Data:    $[cr]     $[lf]
-   Words:
-            string.grow
-            ( an-b )  
-            Allocate a new string 'n' chars longer than the original
-            'a' and copy the original string to it. Returns a pointer
-            to the new string ('b').
-
-            string.append
-            ( ab-c )
-            Combine strings 'a' and 'b' into a new string 'c'. This
-            allocates the necessary space for the new string
-            automatically.
-
-            string.clone
-            ( a-b )
-            Create a new string ('b') identical to string 'a'. Space
-            is allocated automatically.
-
-            string.findToken
-            ( ac-b )
-            Search for character 'c' in string 'a'. Returns a new
-            string containing everything up to, but not including
-            'c'.
-
-            string.findSubstring
-            ( ab-c )
-            Search for string 'b' in string 'a'. Return a new string
-            'c' starting with string 'b' and containing the rest of
-            string 'a'.
-
-            string.findChar
-            ( ac-b )
-            Search string 'a' for character 'c'. Return a new string
-            'b' that starts with character 'c'.
-
-            after-"
-            ( a"-b )
-            A parsing word. Parse ahead until " is encountered, then
-            append string 'a' to it. Returns a new string 'b'.
-
-            +lf
-            ( a-b )
-            Append a linefeed (ascii 13) to a string. Returns a new
-            string.
-
-            +cr
-            ( a-b )
-            Append a carriage return (ascii 10) to a string. Returns
-            a new string.
-#unpre} 1185634522
-
-
-#--------------------------------------------------
-# StructLibrary
-
-page StructLibrary {This library allows for creation of variable sets with a specific form.
-
-
-Provides:
-
-* struct{
-** Begin a structure
-** <i>--</i>
-* }struct
-** End a structure
-** <i>"name" --</i>
-* .char
-** Create a char-size variable
-** <i>string --</i>
-* .cell
-** Create a cell-size variable
-** <i>string --</i>
-
-Example:
-
-#pre
-  needs struct
-
-  struct{
-   " x" .cell
-   " y" .cell
-  }struct POINT
-
-  POINT foo
-
-  foo.x @ .
-  foo.y @ .
-#unpre} 1179676993
-
-
-#--------------------------------------------------
-# TextEditLibrary
-
-page TextEditLibrary {Toka has a hybrid library that provides a Pico/Nano style text editor.
-This is based on a simple text editor originally developed by Tom
-Novelli.
-
-<b>needs textedit</b>
-
-* <b>edit.load</b>
-** <i> $file -- </i>
-** Load a file ($file = filename) into the editor buffer
-* <b>edit.save</b>
-** <i> $file -- </i>
-** Save the editor buffer to a file ($file = filename) 
-* <b>edit.start</b>
-** <i> -- </i>
-** Begin editing the file in the editor buffer
-* <b>edit.redraw</b>
-** <i> -- </i>
-** Redraw the editor screen} 1184461056
-
-
-#--------------------------------------------------
 # threading model
 
 page {threading model} {Toka relies on <i>call threading</i>. This is an implementation technique
@@ -3717,42 +2111,6 @@ the following cell to the stack.
 When this quote is invoked, <i>a</i> will be called. After it finishes
 executing, <i>b</i> will be called, and so on until <i>0</i> is
 encountered. At that point, the [vm_run()|vm.c] function exits.} 1176257425
-
-
-#--------------------------------------------------
-# TimeLibrary
-
-page TimeLibrary {This library allows obtaining the system time, timing functions, and
-similar activities.
-
-#pre
-   Data:
-     time_t
-     
-   Words:
-     time
-     difftime
-     ctime
-     .time
-     :time
-#unpre
-
-#---
-
-=== Examples ===
-
-#pre
-  needs time
-  time_t today
-  today time drop
-  today ctime type
-#unpre
-
-#pre
-  needs time
-  [ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] [ ] ifTrueFalse ] is fib
-  [ 35 fib . cr ] :time
-#unpre} 1177901642
 
 
 #--------------------------------------------------
@@ -3828,34 +2186,6 @@ And for any functions having a Toka equivilent, have a block like:
 #unpre
 
 Please try to keep columns lined up as much as possible for Toka wordlist comments.} 1175313140
-
-
-#--------------------------------------------------
-# Tutorial
-
-page Tutorial {This is a series of lessons on the Toka programming language. It's based
-directly on the tutorials for Forth and Open Firmware that were written
-by Mitch Bradley for the OLPC project.
-
-The original lessons can be found at http://wiki.laptop.org/go/Forth_Lessons
-
-I have made as few changes as possible to the lessons I adapted. I truely
-hope this proves beneficial to all those who may wish to learn to use
-Toka.
-
-#---
-
-=== The Lessons ===
-
-* [Lesson 0] - Motivation and Basic Syntax 
-* [Lesson 1] - Stack and Numbers 
-* [Lesson 2] - Stack diagrams and Comments 
-* [Lesson 3] - Arithmetic Operators and Calculations 
-* [Lesson 4] - Making New Definitions 
-* [Lesson 5] - Variables and Data Storage 
-
-Now that you have seen the basics, proceed to [First Steps] and explore
-the Toka language in more detail.} 1178750135
 
 
 #--------------------------------------------------
@@ -3952,7 +2282,34 @@ Still, it's a nice example of how to write a macro that creates a button.
 proc clickToContinue {name} {
 	return "\[%Click here to continue...|goto-page [list $name]%\]"
 }
-#unTcl} 1113420734
+#unTcl
+
+#Tcl
+html configure -css {
+    h1 { 
+        color: yellow; 
+        background: #990000;
+        margin-left: -4%;
+        font-family: "Arial Rounded MT Bold" Helvetica Arial sans;
+    }
+    h2, h3, h4 { 
+        margin-left: -4%;
+        font-family: "Arial Rounded MT Bold" Helvetica Arial sans;
+    }
+    hr {
+        margin-left:  -5%;
+        margin-right: -5%;
+    }
+    body { margin-left: 5% ; margin-right: 5%; background: #FFFFDD; }
+    pre { 
+        outline: thin dashed blue; 
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 4 px;
+        background: #FFFF99;
+    }
+} -nbtitle "Toka Documentation"
+#unTcl} 1188751946
 
 
 #--------------------------------------------------
@@ -4309,9 +2666,9 @@ $#       ( n- )      Push the following cell to
                      location 'a'
 !        ( na- )     Store 'n' to memory location
                      'a'
-c@        ( a-n )    Fetch a byte from memory
+c@       ( a-n )     Fetch a byte from memory
                      location 'a'
-c!        ( na- )    Store byte 'n' to memory
+c!       ( na- )     Store byte 'n' to memory
                      location 'a'
 copy     ( sdc- )    Copy 'c' bytes from 's' to
                      'd'
@@ -4362,7 +2719,7 @@ file.seek  ( nom-a ) Seek a new position in the
                      file. Valid modes are
                      START, CURRENT, and END. These
                      have values of 1, 2, and 3.
-file.pos   ( n-a )   Return a pointer to the current
+file.pos ( n-a )     Return a pointer to the current
                      offset into the file.
 keep     ( a-a )     Mark quotes/allocated memory
                      as permanent.
@@ -4372,8 +2729,6 @@ heap     ( -a )      Variable pointing to the top
                      of the local heap
 compiler ( -a )      Variable holding the compiler
                      state
-count    ( a-ac )    Return an address/count pair
-                     for a string
 +        ( ab-c )    Add TOS and NOS
 -        ( ab-c )    Subtract TOS from NOS
 *        ( ab-c )    Multiply TOS by NOS
@@ -4389,22 +2744,22 @@ escape-sequences ( -a)  Variable determining if
 parse    ( d-a )     Parse until the character 
                      represented by 'd' is found.
                      Return a pointer to the string
-include   ( "- )     Attempt to open a file and
+include  ( "- )      Attempt to open a file and
                      add it to the input stack.
-          ( $- )     Non-parsing form
-needs     ( "- )     Attempt to include a file
+         ( $- )      Non-parsing form
+needs    ( "- )      Attempt to include a file
                      from the library (normally
                      /usr/share/toka/library)
-          ( $- )     Non-parsing form
-end.      ( - )      Remove the current file from
+         ( $- )      Non-parsing form
+end.     ( - )       Remove the current file from
                      the input stack
-prompt   ( -a )      prompt display variable
 [        ( -a )      Create a new quote
 ]        ( - )       Close an open quote
 invoke   ( a- )      Execute a quote
 compile  ( a- )      Compile a call to the quote
-iterate  ( na- )     Execute a quote 'n' times
-+iterate ( na- )     Execute a quote 'n' times
+countedLoop ( ulq- ) Execute a quote a set number
+                     of times, updating the 'i'
+                     counter each time.
 ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
                      true, 'b' if false.
 recurse  ( - )       Compile a call to the top
@@ -4462,23 +2817,6 @@ tab      ( - )       Display a tab
 ."       ( "- )      Parse to the next <b>"</b> and display the string.
 clear    ( - )       VT100: Clear the screen
 normal   ( - )       VT100: Set the colors back to the default
-bold     ( - )       VT100: Set the bold attribute for the foreground color
-black    ( - )       VT100: Set the foreground color to black
-red      ( - )       VT100: Set the foreground color to red
-green    ( - )       VT100: Set the foreground color to green
-yellow   ( - )       VT100: Set the foreground color to yellow
-blue     ( - )       VT100: Set the foreground color to blue
-magenta  ( - )       VT100: Set the foreground color to magenta
-cyan     ( - )       VT100: Set the foreground color to cyan
-white    ( - )       VT100: Set the foreground color to white
-onBlack  ( - )       VT100: Set the background color to black
-onRed    ( - )       VT100: Set the background color to red
-onGreen  ( - )       VT100: Set the background color to green
-onYellow ( - )       VT100: Set the background color to yellow
-onBlue   ( - )       VT100: Set the background color to blue
-onMagenta( - )       VT100: Set the background color to magenta
-onCyan   ( - )       VT100: Set the background color to cyan
-onWhite  ( - )       VT100: Set the background color to white
 nip      ( xy-y )    Remove the second item on the stack
 rot      ( abc-bca ) Rotate top three values on stack
 -rot     ( abc-acb ) Rotate top three values on stack twice
@@ -4535,12 +2873,19 @@ array.putChar     ( nia- )  Put char-size value 'n' into element 'i' of
 value    ( "- )      Create a new value
 to       ( - )       Set the value of a value
 value|   ( "- )      Create multiple values
+string.grow        ( $n-$ )  Increase the physical size of a string by 'n'
+                             bytes.
+string.append      ( ab-c )  Append string 'b' to string 'a'
+string.compare     ( ab-f )  Compare two strings for equality
+string.appendChar  ( $c-$ )  Append character 'c' to string '$'
+string.getLength   ( $-$n )  Get the length of a string (up to ASCII 0)
+string.clone       ( $-$ )   Make an additional copy of a string.
 words-within ( n- )  Display all words with a specified class #
 :prims   ( - )       Display all primitives
 :quotes  ( - )       Display all named quotes
 :datas   ( - )       Display all named data items
 words    ( - )       Display all names in the dictionary
-#unpre} 1185584417
+#unpre} 1189119544
 
 
 # End of Notebook Database File

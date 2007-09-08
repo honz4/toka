@@ -1,0 +1,3371 @@
+<html><head><title>Toka Documentation</title>
+<style>
+
+    h1 { 
+        color: yellow; 
+        background: #990000;
+        margin-left: -4%;
+        font-family: "Arial Rounded MT Bold" Helvetica Arial sans;
+    }
+    h2, h3, h4 { 
+        margin-left: -4%;
+        font-family: "Arial Rounded MT Bold" Helvetica Arial sans;
+    }
+    hr {
+        margin-left:  -5%;
+        margin-right: -5%;
+    }
+    body { margin-left: 5% ; margin-right: 5%; background: #FFFFDD; }
+    pre { 
+        outline: thin dashed blue; 
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 4 px;
+        background: #FFFF99;
+    }
+</style>
+</head>
+<body>
+
+
+<h1>Toka Documentation</h1>
+
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="home">Home</a></h1>
+
+<p>Hello, and welcome to Toka!
+</p>
+<p>Toka is a concatenative language with roots in Forth. Don't expect your
+existing knowledge to apply directly to Toka. It allows a good deal of
+low-level control, while supporting some useful abstractions that make
+development easier. Some influences come from RetroForth, HelFORTH, 4p,
+Factor, and SmallTalk.
+</p>
+<p><i>If you can't find something, try the <a href="#index">index</a>. A more structured set of
+topics can be found in <a href="#first_steps">First Steps</a>.</i> 
+</p>
+<h2>General Topics</h2>
+
+
+<ul>
+<li> <a href="#license">License</a>
+<li> <a href="#building">Building</a> and <a href="#installation">Installation</a>
+<li> <a href="#first_steps">First Steps</a>, a short guide to the language
+<li> The <a href="#words_and_their_uses">Words and Their Uses</a>
+
+</ul>
+
+<h2>Internals</h2>
+
+<h4>Topics</h4>
+
+
+<ul>
+<li> Information about the <a href="#ports">Ports</a>
+<li> How the <a href="#garbage_collector">garbage collector</a> works
+<li> How the <a href="#parser">parser</a> works
+<li> Notes on the <a href="#threading_model">threading model</a>
+<li> Using <a href="#tokadoc">TokaDoc</a> to comment C code
+<li> <a href="#errorcodes">ErrorCodes</a> that can arise
+<li> <a href="#limitations">Limitations</a>
+
+</ul>
+
+<h4>Source Files</h4>
+
+
+<ul>
+<li> <a href="#bitsc">bits.c</a>
+<li> <a href="#classc">class.c</a>
+<li> <a href="#cmdlinec">cmdline.c</a>
+<li> <a href="#conditionalsc">conditionals.c</a>
+<li> <a href="#consolec">console.c</a>
+<li> <a href="#datac">data.c</a>
+<li> <a href="#debugc">debug.c</a>
+<li> <a href="#decompilec">decompile.c</a>
+<li> <a href="#dictionaryc">dictionary.c</a>
+<li> <a href="#errorsc">errors.c</a>
+<li> <a href="#ffic">ffi.c</a>
+<li> <a href="#filesc">files.c</a>
+<li> <a href="#gcc">gc.c</a>
+<li> <a href="#initialc">initial.c</a>
+<li> <a href="#interpretc">interpret.c</a>
+<li> <a href="#mathc">math.c</a>
+<li> <a href="#parserc">parser.c</a>
+<li> <a href="#quotesc">quotes.c</a>
+<li> <a href="#stackc">stack.c</a>
+<li> <a href="#tokac">toka.c</a>
+<li> <a href="#vmc">vm.c</a></ul>
+
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="arrays">Arrays</a></h1>
+
+<p>The standard bootstrap adds support for arrays. These are a superset of
+variables, and hold either character or numeric data.
+</p>
+<p>The words provided are:
+</p>
+<pre>  is-array          n"-     Create an array of size n. Parses for the name.
+  array.put         nia-    Put value (n) into array (a) at index (i)
+  array.get         ia-n    Get the value (n) from array (a) at index (i)
+  array.putChar     nia-    Put character value (n) into array (a) at index (i)
+  array.getChar     ia-n    Get the character value (n) from array (a) at 
+                            index (i)
+</pre>
+
+<h2>Example</h2>
+
+<pre>  10 cells is-array foo
+  0 foo array.get .
+  100 0 foo array.put 
+  10 1 foo array.put 
+  0 foo array.get .
+  1 foo array.get .
+</pre>
+
+<h2>Tips</h2>
+
+
+<ul>
+<li> The command line arguments are stored in an array (*arglist*).
+
+<ul>
+<li> At 0 is the name of the script
+<li> Actual arguments start at 1.
+</ul>
+
+<li> Be careful not to exceed the length of your array when giving an index</ul>
+
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="bitsc">bits.c</a></h1>
+
+<h2>Use</h2>
+
+<p>This file provides a handful of primitives for manipulating bits.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>lshift()
+Shift NOS left by TOS bits
+
+rshift()
+Shift NOS right by TOS bits
+
+and()
+Perform a bitwise AND
+
+or()
+Perform a bitwise OR
+
+xor()
+Perform a bitwise XOR
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>&lt;&lt;       ( ab-c )    Shift 'a' left by 'b' bits
+&gt;&gt;       ( ab-c )    Shift 'a' right by 'b' bits
+and      ( ab-c )    Perform a bitwise AND
+or       ( ab-c )    Perform a bitwise OR
+xor      ( ab-c )    Perform a bitwise XOR
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="building">Building</a></h1>
+
+<p>To build Toka, you will need the following:
+</p>
+
+<ul>
+<li> GCC 2.9x, 3.x, or 4.x
+<li> Make (Either GNU Make or a BSD Make should work)
+
+</ul>
+
+<p>For most people, the following should work. If it fails, try checking the
+<a href="#ports">Ports</a> page to see if there are any platform-specific instructions. The
+process using Make:
+</p>
+<pre>  make
+</pre>
+
+<p>If you experience problems, check the PLATFORM line in the Makefile and
+add any OS-specific flags your system may need.
+</p>
+<p>As a final note, some pieces of documentation can be updated automatically
+as well:
+</p>
+<pre>  make docs
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="classc">class.c</a></h1>
+
+<h2>Use</h2>
+
+<p>This is where the <a href="#wordclasses">WordClasses</a> are implemented. It does not export any
+functions directly to Toka.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>word_class()
+If compiling, compile the xt into the current
+quote. If interpreting, call the word.
+
+macro_class()
+Always call the word
+
+data_class()
+If compiling, compile a call to lit() and then
+inline TOS into the following location. Otherwise
+leave TOS alone.
+
+quote_macro_class()
+Always invoke the quote.
+
+quote_class()
+Handler for quotes; this takes two cells, one
+which is a call to this function, the other is
+the pointer to the quote to invoke.
+
+quote_word_class()
+Perform data_class() semantics, then, if 
+compiling, compile a call to invoke(). Otherwise,
+invoke() is called with the xt on TOS.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<p><i>None</i>
+</p>
+<h2>Related Words</h2>
+
+<pre>.PRIM_WORD  ( -n )   Class # for primitive words
+.PRIM_MACRO ( -n )   Class # for primitive macros
+.DATA       ( -n )   Class # for data elements
+.WORD       ( -n )   Class # for quote words
+.MACRO      ( -n )   Class # for quote macros
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="cmdlinec">cmdline.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Build the list of command line arguments that Toka programs can access.
+This is a subset of the full arguments passed to the <b>toka</b> executable.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  long arg_count
+  Holds the number of command line arguments
+
+  char *arg_list[128]
+  Holds the list of command line arguments. 
+
+num_args()
+Return the number of arguments, not including the
+file names used to launch this program.
+
+get_arg_list()
+Return the number of arguments, not including the
+file names used to launch this program.
+
+build_arg_list(char *args[], long count)
+Copy pointers to the command line arguments to
+arg_list[]. Also sets arg_count.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>#args    (  -n )     Return the number of arguments
+arglist  (  -a )     Return a pointer to the 
+                     argument list.
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="commenting_code">Commenting Code</a></h1>
+
+<p>It is generally a good idea to comment your code. Comments will make it
+much easier to remember what's going on, can help you locate bugs, and
+also be of significant benefit to others who may work on your code at a
+later time.
+</p>
+<p>Toka provides two ways to comment your code.
+</p>
+<h4>In The Listener</h4>
+
+<p>At the listener (the top level interpreter), you can use <b>#!</b>
+comments. These are comments that start with <b>#!</b> and end at the end
+of the current line. For example, I often start my programs with a short
+information block such as the following:
+</p>
+<pre>  #! ---------------------------------------------------------------
+  #! A small HTTP server for Toka
+  #!
+  #! Developed by:
+  #!  Charles R. Childers
+  #!  erider
+  #!
+  #! ---------------------------------------------------------------
+</pre>
+
+<p>This style comment works well for blocks, and thus can be very useful at
+the start of a function:
+</p>
+<pre>  #! ---------------------------------------------------------------
+  #! get-request
+  #! This reads a client request of up to 1k into the buffer. The
+  #! number of bytes read is returned.
+  #! ---------------------------------------------------------------
+</pre>
+
+<p><b>#!</b> comments can <i>not be used inside quotes</i>.
+</p>
+<h4>Inside Quotes</h4>
+
+<p>Inside a quote, you can use <b>( ... )</b> comments. These start with a
+<b>(</b> and end when <b>)</b> is encountered. Unlike <b>#!</b> comments,
+these can span multiple lines and be used inside of quotes. An example:
+</p>
+<pre>  [ 
+    connection     (  -a )
+    @              ( a-n )
+    pClose         ( n-  )
+  ] is end-connection
+</pre>
+
+<p>In this example, each stack action is mapped out using a <i>stack
+comment</i>. This is helpful when learning to use Toka, as it makes it
+easier to visualize the stack at each step.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="conditionals">Conditionals</a></h1>
+
+<p>Toka provides a few basic comparison primitives and one primitive for
+handling conditional execution of code. The standard bootstrap also adds
+two quotes that extend the conditional functions.
+</p>
+<p>Basic examples:
+</p>
+<pre>  1 100 = [ 1 . ] ifTrue
+  1 100 = [ 2 . ] ifFalse
+  1 100 = [ 3 . ] [ 4 . ] ifTrueFalse
+</pre>
+
+<p>The first case will invoke the quote if the flag returned by <b>=</b> is
+TRUE. The second invokes the quote if the flag is FALSE, and the third
+form invokes the <b><span style="color: red;">[3 .]</span></b> quote if TRUE, or the <b><span style="color: red;">[4 .]</span></b>
+quote if FALSE.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="conditionalsc">conditionals.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Contains the implementation of the core conditionals. These are words
+which do comparisons, and return a flag on the stack.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>less_than()
+Compare TOS and NOS, return a flag.
+
+greater_than()
+Compare TOS and NOS, return a flag.
+
+equals()
+Compare TOS and NOS, return a flag.
+
+not_equals()
+Compare TOS and NOS, return a flag.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>&lt;        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+&gt;        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+=        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+&lt;&gt;       ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>FALSE    ( -f )      Value returned for FALSE
+TRUE     ( -f )      Value returned for TRUE
+ifTrue   ( fq- )     Execute quote ('q') if flag ('f') is TRUE
+ifFalse  ( fq- )     Execute quote ('q') if flag ('f') is FALSE
+ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
+                     true, 'b' if false.
+whileTrue  ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+whileFalse ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="consolec">console.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Provide a very basic console interface. The provided interface is
+intentionally kept to a minimum, a better console interface can be loaded later.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>dot()
+Display the number on TOS using the current base
+if possible.
+
+emit()
+Display the character TOS corresponds to. Consumes
+TOS.
+
+type()
+Display the string TOS points to. Consumes TOS.
+
+bye()
+Quit Toka
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>.        ( n- )      Display the TOS
+emit     ( c- )      Display the ASCII character
+                     for TOS
+type     ( a- )      Display a string
+bye      ( - )       Quit Toka
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>cr       ( - )       Display a CR character
+space    ( - )       Display a space
+tab      ( - )       Display a tab
+."       ( "- )      Parse to the next &lt;b&gt;"&lt;/b&gt; and display the string.
+clear    ( - )       VT100: Clear the screen
+normal   ( - )       VT100: Set the colors back to the default
+bold     ( - )       VT100: Set the bold attribute for the foreground color
+black    ( - )       VT100: Set the foreground color to black
+red      ( - )       VT100: Set the foreground color to red
+green    ( - )       VT100: Set the foreground color to green
+yellow   ( - )       VT100: Set the foreground color to yellow
+blue     ( - )       VT100: Set the foreground color to blue
+magenta  ( - )       VT100: Set the foreground color to magenta
+cyan     ( - )       VT100: Set the foreground color to cyan
+white    ( - )       VT100: Set the foreground color to white
+onBlack  ( - )       VT100: Set the background color to black
+onRed    ( - )       VT100: Set the background color to red
+onGreen  ( - )       VT100: Set the background color to green
+onYellow ( - )       VT100: Set the background color to yellow
+onBlue   ( - )       VT100: Set the background color to blue
+onMagenta( - )       VT100: Set the background color to magenta
+onCyan   ( - )       VT100: Set the background color to cyan
+onWhite  ( - )       VT100: Set the background color to white
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="constants">Constants</a></h1>
+
+<p>For data that does not change, a <i>constant</i> can be created as
+follows:
+</p>
+<pre>  100 is-data OneHundred
+  " /home/crc/htdocs/" is-data docroot
+</pre>
+
+<p>The first example takes the number 100, and assigns a name (OneHundred)
+to it. The name can now be used as a symbolic constant at the listener or
+inside a quote. The second example creates a named pointer to a string,
+which can also be used at the listener or inside quotes.
+</p>
+<p>The use of constants is encouraged as it makes code easier to read and
+maintain. They have minimal impact on performance, and are significantly
+faster to use than variables.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="datac">data.c</a></h1>
+
+<h2>Use</h2>
+
+<p>These are words useful for accessing and modifying data.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>make_literal()
+Compile a call to lit() and then place TOS into
+the next memory location.
+
+make_string_literal()
+Compile a call to string_lit() and then place TOS 
+into the next memory location.
+
+fetch()
+Fetch the value in the memory location pointed to
+by TOS.
+
+store()
+Store NOS into the memory location specified by
+TOS.
+
+fetch_char()
+Fetch the value in the memory location pointed to
+by TOS. This version reads a single byte.
+
+store_char()
+Store NOS into the memory location specified by
+TOS. This version stores a single byte.
+
+copy()
+Copies 'count' bytes from 'source' to 'dest'. The
+stack form for this is:
+  source dest count
+The memory locations can overlap.
+
+cell_size()
+Push the size of a cell to the stack.
+
+char_size()
+Push the size of a char to the stack
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>#        ( n- )      Push the following cell to
+                     the stack.
+$#       ( n- )      Push the following cell to
+                     the stack.
+@        ( a-n )     Fetch the value in memory
+                     location 'a'
+!        ( na- )     Store 'n' to memory location
+                     'a'
+c@        ( a-n )    Fetch a byte from memory
+                     location 'a'
+c!        ( na- )    Store byte 'n' to memory
+                     location 'a'
+copy     ( sdc- )    Copy 'c' bytes from 's' to
+                     'd'
+cell-size ( -n )     Return the size of a cell
+char-size ( -n )     Return the size of a char
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>&gt;char    ( n-c )     Convert the value on TOS to a single character
+char:    ( "-c )     Parse ahead and return one character
+"        ( "-$ )     Parse until " is encountered and return a string
+chars    ( x-y )     Multiply TOS by char-size. Useful w/arrays
+char+    ( x-y )     Increase TOS by char-size
+char-    ( x-y )     Decrease TOS by char-size
+cells    ( x-y )     Multiply TOS by cell-size. Useful w/arrays
+cell+    ( x-y )     Increase TOS by cell-size
+cell-    ( x-y )     Decrease TOS by cell-size
++!       ( xa- )     Add 'x' to the value in address 'a'
+-!       ( xa- )     Subtract 'x' from the value in address 'a'
+on       ( a- )      Set a variable to TRUE
+off      ( a- )      Set a variable to FALSE
+toggle   ( a- )      Toggle a variable between TRUE and FALSE
+variable ( "- )      Create a variable
+variable| ( "- )     Create multiple variables
+is-array          ( n"- )   Create an array of size 'n'
+array.get         ( ia-n )  Get element 'i' from array 'a'
+array.put         ( nia- )  Put value 'n' into element 'i' of array 'a'
+array.getChar     ( ia-n )  Get char-size element 'i' from 
+                            array 'a'
+array.putChar     ( nia- )  Put char-size value 'n' into element 'i' of 
+                            array 'a'
+value    ( "- )      Create a new value
+to       ( - )       Set the value of a value
+value|   ( "- )      Create multiple values
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="debugc">debug.c</a></h1>
+
+<h2>Use</h2>
+
+<p>This provides a very small collection of simple tools that can be helpful
+when trying to track down bugs. It is not intended to be a full-scale
+debugging tool.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>display_stack()
+Display all items on the stack.
+
+vm_info()
+Display information about Toka's memory use, stacks, and
+other aspects of the virtual machine.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>:stack   ( - )       Display all values on the
+                     data stack
+:stat    ( - )       Display information about
+                     the virtual machine status
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>words-within ( n- )  Display all words with a specified class #
+:prims   ( - )       Display all primitives
+:quotes  ( - )       Display all named quotes
+:datas   ( - )       Display all named data items
+words    ( - )       Display all names in the dictionary
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="decompilec">decompile.c</a></h1>
+
+<h2>Use</h2>
+
+<p>This allows for decompiling a quote and displaying the source needed to
+recreate it. 
+</p>
+<h2>Functions Provided</h2>
+
+<pre>long resolve_name(Inst xt)
+Search for a name in the dictionary that corresponds
+to 'xt'. Display it if found, and return a flag.
+
+decompile(Inst *xt)
+Decompile a quote and its children and display the
+result on the screen.
+
+see()
+Decompile the quote on the stack.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>:see     ( "- )      Decompile the specified quote
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="dictionaryc">dictionary.c</a></h1>
+
+<h2>Use</h2>
+
+<p>This file provides the functionality to create new dictionary entries and
+search for a specific entry.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  ENTRY dictionary[MAX_DICTIONARY_ENTRIES];
+  Holds the dictionary entries, up to MAX_DICTIONARY_ENTRIES
+
+  long last
+  A pointer to the most recent dictionary entry
+
+add_entry(char *name, Inst xt, Inst class)
+Add an entry to the dictionary.
+
+name_attach(void *class)
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of the specified class.
+
+name_quote()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_forth_class().
+
+name_quote_macro()
+Attach a name (from the input stream) to the 
+specified quote address. This word is given the
+semantics of quote_macro_class().
+
+name_data()
+Attach a name (from the input stream) to the data
+at the specified address. Semantics are the same
+as the data_class().
+
+find_word()
+Search for a word (name taken from the string
+passed on TOS) in the dictionary. Returns the
+xt, class, and a flag of -1 if found. If not
+found, returns only a flag of 0.
+
+return_quote()
+Find a name (from the input stream) and return a
+quote that corresponds to the word.
+
+return_name()
+Return a pointer to the name of a dictionary entry
+
+return_xt()
+Return the starting address of a word 
+
+return_class()
+Return the class number for a dictionary entry
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>is       ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
+is-macro ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
+is-data  ( a"- )     Attach a name to data memory
+         ( a$- )     Non-parsing form
+`        ( "-a )     Return a quote corresponding
+                     to the specified word.
+         ( $-a )     Non-parsing form
+:name    ( n-$ )     Return the name for a 
+                     dictionary entry
+:xt      ( n-$ )     Return the address of a 
+                     dictionary entry
+:class   ( n-$ )     Return the class # for a 
+                     dictionary entry
+last     ( - a )     Variable holding the number of
+                     the most recent dictionary entry 
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>&lt;list&gt;   ( -a )      Stores a list of pointers used by { and }
+{        ( - )       Start a scoped area
+}        ( - )       End a scoped area
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="errorcodes">ErrorCodes</a></h1>
+
+<p>When using Toka, you may encounter various error messages. These are
+described below. <i>Each error has a unique code; the messages below are
+sorted by this code.</i>
+</p>
+<h2>E0</h2>
+<p>Nonfatal. This error is when a token can not be found in the dictionary
+or converted to a number.
+</p>
+<h2>E1</h2>
+<p><b>Fatal</b>. This error is when the garbage collector fails to allocate enough
+memory to fill a <b><a href="#gcc">gc_alloc()</a></b> request.
+</p>
+<h2>E2</h2>
+<p>Nonfatal. This error is given when an alien function (handled by the
+<a href="#ffi">FFI</a>) is invoked with too many arguments for Toka to handle. You
+shouldn't see it often.
+</p>
+<h2>E3</h2>
+<p>Nonfatal. This error arises when a library can not be located for opening
+by the <a href="#ffi">FFI</a>. 
+</p>
+<h2>E4</h2>
+<p>Nonfatal. This error arises when a symbol can not be found in the
+currently open library.
+</p>
+<h2>E5</h2>
+<p>This error arises when Toka detects a problem with either the data or
+return stack. It can be either fatal (when the problem is with the return
+stack) or nonfatal (when the problem is with the data stack). When
+nonfatal, Toka resets the data stack to an empty state.
+</p>
+<h2>E6</h2>
+<p>Fatal. This error arises when the stdin device is closed unexpectedly.
+</p>
+<h2>E7</h2>
+<p>Fatal. This error arises when a quote exceeds the maximum size permitted.
+See <a href="#limitations">Limitations</a>. 
+</p>
+<h2>E8</h2>
+<p>Fatal. This error arises when a malloc fails. Normally you shouldn't see
+this unless you are dealing with a bad malloc/free implementation or very
+large sets of data.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="errorsc">errors.c</a></h1>
+
+<h2>Use</h2>
+
+<p>This is where errors are handled. It does not export any functions
+directly to Toka.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>error(long code)
+Display a given error by code
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<p><i>None</i>
+</p>
+<h2>See Also</h2>
+
+<p><a href="#errorcodes">ErrorCodes</a></p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="extending_the_language">Extending the Language</a></h1>
+
+<p>Toka provides a few tools that allow you to extend the language in new
+directions. The core of this is <i>compiler macros</i>, special words
+which are (under normal circumstances) always invoked.
+</p>
+<p>Consider a fairly simple task, such as displaying a string. We know that
+this can be done by using <b>type</b>, and that <b>parse</b> can be used to
+create a string. A simple first try would be something like:
+</p>
+<pre>  [ char: " parse type ] is ."
+</pre>
+
+<p>Trying this at the interpreter works just fine:
+</p>
+<pre>  ." Hello, World"
+</pre>
+
+<p>But inside a definition, we run into a problem:
+</p>
+<pre>  [ ." Hello, World" ] is foo
+  E0: 'Hello,' is not a word or a number.
+  E0: 'World"' is not a word or a number.
+</pre>
+
+<p>To make this work inside a definition, we need to do a few things:
+</p>
+
+<ul>
+<li> Parse the string at compile time
+<li> Compile in a reference to the string
+<li> Compile a call to <b>type</b> into the quote
+
+</ul>
+
+<p>To begin, we should be using <b>is-macro</b> to make this into a compiler
+macro. As a macro, it will also run in the interpreter, so we need to
+make it aware of the <b>compiler</b> state. This is provided by the
+<b>compiler</b> variable. So an initial expansion:
+</p>
+<pre>  [ char: " parse 
+    compiler @ [ ( for compile time ) ] [ type ] ifTrueFalse 
+  ] is-macro ."
+</pre>
+
+<p>A simplification is now in order. The first two challenges (parsing the
+string and compiling a reference to it) are already handled by the
+<b>"</b> word. We can reuse this and save some trouble:
+</p>
+<pre>  [ ` " invoke
+    compiler @ [ ( for compile time ) ] [ type ] ifTrueFalse 
+  ] is-macro ."
+</pre>
+
+<p><b>`</b> returns a quote containing the requested function, in this case
+<b>"</b>. We can then <b>invoke</b> the quote. This is a fundamental
+aspect of extending the langauge. 
+</p>
+<p>To compile a call to a quote, Toka provides another word, <b>compile</b>.
+We can use this as follows:
+</p>
+<pre>  [ ` " invoke
+    compiler @ [ ` type compile ] [ type ] ifTrueFalse 
+  ] is-macro ."
+</pre>
+
+<p>And now we are done. Use of <b>`</b>, <b>invoke</b>, and <b>compile</b>
+allows for a fair amount of flexibility in extending the language with
+new features. Learn to use them, and your ability to adapt Toka to your
+programs needs will multiply drastically.
+</p>
+<p>These functions can also be used with normal quotes to create defining
+words. As a nominal example, this is a defining word that creates a
+function that always returns a specific value. Basically a form of
+constant:
+</p>
+<pre>  [ &gt;r ` [ invoke r&gt; # ` ] invoke is ] is const
+</pre>
+
+<p>One final note. Considering the example above, many items have a form
+similar to this. Toka has an additional word <b>+action</b> that creates
+a new quote combining a specific action and data element. The word
+"const" above could be rewritten using it:
+</p>
+<pre>  [ [ ] +action ] is const
+</pre>
+
+<p>Or, with a slightly more complex example, try this:
+</p>
+<pre>  [ [ . ] +action ] is foo
+  100 foo bar
+  bar
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="ffi">FFI</a></h1>
+
+<p>To allow use of external libraries, Toka provides a simple <i>Foreign
+Function Interface</i> (FFI). This is built around the following
+primitives:
+</p>
+<pre>  from LIBRARY
+</pre>
+
+<p>Set the import source to LIBRARY. This should be a fully-qualified
+filename; it may require a path as well as the .so extension.
+</p>
+<pre>  N import FUNCTION
+</pre>
+
+<p>Import FUNCTION from the previously specified library. A new quote named
+FUNCTION will be created, and will take <i>N</i> arguments off the stack.
+This function will always have a return value, even for <i>void</i>
+functions.
+</p>
+<p>You can also make use of <b>as</b> to rename the imported function.
+</p>
+<hr>
+<p>Example:
+</p>
+<pre>  #! Linux libc = libc.so.6, BSD libc = libc.so
+  from libc.so.6
+  2 import printf as printf.2
+  " %i\n" 100 printf.2
+</pre>
+
+<hr>
+<p>The FFI is optional, and can be disabled at build time. Doing so reduces
+the overall functionality of Toka, so doing this is only recommended if
+you are using a system without dlopen()/dlsym(), or if you need more 
+direct control over the functionality provided. To build a version of
+Toka without the FFI, do:
+</p>
+<pre>  rm source/ffi.c
+  make CFLAGS=-DNOFFI
+</pre>
+
+<p>Again, <i>this is only recommended if your system does not support
+dlopen()/dlsym()</i>.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="ffic">ffi.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Implements the <a href="#ffi">Foreign Function Interface</a>, which allows use of external
+libraries.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  void *library
+  Pointer to the most recently opened library
+
+ffi_invoke()
+Call a foreign function. This translates between
+Toka and CDECL calling conventions.
+
+ffi_from()
+Select a library to load from.
+
+ffi_import()
+Import and name an external function. This wraps
+the imported function in a quote.
+
+ffi_rename()
+Rename the most recently defined word in the
+dictionary.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>from     ( "- )      Set the library to import from
+         ( $- )      Non-parsing form
+import   ( n"- )     Import a function taking 'n'
+                     arguments.
+         ( n$- )     Non-parsing form
+as       ( "- )      Rename the last defined word
+         ( $-  )     Non-parsing form
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="files">Files</a></h1>
+
+<p>Toka provides functionality roughly identical to the standard C file I/O
+functionality (fopen, fread, etc). 
+</p>
+<pre>  file.open  ( $m-n )  Open a specified file with
+                       the specified mode.
+  file.close ( n- )    Close the specified file handle
+  file.read  ( nbl-r ) Read 'l' bytes into buffer 'b'
+                       from file handle 'n'. Returns
+                       the number of bytes read.
+  file.write ( nbl-w ) Write 'l' bytes from buffer 'b'
+                       to file handle 'n'. Returns
+                       the number of bytes written.
+  file.size  ( n-s )   Return the size (in bytes)
+                       of the specified file.
+  file.seek  ( nom-a ) Seek a new position in the
+                       file. Valid modes are
+                       START, CURRENT, and END. These
+                       have values of 1, 2, and 3.
+  file.pos   ( n-a )   Return a pointer to the current
+                       offset into the file.
+  file.slurp ( $-a )   Read file '$' into a new buffer.
+  "R"        ( -x )    Mode for file.open
+  "R+"       ( -x )    Mode for file.open
+  "W"        ( -x )    Mode for file.open
+  "W+"       ( -x )    Mode for file.open
+  "A"        ( -x )    Mode for file.open
+  "A+"       ( -x )    Mode for file.open
+  START      ( -x )    Mode for file.seek
+  CURRENT    ( -x )    Mode for file.seek
+  END        ( -x )    Mode for file.seek
+</pre>
+
+<h2>Examples</h2>
+
+<pre>  variable fid
+  " /etc/motd" "R" file.open fid !
+  fid @ file.size .
+  fid @ file.close
+
+  " /etc/motd" file.slurp [ type cr ] ifTrue
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="filesc">files.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Allows for reading and writing data to files.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>file_open()
+Open a file using the specified mode. Modes are
+a direct map to the fopen() modes: "r", "r+", "w",
+"w+", "a", and "a+". Numeric values for these are
+1 - 6, in that order.
+
+file_close()
+This is just a simple wrapper over fclose().
+
+file_read()
+This is just a simple wrapper over fread().
+
+file_write()
+This is just a simple wrapper over fwrite().
+
+file_size()
+This is just a simple wrapper over fstat() which
+returns the size of the file.
+
+file_seek()
+This is just a simple wrapper over fseek().
+
+file_pos()
+This is just a simple wrapper over ftell().
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>file.open  ( $m-n )  Open a specified file with
+                     the specified mode.
+file.close ( n- )    Close the specified file handle
+file.read  ( nbl-r ) Read 'l' bytes into buffer 'b'
+                     from file handle 'n'. Returns
+                     the number of bytes read.
+file.write ( nbl-w ) Write 'l' bytes from buffer 'b'
+                     to file handle 'n'. Returns
+                     the number of bytes written.
+file.size  ( n-s )   Return the size (in bytes)
+                     of the specified file.
+file.seek  ( nom-a ) Seek a new position in the
+                     file. Valid modes are
+                     START, CURRENT, and END. These
+                     have values of 1, 2, and 3.
+file.pos   ( n-a )   Return a pointer to the current
+                     offset into the file.
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>"R"         ( -x )   Mode for file.open
+"R+"        ( -x )   Mode for file.open
+"W"         ( -x )   Mode for file.open
+"W+"        ( -x )   Mode for file.open
+"A"         ( -x )   Mode for file.open
+"A+"        ( -x )   Mode for file.open
+START       ( -x )   Mode for file.seek
+CURRENT     ( -x )   Mode for file.seek
+END         ( -x )   Mode for file.seek
+file.slurp  ( $-a )  Read a file into a dynamically allocated buffer 
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="first_steps">First Steps</a></h1>
+
+<p>The following is a set of topical guides to various aspects of the Toka
+language. It was written as the initial tutorial material, but as should
+be evident, I am not a great writer of tutorials. The material should be
+fairly easy for a moderately experienced Forth or Joy programmer to pick up.
+</p><hr>
+
+<h4>Introductory Bits</h4>
+
+<ul>
+<li> <a href="#usingthestack">The Stack</a>
+<li> <a href="#mathoperations">Basic Math</a>
+
+</ul>
+
+<h4>Writing Functions</h4>
+
+<ul>
+<li> <a href="#quotes">Quotes</a>
+<li> <a href="#wordclasses">WordClasses</a>
+<li> <a href="#loops">Loops</a>
+<li> <a href="#conditionals">Conditionals</a>
+
+</ul>
+
+<h4>Data Structures</h4>
+
+<ul>
+<li> <a href="#types">Types</a>
+<li> <a href="#constants">Constants</a>
+<li> <a href="#variables">Variables</a>
+<li> <a href="#values">Values</a>
+<li> <a href="#arrays">Arrays</a>
+
+</ul>
+
+<h4>Interfacing with the World</h4>
+
+<ul>
+<li> <a href="#files">Files</a>
+<li> <a href="#ffi">FFI</a>
+<li> <a href="#scripts">Scripts</a>
+
+</ul>
+
+<h4>Practical Matters</h4>
+
+<ul>
+<li> <a href="#commenting_code">Commenting Code</a>
+<li> <a href="#stack_comments">Stack Comments</a>
+
+</ul>
+
+<h4>Advanced Topics</h4>
+
+<ul>
+<li> <a href="#extending_the_language">Extending the Language</a></ul>
+
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="garbage_collector">garbage collector</a></h1>
+
+<p>The Toka implementation makes heavy use of dynamically allocated memory.
+To help avoid memory leaks, the memory allocation provides a very simple
+form of <i>garbage collection</i>.
+</p>
+<p>The model is very simple. Two lists are kept of pointers and corresponding
+sizes are kept. One list is used primarily for user-level allocations,
+and the other is only used by the primitives when they need to allocate
+memory.
+</p>
+<p>When either list is filled, <b>gc()</b> is called. This frees up to 64
+allocations from the internal list, and up to 32 allocations from the
+user list. Allocations are freed from oldest to newest, and the newest
+allocations in both lists (up to 32 in the user list and 64 in the
+internal list) will be kept. This prevents recent creations from falling
+out of scope until they can be used.
+</p>
+<p>Obviously there is also a way to mark entries as permanent. This is done
+by <b>keep</b> (the <b><a href="#gcc">gc_keep()</a></b> function). This routine skims
+through the list of allocations (from most recent to oldest) looking for
+a specific pointer. When found, that entry (and any subsequent
+allocations -- in Toka these will almost always be subquotes, strings,
+etc) are removed from the list.
+</p>
+<p>Information regarding the current status of the garbage collection
+subsystem can be obtained via <b>:stat</b> (the <b><a href="#debugc">vm_info()</a></b> function).</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="gcc">gc.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Implements the memory allocator and basic <a href="#garbage_collector">garbage collector</a>.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  GCITEM gc_list[128]
+  Holds the list of items marked as garbage
+
+  long gc_depth
+  A pointer to the top of the garbage collection
+  list
+
+  GCITEM gc_trash[128]
+  Holds the short list of items marked as garbage
+
+  long gc_tdepth
+  A pointer to the top of the short garbage
+  collection list
+
+  long gc_used
+  Contains the total size of all currently used
+  memory, including permanent quotes.
+
+  long gc_objects
+  Contains the total number of objects that are
+  currently existing, including permanent ones.
+
+gc_alloc(long items, long size, long type)
+Allocate the requested memory and add it to the
+garbage collection list.
+If type is set to 0, add to the normal garbage
+collection list. If set to 1, add to the short
+list of known garbage items which can be safely
+freed at the next gc().
+If the allocation fails, gc() is called, and the
+allocation is retried. If it still fails, an
+error is reported and Toka is terminated.
+
+gc_keep()
+Remove the specified address (and any childern it
+has registered) from the garbage collection list.
+If the TOS is not an allocated address, this will
+silently ignore it.
+
+gc()
+Free the oldest allocations on the garbage list.
+Will free up to 64 trash items and 32 items from the 
+user allocation list per call. This leaves the newest
+allocations on both lists alone, even with repeated 
+calls.
+
+toka_malloc()
+Allocate TOS bytes of memory. Returns a pointer to
+the allocated memory.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>keep     ( a-a )     Mark quotes/allocated memory
+                     as permanent.
+gc       ( - )       Clean the garbage
+malloc   ( n-a )     Allocate 'n' bytes of memory
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="index">Index</a></h1>
+
+
+<ul>
+<li> <a href="#arrays">Arrays</a> <font face="sans-serif" size="-2">(07/27/2007 21:01:34)</font>
+<li> <a href="#bitsc">bits.c</a> <font face="sans-serif" size="-2">(05/21/2007 21:44:03)</font>
+<li> <a href="#building">Building</a> <font face="sans-serif" size="-2">(07/21/2007 14:17:16)</font>
+<li> <a href="#classc">class.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:29:22)</font>
+<li> <a href="#cmdlinec">cmdline.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:29:45)</font>
+<li> <a href="#commenting_code">Commenting Code</a> <font face="sans-serif" size="-2">(04/27/2007 19:12:55)</font>
+<li> <a href="#conditionals">Conditionals</a> <font face="sans-serif" size="-2">(04/28/2007 22:11:10)</font>
+<li> <a href="#conditionalsc">conditionals.c</a> <font face="sans-serif" size="-2">(07/21/2007 15:02:56)</font>
+<li> <a href="#consolec">console.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:42:15)</font>
+<li> <a href="#constants">Constants</a> <font face="sans-serif" size="-2">(04/29/2007 19:19:14)</font>
+<li> <a href="#datac">data.c</a> <font face="sans-serif" size="-2">(07/27/2007 21:02:47)</font>
+<li> <a href="#debugc">debug.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:41:41)</font>
+<li> <a href="#decompilec">decompile.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:32:11)</font>
+<li> <a href="#dictionaryc">dictionary.c</a> <font face="sans-serif" size="-2">(07/21/2007 15:00:59)</font>
+<li> <a href="#errorcodes">ErrorCodes</a> <font face="sans-serif" size="-2">(09/02/2007 12:58:48)</font>
+<li> <a href="#errorsc">errors.c</a> <font face="sans-serif" size="-2">(04/21/2007 17:02:50)</font>
+<li> <a href="#extending_the_language">Extending the Language</a> <font face="sans-serif" size="-2">(07/21/2007 15:18:28)</font>
+<li> <a href="#ffi">FFI</a> <font face="sans-serif" size="-2">(04/29/2007 22:43:53)</font>
+<li> <a href="#ffic">ffi.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:34:11)</font>
+<li> <a href="#files">Files</a> <font face="sans-serif" size="-2">(04/28/2007 22:11:30)</font>
+<li> <a href="#filesc">files.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:35:45)</font>
+<li> <a href="#first_steps">First Steps</a> <font face="sans-serif" size="-2">(09/06/2007 19:01:17)</font>
+<li> <a href="#garbage_collector">garbage collector</a> <font face="sans-serif" size="-2">(07/14/2007 20:51:43)</font>
+<li> <a href="#gcc">gc.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:36:11)</font>
+<li> <a href="#home">Home</a> <font face="sans-serif" size="-2">(09/06/2007 19:00:43)</font>
+<li> <a href="#index">Index</a> <font face="sans-serif" size="-2">(07/13/2002 14:58:54)</font>
+<li> <a href="#initialc">initial.c</a> <font face="sans-serif" size="-2">(03/30/2007 18:43:04)</font>
+<li> <a href="#installation">Installation</a> <font face="sans-serif" size="-2">(04/23/2007 18:18:57)</font>
+<li> <a href="#interpretc">interpret.c</a> <font face="sans-serif" size="-2">(08/28/2007 18:52:25)</font>
+<li> <a href="#license">License</a> <font face="sans-serif" size="-2">(09/03/2007 02:34:27)</font>
+<li> <a href="#limitations">Limitations</a> <font face="sans-serif" size="-2">(07/14/2007 20:41:28)</font>
+<li> <a href="#loops">Loops</a> <font face="sans-serif" size="-2">(09/06/2007 18:55:02)</font>
+<li> <a href="#mathc">math.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:37:18)</font>
+<li> <a href="#mathoperations">MathOperations</a> <font face="sans-serif" size="-2">(04/19/2007 18:01:47)</font>
+<li> <a href="#parser">parser</a> <font face="sans-serif" size="-2">(07/21/2007 15:05:10)</font>
+<li> <a href="#parserc">parser.c</a> <font face="sans-serif" size="-2">(08/22/2007 19:07:05)</font>
+<li> <a href="#ports">Ports</a> <font face="sans-serif" size="-2">(09/06/2007 19:00:08)</font>
+<li> <a href="#quotes">Quotes</a> <font face="sans-serif" size="-2">(04/24/2007 21:47:51)</font>
+<li> <a href="#quotesc">quotes.c</a> <font face="sans-serif" size="-2">(09/06/2007 18:55:27)</font>
+<li> <a href="#recent_changes">Recent Changes</a> <font face="sans-serif" size="-2">(07/13/2002 14:41:15)</font>
+<li> <a href="#scripts">Scripts</a> <font face="sans-serif" size="-2">(09/06/2007 19:10:35)</font>
+<li> <a href="#search">Search</a> <font face="sans-serif" size="-2">(03/29/2007 21:18:59)</font>
+<li> <a href="#stack_comments">Stack Comments</a> <font face="sans-serif" size="-2">(04/27/2007 19:24:28)</font>
+<li> <a href="#stackc">stack.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:40:13)</font>
+<li> <a href="#strings">strings</a> <font face="sans-serif" size="-2">(07/27/2007 21:04:14)</font>
+<li> <a href="#threading_model">threading model</a> <font face="sans-serif" size="-2">(04/10/2007 22:10:25)</font>
+<li> <a href="#tokac">toka.c</a> <font face="sans-serif" size="-2">(07/21/2007 15:06:11)</font>
+<li> <a href="#tokadoc">TokaDoc</a> <font face="sans-serif" size="-2">(03/30/2007 23:52:20)</font>
+<li> <a href="#types">Types</a> <font face="sans-serif" size="-2">(04/24/2007 21:02:42)</font>
+<li> <a href="#user_code">User Code</a> <font face="sans-serif" size="-2">(09/02/2007 12:52:26)</font>
+<li> <a href="#usingthestack">UsingTheStack</a> <font face="sans-serif" size="-2">(07/21/2007 15:17:53)</font>
+<li> <a href="#values">Values</a> <font face="sans-serif" size="-2">(05/28/2007 15:20:13)</font>
+<li> <a href="#variables">Variables</a> <font face="sans-serif" size="-2">(04/19/2007 18:05:19)</font>
+<li> <a href="#vmc">vm.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:40:50)</font>
+<li> <a href="#wordclasses">WordClasses</a> <font face="sans-serif" size="-2">(04/28/2007 01:03:03)</font>
+<li> <a href="#words_and_their_uses">Words and Their Uses</a> <font face="sans-serif" size="-2">(09/06/2007 18:59:04)</font>
+
+</ul>
+
+<p><b>56 Pages</b>
+</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="initialc">initial.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Build the initial dictionary
+</p>
+<h2>Functions Provided</h2>
+
+<pre>build_dictionary()
+Attach names and classes to the various initial
+words in the Toka language.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<p><i>None</i></p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="installation">Installation</a></h1>
+
+<p>To get the most out of Toka, it needs to be installed. This can be done
+via the build system:
+</p>
+<pre>  make install
+</pre>
+
+<p>When done this way, the following files are installed:
+</p>
+<pre>  /usr/bin/toka
+  /usr/share/toka/bootstrap.toka
+</pre>
+
+<p>After installation, run the test suite:
+</p>
+<pre>  make tests
+</pre>
+
+<p>Look for any failures in the test.log. If you encounter a problem, please
+forward the test.log to charles.childers@gmail.com along with some
+basic information about your system (OS, CPU type, GCC version, Toka
+revision #)</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="interpretc">interpret.c</a></h1>
+
+<h2>Use</h2>
+
+<p>The interpreter itself.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  long compiler
+  When set to 0, interpret; when set to -1, 
+  compile. This is checked by the various word
+  classes defined in class.c
+
+  char *scratch
+  Temporary holding area used by the parser and
+  other routines.
+
+  char *tib
+  Pointer to the text input buffer.
+
+
+interpret()
+Accept and process input.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>compiler ( -a )      Variable holding the compiler
+                     state
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="license">License</a></h1>
+
+<p>Copyright (c) 2006, 2007, Charles R. Childers <charles.childers@gmail.com>
+</p>
+<p>Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="limitations">Limitations</a></h1>
+
+<p>These limits are dependent on the host system and can not be altered:
+</p>
+
+<ul>
+<li> Cell size is machine dependent, generally 32 bits (4 bytes) or 64 bits
+  (8 bytes) in size. <b>cell-size</b> returns the actual size in bytes.
+<li> Character size is machine and OS dependent.  Normally 8 bits (1 byte).
+  <b>char-size</b> returns the actual size in bytes. This is normally
+  1 byte in size.
+
+</ul>
+
+<p>The following limits can be overridden in <b>config.h</b>:
+</p>
+
+<ul>
+<li> Quotes can be up to 64 elements (values, primitives, embedded quotes,
+  calls to other quotes, string pointers, etc) in length in most cases.
+<li> The data stack can hold up to 100 cells.
+<li> The return stack can hold up to 1024 cells.
+<li> You can have up to 4096 named items</ul>
+
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="loops">Loops</a></h1>
+
+<p>Toka provides a limited collection of primitives for building various
+types of simple loops.
+</p>
+<p>The most basic form is <b>countedLoop</b>, which takes the following form:
+</p>
+<pre>  upper-limit lower-limit quote  countedLoop
+</pre>
+
+<p><b>countedLoop</b> will invoke <i>quote</i> the specified number of
+times. Upper and lower indexes can be set as desired; Toka will count up
+or down as necessary.
+</p>
+<p>Some examples:
+</p>
+<pre>  10 0 [ i . ] countedLoop
+  0 10 [ i . ] countedLoop
+</pre>
+
+<p>Note the use of <b>i</b>, the loop index. When looping via
+<b>countedLoop</b>, the loop index is set to the current cycle number.
+<i>Other types of loops do not set the loop index.</i>
+</p>
+<p>The other type of loop is a <b>whileTrue</b> or <b>whileFalse</b> loop.
+The normal form:
+</p>
+<pre>  quote whileTrue
+  quote whileFalse
+</pre>
+
+<p>Each time <i>quote</i> is invoked, a value of <b>TRUE</b> or <b>FALSE</b>
+should be left on the stack. The loop primitives will consume this, and
+either repeat the loop or end the loop until the condition is not met.
+<b>whileTrue</b> continues execution if the returned value is <b>TRUE</b>;
+<b>whileFalse</b> continues if the returned value is <b>FALSE</b>.
+</p>
+<p>Some examples:
+</p>
+<pre>  1 [ dup . 1 + dup 101 &lt; ] whileTrue
+  101 [ dup . 1 - dup 1 &lt; ] whileFalse
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="mathc">math.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Basic math operations on the stack.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>add()
+Add TOS to NOS
+
+subtract()
+Subtract TOS from NOS
+
+multiply()
+Multiply TOS by NOS
+
+divmod()
+Divide and return the result, including remainder
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>+        ( ab-c )    Add TOS and NOS
+-        ( ab-c )    Subtract TOS from NOS
+*        ( ab-c )    Multiply TOS by NOS
+/mod     ( ab-cd )   Divide and get remainder
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>negate   ( x-y )     Invert the sign of TOS
+/        ( xy-z )    Divide two numbers
+mod      ( xy-z )    Divide two numbers and get remainder
+not      ( x-y )     Invert the value 'x'
+*/       ( abc-d )   (a*b)/c
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="mathoperations">MathOperations</a></h1>
+
+<p>Toka provides a very basic set of math functionality, sufficient for many
+purposes. The functions are:
+</p>
+<pre>  +        ( ab-c )    Add TOS and NOS
+  -        ( ab-c )    Subtract TOS from NOS
+  *        ( ab-c )    Multiply TOS by NOS
+  /mod     ( ab-cd )   Divide and get remainder
+</pre>
+
+<p>In addition, the standard bootstrap adds some additional operations:
+</p>
+<pre>  1+       ( x-y )     Increase value on stack by 1
+  1-       ( x-y )     Decrease value on stack by 1
+  negate   ( x-y )     Invert the sign of TOS
+  /        ( xy-z )    Divide two numbers
+  mod      ( xy-z )    Divide two numbers and get remainder
+  not      ( x-y )     Invert the value 'x'
+  */       ( abc-d )   (a*b)/c
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="parser">parser</a></h1>
+
+<p>Toka's parser is fairly simple. It only handles input coming from a
+<i>file stream</i> (which includes <i>stdin</i>). Input sources are
+implemented as a stack.
+</p>
+<p>At the bottom is the <i>stdin</i> file. Generally on startup, the
+<i>bootstrap.toka</i>. A script would be at the third position, and any
+files that includes get added above it.
+</p>
+<p>The parser will read from the top file until either <b>end.</b> or an EOF
+(end of file) is detected. At this point, it closes the file and drops to
+the next one on the stack.
+</p>
+<p>Internally, the fundamental function for parsing is <b>get_token()</b>.
+This accepts two arguments, a pointer to a buffer to place the resulting
+string, and a delimiter character. Parsing ends when the delimiter
+character is encountered. <b>get_token()</b> also leaves a pointer to the
+resulting token on the stack. A Toka-level wrapper, <b>parse()</b>, makes
+use of <b>get_token()</b>.
+</p>
+<p>When parsing, a number of <i>escape sequences</i> can be recognized. These
+are listed below:
+</p>
+<pre>  \n
+  Embed a line feed (ASCII 10) into the token
+ 
+  \r
+  Embed a carriage return (ASCII 13) into the token
+
+  \^
+  Embed ASCII 27 into the token. Useful with VT100/ANSI terminal
+  escape sequences
+
+  \\
+  Embed a \ character into the token
+
+  \"
+  Embed a quote into the token
+</pre>
+
+<p>Processing of escape sequences can be enabled or disabled by turning the
+<b>escape-sequences</b> variable <b>on</b> or <b>off</b>. For example:
+</p>
+<pre>  escape-sequences off
+  " \\ hello \\" type cr
+  escape-sequences on
+  " \\ hello \\" type cr
+</pre>
+
+<h4>Tips</h4>
+
+<ul>
+<li> Tokens have a maximum size of 4096 characters
+<li> If the delimiter = 10, <b>get_token()</b> will also break on
+  encountering ASCII 13.
+<li> If the delimiter = 32, <b>get_token()</b> will also break on
+  encountering ASCII 10 or ASCII 13.</ul>
+
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="parserc">parser.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Implement the <a href="#parser">parser</a>.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  FILE *input[]
+  Current file stream to parse from. Setup as
+  an array of 8 inputs.
+
+  long isp
+  Pointer to the most recent input source in the array
+
+  long base
+  Holds the current numeric base
+
+  long parser
+  When ON (TRUE), system parsing words will parse. When
+  OFF (FALSE), they will take a string from the stack.
+
+  long escapes
+  When ON (TRUE), escape sequences will be handled
+  by the parser. When OFF (FALSE), they will be ignored.
+
+
+to_number()
+Attempt to convert a string (on TOS) to a number.
+This accepts a format of:
+  [-]number
+If successful, it leaves the number and a flag of
+TRUE on the stack. Otherwise, it leaves the original
+string, and a flag of FALSE.
+
+parse()
+Parse the input buffer until the character passed
+on TOS is found, or until the end of the line is
+encountered. Return a pointer to the resulting
+string on the stack.
+
+get_token(char *s, long delim)
+Return a string (in "s") up to the specified 
+delimiter. This also puts the resulting string 
+on the stack.
+
+long include_file(char *s)
+Attempt to open a file ("s") and add it to the
+top of the input stack.
+
+include()
+Take a filename off the stack, attempt to open
+it and add it to the input stream if successful.
+
+needs()
+Take a filename off the stack. Attempt to open it
+from the library, and add it to the input stream 
+if successful.
+
+force_eof()
+Remove the current file from the input stack. This
+can be used to abort an include.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>base     ( -a )      Variable containg the current
+                     numeric base
+parser   ( -a )      Variable holding current parser
+                     mode.
+escape-sequences     Variable determining if
+         ( -a)       escape sequences are used.
+&gt;number  ( a-nf )    Attempt to convert a string
+                     to a number
+parse    ( d-a )     Parse until the character 
+                     represented by 'd' is found.
+                     Return a pointer to the string
+include   ( "- )     Attempt to open a file and
+                     add it to the input stack.
+          ( $- )     Non-parsing form
+needs     ( "- )     Attempt to include a file
+                     from the library (normally
+                     /usr/share/toka/library)
+          ( $- )     Non-parsing form
+end.      ( - )      Remove the current file from
+                     the input stack
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>wsparse  ( -a )      Parse until a SPACE is encountered
+lnparse  ( -a )      Parse to the end of the line,
+                     leave the resulting string on the
+                     stack.
+hex      ( - )       Set the base to hexadecimal (16)
+decimal  ( - )       Set the base to decimal (10)
+binary   ( - )       Set the base to binary (2)
+octal    ( - )       Set the base to octal (8)
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="ports">Ports</a></h1>
+
+<p>This page lists the officially supported platforms and includes notes on
+building for specific targets.
+</p>
+<hr>
+<h2>Quick Summary</h2>
+
+<p>CPUs: x86, x86-64, ARM, MIPS, Itanium
+</p>
+<p>OSes: Linux, NetBSD, FreeBSD, OpenBSD, DragonFly BSD, BeOS, Cygwin, OpenSolaris
+</p>
+<hr>
+<h2>Linux</h2>
+
+<p>Supported CPUs: x86, x86-64, MIPS, Itanium
+</p>
+<p>Toka has been built and tested on Debian and SuSE, using
+GCC versions 2.95, 3.0, 3.1, and 4.1
+</p>
+<hr>
+<h2>BSD</h2>
+
+<h4>OpenBSD</h4>
+
+<p>Supported CPUs: x86, ARM
+</p>
+<h4>FreeBSD 4.x - 6.x</h4>
+
+<p>Supported CPUs: x86
+</p>
+<h4>NetBSD 3</h4>
+
+<p>Supported CPUs: x86, MIPS, ARM
+</p>
+<h4>DragonFly BSD</h4>
+
+<p>Supported CPUs: x86
+</p>
+<hr>
+<h2>BeOS</h2>
+
+<p>Supported CPUs: x86
+</p>
+<p>Requires libdl.so (from http://bebits.com/app/2917)
+</p>
+<p>You may also need (or want) to use the newer GCC from
+http://bebits.com/app/4011
+</p>
+<p>Build with <b>OTHER=-I/beos/develop/headers</b>
+</p>
+<hr>
+<h2>Cygwin</h2>
+
+<p>Supported CPUs: x86
+</p>
+<p>Toka has been built and run under Cygwin on both Windows XP and Windows
+Vista. Note that some of the libraries and examples may not function
+under Cygwin at this time.
+</p>
+<hr>
+<h2>OpenSolaris</h2>
+
+<p>Supported CPUs: x86
+</p>
+<p>Only tested under Nexenta GNU/Solaris distribution but builds and works
+fine.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="quotes">Quotes</a></h1>
+
+<p>With the functions described above, many small programs can be written.
+Toka has much more functionality, but before proceeding further, we need
+to take a look at how to create new functions (called <i>quotes</i>).
+</p>
+<p>In Toka, a <i>quote</i> is the basic building block. At the simplest
+level, they are anonymous blocks of code and data. Quotes are created by
+encolsing the code and/or data in brackets:
+</p>
+<pre>  [ ]
+</pre>
+
+<p>The above will create an empty quote and leave a pointer to it on the
+stack. You can attach a name to this pointer with <b>is</b>:
+</p>
+<pre>  [ ] is empty-quote
+</pre>
+
+<p>Names can include any characters, other than space, tab, cr, or lf (enter
+key). (<i>There are other forms of <b>is</b>, but this is the most common
+one; the others are discussed <a href="#wordclasses">elsewhere</a></i>).</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="quotesc">quotes.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Build, operate on quotes.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  QUOTE quotes[8]
+  Holds details about the compiler state, heap,
+  etc for quotes during compilation.
+
+  long qdepth
+  Tracks how deeply the quotes are nested
+
+  long quote_counter
+  Tracks the current loop index
+
+  Inst top
+  Holds a pointer to the root quote
+
+begin_quote()
+Create a new quote. This allocates space for it,
+and sets the compiler flag. A pointer to the
+quote's start is pushed to the stack.
+
+end_quote()
+Terminate the previously opened quote and perform
+data_class() semantics.
+
+invoke()
+Call a quote (passed on TOS)
+
+compile()
+Compile the code needed to call a quote (passed on TOS)
+
+countedLoop()
+Execute a quote a given number of times. You pass
+a quote, and upper/lower limits. The loop counter,
+'i', is updated with each cycle.
+
+truefalse()
+Takes three items (true-xt, false-xt, and a flag)
+from the stack. Stack should be passed in as:
+  flag true false 
+It will execute true if the flag is true, false
+otherwise.
+
+recurse()
+Compiles a call to the top-level quote. As a
+trivial example:
+  [ dup 1 &gt; [ dup 1 - recurse swap 2 - recurse + ] ifTrue ] is fib
+
+qlit()
+Push the value in the following memory location
+to the stack. This is used instead of lit() so
+that the decompiler (and eventually debugger) can
+reliably identify nested quotes as opposed to 
+regular literals.
+
+quote_index()
+Return the current loop index (counter)
+
+quote_while_true()
+Return execution of a quote until the quote
+returns FALSE.
+
+quote_while_false()
+Return execution of a quote until the quote
+returns TRUE.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>[        ( -a )      Create a new quote
+]        ( - )       Close an open quote
+invoke   ( a- )      Execute a quote
+compile  ( a- )      Compile a call to the quote
+countedLoop ( ulq- ) Execute a quote a set number
+                     of times, updating the 'i'
+                     counter each time.
+ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
+                     true, 'b' if false.
+recurse  ( - )       Compile a call to the top
+                     quote.
+i        ( -n )      Return the current loop index
+whileTrue  ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+whileFalse ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="recent_changes">Recent Changes</a></h1>
+
+
+<ul>
+<li> <a href="#scripts">Scripts</a> <font face="sans-serif" size="-2">(09/06/2007 19:10:35)</font>
+<li> <a href="#first_steps">First Steps</a> <font face="sans-serif" size="-2">(09/06/2007 19:01:17)</font>
+<li> <a href="#home">Home</a> <font face="sans-serif" size="-2">(09/06/2007 19:00:43)</font>
+<li> <a href="#ports">Ports</a> <font face="sans-serif" size="-2">(09/06/2007 19:00:08)</font>
+<li> <a href="#words_and_their_uses">Words and Their Uses</a> <font face="sans-serif" size="-2">(09/06/2007 18:59:04)</font>
+<li> <a href="#quotesc">quotes.c</a> <font face="sans-serif" size="-2">(09/06/2007 18:55:27)</font>
+<li> <a href="#loops">Loops</a> <font face="sans-serif" size="-2">(09/06/2007 18:55:02)</font>
+<li> <a href="#license">License</a> <font face="sans-serif" size="-2">(09/03/2007 02:34:27)</font>
+<li> <a href="#errorcodes">ErrorCodes</a> <font face="sans-serif" size="-2">(09/02/2007 12:58:48)</font>
+<li> <a href="#user_code">User Code</a> <font face="sans-serif" size="-2">(09/02/2007 12:52:26)</font>
+<li> <a href="#interpretc">interpret.c</a> <font face="sans-serif" size="-2">(08/28/2007 18:52:25)</font>
+<li> <a href="#parserc">parser.c</a> <font face="sans-serif" size="-2">(08/22/2007 19:07:05)</font>
+<li> <a href="#strings">strings</a> <font face="sans-serif" size="-2">(07/27/2007 21:04:14)</font>
+<li> <a href="#datac">data.c</a> <font face="sans-serif" size="-2">(07/27/2007 21:02:47)</font>
+<li> <a href="#arrays">Arrays</a> <font face="sans-serif" size="-2">(07/27/2007 21:01:34)</font>
+<li> <a href="#extending_the_language">Extending the Language</a> <font face="sans-serif" size="-2">(07/21/2007 15:18:28)</font>
+<li> <a href="#usingthestack">UsingTheStack</a> <font face="sans-serif" size="-2">(07/21/2007 15:17:53)</font>
+<li> <a href="#tokac">toka.c</a> <font face="sans-serif" size="-2">(07/21/2007 15:06:11)</font>
+<li> <a href="#parser">parser</a> <font face="sans-serif" size="-2">(07/21/2007 15:05:10)</font>
+<li> <a href="#conditionalsc">conditionals.c</a> <font face="sans-serif" size="-2">(07/21/2007 15:02:56)</font>
+<li> <a href="#dictionaryc">dictionary.c</a> <font face="sans-serif" size="-2">(07/21/2007 15:00:59)</font>
+<li> <a href="#consolec">console.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:42:15)</font>
+<li> <a href="#debugc">debug.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:41:41)</font>
+<li> <a href="#vmc">vm.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:40:50)</font>
+<li> <a href="#stackc">stack.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:40:13)</font>
+<li> <a href="#mathc">math.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:37:18)</font>
+<li> <a href="#gcc">gc.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:36:11)</font>
+<li> <a href="#filesc">files.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:35:45)</font>
+<li> <a href="#ffic">ffi.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:34:11)</font>
+<li> <a href="#decompilec">decompile.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:32:11)</font>
+<li> <a href="#cmdlinec">cmdline.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:29:45)</font>
+<li> <a href="#classc">class.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:29:22)</font>
+<li> <a href="#building">Building</a> <font face="sans-serif" size="-2">(07/21/2007 14:17:16)</font>
+<li> <a href="#garbage_collector">garbage collector</a> <font face="sans-serif" size="-2">(07/14/2007 20:51:43)</font>
+<li> <a href="#limitations">Limitations</a> <font face="sans-serif" size="-2">(07/14/2007 20:41:28)</font>
+<li> <a href="#values">Values</a> <font face="sans-serif" size="-2">(05/28/2007 15:20:13)</font>
+<li> <a href="#bitsc">bits.c</a> <font face="sans-serif" size="-2">(05/21/2007 21:44:03)</font>
+<li> <a href="#ffi">FFI</a> <font face="sans-serif" size="-2">(04/29/2007 22:43:53)</font>
+<li> <a href="#constants">Constants</a> <font face="sans-serif" size="-2">(04/29/2007 19:19:14)</font>
+<li> <a href="#files">Files</a> <font face="sans-serif" size="-2">(04/28/2007 22:11:30)</font>
+<li> <a href="#conditionals">Conditionals</a> <font face="sans-serif" size="-2">(04/28/2007 22:11:10)</font>
+<li> <a href="#wordclasses">WordClasses</a> <font face="sans-serif" size="-2">(04/28/2007 01:03:03)</font>
+<li> <a href="#stack_comments">Stack Comments</a> <font face="sans-serif" size="-2">(04/27/2007 19:24:28)</font>
+<li> <a href="#commenting_code">Commenting Code</a> <font face="sans-serif" size="-2">(04/27/2007 19:12:55)</font>
+<li> <a href="#quotes">Quotes</a> <font face="sans-serif" size="-2">(04/24/2007 21:47:51)</font>
+<li> <a href="#types">Types</a> <font face="sans-serif" size="-2">(04/24/2007 21:02:42)</font>
+<li> <a href="#installation">Installation</a> <font face="sans-serif" size="-2">(04/23/2007 18:18:57)</font>
+<li> <a href="#errorsc">errors.c</a> <font face="sans-serif" size="-2">(04/21/2007 17:02:50)</font>
+<li> <a href="#variables">Variables</a> <font face="sans-serif" size="-2">(04/19/2007 18:05:19)</font>
+<li> <a href="#mathoperations">MathOperations</a> <font face="sans-serif" size="-2">(04/19/2007 18:01:47)</font>
+<li> <a href="#threading_model">threading model</a> <font face="sans-serif" size="-2">(04/10/2007 22:10:25)</font>
+<li> <a href="#tokadoc">TokaDoc</a> <font face="sans-serif" size="-2">(03/30/2007 23:52:20)</font>
+<li> <a href="#initialc">initial.c</a> <font face="sans-serif" size="-2">(03/30/2007 18:43:04)</font>
+<li> <a href="#search">Search</a> <font face="sans-serif" size="-2">(03/29/2007 21:18:59)</font>
+<li> <a href="#index">Index</a> <font face="sans-serif" size="-2">(07/13/2002 14:58:54)</font>
+<li> <a href="#recent_changes">Recent Changes</a> <font face="sans-serif" size="-2">(07/13/2002 14:41:15)</font>
+
+</ul>
+
+<p><b>56 Pages
+</b></p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="scripts">Scripts</a></h1>
+
+<p>Toka can be used to write scripts. Start your code with the following:
+</p>
+<pre>  #! /usr/bin/toka
+</pre>
+
+<p>And set the permissions to executable (<i>+x</i>), and you can run your
+code directly at the command line (assuming that Toka is
+<a href="#installation">installed</a>).
+</p>
+<p>To make the most of your scripts, you will probably want to handle
+command line arguments. Toka allows for this using the following words:
+</p>
+<pre>  #args        ( -n )   Returns the number of command line arguments
+  arglist      ( -a )   An array containing the arguments
+  array.get    ( ia-n ) Return a pointer to an element in the array
+</pre>
+
+<p>Toka accepts a command line like the following:
+</p>
+<pre>  toka &lt;script&gt; &lt;arg0&gt; &lt;arg1&gt; ... &lt;argN&gt;
+</pre>
+
+<p>If no arguments are given to Toka, <i>excluding than the optional script
+filename</i>, <b>#args</b> will be set to <i>0</i>. In any other case,
+<b>#args</b> will contain the number of arguments <i>following</i> the
+script name. For example, in the following example, <b>#args</b> will
+return <i>3</i>:
+</p>
+<pre>  toka foo.toka apple banana carrot
+</pre>
+
+<p>The breakdown in the <b>arglist</b> will then be as follows:
+</p>
+
+<ul>
+<li> Element 0 is the name of the script, in this case <i>foo.toka</i>
+<li> Element 1 is <i>apple</i>
+<li> Element 2 is <i>banana</i>
+<li> Element 3 is <i>carrot</i>
+
+</ul>
+
+<p>You can loop over the arguments to process them. For instance, if we
+wanted to display each of the script arguments, we could do:
+</p>
+<pre>  1 #args [ i arglist array.get type cr ] countedLoop
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="search">Search</a></h1>
+
+
+<ul>
+<li> <a href="#arrays">Arrays</a> <font face="sans-serif" size="-2">(07/27/2007 21:01:34)</font>
+<li> <a href="#bitsc">bits.c</a> <font face="sans-serif" size="-2">(05/21/2007 21:44:03)</font>
+<li> <a href="#building">Building</a> <font face="sans-serif" size="-2">(07/21/2007 14:17:16)</font>
+<li> <a href="#classc">class.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:29:22)</font>
+<li> <a href="#cmdlinec">cmdline.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:29:45)</font>
+<li> <a href="#commenting_code">Commenting Code</a> <font face="sans-serif" size="-2">(04/27/2007 19:12:55)</font>
+<li> <a href="#conditionals">Conditionals</a> <font face="sans-serif" size="-2">(04/28/2007 22:11:10)</font>
+<li> <a href="#conditionalsc">conditionals.c</a> <font face="sans-serif" size="-2">(07/21/2007 15:02:56)</font>
+<li> <a href="#consolec">console.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:42:15)</font>
+<li> <a href="#constants">Constants</a> <font face="sans-serif" size="-2">(04/29/2007 19:19:14)</font>
+<li> <a href="#datac">data.c</a> <font face="sans-serif" size="-2">(07/27/2007 21:02:47)</font>
+<li> <a href="#debugc">debug.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:41:41)</font>
+<li> <a href="#decompilec">decompile.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:32:11)</font>
+<li> <a href="#dictionaryc">dictionary.c</a> <font face="sans-serif" size="-2">(07/21/2007 15:00:59)</font>
+<li> <a href="#errorcodes">ErrorCodes</a> <font face="sans-serif" size="-2">(09/02/2007 12:58:48)</font>
+<li> <a href="#errorsc">errors.c</a> <font face="sans-serif" size="-2">(04/21/2007 17:02:50)</font>
+<li> <a href="#extending_the_language">Extending the Language</a> <font face="sans-serif" size="-2">(07/21/2007 15:18:28)</font>
+<li> <a href="#ffi">FFI</a> <font face="sans-serif" size="-2">(04/29/2007 22:43:53)</font>
+<li> <a href="#ffic">ffi.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:34:11)</font>
+<li> <a href="#files">Files</a> <font face="sans-serif" size="-2">(04/28/2007 22:11:30)</font>
+<li> <a href="#filesc">files.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:35:45)</font>
+<li> <a href="#first_steps">First Steps</a> <font face="sans-serif" size="-2">(09/06/2007 19:01:17)</font>
+<li> <a href="#garbage_collector">garbage collector</a> <font face="sans-serif" size="-2">(07/14/2007 20:51:43)</font>
+<li> <a href="#gcc">gc.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:36:11)</font>
+<li> <a href="#home">Home</a> <font face="sans-serif" size="-2">(09/06/2007 19:00:43)</font>
+<li> <a href="#index">Index</a> <font face="sans-serif" size="-2">(07/13/2002 14:58:54)</font>
+<li> <a href="#initialc">initial.c</a> <font face="sans-serif" size="-2">(03/30/2007 18:43:04)</font>
+<li> <a href="#installation">Installation</a> <font face="sans-serif" size="-2">(04/23/2007 18:18:57)</font>
+<li> <a href="#interpretc">interpret.c</a> <font face="sans-serif" size="-2">(08/28/2007 18:52:25)</font>
+<li> <a href="#license">License</a> <font face="sans-serif" size="-2">(09/03/2007 02:34:27)</font>
+<li> <a href="#limitations">Limitations</a> <font face="sans-serif" size="-2">(07/14/2007 20:41:28)</font>
+<li> <a href="#loops">Loops</a> <font face="sans-serif" size="-2">(09/06/2007 18:55:02)</font>
+<li> <a href="#mathc">math.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:37:18)</font>
+<li> <a href="#mathoperations">MathOperations</a> <font face="sans-serif" size="-2">(04/19/2007 18:01:47)</font>
+<li> <a href="#parser">parser</a> <font face="sans-serif" size="-2">(07/21/2007 15:05:10)</font>
+<li> <a href="#parserc">parser.c</a> <font face="sans-serif" size="-2">(08/22/2007 19:07:05)</font>
+<li> <a href="#ports">Ports</a> <font face="sans-serif" size="-2">(09/06/2007 19:00:08)</font>
+<li> <a href="#quotes">Quotes</a> <font face="sans-serif" size="-2">(04/24/2007 21:47:51)</font>
+<li> <a href="#quotesc">quotes.c</a> <font face="sans-serif" size="-2">(09/06/2007 18:55:27)</font>
+<li> <a href="#recent_changes">Recent Changes</a> <font face="sans-serif" size="-2">(07/13/2002 14:41:15)</font>
+<li> <a href="#scripts">Scripts</a> <font face="sans-serif" size="-2">(09/06/2007 19:10:35)</font>
+<li> <a href="#search">Search</a> <font face="sans-serif" size="-2">(03/29/2007 21:18:59)</font>
+<li> <a href="#stack_comments">Stack Comments</a> <font face="sans-serif" size="-2">(04/27/2007 19:24:28)</font>
+<li> <a href="#stackc">stack.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:40:13)</font>
+<li> <a href="#strings">strings</a> <font face="sans-serif" size="-2">(07/27/2007 21:04:14)</font>
+<li> <a href="#threading_model">threading model</a> <font face="sans-serif" size="-2">(04/10/2007 22:10:25)</font>
+<li> <a href="#tokac">toka.c</a> <font face="sans-serif" size="-2">(07/21/2007 15:06:11)</font>
+<li> <a href="#tokadoc">TokaDoc</a> <font face="sans-serif" size="-2">(03/30/2007 23:52:20)</font>
+<li> <a href="#types">Types</a> <font face="sans-serif" size="-2">(04/24/2007 21:02:42)</font>
+<li> <a href="#user_code">User Code</a> <font face="sans-serif" size="-2">(09/02/2007 12:52:26)</font>
+<li> <a href="#usingthestack">UsingTheStack</a> <font face="sans-serif" size="-2">(07/21/2007 15:17:53)</font>
+<li> <a href="#values">Values</a> <font face="sans-serif" size="-2">(05/28/2007 15:20:13)</font>
+<li> <a href="#variables">Variables</a> <font face="sans-serif" size="-2">(04/19/2007 18:05:19)</font>
+<li> <a href="#vmc">vm.c</a> <font face="sans-serif" size="-2">(07/21/2007 14:40:50)</font>
+<li> <a href="#wordclasses">WordClasses</a> <font face="sans-serif" size="-2">(04/28/2007 01:03:03)</font>
+<li> <a href="#words_and_their_uses">Words and Their Uses</a> <font face="sans-serif" size="-2">(09/06/2007 18:59:04)</font>
+
+</ul>
+
+<p><b>56 Pages
+</b></p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="stack_comments">Stack Comments</a></h1>
+
+<p>Stack comments provide a way to specify the action of a quote as it
+relates to the stack. It's normally a good idea to keep a list of words
+with their description and stack comments on hand if they are not part of
+the source.
+</p>
+<p>A typical stack comment will resemble the following:
+</p>
+<pre>  ( abc-d )
+</pre>
+
+<p>The dash shows the before/after split. In the example above, the quote
+takes three elements from the stack (a, b, and c) and leaves a new one
+(d). 
+</p>
+<p>Words that parse use <i>"</i> as a symbol to denote this. For example:
+</p>
+<pre>  ( a"-b )
+</pre>
+
+<p>This is a stack comment for a word that takes a string (a), parses the
+input until a specified symbol is encountered, and returns a new string
+(b).
+</p>
+<p>The exact meaning of the symbols is up to you. Generally in a
+description, you can explain them better, but the stack comment form is
+just a general overview.
+</p>
+<p><i>When you are learning Toka, it may be helpful to write out stack
+comments for each step in a quote. This can help you keep track of the
+stack and become more comfortable using it.</i></p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="stackc">stack.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Implements the basic stack operations. This is intentionally kept
+minimal, though additional primitives can be added to improve overall
+performance.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>stack_dup()
+Duplicate the TOS
+
+stack_drop()
+Drop the TOS
+
+stack_swap()
+Exchange TOS and NOS
+
+stack_to_r()
+Push TOS to return stack, DROP TOS
+
+stack_from_r()
+Pop TORS to the data stack
+
+stack_depth()
+Return the number of items on the stack
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>dup      ( n-nn )    Duplicate the TOS
+drop     ( n- )      Drop the TOS
+swap     ( ab-ba )   Exchange the TOS and NOS
+&gt;r       ( n- )      Push TOS to return stack, DROP
+r&gt;       ( -n )      Pop TORS to the data stack
+depth    ( -n )      Return the number of items on 
+                     the stack
+</pre>
+
+<h2>Related Words</h2>
+
+<pre>nip      ( xy-y )    Remove the second item on the stack
+rot      ( abc-bca ) Rotate top three values on stack
+-rot     ( abc-acb ) Rotate top three values on stack twice
+over     ( xy-xyx )  Put a copy of NOS above the TOS
+tuck     ( xy-yxy )  Put a copy of TOS under NOS     
+2dup     ( xy-xyxy ) Duplicate the top two items on the stack
+2drop    ( xy- )     Drop TOS and NOS
+reset    ( *- )      Drop all items on the stack
+r@       ( -x )      Get a copy of the top item on the return stack
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="strings">strings</a></h1>
+
+<p>Strings are sequences of characters. Specifically a string is any
+sequence of ASCII characters (each character can have a length identical
+to <b>char-size</b>), and ending with the literal value 0.
+</p>
+<p>Strings are created by parsing, or can be manually constructed as an
+array. For example the following two are functionally identical:
+</p>
+<pre>  " hello" is-data hello
+  hello type cr
+
+  5 chars is-array hello
+  char: h 0 hello array.putChar
+  char: e 1 hello array.putChar
+  char: l 2 hello array.putChar
+  char: l 3 hello array.putChar
+  char: o 4 hello array.putChar
+        0 5 hello array.putChar
+  hello type cr
+</pre>
+
+<p>Since all strings are arrays, you can also manipulate individual elements
+in a string:
+</p>
+<pre>  " hello" is-data hello
+  hello type cr
+
+  #! Now change the lowercase 'h' to uppercase.
+  char: H 0 hello array.putChar
+  hello type cr
+</pre>
+
+<h4>Tips</h4>
+
+
+<ul>
+<li> <b>char-size</b> is normally equal to <i>1</i>, corresponding to one
+  byte.
+<li> It is possible (though not likely) to have a <b>char-size</b> larger
+  than one byte.
+<li> Use <b>c@</b> and <b>c!</b> when manipulating <b>char-size</b> elements.
+<li> Do not use <b>@</b> and <b>!</b> (which are for <b>cell-size</b> elements).</ul>
+
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="threading_model">threading model</a></h1>
+
+<p>Toka relies on <i>call threading</i>. This is an implementation technique
+in which a list of addresses is compiled. Each of these is then called in
+sequence. The model is similar to <i>direct threading</i> in the Forth
+world.
+</p>
+<p>There is one special address which marks the end of a threaded sequence.
+This address is <b>0</b>.
+</p>
+<p>As an example of this, consider the following quote:
+</p>
+<pre> [ a b c 1 2 + . ]
+</pre>
+
+<p>This is compiled into a list of addresses:
+</p>
+<pre> a, b, c, lit, 1, lit 2, +, ., 0
+</pre>
+
+<p>Note the special form for numbers. The <a href="#vmc">lit()</a> function pushes the value in
+the following cell to the stack.
+</p>
+<p>When this quote is invoked, <i>a</i> will be called. After it finishes
+executing, <i>b</i> will be called, and so on until <i>0</i> is
+encountered. At that point, the <a href="#vmc">vm_run()</a> function exits.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="tokac">toka.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Setup and call the interpreter.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>main()
+The main entry point into Toka. Calls
+the functions needed to setup the initial
+dictionary and calls interpret().
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<p><i>None</i></p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="tokadoc">TokaDoc</a></h1>
+
+<h2>Introduction</h2>
+
+<p>To help keep an up-to-date list of C functions and their Toka
+equivilents, the TokaDoc scripts were developed. These seach C sources
+for specially formatted comments and extract them into various files.
+These files can be updated when <a href="#building">building</a>.
+</p>
+<h2>Supporting TokaDoc</h2>
+
+<p>At the start of each C file, have a comment header like this:
+</p>
+<pre> /*
+  *|F|
+  *|F| FILE: filename
+  *|F|
+  */
+</pre>
+
+<p>Before any global variables, have a comment block like this:
+</p>
+<pre>/*
+ *|F| Variables:
+ *|F|   GCITEM gc_list[128]
+ *|F|   Holds the list of items marked as garbage.
+ *|F|
+ */
+</pre>
+
+<p>Before each function have a comment block like this:
+</p>
+<pre> /*
+  *|F| &lt;return type&gt; functioname(&lt;arguments&gt;)
+  *|F| description of the function
+  *|F|
+  */
+</pre>
+
+<p>And for any functions having a Toka equivilent, have a block like:
+</p>
+<pre> /*
+  *|G| wordname    stack-effect    description
+  */
+</pre>
+
+<p>Please try to keep columns lined up as much as possible for Toka wordlist comments.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="types">Types</a></h1>
+
+<p>Toka has one data type, called the <i>cell</i>. This is a machine
+dependent sized memory area that can hold a single number or pointer. On
+32-bit systems, cells are 4 bytes in length, and on 64-bit systems, they
+take 8 bytes. A constant, <b>cell-size</b>, returns the exact length
+provided by Toka on your system.
+</p>
+<p>Cells can hold numbers, pointers to allocated memory, and pointers to
+quotes. When Toka encounters a number or a pointer, it is placed on the
+stack. For more permanent storage, you can store cell values into memory
+locations for later use. 
+</p>
+<p>This is where a number of abstractions arise. Memory allocated for
+storage of values is called <a href="#variables">variables</a>. Memory allocated for sequences
+of values are called <a href="#arrays">arrays</a>. And a special class of array is used for
+sequences of characters. These are called <a href="#strings">strings</a>.
+</p>
+<p>In all of these, when you reference them, a <i>pointer</i> is left on the
+stack. Pointers are simply numbers corresponding to an actual memory
+address. <i>It is up to you to know what abstract data type a pointer
+represents</i>.
+</p>
+<p>When dealing with variables, you can use <b>@</b> (fetch) and <b>!</b>
+(store) to set and obtain the values stored in them. If you need to fetch
+or store single characters (as may arise when manipulating strings), you
+can use <b>c@</b> and <b>c!</b> instead.
+</p>
+<p>Arrays have an entire abstracted set of words for dealing with them. It's
+well worth learning to use these, as they are portable, and make
+accessing and setting individual elements in an array trivial.
+</p>
+<h4>Tips</h4>
+
+<p>You are strongly encouraged to use <b>cell-size</b> and <b>char-size</b>
+instead of hard coding the sizes for data. This helps ensure readability
+and portability.</p>
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="user_code">User Code</a></h1>
+
+<p>Use this page to extend Notebook using the 
+the Tcl language.  Commands you add here can be used as
+Magic Buttons and Embedded Macros.
+</p>
+<p>Note that you can intersperse normal prose in between blocks of Tcl code.
+</p>
+<h2>User Menu</h2>
+
+<p>The User Menu pops up when you right-click or control-click 
+on a page in the Page Browser.  You can customize it however you like.
+</p>
+<pre>usermenu {
+    Back back-page
+    Home {goto-page Home}
+}
+</pre>
+
+<h2>Edit Menu</h2>
+
+<p>The Edit Menu pops up when you right-click or control-click 
+on a page in the Page Editor.  You can customize it however you like.
+</p>
+<pre>editmenu {
+    Undo             undo-change
+    Redo             redo-change
+    separator {}
+    Cut              cut-string
+    Copy             copy-string
+    Paste            paste-string
+    "Insert Page..." insert-page
+}
+</pre>
+
+<h2>Example</h2>
+
+<p>The following embedded macro used to be used by the
+<span style="color: red;">[Tour]</span> to create a magic button that said 
+"Click here to continue..." and took you to the next page in the tour
+when you clicked it.  It's no longer needed, because now you can write
+such links directly, like this:
+</p>
+<pre>  [Click here to continue...|Tour 2]
+</pre>
+
+<p>Still, it's a nice example of how to write a macro that creates a button.
+</p>
+<pre>proc clickToContinue {name} {
+	return "\[%Click here to continue...|goto-page [list $name]%\]"
+}
+</pre>
+
+<pre>html configure -css {
+    h1 { 
+        color: yellow; 
+        background: #990000;
+        margin-left: -4%;
+        font-family: "Arial Rounded MT Bold" Helvetica Arial sans;
+    }
+    h2, h3, h4 { 
+        margin-left: -4%;
+        font-family: "Arial Rounded MT Bold" Helvetica Arial sans;
+    }
+    hr {
+        margin-left:  -5%;
+        margin-right: -5%;
+    }
+    body { margin-left: 5% ; margin-right: 5%; background: #FFFFDD; }
+    pre { 
+        outline: thin dashed blue; 
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 4 px;
+        background: #FFFF99;
+    }
+} -nbtitle "Toka Documentation"
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="usingthestack">UsingTheStack</a></h1>
+
+<p>The Toka language makes use of a stack to pass data between functions
+(called <i>quotes</i> in toka). Imagine a stack of blocks with numbers on
+them. You can add or remove numbers from the top of the stack. You can
+also rearrange the order of the numbers.
+</p>
+<p>The stack is initially empty. Let's start by putting some numbers on the
+stack. Type in:
+</p>
+<pre>  23 7 9182
+</pre>
+
+<p>Excellent! Now print the number on top of the stack using <b>.</b>, which
+is pronounced "dot". This is a hard word to write about in a manual
+because it is just a single period.
+</p>
+<p>Enter:
+</p>
+<pre>  .
+</pre>
+
+<p>You should see the last number you entered, 9182, printed. Each time
+<b>.</b> is used, the top element on the stack is lost. If you want to
+see what is on the stack, you can use <b>:stack</b>. Try this:
+</p>
+<pre>  :stack
+</pre>
+
+<p>You should see:
+</p>
+<pre>  &lt;2&gt; 23 7
+</pre>
+
+<p>The number on the left, enclosed in brackets, is the number of items on
+the stack. The number to the far right is the top of the stack, or
+<i>TOS</i>. It should be mentioned that <b>:stack</b> leaves the stack
+unchanged.
+</p>
+<p>Since Toka uses the stack to hold data being operated on, and it uses the
+stack to pass data between quotes, it is very important to practice using
+it. Quotes generally take what they need off of the stack, and put their
+results back on it. To help understand exactly what each quote consumes
+and leaves, we use <i>stack diagrams</i>. As an example:
+</p>
+<pre>  . ( x- )
+</pre>
+
+<p>That is to say, <b>.</b> takes one word off the stack (the 'x') and puts
+nothing on the stack. In other words, it consumes the TOS.
+</p>
+<p>In the examples that follow, you do not need to type in the comments.
+When you are programming, of course, liberal use of comments and stack
+diagrams may make your code more readable and maintainable.
+</p>
+<p>Between examples, you may wish to clear the stack. If you enter
+<b>reset</b>, the stack will be cleared. Since the stack is central to
+Toka, it is important to be able to alter it easily. Let's look at some
+more functions that manipulate the stack. Enter:
+</p>
+<pre>  reset
+  777 dup :stack
+</pre>
+
+<p>You will notice that there are two copies of 777 on the stack. The quote
+<b>dup</b> duplicates TOS. This is useful when you want to use the TOS
+and still have a copy. The stack diagram for <b>dup</b> would be:
+</p>
+<pre>  dup ( x-xx )
+</pre>
+
+<p>Another useful quote is <b>swap</b>. Enter:
+</p>
+<pre>  reset
+  23 7 :stack
+  swap :stack
+</pre>
+
+<p>The stack should look like:
+</p>
+<pre>  &lt;2&gt; 7 23
+</pre>
+
+<p>The stack diagram for <b>swap</b> would be:
+</p>
+<pre>  swap ( xy-yx )
+</pre>
+
+<p>Now enter:
+</p>
+<pre>  over :stack
+</pre>
+
+<p>You should see:
+</p>
+<pre>  &lt;3&gt; 7 23 7
+</pre>
+
+<p><b>over</b> causes a copy of the second item on the stack to leapfrog
+over the first. Its stack diagram would be:
+</p>
+<pre>  over ( xy-xyx )
+</pre>
+
+<p>Here is another commonly used function:
+</p>
+<pre>  drop ( x- )
+</pre>
+
+<p>Can you guess what we will see if we enter:
+</p>
+<pre>  drop :stack
+</pre>
+
+<p>Another handy function for manipulating the stack is <b>rot</b> (short
+for rotate). Enter:
+</p>
+<pre>  11 22 33 44 :stack
+  rot :stack
+</pre>
+
+<p>The stack diagram for <b>rot</b> is, therefore:
+</p>
+<pre>  rot ( xyz-yzx )
+</pre>
+
+<p>You have now learned the more important stack manipulation words. These
+will be present in almost every non-trivial Toka program. I will say that
+if you see heavy use of these words in your code, you may want to examine
+and reorganize (<i>refactor</i>) your code. Use of variables and arrays
+(which we will discuss later) can also help clean things up.
+</p>
+<p>Here are stack diagrams for some other useful stack manipulation
+functions. Try experimenting with them by putting numbers on the stack
+and calling them to get a feel for what they do. Again, the text in
+parentheses is just a comment and need not be entered.
+</p>
+<pre>  2drop ( xyz--x )
+  2dup ( xy-xyxy )
+  nip ( xyz-xz )
+  tuck ( xy-yxy )
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="values">Values</a></h1>
+
+<p>Values are a special form of variable that may be more readable in
+many situations.
+</p>
+<p>Example: 
+</p>
+<pre>  value foo
+  foo .
+  100 to foo
+  foo .
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="variables">Variables</a></h1>
+
+<p>To hold data for longer periods of time than is practical with the stack,
+variables can be used. Variables are pointers to memory locations large
+enough to hold a number. There are two primary ways to create variables:
+</p>
+<pre>  variable foo
+  variable bar
+  variable baz
+</pre>
+
+<p>The above would create three new variables, named <b>foo</b>, <b>bar</b>,
+and <b>baz</b>. When creating multiple variables, it is more readable to
+use <b>variable|</b> though:
+</p>
+<pre>  variable| foo bar baz |
+</pre>
+
+<p>You can use <b>@</b> (fetch) and <b>!</b> (store) to alter the contents
+of a variable:
+</p>
+<pre>  variable foo
+  100 foo !
+  foo @ .
+</pre>
+
+<p>For reading/writing character-sized values, <b>c@</b> and <b>c!</b> are
+also provided. A full list of functions for working with variables follows:
+</p>
+<pre>  variable ( "- )      Parse ahead and create a named entry
+                       corresponding to a memory location
+  variable| ( |- )     Parse and create variables until | 
+                       is encountered.
+  @        ( a-n )     Fetch the value from variable 'a'
+  !        ( na- )     Store 'n' to variable 'a'
+  c@       ( a-n )     Fetch a byte from variable 'a'
+  c!       ( na- )     Store byte 'n' to variable 'a'
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="vmc">vm.c</a></h1>
+
+<h2>Use</h2>
+
+<p>Implements the heart of the virtual machine.
+</p>
+<h2>Functions Provided</h2>
+
+<pre>Variables:
+  Inst *heap
+  Pointer into the current heap
+
+  Inst *ip
+  The instruction pointer
+
+  long stack[MAX_DATA_SIZE], rstack[MAX_RETURN_STACK]
+  The data and return stacks
+
+  long sp, rsp
+  The stack pointers
+
+vm_run(Inst)
+Run through a list of instructions
+Side effects:
+  modifes *ip
+
+vm_stack_check()
+Check for over/underflow and reset if detected
+If the return stack over/underflows, exit Toka
+
+push(long a)
+Push a number to the stack.
+
+lit()
+Push the value in the following memory location
+to the stack
+
+string_lit()
+Push the pointer in the following memory location
+to the stack. This is a helper function for 
+strings.
+</pre>
+
+<h2>Primitives Provided</h2>
+
+<pre>heap     ( -a )      Variable pointing to the top
+                     of the local heap
+</pre>
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="wordclasses">WordClasses</a></h1>
+
+<p>An implementation strategy adopted from HelFORTH. Each quote, primitive,
+and data structure has a <i>class</i> assigned to it. These classes are
+aware of the current compiler state (<i>on</i> or <i>off</i>), and may be
+aware of other aspects of the Toka system as well.
+</p>
+<p>When an item is found, the corresponding <i>class handler</i> is invoked.
+The primary classes you will encounter in Toka are:
+</p>
+<h3>is</h3>
+
+<p>This is the most common class. 
+</p>
+
+<ul>
+<li> Compiling: compile a call to the quote.
+<li> Interpreting: invoke the quote.
+
+</ul>
+
+<h3>is-macro</h3>
+
+<p>A special case, these are used for quotes that need to be invoked
+whenever they are encountered. Macro class is used for creating strings
+(via <b>"</b>) and symbolic creation of characters (via <b>char:</b>).
+</p>
+
+<ul>
+<li> Compiling: invoke the quote.
+<li> Interpreting: invoke the quote.
+
+</ul>
+
+<h3>is-data</h3>
+
+<p>This is the second most common class. It is used for all data structures,
+including variables, arrays, and strings.
+</p>
+
+<ul>
+<li> Compiling: compile the value into the quote.
+<li> Interpreting: leave the value on the stack.</ul>
+
+
+
+<hr>
+
+<p><a href="#home">Home</a> | 
+<a href="#index">Index</a></p>
+
+<hr>
+
+<h1><a name="words_and_their_uses">Words and Their Uses</a></h1>
+
+<h2>Primitives</h2>
+
+<p>These are words that are built into the Toka executable. If the
+<b>bootstrap.toka</b> can not be found, these are the only words 
+that will be provided.
+</p>
+<pre>&lt;&lt;       ( ab-c )    Shift 'a' left by 'b' bits
+&gt;&gt;       ( ab-c )    Shift 'a' right by 'b' bits
+and      ( ab-c )    Perform a bitwise AND
+or       ( ab-c )    Perform a bitwise OR
+xor      ( ab-c )    Perform a bitwise XOR
+#args    (  -n )     Return the number of arguments
+arglist  (  -a )     Return a pointer to the 
+                     argument list.
+&lt;        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+&gt;        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+=        ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+&lt;&gt;       ( ab-f )    Compare 'a' and 'b', return
+                     a flag
+.        ( n- )      Display the TOS
+emit     ( c- )      Display the ASCII character
+                     for TOS
+type     ( a- )      Display a string
+bye      ( - )       Quit Toka
+#        ( n- )      Push the following cell to
+                     the stack.
+$#       ( n- )      Push the following cell to
+                     the stack.
+@        ( a-n )     Fetch the value in memory
+                     location 'a'
+!        ( na- )     Store 'n' to memory location
+                     'a'
+c@       ( a-n )     Fetch a byte from memory
+                     location 'a'
+c!       ( na- )     Store byte 'n' to memory
+                     location 'a'
+copy     ( sdc- )    Copy 'c' bytes from 's' to
+                     'd'
+cell-size ( -n )     Return the size of a cell
+char-size ( -n )     Return the size of a char
+:stack   ( - )       Display all values on the
+                     data stack
+:stat    (  -  )     Display information about
+                     the virtual machine status
+:see     (  "- )     Decompile the specified quote
+last     ( -a )      Variable holding a pointer to
+                     the most recent dictionary entry
+                     number
+is       ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
+is-macro ( a"- )     Attach a name to a quote
+         ( a$- )     Non-parsing form
+is-data  ( a"- )     Attach a name to data memory
+         ( a$- )     Non-parsing form
+`        ( "-a )     Return a quote corresponding
+                     to the specified word.
+         ( $-a )     Non-parsing form
+:name    ( n-$ )     Return the name for a 
+                     dictionary entry
+:xt      ( n-$ )     Return the address of a 
+                     dictionary entry
+:class   ( n-$ )     Return the class # for a 
+                     dictionary entry
+from     ( "- )      Set the library to import from
+         ( $- )      Non-parsing form
+import   ( n"- )     Import a function taking 'n'
+                     arguments.
+         ( n$- )     Non-parsing form
+as       ( "- )      Rename the last defined word
+         ( $-  )     Non-parsing form
+file.open  ( $m-n )  Open a specified file with
+                     the specified mode.
+file.close ( n- )    Close the specified file handle
+file.read  ( nbl-r ) Read 'l' bytes into buffer 'b'
+                     from file handle 'n'. Returns
+                     the number of bytes read.
+file.write ( nbl-w ) Write 'l' bytes from buffer 'b'
+                     to file handle 'n'. Returns
+                     the number of bytes written.
+file.size  ( n-s )   Return the size (in bytes)
+                     of the specified file.
+file.seek  ( nom-a ) Seek a new position in the
+                     file. Valid modes are
+                     START, CURRENT, and END. These
+                     have values of 1, 2, and 3.
+file.pos ( n-a )     Return a pointer to the current
+                     offset into the file.
+keep     ( a-a )     Mark quotes/allocated memory
+                     as permanent.
+gc       ( - )       Clean the garbage
+malloc   ( n-a )     Allocate 'n' bytes of memory
+heap     ( -a )      Variable pointing to the top
+                     of the local heap
+compiler ( -a )      Variable holding the compiler
+                     state
++        ( ab-c )    Add TOS and NOS
+-        ( ab-c )    Subtract TOS from NOS
+*        ( ab-c )    Multiply TOS by NOS
+/mod     ( ab-cd )   Divide and get remainder
+base     ( -a )      Variable containg the current
+                     numeric base
+parser   ( -a )      Variable holding current parser
+                     mode.
+escape-sequences ( -a)  Variable determining if
+                        escape sequences are used.
+&gt;number  ( a-nf )    Attempt to convert a string
+                     to a number
+parse    ( d-a )     Parse until the character 
+                     represented by 'd' is found.
+                     Return a pointer to the string
+include  ( "- )      Attempt to open a file and
+                     add it to the input stack.
+         ( $- )      Non-parsing form
+needs    ( "- )      Attempt to include a file
+                     from the library (normally
+                     /usr/share/toka/library)
+         ( $- )      Non-parsing form
+end.     ( - )       Remove the current file from
+                     the input stack
+[        ( -a )      Create a new quote
+]        ( - )       Close an open quote
+invoke   ( a- )      Execute a quote
+compile  ( a- )      Compile a call to the quote
+countedLoop ( ulq- ) Execute a quote a set number
+                     of times, updating the 'i'
+                     counter each time.
+ifTrueFalse ( fab- ) Invoke 'a' if 'f' flag is
+                     true, 'b' if false.
+recurse  ( - )       Compile a call to the top
+                     quote.
+i        ( -n )      Return the current loop index
+whileTrue  ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+whileFalse ( a- )    Execute quote. If the quote
+                     returns TRUE, execute again.
+                     otherwise end the cycle.
+dup      ( n-nn )    Duplicate the TOS
+drop     ( n- )      Drop the TOS
+swap     ( ab-ba )   Exchange the TOS and NOS
+&gt;r       ( n- )      Push TOS to return stack, DROP
+r&gt;       ( -n )      Pop TORS to the data stack
+depth    ( -n )      Return the number of items on 
+                     the stack
+</pre>
+
+<h2>Bootstrap</h2>
+
+<p>These are additional words, provided in <b>bootstrap.toka</b>.
+They significantly expand the core language.
+</p>
+<pre>#!       ( "- )      Parse to the end of the line
+                     and scrap the results.
+(        ( "- )      Parse until ) is found and scrap
+                     the results
+.PRIM_WORD  ( -n )   Class # for primitive words
+.PRIM_MACRO ( -n )   Class # for primitive macros
+.DATA       ( -n )   Class # for data elements
+.WORD       ( -n )   Class # for quote words
+.MACRO      ( -n )   Class # for quote macros
+SPACE    ( -n )      ASCII value for SPACE character
+CR       ( -n )      ASCII value for CR character
+LF       ( -n )      ASCII value for LF character
+ESC      ( -n )      ASCII value for ESC character
+TAB      ( -n )      ASCII value for TAB character
+wsparse  ( -a )      Parse until a SPACE is encountered
+lnparse  ( -a )      Parse to the end of the line,
+                     leave the resulting string on the
+                     stack.
+FALSE    ( -f )      Value returned for FALSE
+TRUE     ( -f )      Value returned for TRUE
+ifTrue   ( fq- )     Execute quote ('q') if flag ('f') is TRUE
+ifFalse  ( fq- )     Execute quote ('q') if flag ('f') is FALSE
+&gt;char    ( n-c )     Convert the value on TOS to a single character
+char:    ( "-c )     Parse ahead and return one character
+"        ( "-$ )     Parse until " is encountered and return a string
+cr       ( - )       Display a CR character
+space    ( - )       Display a space
+tab      ( - )       Display a tab
+."       ( "- )      Parse to the next &lt;b&gt;"&lt;/b&gt; and display the string.
+clear    ( - )       VT100: Clear the screen
+normal   ( - )       VT100: Set the colors back to the default
+nip      ( xy-y )    Remove the second item on the stack
+rot      ( abc-bca ) Rotate top three values on stack
+-rot     ( abc-acb ) Rotate top three values on stack twice
+over     ( xy-xyx )  Put a copy of NOS above the TOS
+tuck     ( xy-yxy )  Put a copy of TOS under NOS     
+2dup     ( xy-xyxy ) Duplicate the top two items on the stack
+2drop    ( xy- )     Drop TOS and NOS
+reset    ( *- )      Drop all items on the stack
+r@       ( -x )      Get a copy of the top item on the return stack
+negate   ( x-y )     Invert the sign of TOS
+/        ( xy-z )    Divide two numbers
+mod      ( xy-z )    Divide two numbers and get remainder
+not      ( x-y )     Invert the value 'x'
+*/       ( abc-d )   (a*b)/c
+chars    ( x-y )     Multiply TOS by char-size. Useful w/arrays
+char+    ( x-y )     Increase TOS by char-size
+char-    ( x-y )     Decrease TOS by char-size
+cells    ( x-y )     Multiply TOS by cell-size. Useful w/arrays
+cell+    ( x-y )     Increase TOS by cell-size
+cell-    ( x-y )     Decrease TOS by cell-size
++!       ( xa- )     Add 'x' to the value in address 'a'
+-!       ( xa- )     Subtract 'x' from the value in address 'a'
+on       ( a- )      Set a variable to TRUE
+off      ( a- )      Set a variable to FALSE
+toggle   ( a- )      Toggle a variable between TRUE and FALSE
+variable ( "- )      Create a variable
+variable| ( "- )     Create multiple variables
+hex      ( - )       Set the base to hexadecimal (16)
+decimal  ( - )       Set the base to decimal (10)
+binary   ( - )       Set the base to binary (2)
+octal    ( - )       Set the base to octal (8)
+"R"      ( -x )      Mode for file.open
+"R+"     ( -x )      Mode for file.open
+"W"      ( -x )      Mode for file.open
+"W+"     ( -x )      Mode for file.open
+"A"      ( -x )      Mode for file.open
+"A+"     ( -x )      Mode for file.open
+START    ( -x )      Mode for file.seek
+CURRENT  ( -x )      Mode for file.seek
+END      ( -x )      Mode for file.seek
+file.slurp        ( $-a )   Read a file into a dynamically allocated buffer 
+is-array          ( n"- )   Create an array of size 'n'
+array.get         ( ia-n )  Get element 'i' from array 'a'
+array.put         ( nia- )  Put value 'n' into element 'i' of array 'a'
+array.getChar     ( ia-n )  Get char-size element 'i' from 
+                            array 'a'
+array.putChar     ( nia- )  Put char-size value 'n' into element 'i' of 
+                            array 'a'
+&lt;list&gt;   ( -a )      Stores a list of pointers used by { and }
+{        ( - )       Start a scoped area
+}        ( - )       End a scoped area
++action  ( aq"- )    Create a new word (") with the action of the
+                     specified quote (q) and data element (a)
+value    ( "- )      Create a new value
+to       ( - )       Set the value of a value
+value|   ( "- )      Create multiple values
+string.grow        ( $n-$ )  Increase the physical size of a string by 'n'
+                             bytes.
+string.append      ( ab-c )  Append string 'b' to string 'a'
+string.compare     ( ab-f )  Compare two strings for equality
+string.appendChar  ( $c-$ )  Append character 'c' to string '$'
+string.getLength   ( $-$n )  Get the length of a string (up to ASCII 0)
+string.clone       ( $-$ )   Make an additional copy of a string.
+words-within ( n- )  Display all words with a specified class #
+:prims   ( - )       Display all primitives
+:quotes  ( - )       Display all named quotes
+:datas   ( - )       Display all named data items
+words    ( - )       Display all names in the dictionary
+</pre>
+
+
+<hr>
+
+<p><i>Notebook exported on Thursday,  6 September 2007, 19:11:20 PM EDT</i></p>
+
+</body></html>

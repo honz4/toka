@@ -1,3 +1,9 @@
+ _____     _                               Homepage: http://toka.charleschilders.com
+|_   _|__ | | ____ _             Dictionary Browser: http://charleschilders.com:9812
+  | |/ _ \| |/ / _` |
+  | | (_) |   < (_| |
+  |_|\___/|_|\_\__,_|
+                     
 Toka is a programming language that draws on my experiences with a variety
 of languages. It's still experimental, so things sometimes change significantly
 with little to no warning. Overall it does work suprising well though.
@@ -8,33 +14,26 @@ Forth. It does have some extra things (quotes, garbage collection, etc) that
 make programming easier for me.
 
 The language is documented using a tool called Notebook. (Get a copy from
-http://notebook.wjduquette.com/). There is an HTML export in the "book" 
-directory. Start with the "home.html" and you'll find a (somewhat) organized 
-set of links to individual pages on most aspects of the language. For those 
-who are familiar with it, the GLOSSARY file will give you a good reminder of 
-what each word does.
+http://notebook.wjduquette.com/). Take a look at the "toka.nbk" in the "doc"
+directory. An HTML formatted version of this documentation is provided as
+"toka.html" in the "doc" directory.
 
-Homepage: http://charleschilders.com:8080
-Mirror:   http://charleschilders.com/toka
+==============================================================================
+BUILDING AND INSTALLATION
 
-At the homepage is information on how to obtain the latest source via 
-Subversion, the full documentation, and a way to download the latest "stable"
-source as a tarball ("tar.gz").
+1) Run "make"
 
-Toka has an optional library that adds enhanced support for strings, network
-sockets, and more. It's been tested on Linux and BSD systems, but may also
-work on other systems.
---------------------------------------------------------------------------
-If you have the rebuild tool (http://code.google.com/p/rebuild) and would
-rather not use make, you can build and install Toka by doing:
+   This should build the 'toka' binary. You may get some compiler warnings,
+   depending on the version of GCC you use.
 
-cd source
-rebuild toka
-cp toka /usr/bin
-cd ..
-mkdir -p /usr/share/toka
-cp bootstrap.toka /usr/share/toka
+   You can run Toka without installing it. Keep the 'toka' and 'bootstrap.toka'
+   files in the same directory and run "./toka" to start it.
 
-You will probably need to be root, at least initially. Once installed, you
-can change the owner/permissions to allow a normal account to update it.
---------------------------------------------------------------------------
+2) Run "sudo make install"
+
+   This will put 'toka' into /usr/bin, and create /usr/share/toka, where
+   'bootstrap.toka' will be placed.
+
+   Installation automatically runs the test suite and generates a 'test.log';
+   if any errors show up in this, please let us know!
+==============================================================================
