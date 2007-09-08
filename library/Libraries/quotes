@@ -39,7 +39,7 @@
 [ 2dup > >r nip < r> = ] is within
 
 [ swap 1 - swap 1 +
-  dup 1 - [ 2dup i within [ >r >r i r> r> ] ifTrue ] +iterate
+  dup 1 swap [ 2dup i within [ >r >r i r> r> ] ifTrue ] countedLoop
   2drop
 ] is range
 
@@ -47,9 +47,12 @@
 #! Example:
 #!    1 7 range [ fix? + ] apply .
 #! ---------------------------------------------------------------------
-[ >r depth >r invoke depth r> - 1 +
-  [ r> r> dup >r swap >r invoke ] iterate 
-] is apply
+{
+  value q
+  [ to q q invoke depth 0 
+    [ q invoke ] countedLoop 
+  ]
+} is apply
 
 [ depth 1 = [ 0 ] ifTrue ] is fix?
 #! ---------------------------------------------------------------------
