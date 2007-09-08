@@ -1,2 +1,0 @@
-[ ( array size -- sum )
-  >r 0 r> [ over i swap array.get + ] iterate nip ] is sum-array

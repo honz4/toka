@@ -1,3 +1,0 @@
- needs strings
- " hello" is-data a
- a string.clone is-data b

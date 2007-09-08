@@ -1,1 +1,0 @@
- 1000 10 array array.put    ( number index array -- )

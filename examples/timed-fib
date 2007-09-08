@@ -1,7 +1,0 @@
-#! /usr/bin/toka
-needs time
-
-[ dup 1 > [ dup 1 - recurse swap 2 - recurse + ] [ ] ifTrueFalse ] is fib
-
-[ 35 fib . cr ] :time
-bye
